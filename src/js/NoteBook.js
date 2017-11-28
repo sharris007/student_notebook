@@ -27,6 +27,14 @@ export default class Board extends Component {
       this.cancelAddCard = this.cancelAddCard.bind(this);
       this.saveCard = this.saveCard.bind(this);
       this.handleOnChange = this.handleOnChange.bind(this);
+      const lists=[...props.lists];
+      lists[0].cards.unshift({
+        id: 0,
+        title: '',
+        cardFormat: 'add mode',
+        content: '',
+        content2: ''
+      });
       this.state = {
         isScrolling: false,
         search: '',

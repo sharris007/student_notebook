@@ -1,6 +1,4 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-
-import faker from 'faker';
 import {notes} from './notesDummy';
 
 function mapNotes(notesList, lists, quantity) {
@@ -22,13 +20,13 @@ function init(quantity) {
     });
   }
 
-  notesList.push({
-    id: 0,
-    title: '',
-    cardFormat: 'add mode',
-    content: '',
-    content2: ''
-  });
+//   notesList.push({
+//     id: 0,
+//     title: '',
+//     cardFormat: 'add mode',
+//     content: '',
+//     content2: ''
+//   });
 
   // const randomQuantity = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
   // const randomQuantity = 20;
