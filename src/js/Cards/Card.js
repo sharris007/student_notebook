@@ -9,6 +9,7 @@ import Moment from 'moment';
 //   saveCard: PropTypes.func,
 //   addCard: PropTypes.func
 // };
+// test
 
 const galPng = require('../../assets/images/gal.png');
 const delPng = require('../../assets/images/del.png');
