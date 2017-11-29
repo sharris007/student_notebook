@@ -148,8 +148,6 @@ const line = {
   marginRight: '15px'
 };
 
-const fullName = '';
-
 export default class Card extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
@@ -180,8 +178,10 @@ export default class Card extends Component {
     // });
 
     const newNote = {
+      id:'',
       title: this.titleInput.value,
-      changeDate: Moment(new Date()).format('MMMM DD, YYYY')
+      changeDate: Moment(new Date()).format('MMMM DD, YYYY'),
+      content:this.contentArea.value
     };
 
     this.props.saveCard(newNote);
@@ -267,6 +267,9 @@ export default class Card extends Component {
                     cols="50"
                     style={noteTextArea}
                     placeholder="Write note..."
+                    ref={el => {
+                      this.contentArea = el;
+                    }}
                   />
                 ) : null}
               </div>
@@ -349,6 +352,3 @@ export default class Card extends Component {
   }
 }
 
-// Card.propTypes = propTypes;
-
-//export default Card;

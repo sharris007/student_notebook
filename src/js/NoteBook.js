@@ -44,13 +44,21 @@ export default class Board extends Component {
     }
 
     componentWillMount() {
-        // number of columns   this.props.getLists(10);
-        //this.props.getLists(6);
-        // this.delayedCallback = _.debounce(function (event) {
-        //   // `event.target` is accessible now
-        // }, 1000);
     }
 
+    componentWillReceiveProps() {
+      
+    }
+    editCard(card) {
+      console.log(card);
+    }
+    deleteCard(card) {
+      console.log(card);
+    }
+    navigateCard(card) {
+      console.log(card);
+    }
+    
     startScrolling(direction) {
         // if (!this.state.isScrolling) {
       switch (direction) {
@@ -125,53 +133,26 @@ export default class Board extends Component {
     addCard() {
         //this.props.addCard();
       const newLists = [...this.state.lists];
-      const notesList = [...this.state.notesList];
 
       newLists[0].cards[0] = {
-        id: newLists[0].cards.length + 1,
-        firstName: 'new',
-        lastName: 'bill',
-        title: 'bill',
+        id: '',
+        title: '',
         cardFormat: 'create new',
-        content: 'bill',
-        content2: 'bill',
-        wikiImage: 'bill',
-        changeDate: 'February 12, 2003'
+        content: '',
+        content2: '',
+        changeDate: new Date()
       };
-
-      notesList.map((item, i) => {
-        const index = i % quantity;
-        lists[index].cards.push(item);
-      });
-
-
-
-      // newLists[0].cards.unshift({
-      //   id: newLists[0].cards.length + 1,
-      //   firstName: 'new',
-      //   lastName: 'bill',
-      //   title: 'bill',
-      //   cardFormat: 'create new',
-      //   content: 'bill',
-      //   content2: 'bill',
-      //   wikiImage: 'bill'
-      // });
-
       this.setState({lists:newLists});
     }
 
     cancelAddCard() {
-        //this.props.cancelAddCard();
       const newLists = [...this.state.lists];
       newLists[0].cards[0] = {
         id: 0,
-        firstName: 'new',
-        lastName: 'bill',
-        title: 'bill',
+        title: '',
         cardFormat: 'add mode',
-        content: 'bill',
-        content2: 'bill',
-        wikiImage: 'bill',
+        content: '',
+        content2: '',
         changeDate: 'January 11, 1977'
       };
 
@@ -179,91 +160,17 @@ export default class Board extends Component {
     }
 
     saveCard(newNote) {
-      //this.props.saveCard(newNote);
-
       const newLists = [...this.state.lists];
-      newLists[1].cards.unshift({
-        id: new Date(),
-        firstName: 'new',
-        lastName: 'bill',
-        title: newNote.title,
-        cardFormat: 'note',
-        content: 'The quick brown fox jumped over the lazy dog.',
-        content2: 'The cubs are world series champions',
-        wikiImage: 'bill',
-        changeDate: newNote.changeDate
-      });
-
       newLists[0].cards[0] = {
         id: 0,
-        firstName: 'new',
-        lastName: 'bill',
-        title: 'bill',
+        title: '',
         cardFormat: 'add mode',
-        content: 'bill',
-        content2: 'bill',
-        wikiImage: 'bill',
-        changeDate: 'January 13, 1977'
+        content: '',
+        content2: ''
       };
-
-      /*return state.withMutations(ctx => {
-        ctx.set("lists", newLists);
-      });*/
-      this.setState({lists:newLists});
-      return false;
-
-      const _id = newLists[0].cards[0].id;
-      newLists[0].cards.shift();
-
-      newLists[0].cards.unshift({
-        id: _id + 777,
-        firstName: 'new',
-        lastName: 'bill',
-        title: 'Newly added note',
-        cardFormat: 'note',
-        content: 'The quick brown fox jumped over the lazy dog.',
-        content2: 'The cubs are world series champions',
-        wikiImage: 'bill',
-        changeDate: 'January 23, 1977'
+      this.setState({lists:newLists}, ()=>{
+        this.props.callback('ADD', newNote);
       });
-
-      // newLists[0].cards.unshift({
-      //   id: newLists[0].cards.length + 1,
-      //   firstName: 'new',
-      //   lastName: 'bill',
-      //   title: 'bill',
-      //   cardFormat: 'note',
-      //   content: 'bill',
-      //   content2: 'bill',
-      //   wikiImage: 'bill'
-      // });
-
-      // newLists[0].cards.map((item, i) => {
-      //   return item.cardFormat == 'create new' ? { cardFormat: 'note' }: item;
-      // });
-
-      // newLists[0].cards[0] = {
-      //   id: newLists[0].cards[0].id,
-      //   firstName: 'new',
-      //   lastName: 'bill',
-      //   title: 'bill',
-      //   cardFormat: 'note',
-      //   content: 'bill',
-      //   content2: 'bill',
-      //   wikiImage: 'bill'
-      // };
-
-      console.log(JSON.stringify(newLists[0].cards[0]));
-
-      //   newLists = newLists.map(function(item) { return item.cardFormat == 'create new' ? 'note' : 'note'; });
-
-      // newLists[0].cards[0].cardFormat = 'note';
-
-      //  newLists.splice(nextX, 0, t);
-
-      /*return state.withMutations(ctx => {
-        ctx.set("lists", newLists);
-      });*/
     }
 
     handleOnChange(event) {
@@ -288,9 +195,19 @@ export default class Board extends Component {
                 <div style = {{ height: '100%' }} >
                     <CustomDragLayer snapToGrid = {false}/> {
                     filteredList.map((item, i) => ( 
-                        <CardsContainer key = {item.id} id = {item.id} item = {item} moveCard = {this.moveCard} 
-                        moveList = {this.moveList} startScrolling = {this.startScrolling} stopScrolling = {this.stopScrolling} isScrolling = {this.state.isScrolling} 
-                        cancelAddCard = {this.cancelAddCard} saveCard = {this.saveCard} addCard = {this.addCard} x = {i}/>
+                        <CardsContainer 
+                          key = {item.id} 
+                          id = {item.id} 
+                          item = {item} 
+                          moveCard = {this.moveCard} 
+                          moveList = {this.moveList} 
+                          startScrolling = {this.startScrolling} 
+                          stopScrolling = {this.stopScrolling} 
+                          isScrolling = {this.state.isScrolling} 
+                          cancelAddCard = {this.cancelAddCard} 
+                          saveCard = {this.saveCard}  
+                          addCard = {this.addCard} x = {i}
+                        />
                     ))
                     } 
                 </div> 
