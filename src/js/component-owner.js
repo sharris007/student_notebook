@@ -8,8 +8,10 @@
 
 import React, {PropTypes} from 'react';
 import {injectIntl} from 'react-intl';
+import _ from 'lodash';
 
 import NoteBook from './NoteBook';
+
 
 class ComponentOwner extends React.Component {
 
@@ -23,6 +25,44 @@ class ComponentOwner extends React.Component {
   };
   constructor(props) {
     super(props);
+    this.state={
+      lists:props.lists,
+      notesList:props.notesList
+    };
+  }
+  callback=(msg, data)=> {;
+    const notesList=[...this.state.notesList];
+    if (msg==='ADD') {
+      notesList.splice(0, 0, {
+        id: 'created'+notesList.length+1,
+        title: data.title,
+        cardFormat: 'note',
+        content: data.content,
+        content2: '',
+        changeDate: data.changeDate
+      });
+      this.setState({
+        notesList:notesList
+      });
+    }else if (msg==='SAVE') {
+      const index = _.findIndex(notesList, function(o) { return o.id === data.id; });
+      if (index>-1) {
+        notesList.splice(index, 1, data);
+        this.setState({
+          notesList:notesList
+        });
+      }
+    }else if (msg==='DELETE') {
+      const index = _.findIndex(notesList, function(o) { return o.id === data.id; });
+      if (index>-1) {
+        notesList.splice(index, 1);
+        this.setState({
+          notesList:notesList
+        });
+      }
+    }else if (msg==='NAVIGATE') {
+      console.log('Navigation', data);
+    }
   }
 
   //
@@ -32,10 +72,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { lists, notesList, callback } = this.props;
+    const { notesList } = this.state;
     return (
       <div>
-        <NoteBook lists={lists} notesList={notesList} callback={callback} />
+        <NoteBook notesList={notesList} callback={this.callback} coloums={5}/>
       </div>
     );
   };  

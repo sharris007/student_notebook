@@ -1,29 +1,9 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
 import {notes} from './notesDummy';
 
-function mapNotes(notesList, lists, quantity) {
-  notesList.map((item, i) => {
-    const index = i % quantity;
-    lists[index].cards.push(item);
-  });
-}
-
-function init(quantity) {
-  const lists = [];
+function init() {
   const notesList = [];
-    // initialize lists
-  for (let ic = 0; ic < quantity; ic++) {
-    lists.push({
-      id: ic,
-      name: '',
-      cards: []
-    });
-  }
 
-
-  
-  // const randomQuantity = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-  // const randomQuantity = 20;
   for (let ic = 0; ic < notes.total; ic++) {
     const note = notes.rows[ic];
     note.cardFormat='note';
@@ -43,34 +23,15 @@ function init(quantity) {
     notesList.push(note);
   }
 
-
-  let lastId = notesList.reduce(function(max, x) {
-    return x.id > max ? x.id : max;
-  }, 0);
-
-  notesList.unshift({
-    id: lastId + 1,
-    title: '',
-    cardFormat: 'add mode',
-    content: '',
-    content2: ''
-  });
-
-
-debugger;
-  mapNotes(notesList, lists, quantity);
-
-
   new NoteBookComponent({
     elementId: 'demo',
     locale: 'en-us',
     callback: (msg, data) => {
       console.log(msg, data);
     },
-    lists:lists,
     notesList: notesList
   //  responsiveColumns
   });
 }
 
-window.onload = init(5);
+window.onload = init();

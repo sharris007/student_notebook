@@ -122,7 +122,7 @@ export default class Cards extends Component {
         }
       }
       if (item !== undefined) {
-        if (item.cardFormat == 'note') {
+        if (item.cardFormat === 'note') {
           cardList.push(
             <Card x={x} y={i}
               item={item}

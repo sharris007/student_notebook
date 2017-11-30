@@ -1,5 +1,5 @@
 export const notes={
-  'total': 24,
+  'total': 5,
   'rows': [
     {
       'text': 'test',

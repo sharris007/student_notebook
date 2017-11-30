@@ -1,16 +1,15 @@
-import React, { Component, PropTypes } from "react";
-import { DragDropContext } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import React, { Component, PropTypes } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-import CardsContainer from "./Cards/CardsContainer";
-import CustomDragLayer from "./CustomDragLayer";
+import CardsContainer from './Cards/CardsContainer';
+import CustomDragLayer from './CustomDragLayer';
 
-import "../assets/temp.styl";
+import '../assets/temp.styl';
 
 @DragDropContext(HTML5Backend)
 export default class Board extends Component {
   static propTypes = {
-    lists: PropTypes.array.isRequired,
     notesList: PropTypes.array.isRequired,
     callback: PropTypes.func
   };
@@ -28,63 +27,111 @@ export default class Board extends Component {
     this.cancelAddCard = this.cancelAddCard.bind(this);
     this.saveCard = this.saveCard.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    const lists = [...props.lists];
+    // const lists = [...props.lists];
     const notesList = [...props.notesList];
 
     // lists[0].cards.unshift({
-    //   id: 0,
-    //   title: "",
-    //   cardFormat: "add mode",
-    //   content: "",
-    //   content2: ""
+    //   id: 'new',
+    //   title: '',
+    //   cardFormat: 'add mode',
+    //   content: '',
+    //   content2: ''
     // });
+
+    notesList.splice(0, 0, {
+      id:'new',
+      title: '',
+      cardFormat: 'add mode',
+      content: '',
+      content2: '',
+      changeDate: ''
+    });
+
+    const lists = [];
+      // initialize lists
+    for (let ic = 0; ic < props.coloums; ic++) {
+      lists.push({
+        id: ic,
+        cards: []
+      });
+    }
+
+    notesList.map((item, i) => {
+      const index = i % props.coloums;
+      lists[index].cards.push(item);
+    });
 
     this.state = {
       isScrolling: false,
-      search: "",
-      lists: props.lists,
-      notesList: props.notesList
+      search: '',
+      lists: lists,
+      notesList:notesList
     };
   }
+  createLists = (nextProps) => {
+    const notesList=[...nextProps.notesList];
+    notesList.splice(0, 0, {
+      id:'new',
+      title: '',
+      cardFormat: 'add mode',
+      content: '',
+      content2: '',
+      changeDate: ''
+    });
 
+    const lists = [];
+      // initialize lists
+    for (let ic = 0; ic < nextProps.coloums; ic++) {
+      lists.push({
+        id: ic,
+        cards: []
+      });
+    }
+
+    notesList.map((item, i) => {
+      const index = i % nextProps.coloums;
+      lists[index].cards.push(item);
+    });
+    this.setState({lists});
+  }
   componentWillMount() {}
 
-  componentWillReceiveProps() {}
-  editCard(card) {
-    console.log(card);
-  }
-  deleteCard(card) {
-    console.log(card);
-  }
-  navigateCard(card) {
-    console.log(card);
+  componentWillReceiveProps(nextProps) {;
+    // console.log(nextProps);
+    if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
+     //Added new note 
+      this.createLists(nextProps);
+    }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
+      // Deleted note
+      this.createLists(nextProps);
+    }
   }
 
   startScrolling(direction) {
     // if (!this.state.isScrolling) {
     switch (direction) {
-      case "toLeft":
-        this.setState({ isScrolling: true }, this.scrollLeft());
-        break;
-      case "toRight":
-        this.setState({ isScrolling: true }, this.scrollRight());
-        break;
-      default:
-        break;
+    case 'toLeft':
+      this.setState({ isScrolling: true }, this.scrollLeft());
+      break;
+    case 'toRight':
+      this.setState({ isScrolling: true }, this.scrollRight());
+      break;
+    default:
+      break;
     }
     // }
   }
 
   scrollRight() {
     function scroll() {
-      document.getElementsByTagName("main")[0].scrollLeft += 10;
+      document.getElementsByTagName('main')[0].scrollLeft += 10;
     }
     this.scrollInterval = setInterval(scroll, 10);
   }
 
   scrollLeft() {
     function scroll() {
-      document.getElementsByTagName("main")[0].scrollLeft -= 10;
+      document.getElementsByTagName('main')[0].scrollLeft -= 10;
     }
     this.scrollInterval = setInterval(scroll, 10);
   }
@@ -136,11 +183,11 @@ export default class Board extends Component {
     const newLists = [...this.state.lists];
 
     newLists[0].cards[0] = {
-      id: "",
-      title: "",
-      cardFormat: "create new",
-      content: "",
-      content2: "",
+      id: '',
+      title: '',
+      cardFormat: 'create new',
+      content: '',
+      content2: '',
       changeDate: new Date()
     };
     this.setState({ lists: newLists });
@@ -150,82 +197,18 @@ export default class Board extends Component {
     const newLists = [...this.state.lists];
     newLists[0].cards[0] = {
       id: 0,
-      title: "",
-      cardFormat: "add mode",
-      content: "",
-      content2: "",
-      changeDate: "January 11, 1977"
+      title: '',
+      cardFormat: 'add mode',
+      content: '',
+      content2: '',
+      changeDate: 'January 11, 1977'
     };
 
     this.setState({ lists: newLists });
   }
 
-  saveCard(newNote) {
-    debugger;
-    const newLists = [...this.state.lists];
-    const notesList = [...this.state.notesList];
-    // newLists[0].cards[0] = {
-    //   id: 0,
-    //   title: "",
-    //   cardFormat: "add mode",
-    //   content: "",
-    //   content2: ""
-    // };
-
-
-    let lastId = notesList.reduce(function(max, x) {
-      return x.id > max ? x.id : max;
-    }, 0);
-
-    notesList.splice(1, 0, {
-      id: lastId + 1,
-      firstName: "new",
-      lastName: "ssssssbill",
-      title: newNote.title,
-      cardFormat: "note",
-      content: "xxxxThe quick brown fox jumped over the lazy dog.",
-      content2: "xxxxThe cubs are world series champions",
-      wikiImage: "bxxxxill",
-      changeDate: newNote.changeDate
-    });
-
-    lastId = notesList.reduce(function(max, x) {
-      return x.id > max ? x.id : max;
-    }, 0);
-
-    notesList[0] = {
-      id: lastId + 1,
-      firstName: "",
-      lastName: "",
-      title: "",
-      cardFormat: "add mode",
-      content: "",
-      content2: "",
-      wikiImage: "",
-      changeDate: ""
-    };
-
-
-    let lists = [];
-    // initialize lists
-    for (let ic = 0; ic < 5; ic++) {
-      lists.push({
-        id: ic,
-        name: "",
-        cards: []
-      });
-    }
-
-    notesList.map((item, i) => {
-      //    let index = i % quantity;
-      let index = i % 5;
-      lists[index].cards.push(item);
-    });
-
-
-    this.setState({ lists: lists, notesList: notesList }, () => {
-      this.props.callback("ADD", newNote);
-    });
+  saveCard(newNote, msg) {
+    this.props.callback(msg, newNote);
   }
 
   handleOnChange(event) {
@@ -248,7 +231,7 @@ export default class Board extends Component {
 
     return (
       <main>
-        <div style={{ height: "100%" }}>
+        <div style={{ height: '100%' }}>
           <CustomDragLayer snapToGrid={false} />{" "}
           {filteredList.map((item, i) => (
             <CardsContainer
