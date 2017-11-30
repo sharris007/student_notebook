@@ -18,7 +18,8 @@ class ComponentOwner extends React.Component {
   // This is defined using an ES7 class property (transpiled by Babel Stage 0)
   //
   static propTypes = {
-    lists:PropTypes.array.isRequired
+    lists:PropTypes.array.isRequired,
+    notesList:PropTypes.array.isRequired
   };
   constructor(props) {
     super(props);
@@ -31,10 +32,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { lists, callback } = this.props;
+    const { lists, notesList, callback } = this.props;
     return (
       <div>
-        <NoteBook lists={lists} callback={callback} />
+        <NoteBook lists={lists} notesList={notesList} callback={callback} />
       </div>
     );
   };  

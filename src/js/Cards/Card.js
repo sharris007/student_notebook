@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import ImageUploader from './ImageUploader';
-import Moment from 'moment';
+import React, { Component, PropTypes } from "react";
+import ImageUploader from "./ImageUploader";
+import Moment from "moment";
 
 // const propTypes = {
 //   item: PropTypes.object.isRequired,
@@ -11,142 +11,142 @@ import Moment from 'moment';
 // };
 // test
 
-const galPng = require('../../assets/images/gal.png');
-const delPng = require('../../assets/images/del.png');
-const cogPng = require('../../assets/images/cog.png');
-const deletePng = require('../../assets/images/delete-icon.png');
-const fivePng = require('../../assets/images/5.jpg');
-const gotoPng = require('../../assets/images/goto-arrow-ico.png');
-const addPng = require('../../assets/images/add.png');
-const editPng = require('../../assets/images/edit.png');
+const galPng = require("../../assets/images/gal.png");
+const delPng = require("../../assets/images/del.png");
+const cogPng = require("../../assets/images/cog.png");
+const deletePng = require("../../assets/images/delete-icon.png");
+const fivePng = require("../../assets/images/5.jpg");
+const gotoPng = require("../../assets/images/goto-arrow-ico.png");
+const addPng = require("../../assets/images/add.png");
+const editPng = require("../../assets/images/edit.png");
 
 const ellipsis = {
-  overflow: 'hidden',
-  display: '-webkit-box',
+  overflow: "hidden",
+  display: "-webkit-box",
   WebkitLineClamp: 3,
-  background: '#ffffff !important',
-  WebkitBoxOrient: 'vertical'
+  background: "#ffffff !important",
+  WebkitBoxOrient: "vertical"
 };
 
 const mainIdea = {
-  backgroundColor: '#bbf2b6',
-  height: '36px',
-  paddingTop: '10px',
-  paddingLeft: '10px'
+  backgroundColor: "#bbf2b6",
+  height: "36px",
+  paddingTop: "10px",
+  paddingLeft: "10px"
 };
 
 const fromInstructor = {
-  backgroundColor: '#ccf5fd',
-  height: '36px',
-  paddingTop: '10px',
-  paddingLeft: '10px'
+  backgroundColor: "#ccf5fd",
+  height: "36px",
+  paddingTop: "10px",
+  paddingLeft: "10px"
 };
 
 const observations = {
-  backgroundColor: '#fed3ec',
-  height: '36px',
-  paddingTop: '10px',
-  paddingLeft: '10px'
+  backgroundColor: "#fed3ec",
+  height: "36px",
+  paddingTop: "10px",
+  paddingLeft: "10px"
 };
 
 const questions = {
-  backgroundColor: '#ffedad',
-  height: '36px',
-  paddingTop: '10px',
-  paddingLeft: '10px'
+  backgroundColor: "#ffedad",
+  height: "36px",
+  paddingTop: "10px",
+  paddingLeft: "10px"
 };
 
 const styleContent = {
-  width: '228px',
-  height: '154px',
-  fontSize: '14px',
-  fontWeight: '600',
-  lineHeight: '1.57',
-  letterSpacing: '-0.2px',
-  textAlign: 'left',
-  color: '#252525'
+  width: "228px",
+  height: "154px",
+  fontSize: "14px",
+  fontWeight: "600",
+  lineHeight: "1.57",
+  letterSpacing: "-0.2px",
+  textAlign: "left",
+  color: "#252525"
 };
 
 const styleContent2 = {
-  width: '228px',
-  height: '154px',
-  fontSize: '14px',
-  lineHeight: '1.57',
-  letterSpacing: '-0.3px',
-  textAlign: 'left',
-  color: '#252525'
+  width: "228px",
+  height: "154px",
+  fontSize: "14px",
+  lineHeight: "1.57",
+  letterSpacing: "-0.3px",
+  textAlign: "left",
+  color: "#252525"
 };
 
 const date = {
-  fontSize: '12px',
-  letterSpacing: '-0.1px',
-  textAlign: 'left',
-  color: '#6a7070',
-  padding: '15px',
+  fontSize: "12px",
+  letterSpacing: "-0.1px",
+  textAlign: "left",
+  color: "#6a7070",
+  padding: "15px",
   paddingBottom: 0,
-  background: 'white'
+  background: "white"
 };
 
 const title = {
-  fontSize: '18px',
-  letterSpacing: '-0.4px',
-  textAlign: 'left',
-  color: '#252525',
-  fontWeight: '300',
-  lineHeight: '1.44',
-  padding: '15px',
+  fontSize: "18px",
+  letterSpacing: "-0.4px",
+  textAlign: "left",
+  color: "#252525",
+  fontWeight: "300",
+  lineHeight: "1.44",
+  padding: "15px",
   paddingBottom: 0,
-  whiteSpace: 'normal',
-  background: 'white'
+  whiteSpace: "normal",
+  background: "white"
 };
 
 const titleInputBox = {
-  outline: '0',
-  width: '100%',
-  background: 'transparent',
-  borderTop: '0',
-  borderRight: '0',
-  borderLeft: '0',
-  borderBottom: '1px solid black',
-  marginTop: '32px'
+  outline: "0",
+  width: "100%",
+  background: "transparent",
+  borderTop: "0",
+  borderRight: "0",
+  borderLeft: "0",
+  borderBottom: "1px solid black",
+  marginTop: "32px"
 };
 
 const relatesToDropDown = {
-  borderRight: '0px',
-  borderTop: '0px',
-  borderLeft: '0px',
-  borderColor: 'black !important',
-  width: '100%',
-  background: 'transparent',
-  outline: '0px',
-  marginTop: '32px',
-  background: 'white'
+  borderRight: "0px",
+  borderTop: "0px",
+  borderLeft: "0px",
+  borderColor: "black !important",
+  width: "100%",
+  background: "transparent",
+  outline: "0px",
+  marginTop: "32px",
+  background: "white"
 };
 
 const noteTextArea = {
-  borderRight: '0px',
-  borderTop: '0px',
-  borderLeft: '0px',
-  borderBottom: '0px',
-  width: '100%',
-  outline: '0px',
-  marginTop: '32px',
-  background: 'white'
+  borderRight: "0px",
+  borderTop: "0px",
+  borderLeft: "0px",
+  borderBottom: "0px",
+  width: "100%",
+  outline: "0px",
+  marginTop: "32px",
+  background: "white"
 };
 
 const addNote = {
-  paddingLeft: '72px',
-  color: '#1ca6a5',
-  fontWeight: '600',
-  lineHeight: '1.57',
-  fontSize: '14px'
+  paddingLeft: "72px",
+  color: "#1ca6a5",
+  fontWeight: "600",
+  lineHeight: "1.57",
+  fontSize: "14px"
 };
 
 const line = {
-  height: '2px',
-  border: 'solid 1px #e9e9e9',
-  marginLeft: '15px',
-  marginRight: '15px'
+  height: "2px",
+  border: "solid 1px #e9e9e9",
+  marginLeft: "15px",
+  marginRight: "15px"
 };
 
 export default class Card extends Component {
@@ -166,7 +166,7 @@ export default class Card extends Component {
     // this.addCard = this.addCard.bind(this);
     // this.cancelAddCard = this.cancelAddCard.bind(this);
     // this.saveCard = this.saveCard.bind(this);
-    this.state = { _title: 'aas' };
+    this.state = { _title: "aas" };
   }
 
   handleCancelAddCard = e => {
@@ -179,10 +179,10 @@ export default class Card extends Component {
     // });
 
     const newNote = {
-      id:'',
+      id: "",
       title: this.titleInput.value,
-      changeDate: Moment(new Date()).format('MMMM DD, YYYY'),
-      content:this.contentArea.value
+      changeDate: Moment(new Date()).format("MMMM DD, YYYY"),
+      content: this.contentArea.value
     };
 
     this.props.saveCard(newNote);
@@ -196,61 +196,61 @@ export default class Card extends Component {
     const { style, item, cancelAddCard, saveCard } = this.props;
     return (
       <div
-        style={{ background: 'white' }}
+        style={{ background: "white" }}
         className="item"
         id={style ? item.id : null}
       >
-        {item.cardFormat === 'note' && item.noteText === 'M' ? (
+        {item.cardFormat === "note" && item.noteText === "M" ? (
           <div className="item-name" style={mainIdea}>
             Main Idea
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'I' ? (
+        {item.cardFormat === "note" && item.noteText === "I" ? (
           <div className="item-name" style={fromInstructor}>
             From Instructor
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'O' ? (
+        {item.cardFormat === "note" && item.noteText === "O" ? (
           <div className="item-name" style={observations}>
             Observations
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'Q' ? (
+        {item.cardFormat === "note" && item.noteText === "Q" ? (
           <div className="item-name" style={questions}>
             Questions
           </div>
         ) : null}
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === "note" ? (
           <div style={date}>{item.changeDate}</div>
         ) : null}
-        {item.cardFormat !== 'add mode' ? (
+        {item.cardFormat !== "add mode" ? (
           <div style={title}>{item.title}</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
-          <div style={{ paddingTop: '100px' }} />
+        {item.cardFormat === "add mode" ? (
+          <div style={{ paddingTop: "100px" }} />
         ) : null}
-        {item.cardFormat === 'add mode' ? (
-          <span style={{ paddingLeft: '85px', paddingBottom: '8px' }}>
+        {item.cardFormat === "add mode" ? (
+          <span style={{ paddingLeft: "85px", paddingBottom: "8px" }}>
             <button
               onClick={this.handleAddCard}
-              style={{ border: '0', background: 'transparent' }}
+              style={{ border: "0", background: "transparent" }}
             >
               <img src={addPng} />
             </button>
           </span>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+        {item.cardFormat === "add mode" ? (
           <div style={addNote}>Add Note</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
-          <div style={{ paddingBottom: '100px' }} />
+        {item.cardFormat === "add mode" ? (
+          <div style={{ paddingBottom: "100px" }} />
         ) : null}
 
-        {item.cardFormat !== 'note' ? (
+        {item.cardFormat !== "note" ? (
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
-                {item.cardFormat !== 'add mode' ? (
+                {item.cardFormat !== "add mode" ? (
                   <input
                     style={titleInputBox}
                     ref={el => {
@@ -262,7 +262,7 @@ export default class Card extends Component {
 
                 {this.state.titleInput}
 
-                {item.cardFormat !== 'add mode' ? (
+                {item.cardFormat !== "add mode" ? (
                   <textarea
                     rows="10"
                     cols="50"
@@ -294,12 +294,12 @@ export default class Card extends Component {
           </div>
         )}
 
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === "note" ? (
           <div className="item-perfomers">
             <div className="add-perfomers">
               <a href="#">
                 <img
-                  style={{ height: '24px', width: '24px' }}
+                  style={{ height: "24px", width: "24px" }}
                   src={deletePng}
                   alt="delete"
                 />
@@ -308,7 +308,7 @@ export default class Card extends Component {
             <div className="add-perfomers">
               <a href="#">
                 <img
-                  style={{ height: '24px', width: '24px' }}
+                  style={{ height: "24px", width: "24px" }}
                   src={editPng}
                   alt="delete"
                 />
@@ -318,7 +318,7 @@ export default class Card extends Component {
               <div className="perfomer">
                 <a href="#">
                   <img
-                    style={{ height: '24px', width: '24px' }}
+                    style={{ height: "24px", width: "24px" }}
                     src={gotoPng}
                     alt="delete"
                   />
@@ -328,17 +328,17 @@ export default class Card extends Component {
           </div>
         ) : (
           <div className="item-perfomers">
-            {item.cardFormat === 'create new' ? (
+            {item.cardFormat === "create new" ? (
               <div className="add-perfomers">
                 <a
-                  style={{ paddingRight: '10px', color: '#1ca6a5' }}
+                  style={{ paddingRight: "10px", color: "#1ca6a5" }}
                   href="#"
                   onClick={this.handleSaveCard}
                 >
                   Save
                 </a>
                 <a
-                  style={{ paddingRight: '10px', color: '#1ca6a5' }}
+                  style={{ paddingRight: "10px", color: "#1ca6a5" }}
                   href="#"
                   onClick={this.handleCancelAddCard}
                 >
@@ -352,4 +352,3 @@ export default class Card extends Component {
     );
   }
 }
-

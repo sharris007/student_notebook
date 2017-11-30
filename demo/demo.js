@@ -20,14 +20,8 @@ function init(quantity) {
     });
   }
 
-//   notesList.push({
-//     id: 0,
-//     title: '',
-//     cardFormat: 'add mode',
-//     content: '',
-//     content2: ''
-//   });
 
+  
   // const randomQuantity = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
   // const randomQuantity = 20;
   for (let ic = 0; ic < notes.total; ic++) {
@@ -49,6 +43,21 @@ function init(quantity) {
     notesList.push(note);
   }
 
+
+  let lastId = notesList.reduce(function(max, x) {
+    return x.id > max ? x.id : max;
+  }, 0);
+
+  notesList.unshift({
+    id: lastId + 1,
+    title: '',
+    cardFormat: 'add mode',
+    content: '',
+    content2: ''
+  });
+
+
+debugger;
   mapNotes(notesList, lists, quantity);
 
 
@@ -58,7 +67,9 @@ function init(quantity) {
     callback: (msg, data) => {
       console.log(msg, data);
     },
-    lists:lists
+    lists:lists,
+    notesList: notesList
+  //  responsiveColumns
   });
 }
 
