@@ -36,7 +36,7 @@ function getItemStyles(props) {
   };
 }
 
-@DragLayer((monitor) => ({
+@DragLayer((monitor) => ({  // eslint-disable-line
   item: monitor.getItem(),
   itemType: monitor.getItemType(),
   initialOffset: monitor.getInitialSourceClientOffset(),
@@ -61,12 +61,12 @@ export default class CustomDragLayer extends Component {
 
   renderItem(type, item) {
     switch (type) {
-      case 'card':
-        return (
+    case 'card':
+      return (
           <CardDragPreview card={item} />
         );
-      default:
-        return null;
+    default:
+      return null;
     }
   }
 

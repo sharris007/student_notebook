@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ImageUploader from './ImageUploader';
+// import ImageUploader from './ImageUploader';
 import Moment from 'moment';
 
 // const propTypes = {
@@ -11,11 +11,11 @@ import Moment from 'moment';
 // };
 // test
 
-const galPng = require('../../assets/images/gal.png');
-const delPng = require('../../assets/images/del.png');
-const cogPng = require('../../assets/images/cog.png');
+// const galPng = require('../../assets/images/gal.png');
+// const delPng = require('../../assets/images/del.png');
+// const cogPng = require('../../assets/images/cog.png');
 const deletePng = require('../../assets/images/delete-icon.png');
-const fivePng = require('../../assets/images/5.jpg');
+// const fivePng = require('../../assets/images/5.jpg');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
@@ -111,17 +111,17 @@ const titleInputBox = {
   marginTop: '32px'
 };
 
-const relatesToDropDown = {
-  borderRight: '0px',
-  borderTop: '0px',
-  borderLeft: '0px',
-  borderColor: 'black !important',
-  width: '100%',
-  background: 'transparent',
-  outline: '0px',
-  marginTop: '32px',
-  background: 'white'
-};
+// const relatesToDropDown = {
+//   borderRight: '0px',
+//   borderTop: '0px',
+//   borderLeft: '0px',
+//   borderColor: 'black !important',
+//   width: '100%',
+//   background: 'transparent',
+//   outline: '0px',
+//   marginTop: '32px',
+//   background: 'white'
+// };
 
 const noteTextArea = {
   borderRight: '0px',
@@ -186,15 +186,19 @@ export default class Card extends Component {
     const newNote = {
       id:card.id,
       title: this.titleInput.value,
-      changeDate: Moment(new Date()).format('MMMM DD, YYYY'),
+      changeDate: new Date().toISOString(),
       content: this.contentArea.value,
       noteText:card.noteText?card.noteText:'',
       cardFormat:'note'
     };
     const msg=(card.id==='new'||card.id==='')?'ADD':'SAVE';
-    this.setState({item:newNote}, ()=>{
-      this.props.saveCard(this.state.item, msg);
-    });
+    if (msg==='ADD') {
+      this.props.saveCard(newNote, msg);
+    }else if (msg==='SAVE') {
+      this.setState({item:newNote}, ()=>{
+        this.props.saveCard(this.state.item, msg);
+      }); 
+    }
   };
 
   handleEditCard = card => {
@@ -205,20 +209,20 @@ export default class Card extends Component {
     });
   }
 
-  handleDeleteCard = card => {
+  handleDeleteCard = () => {
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
-  handleNavigate = card =>{
+  handleNavigate = () =>{
     this.props.saveCard(this.state.item, 'NAVIGATE');
   }
 
-  handleAddCard = e => {
+  handleAddCard = () => {
     this.props.addCard();
   };
 
   render() {
-    const { style, cancelAddCard, saveCard } = this.props;
+    const { style } = this.props;
     const { item } = this.state;
     return (
       <div
@@ -247,7 +251,7 @@ export default class Card extends Component {
           </div>
         ) : null}
         {item.cardFormat === 'note' ? (
-          <div style={date}>{item.changeDate}</div>
+          <div style={date}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div> // eslint-disable-line
         ) : null}
         {item.cardFormat === 'note' ? (
           <div style={title}>{item.title}</div>

@@ -10,7 +10,7 @@ function init() {
     note.title=note.quote;
     note.content=note.text;
     const timeStamp=note.updatedTimestamp?note.updatedTimestamp:note.createdTimestamp;
-    note.changeDate=new Date(parseInt(timeStamp)).toDateString();
+    note.changeDate=new Date(parseInt(timeStamp));
     if (note.colorCode === '#FFD232') { //Yellow
       note.noteText = 'Q'; //Questions
     } else if (note.colorCode === '#55DF49') { //Green

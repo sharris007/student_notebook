@@ -41,10 +41,10 @@ const listTarget = {
   }
 };
 //ll
-@DropTarget('list', listTarget, connectDragSource => ({
-  connectDropTarget: connectDragSource.dropTarget(),
+@DropTarget('list', listTarget, connectDragSource => ({ // eslint-disable-line
+  connectDropTarget: connectDragSource.dropTarget()
 }))
-@DragSource('list', listSource, (connectDragSource, monitor) => ({
+@DragSource('list', listSource, (connectDragSource, monitor) => ({  // eslint-disable-line
   connectDragSource: connectDragSource.dragSource(),
   isDragging: monitor.isDragging()
 }))
@@ -66,10 +66,10 @@ export default class CardsContainer extends Component {
   }
 
   render() {
-    const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging, cancelAddCard, saveCard, addCard } = this.props;
+    const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging } = this.props;
     const opacity = isDragging ? 0.5 : 1;
     //const background = x == 0 ? 'gold' : null;
-    const cancelPng = require('../../assets/images/cancel.png');
+    // const cancelPng = require('../../assets/images/cancel.png');
 
     return connectDragSource(connectDropTarget(
       // shortcut for background:background

@@ -7,7 +7,7 @@ import CustomDragLayer from './CustomDragLayer';
 
 import '../assets/temp.styl';
 
-@DragDropContext(HTML5Backend)
+@DragDropContext(HTML5Backend)  // eslint-disable-line
 export default class Board extends Component {
   static propTypes = {
     notesList: PropTypes.array.isRequired,
@@ -103,6 +103,9 @@ export default class Board extends Component {
       this.createLists(nextProps);
     }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
       // Deleted note
+      this.createLists(nextProps);
+    }else if (nextProps.coloums!==this.props.coloums) {
+      // Resize of window
       this.createLists(nextProps);
     }
   }
@@ -208,6 +211,9 @@ export default class Board extends Component {
   }
 
   saveCard(newNote, msg) {
+    if (msg==='ADD') {
+      newNote.id='';
+    }
     this.props.callback(msg, newNote);
   }
 

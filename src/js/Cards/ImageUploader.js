@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -14,21 +14,21 @@ class ImageUpload extends React.Component {
   _handleImageChange(e) {
     e.preventDefault();
 
-    let reader = new FileReader();
-    let file = e.target.files[0];
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
         file: file,
         imagePreviewUrl: reader.result
       });
-    }
+    };
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
   }
 
   render() {
-    let { imagePreviewUrl } = this.state;
+    const { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} />);
@@ -50,7 +50,7 @@ class ImageUpload extends React.Component {
           {$imagePreview}
         </div>
       </div>
-    )
+    );
   }
 }
 

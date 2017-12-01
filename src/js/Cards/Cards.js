@@ -75,7 +75,7 @@ const specs = {
 };
 
 
-@DropTarget('card', specs, (connectDragSource, monitor) => ({
+@DropTarget('card', specs, (connectDragSource, monitor) => ({ // eslint-disable-line
   connectDropTarget: connectDragSource.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
@@ -102,7 +102,7 @@ export default class Cards extends Component {
     super(props);
     this.state = {
       placeholderIndex: undefined,
-      isScrolling: false,
+      isScrolling: false
     };
   }
 
@@ -111,7 +111,7 @@ export default class Cards extends Component {
     const { placeholderIndex } = this.state;
 
     let isPlaceHold = false;
-    let cardList = [];
+    const cardList = [];
     cards.forEach((item, i) => {
       if (isOver && canDrop) {
         isPlaceHold = false;

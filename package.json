@@ -1,13 +1,13 @@
 {
   "name": "@pearson-incubator/notebook",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "./main.js",
   "scripts": {
     "dev": "webpack-dev-server --port 4000 --devtool source-map --hot --progress --colors",
     "pretest": "npm run lint",
     "build": "webpack -p",
-    "lint": "eslint src/js/** demo/demo.js"
+    "lint": "eslint --ext js,jsx src demo/demo.js"
   },
   "dependencies": {
     "immutable": "3.8.1",

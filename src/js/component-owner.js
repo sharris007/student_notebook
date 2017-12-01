@@ -20,7 +20,6 @@ class ComponentOwner extends React.Component {
   // This is defined using an ES7 class property (transpiled by Babel Stage 0)
   //
   static propTypes = {
-    lists:PropTypes.array.isRequired,
     notesList:PropTypes.array.isRequired
   };
   constructor(props) {

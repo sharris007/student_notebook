@@ -55,7 +55,7 @@ function collectDragSource(connectDragSource, monitor) {
   };
 }
 
-@DragSource('card', cardSource, collectDragSource, OPTIONS)
+@DragSource('card', cardSource, collectDragSource, OPTIONS) // eslint-disable-line
 export default class CardComponent extends Component {
   static propTypes = {
     item: PropTypes.object,
@@ -81,7 +81,12 @@ export default class CardComponent extends Component {
 
     return connectDragSource(
       <div>
-        <Card style={getStyles(isDragging)} item={item} cancelAddCard={cancelAddCard} saveCard={saveCard} addCard={addCard} />
+        <Card 
+            style={getStyles(isDragging)} 
+            item={item} cancelAddCard={cancelAddCard} 
+            saveCard={saveCard} 
+            addCard={addCard} 
+        />
       </div>
     );
   }
