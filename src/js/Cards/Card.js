@@ -64,7 +64,8 @@ const styleContent = {
   lineHeight: '1.57',
   letterSpacing: '-0.2px',
   textAlign: 'left',
-  color: '#252525'
+  color: '#252525',
+  wordWrap: 'break-word'
 };
 
 const styleContent2 = {
@@ -135,7 +136,7 @@ const noteTextArea = {
 };
 
 const addNote = {
-  paddingLeft: '72px',
+  paddingLeft: '80px',
   color: '#1ca6a5',
   fontWeight: '600',
   lineHeight: '1.57',
@@ -166,7 +167,12 @@ export default class Card extends Component {
     // this.addCard = this.addCard.bind(this);
     // this.cancelAddCard = this.cancelAddCard.bind(this);
     // this.saveCard = this.saveCard.bind(this);
-    this.state = { _title: 'aas', item:props.item };
+    this.state = { 
+      item:props.item,
+      titleMaxLength:5,
+      noteMaxLength:3000,
+      noteMaxLengthWarning:''
+    };
   }
 
   handleCancelAddCard = card => {
@@ -186,7 +192,7 @@ export default class Card extends Component {
     const newNote = {
       id:card.id,
       title: this.titleInput.value,
-      changeDate: new Date().toISOString(),
+      changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
       noteText:card.noteText?card.noteText:'',
       cardFormat:'note'
@@ -221,9 +227,26 @@ export default class Card extends Component {
     this.props.addCard();
   };
 
+  checkNoteMaxLengthValidation= () =>{
+    const inputCharLength = this.contentArea.value.length;
+    const remainingCount = this.state.noteMaxLength-inputCharLength;
+    let noteMaxLengthWarning = '';
+    if (remainingCount>0 && remainingCount<51) {
+      noteMaxLengthWarning = `-${remainingCount} characters left`;
+    }else if (remainingCount===0) {
+      noteMaxLengthWarning=`${remainingCount} characters left`;
+    }else  {
+      noteMaxLengthWarning='';
+    }
+    this.setState({
+      noteMaxLengthWarning
+    });
+  }
+
   render() {
     const { style } = this.props;
-    const { item } = this.state;
+    // const { item } = this.state;
+    const item = Object.assign({}, this.state.item);
     return (
       <div
         style={{ background: 'white' }}
@@ -260,7 +283,7 @@ export default class Card extends Component {
           <div style={{ paddingTop: '100px' }} />
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <span style={{ paddingLeft: '85px', paddingBottom: '8px' }}>
+          <span style={{ paddingLeft: '90px', paddingBottom: '8px' }}>
             <button
               onClick={this.handleAddCard}
               style={{ border: '0', background: 'transparent' }}
@@ -287,6 +310,7 @@ export default class Card extends Component {
                       this.titleInput = el;
                     }}
                     placeholder="Title"
+                    maxLength={this.state.titleMaxLength}
                   />
                 ) : null}
 
@@ -301,6 +325,8 @@ export default class Card extends Component {
                     ref={el => {
                       this.contentArea = el;
                     }}
+                    maxLength={this.state.noteMaxLength}
+                    onKeyUp={this.checkNoteMaxLengthValidation}
                   />
                 ) : null}
               </div>
@@ -308,19 +334,20 @@ export default class Card extends Component {
           </div>
         ) : (
           <div>
-            <div className="item-container">
-              <div className="item-content" style={ellipsis}>
+            {item.content?<div className="item-container">
+              <div className="item-content"> 
+                {/*{style={ellipsis}}*/}
                 <span style={styleContent}>“{item.content}”</span>
               </div>
-            </div>
+            </div>:null}
 
             <div style={line} />
 
-            <div className="item-container">
+            {item.content2?<div className="item-container">
               <div className="item-content">
                 <span style={styleContent2}>{item.content2}</span>
               </div>
-            </div>
+            </div>:null}
           </div>
         )}
 
@@ -374,6 +401,7 @@ export default class Card extends Component {
                 >
                   Cancel
                 </a>
+                {this.state.noteMaxLengthWarning.length?<span style={{color:'#db0020'}}>{this.state.noteMaxLengthWarning}</span>:null}
               </div>
             ) : null}
           </div>
