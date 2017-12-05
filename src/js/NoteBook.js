@@ -58,6 +58,9 @@ export default class Board extends Component {
 
     notesList.map((item, i) => {
       const index = i % props.coloums;
+      if (!item.cardFormat) {
+        item.cardFormat='note';
+      }
       lists[index].cards.push(item);
     });
 
@@ -90,6 +93,9 @@ export default class Board extends Component {
 
     notesList.map((item, i) => {
       const index = i % nextProps.coloums;
+      if (!item.cardFormat) {
+        item.cardFormat='note';
+      }
       lists[index].cards.push(item);
     });
     this.setState({lists});
@@ -227,10 +233,9 @@ export default class Board extends Component {
 
     const filteredList = lists.filter(list => {
       list.cards = list.cards.filter(card => {
-        return (
-          card.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !==
-          -1
-        );
+        if (card.title||card.title==='') {
+          return (card.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+        }
       });
       return true;
     });

@@ -195,7 +195,9 @@ export default class Card extends Component {
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
       noteText:card.noteText?card.noteText:'',
-      cardFormat:'note'
+      cardFormat:'note',
+      colorCode:card.colorCode?card.colorCode:'',
+      pageId:card.pageId?card.pageId:''
     };
     const msg=(card.id==='new'||card.id==='')?'ADD':'SAVE';
     if (msg==='ADD') {
