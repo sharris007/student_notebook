@@ -98,16 +98,16 @@ export default class Board extends Component {
 
   componentWillReceiveProps(nextProps) {;
     // console.log(nextProps);
-    if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
-     //Added new note 
-      this.createLists(nextProps);
-    }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
-      // Deleted note
-      this.createLists(nextProps);
-    }else if (nextProps.coloums!==this.props.coloums) {
-      // Resize of window
-      this.createLists(nextProps);
-    }
+    // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
+    //  //Added new note 
+    //   this.createLists(nextProps);
+    // }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
+    //   // Deleted note
+    //   this.createLists(nextProps);
+    // }else if (nextProps.coloums!==this.props.coloums) {
+    //   // Resize of window
+    this.createLists(nextProps);
+    // }
   }
 
   startScrolling(direction) {

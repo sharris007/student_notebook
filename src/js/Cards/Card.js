@@ -169,7 +169,7 @@ export default class Card extends Component {
     // this.saveCard = this.saveCard.bind(this);
     this.state = { 
       item:props.item,
-      titleMaxLength:5,
+      titleMaxLength:25,
       noteMaxLength:3000,
       noteMaxLengthWarning:''
     };
