@@ -83,7 +83,7 @@ export const notes={
       'colorCode': '#FFD232'
     },
     {
-      'text': 'dssdas',
+      'text': 'the quick browqn fox jumped over the lazy dog',
       'client': 'Web',
       'createdTimestamp': '1510729428739',
       'shareable': false,
@@ -234,7 +234,7 @@ export const notes={
       'quote': 'Chapter 2',
       'context': '67BIQAGT5YS',
       'user': 'ffffffff56b90bd7e4b0f8eeaa4655d4',
-      'colorCode': '#FFD232'
+      'colorCode': '#ccf5fd'
     },
     {
       'text': 'das',
