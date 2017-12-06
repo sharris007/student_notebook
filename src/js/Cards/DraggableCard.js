@@ -28,7 +28,10 @@ const cardSource = {
   isDragging(props, monitor) {
     const isDragging = props.item && props.item.id === monitor.getItem().id;
     return isDragging;
-  }
+  },
+  canDrag(props, monitor) {
+    return props.canDrag;
+  },
 };
 
 // options: 4rd param to DragSource https://gaearon.github.io/react-dnd/docs-drag-source.html
@@ -82,6 +85,7 @@ export default class CardComponent extends Component {
     return connectDragSource(
       <div>
         <Card 
+        canDrag={false}
             style={getStyles(isDragging)} 
             item={item} cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 

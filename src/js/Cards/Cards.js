@@ -125,6 +125,7 @@ export default class Cards extends Component {
         if (item.cardFormat === 'note') {
           cardList.push(
             <Card x={x} y={i}
+              canDrag={false}
               item={item}
               key={item.id}
               stopScrolling={this.props.stopScrolling}
@@ -136,7 +137,7 @@ export default class Cards extends Component {
 
           cardList.push(
             <Card x={x} y={i}
-              item={item}
+              canDrag={false}
               key={item.id}
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}

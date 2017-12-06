@@ -37,7 +37,7 @@ class ComponentOwner extends React.Component {
         title: data.title,
         cardFormat: 'note',
         content: data.content,
-        content2: '',
+        content2: 'this is test data',
         changeDate: data.changeDate
       });
       this.setState({

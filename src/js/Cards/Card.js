@@ -150,6 +150,13 @@ const line = {
   marginRight: '15px'
 };
 
+const line2 = {
+  height: '2px',
+  border: 'solid 1px #e9e9e9',
+  marginLeft: '15px',
+  marginRight: '15px',
+};
+
 export default class Card extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
@@ -336,20 +343,34 @@ export default class Card extends Component {
           </div>
         ) : (
           <div>
-            {item.content ? <div className="item-container">
+            {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
               <div className="item-content">
                 {/* {style={ellipsis}}*/}
                 <span style={styleContent}>“{item.content}”</span>
               </div>
             </div> : null}
 
-            <div style={line} />
+            {item.cardFormat === 'note' && item.noteText ? 
+            null : <br />}
 
-            {item.content2 ? <div className="item-container">
+            {item.cardFormat === 'note' && item.noteText ? 
+            <div style={line} /> : <div style={line} />}
+
+
+           
+
+
+            {item.cardFormat === 'note' && !item.noteText ? <div className="item-container">
               <div className="item-content">
-                <span style={styleContent2}>{item.content2}</span>
+                <span style={styleContent2}>{item.content}</span>
               </div>
             </div> : null}
+
+            {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
+            <div className="item-content">
+              <span style={styleContent2}>this is content2{item.content2}</span>
+            </div>
+          </div> : null}
           </div>
         )}
 

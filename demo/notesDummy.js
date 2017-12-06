@@ -196,7 +196,7 @@ export const notes={
       'quote': 'It is a term',
       'context': '67BIQAGT5YS',
       'user': 'ffffffff56b90bd7e4b0f8eeaa4655d4',
-      'colorCode': '#FFD232'
+      'colorCode': '#ccf5fd'
     },
     {
       'lastColor': '#FFD232',
