@@ -162,57 +162,57 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
-    //this.handleSaveCard = this.handleSaveCard.bind(this);
+    // this.handleSaveCard = this.handleSaveCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     // this.addCard = this.addCard.bind(this);
     // this.cancelAddCard = this.cancelAddCard.bind(this);
     // this.saveCard = this.saveCard.bind(this);
-    this.state = { 
-      item:props.item,
-      titleMaxLength:25,
-      noteMaxLength:3000,
-      noteMaxLengthWarning:''
+    this.state = {
+      item: props.item,
+      titleMaxLength: 25,
+      noteMaxLength: 3000,
+      noteMaxLengthWarning: ''
     };
   }
 
-  handleCancelAddCard = card => {
-    if (card.id==='new'||card.id==='') {
+  handleCancelAddCard = (card) => {
+    if (card.id === 'new' || card.id === '') {
       this.props.cancelAddCard();
-    }else  {
-      card.cardFormat='note';
-      this.setState({item:card}); 
+    } else {
+      card.cardFormat = 'note';
+      this.setState({ item: card });
     }
   };
 
-  handleSaveCard = card => {
+  handleSaveCard = (card) => {
     // this.setState({
     //   titleInput: this.titleInput.value
     // });
 
     const newNote = {
-      id:card.id,
+      id: card.id,
       title: this.titleInput.value,
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
-      noteText:card.noteText?card.noteText:'',
-      cardFormat:'note',
-      colorCode:card.colorCode?card.colorCode:'',
-      pageId:card.pageId?card.pageId:''
+      noteText: card.noteText ? card.noteText : '',
+      cardFormat: 'note',
+      colorCode: card.colorCode ? card.colorCode : '',
+      pageId: card.pageId ? card.pageId : ''
     };
-    const msg=(card.id==='new'||card.id==='')?'ADD':'SAVE';
-    if (msg==='ADD') {
+    const msg = (card.id === 'new' || card.id === '') ? 'ADD' : 'SAVE';
+    if (msg === 'ADD') {
       this.props.saveCard(newNote, msg);
-    }else if (msg==='SAVE') {
-      this.setState({item:newNote}, ()=>{
+    } else if (msg === 'SAVE') {
+      this.setState({ item: newNote }, () => {
         this.props.saveCard(this.state.item, msg);
-      }); 
+      });
     }
   };
 
-  handleEditCard = card => {
-    card.cardFormat='create new';
-    this.setState({item:card}, ()=>{
-      this.titleInput.value=card.title;
+  handleEditCard = (card) => {
+    card.cardFormat = 'create new';
+    this.setState({ item: card }, () => {
+      this.titleInput.value = card.title;
       this.contentArea.value = card.content;
     });
   }
@@ -221,7 +221,7 @@ export default class Card extends Component {
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
-  handleNavigate = () =>{
+  handleNavigate = () => {
     this.props.saveCard(this.state.item, 'NAVIGATE');
   }
 
@@ -229,16 +229,16 @@ export default class Card extends Component {
     this.props.addCard();
   };
 
-  checkNoteMaxLengthValidation= () =>{
+  checkNoteMaxLengthValidation= () => {
     const inputCharLength = this.contentArea.value.length;
-    const remainingCount = this.state.noteMaxLength-inputCharLength;
+    const remainingCount = this.state.noteMaxLength - inputCharLength;
     let noteMaxLengthWarning = '';
-    if (remainingCount>0 && remainingCount<51) {
+    if (remainingCount > 0 && remainingCount < 51) {
       noteMaxLengthWarning = `-${remainingCount} characters left`;
-    }else if (remainingCount===0) {
-      noteMaxLengthWarning=`${remainingCount} characters left`;
-    }else  {
-      noteMaxLengthWarning='';
+    } else if (remainingCount === 0) {
+      noteMaxLengthWarning = `${remainingCount} characters left`;
+    } else {
+      noteMaxLengthWarning = '';
     }
     this.setState({
       noteMaxLengthWarning
@@ -308,7 +308,7 @@ export default class Card extends Component {
                 {item.cardFormat !== 'add mode' ? (
                   <input
                     style={titleInputBox}
-                    ref={el => {
+                    ref={(el) => {
                       this.titleInput = el;
                     }}
                     placeholder="Title"
@@ -324,7 +324,7 @@ export default class Card extends Component {
                     cols="50"
                     style={noteTextArea}
                     placeholder="Write note..."
-                    ref={el => {
+                    ref={(el) => {
                       this.contentArea = el;
                     }}
                     maxLength={this.state.noteMaxLength}
@@ -336,46 +336,46 @@ export default class Card extends Component {
           </div>
         ) : (
           <div>
-            {item.content?<div className="item-container">
-              <div className="item-content"> 
-                {/*{style={ellipsis}}*/}
+            {item.content ? <div className="item-container">
+              <div className="item-content">
+                {/* {style={ellipsis}}*/}
                 <span style={styleContent}>“{item.content}”</span>
               </div>
-            </div>:null}
+            </div> : null}
 
             <div style={line} />
 
-            {item.content2?<div className="item-container">
+            {item.content2 ? <div className="item-container">
               <div className="item-content">
                 <span style={styleContent2}>{item.content2}</span>
               </div>
-            </div>:null}
+            </div> : null}
           </div>
         )}
 
         {item.cardFormat === 'note' ? (
           <div className="item-perfomers">
-            <div className="add-perfomers">
-              <a href="#" onClick={()=>this.handleDeleteCard(item)}>
+            {item.noteText === 'I' ? null : <div className="add-perfomers">
+              <a href="#" onClick={() => this.handleDeleteCard(item)}>
                 <img
                   style={{ height: '24px', width: '24px' }}
                   src={deletePng}
                   alt="delete"
                 />
               </a>
-            </div>
-            <div className="add-perfomers">
-              <a href="#" onClick={()=>this.handleEditCard(item)}>
+            </div>}
+            {item.noteText === 'I' ? null:<div className="add-perfomers">
+              <a href="#" onClick={() => this.handleEditCard(item)}>
                 <img
                   style={{ height: '24px', width: '24px' }}
                   src={editPng}
                   alt="edit"
                 />
               </a>
-            </div>
+            </div>}
             <div className="delete-perfomers">
               <div className="perfomer">
-                <a href="#" onClick={()=>this.handleNavigate(item)}>
+                <a href="#" onClick={() => this.handleNavigate(item)}>
                   <img
                     style={{ height: '24px', width: '24px' }}
                     src={gotoPng}
@@ -392,18 +392,18 @@ export default class Card extends Component {
                 <a
                   style={{ paddingRight: '10px', color: '#1ca6a5' }}
                   href="#"
-                  onClick={()=>this.handleSaveCard(item)}
+                  onClick={() => this.handleSaveCard(item)}
                 >
                   Save
                 </a>
                 <a
                   style={{ paddingRight: '10px', color: '#1ca6a5' }}
                   href="#"
-                  onClick={()=>{this.handleCancelAddCard(item);}}
+                  onClick={() => { this.handleCancelAddCard(item); }}
                 >
                   Cancel
                 </a>
-                {this.state.noteMaxLengthWarning.length?<span style={{color:'#db0020'}}>{this.state.noteMaxLengthWarning}</span>:null}
+                {this.state.noteMaxLengthWarning.length ? <span style={{ color: '#db0020' }}>{this.state.noteMaxLengthWarning}</span> : null}
               </div>
             ) : null}
           </div>
