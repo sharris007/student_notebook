@@ -14,7 +14,7 @@ import Moment from 'moment';
 // const galPng = require('../../assets/images/gal.png');
 // const delPng = require('../../assets/images/del.png');
 // const cogPng = require('../../assets/images/cog.png');
-const deletePng = require('../../assets/images/delete-icon.png');
+const deletePng = require('../../assets/images/ic-trash.png');
 // const fivePng = require('../../assets/images/5.jpg');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
@@ -379,7 +379,7 @@ export default class Card extends Component {
             {item.noteText === 'I' ? null : <div className="add-perfomers">
               <a href="#" onClick={() => this.handleDeleteCard(item)}>
                 <img
-                  style={{ height: '24px', width: '24px' }}
+                  style={{ height: '18px', width: '18px' }}
                   src={deletePng}
                   alt="delete"
                 />
@@ -388,7 +388,7 @@ export default class Card extends Component {
             {item.noteText === 'I' ? null:<div className="add-perfomers">
               <a href="#" onClick={() => this.handleEditCard(item)}>
                 <img
-                  style={{ height: '24px', width: '24px' }}
+                  style={{ height: '18px', width: '18px' }}
                   src={editPng}
                   alt="edit"
                 />
