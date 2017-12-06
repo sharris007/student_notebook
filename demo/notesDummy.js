@@ -29,7 +29,7 @@ export const notes={
         'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/f27be358-2a64-47dc-8910-ab2c78e41752/1/file/LutgensAtm13-071415-MJ-DW/',
         'para': 'MathJax-Span-56'
       },
-      'quote': 'exp',
+      'quote': 'this is first note',
       'context': '67BIQAGT5YS',
       'permissions': {
         'read': [

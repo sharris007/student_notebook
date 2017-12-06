@@ -47,6 +47,7 @@ export default class Board extends Component {
       changeDate: ''
     });
 
+
     const lists = [];
       // initialize lists
     for (let ic = 0; ic < props.coloums; ic++) {
@@ -237,6 +238,7 @@ export default class Board extends Component {
           return (card.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
         }
       });
+    
       return true;
     });
 

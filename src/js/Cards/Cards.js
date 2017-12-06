@@ -112,6 +112,7 @@ export default class Cards extends Component {
 
     let isPlaceHold = false;
     const cardList = [];
+    
     cards.forEach((item, i) => {
       if (isOver && canDrop) {
         isPlaceHold = false;
@@ -139,6 +140,7 @@ export default class Cards extends Component {
             <Card x={x} y={i}
               canDrag={false}
               key={item.id}
+              item={item}
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}

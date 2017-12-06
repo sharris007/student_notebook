@@ -180,6 +180,7 @@ export default class Card extends Component {
       noteMaxLength: 3000,
       noteMaxLengthWarning: ''
     };
+
   }
 
   handleCancelAddCard = (card) => {
@@ -324,7 +325,6 @@ export default class Card extends Component {
                 ) : null}
 
                 {this.state.titleInput}
-
                 {item.cardFormat !== 'add mode' ? (
                   <textarea
                     rows="10"
@@ -343,7 +343,7 @@ export default class Card extends Component {
           </div>
         ) : (
           <div>
-            {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
+          {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
               <div className="item-content">
                 {/* {style={ellipsis}}*/}
                 <span style={styleContent}>“{item.content}”</span>
@@ -354,7 +354,7 @@ export default class Card extends Component {
             null : <br />}
 
             {item.cardFormat === 'note' && item.noteText ? 
-            <div style={line} /> : <div style={line} />}
+            <div style={line} /> : null}
 
 
            

@@ -85,7 +85,7 @@ export default class CardComponent extends Component {
     return connectDragSource(
       <div>
         <Card 
-        canDrag={false}
+            canDrag={false}
             style={getStyles(isDragging)} 
             item={item} cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 
