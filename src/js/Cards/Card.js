@@ -11,11 +11,7 @@ import Moment from 'moment';
 // };
 // test
 
-// const galPng = require('../../assets/images/gal.png');
-// const delPng = require('../../assets/images/del.png');
-// const cogPng = require('../../assets/images/cog.png');
 const deletePng = require('../../assets/images/ic-trash.png');
-// const fivePng = require('../../assets/images/5.jpg');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
@@ -125,18 +121,6 @@ const titleInputBox = {
   marginTop: '32px'
 };
 
-// const relatesToDropDown = {
-//   borderRight: '0px',
-//   borderTop: '0px',
-//   borderLeft: '0px',
-//   borderColor: 'black !important',
-//   width: '100%',
-//   background: 'transparent',
-//   outline: '0px',
-//   marginTop: '32px',
-//   background: 'white'
-// };
-
 const noteTextArea = {
   borderRight: '0px',
   borderTop: '0px',
@@ -184,11 +168,7 @@ export default class Card extends Component {
   constructor(props) {
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
-    // this.handleSaveCard = this.handleSaveCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
-    // this.addCard = this.addCard.bind(this);
-    // this.cancelAddCard = this.cancelAddCard.bind(this);
-    // this.saveCard = this.saveCard.bind(this);
     this.state = {
       item: props.item,
       titleMaxLength: 25,
@@ -197,14 +177,6 @@ export default class Card extends Component {
     };
   }  
 
-  componentDidUpdate(){
-   if (this.state.item.id === '1510729448425'){
-  //  debugger;
-   //  this.props.cancelAddCard();
- //   document.body.style.overflow = 'hidden';
-   }
-   return true;
-}
 
   handleCancelAddCard = (card) => {
     if (card.id === 'new' || card.id === '') {
@@ -452,7 +424,6 @@ export default class Card extends Component {
             ) : null}
           </div>
         )}
-        <div  id={style ? item.id + 'now' : null} ></div>
       </div>
     );
   }

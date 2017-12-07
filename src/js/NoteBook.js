@@ -210,10 +210,6 @@ export default class Board extends Component {
     };
 
     this.setState({ lists: newLists });
-    document.getElementById("1510729448425").style.backgroundColor = "red";
-    var element = document.getElementById("1510729448425now");
-    element.scrollIntoView();
-
   }
 
   saveCard(newNote, msg) {
