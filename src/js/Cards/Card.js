@@ -101,6 +101,19 @@ const title = {
   background: 'white'
 };
 
+const saveStyle = {
+  fontSize: '16px',
+  fontWeight: '600',
+  letterSpacing: '-0.4px',
+  color: '#047a9c'
+}
+
+const cancelStyle = {
+  fontSize: '16px',
+  fontWeight: '600',
+  letterSpacing: '-0.4px',
+  color: '#74797b'
+}
 const titleInputBox = {
   outline: '0',
   width: '100%',
@@ -132,15 +145,17 @@ const noteTextArea = {
   width: '100%',
   outline: '0px',
   marginTop: '32px',
-  background: 'white'
+  background: 'white',
+  fontFamily: 'Open Sans'
 };
 
 const addNote = {
-  paddingLeft: '80px',
   color: '#1ca6a5',
   fontWeight: '600',
   lineHeight: '1.57',
-  fontSize: '14px'
+  fontSize: '14px',
+  letterSpacing: '-0.2px'
+  
 };
 
 const line = {
@@ -180,8 +195,16 @@ export default class Card extends Component {
       noteMaxLength: 3000,
       noteMaxLengthWarning: ''
     };
+  }  
 
-  }
+  componentDidUpdate(){
+   if (this.state.item.id === '1510729448425'){
+  //  debugger;
+   //  this.props.cancelAddCard();
+ //   document.body.style.overflow = 'hidden';
+   }
+   return true;
+}
 
   handleCancelAddCard = (card) => {
     if (card.id === 'new' || card.id === '') {
@@ -193,7 +216,7 @@ export default class Card extends Component {
   };
 
   handleSaveCard = (card) => {
-    // this.setState({
+    // this.setState(
     //   titleInput: this.titleInput.value
     // });
 
@@ -293,17 +316,17 @@ export default class Card extends Component {
           <div style={{ paddingTop: '100px' }} />
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <span style={{ paddingLeft: '90px', paddingBottom: '8px' }}>
+          <center>
             <button
               onClick={this.handleAddCard}
               style={{ border: '0', background: 'transparent' }}
             >
-              <img src={addPng} />
+             <img src={addPng} />
             </button>
-          </span>
+          </center>
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <div style={addNote}>Add Note</div>
+          <div style={addNote}><center>Add Note</center></div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
           <div style={{ paddingBottom: '100px' }} />
@@ -385,10 +408,10 @@ export default class Card extends Component {
                 />
               </a>
             </div>}
-            {item.noteText === 'I' ? null:<div className="add-perfomers">
+            {item.noteText === 'I' ? null:<div style={{  paddingLeft: '24px' }} className="add-perfomers">
               <a href="#" onClick={() => this.handleEditCard(item)}>
                 <img
-                  style={{ height: '18px', width: '18px' }}
+                  style={{  height: '18px', width: '18px' }}
                   src={editPng}
                   alt="edit"
                 />
@@ -409,26 +432,27 @@ export default class Card extends Component {
         ) : (
           <div className="item-perfomers">
             {item.cardFormat === 'create new' ? (
-              <div className="add-perfomers">
+              <div>
                 <a
-                  style={{ paddingRight: '10px', color: '#1ca6a5' }}
+                  style={{ float: 'right', paddingRight: '5px', color: '#1ca6a5' }}
                   href="#"
                   onClick={() => this.handleSaveCard(item)}
                 >
-                  Save
+                 <span style={saveStyle}>SAVE</span>
                 </a>
                 <a
-                  style={{ paddingRight: '10px', color: '#1ca6a5' }}
+                  style={{ float: 'right', paddingRight: '15px', color: '#1ca6a5' }}
                   href="#"
                   onClick={() => { this.handleCancelAddCard(item); }}
                 >
-                  Cancel
+                <span style={cancelStyle}>CANCEL</span>
                 </a>
                 {this.state.noteMaxLengthWarning.length ? <span style={{ color: '#db0020' }}>{this.state.noteMaxLengthWarning}</span> : null}
               </div>
             ) : null}
           </div>
         )}
+        <div  id={style ? item.id + 'now' : null} ></div>
       </div>
     );
   }
