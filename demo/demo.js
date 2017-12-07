@@ -5,12 +5,18 @@ function init() {
   const notesList = [];
 
   for (let ic = 0; ic < notes.total; ic++) {
-    const note = notes.rows[ic];
+    const note = notes.response[ic].data;
     note.cardFormat='note';
-    note.title=note.quote;
+    if (notes.response[ic].pageId) {
+      note.title=note.source.title;
+      note.highLightText=note.quote;
+      note.pageId=notes.response[ic].pageId;
+    }else  {
+      note.title=note.quote; 
+    }
     note.content=note.text;
     const timeStamp=note.updatedTimestamp?note.updatedTimestamp:note.createdTimestamp;
-    note.changeDate=new Date(parseInt(timeStamp));
+    note.changeDate=timeStamp;
     if (note.colorCode === '#FFD232') { //Yellow
       note.noteText = 'Q'; //Questions
     } else if (note.colorCode === '#55DF49') { //Green

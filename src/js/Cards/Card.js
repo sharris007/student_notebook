@@ -199,13 +199,14 @@ export default class Card extends Component {
 
     const newNote = {
       id: card.id,
-      title: this.titleInput.value,
+      title: card.noteText?card.title:this.titleInput.value,
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
       noteText: card.noteText ? card.noteText : '',
       cardFormat: 'note',
       colorCode: card.colorCode ? card.colorCode : '',
-      pageId: card.pageId ? card.pageId : ''
+      pageId: card.pageId ? card.pageId : '',
+      highLightText:card.highLightText?card.highLightText:''
     };
     const msg = (card.id === 'new' || card.id === '') ? 'ADD' : 'SAVE';
     if (msg === 'ADD') {
@@ -220,7 +221,7 @@ export default class Card extends Component {
   handleEditCard = (card) => {
     card.cardFormat = 'create new';
     this.setState({ item: card }, () => {
-      this.titleInput.value = card.title;
+      this.titleInput.value = card.noteText?card.highLightText:card.title;
       this.contentArea.value = card.content;
     });
   }
@@ -257,6 +258,7 @@ export default class Card extends Component {
     const { style } = this.props;
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
+    const disablehighLightText=item.noteText?{'disabled':'disabled'}:{};
     return (
       <div
         style={{ background: 'white' }}
@@ -321,6 +323,7 @@ export default class Card extends Component {
                     }}
                     placeholder="Title"
                     maxLength={this.state.titleMaxLength}
+                    {...disablehighLightText}
                   />
                 ) : null}
 
@@ -345,8 +348,7 @@ export default class Card extends Component {
           <div>
           {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
               <div className="item-content">
-                {/* {style={ellipsis}}*/}
-                <span style={styleContent}>“{item.content}”</span>
+                <span style={styleContent}>“{item.highLightText}”</span>
               </div>
             </div> : null}
 
@@ -368,7 +370,7 @@ export default class Card extends Component {
 
             {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
             <div className="item-content">
-              <span style={styleContent2}>this is content2{item.content2}</span>
+              <span style={styleContent2}>{item.content}</span>
             </div>
           </div> : null}
           </div>
@@ -395,7 +397,7 @@ export default class Card extends Component {
               </a>
             </div>}
             <div className="delete-perfomers">
-              <div className="perfomer">
+              {item.noteText?<div className="perfomer">
                 <a href="#" onClick={() => this.handleNavigate(item)}>
                   <img
                     style={{ height: '24px', width: '24px' }}
@@ -403,7 +405,7 @@ export default class Card extends Component {
                     alt="navigate"
                   />
                 </a>
-              </div>
+              </div>:null}
             </div>
           </div>
         ) : (
