@@ -110,21 +110,6 @@ export default class Board extends Component {
     // }
   }
 
-  componentDidUpdate(){
-    alert('shouldComponentUpdate-notebook', this.state.ider)
-    
-    document.getElementById("1510729448425").style.backgroundColor = "lightblue";
-    var element = document.getElementById("1510729448425now");
-    element.scrollIntoView();
-   // element.scrollIntoView(false);
-   // element.scrollIntoView({block: "end"});
-   // element.scrollIntoView({behavior: "instant", block: "end", inline: "nearest"});
-
-
-  //  document.body.style.overflow = 'hidden';
-    
-    return true;
- }
 
   startScrolling(direction) {
     // if (!this.state.isScrolling) {

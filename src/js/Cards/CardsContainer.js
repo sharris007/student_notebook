@@ -69,23 +69,6 @@ export default class CardsContainer extends Component {
   }
 
 
-  componentDidUpdate(){
-    alert('shouldComponentUpdate-container')
-    
-    document.getElementById("1510729448425").style.backgroundColor = "green";
-    var element = document.getElementById("1510729448425now");
-    element.scrollIntoView();
-   // element.scrollIntoView(false);
-   // element.scrollIntoView({block: "end"});
-   // element.scrollIntoView({behavior: "instant", block: "end", inline: "nearest"});
-
-
-  //  document.body.style.overflow = 'hidden';
-    
-    return true;
- }
-
-
   render() {
     const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging } = this.props;
     const opacity = isDragging ? 0.5 : 1;
