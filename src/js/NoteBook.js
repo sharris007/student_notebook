@@ -30,14 +30,6 @@ export default class Board extends Component {
     // const lists = [...props.lists];
     const notesList = [...props.notesList];
 
-    // lists[0].cards.unshift({
-    //   id: 'new',
-    //   title: '',
-    //   cardFormat: 'add mode',
-    //   content: '',
-    //   content2: ''
-    // });
-
     notesList.splice(0, 0, {
       id:'new',
       title: '',
@@ -69,7 +61,8 @@ export default class Board extends Component {
       isScrolling: false,
       search: '',
       lists: lists,
-      notesList:notesList
+      notesList:notesList,
+      ider: null
     };
   }
   createLists = (nextProps) => {
@@ -117,6 +110,7 @@ export default class Board extends Component {
     // }
   }
 
+
   startScrolling(direction) {
     // if (!this.state.isScrolling) {
     switch (direction) {
@@ -151,6 +145,7 @@ export default class Board extends Component {
   }
 
   moveCard(lastX, lastY, nextX, nextY) {
+    debugger;
     //this.props.moveCard(lastX, lastY, nextX, nextY);
     const newLists = [...this.state.lists];
     if (lastX === nextX) {
@@ -189,7 +184,7 @@ export default class Board extends Component {
   }
 
   addCard() {
-    //this.props.addCard();
+       //this.props.addCard();
     const newLists = [...this.state.lists];
 
     newLists[0].cards[0] = {
