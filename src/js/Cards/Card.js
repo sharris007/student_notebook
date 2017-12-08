@@ -28,28 +28,32 @@ const mainIdea = {
   backgroundColor: '#bbf2b6',
   height: '36px',
   paddingTop: '10px',
-  paddingLeft: '10px'
+  paddingLeft: '10px',
+  color: '#000000'
 };
 
 const fromInstructor = {
   backgroundColor: '#ccf5fd',
   height: '36px',
   paddingTop: '10px',
-  paddingLeft: '10px'
+  paddingLeft: '10px',
+  color: '#000000'
 };
 
 const observations = {
   backgroundColor: '#fed3ec',
   height: '36px',
   paddingTop: '10px',
-  paddingLeft: '10px'
+  paddingLeft: '10px',
+  color: '#000000'
 };
 
 const questions = {
   backgroundColor: '#ffedad',
   height: '36px',
   paddingTop: '10px',
-  paddingLeft: '10px'
+  paddingLeft: '10px',
+  color: '#000000'
 };
 
 const styleContent = {
@@ -117,8 +121,13 @@ const titleInputBox = {
   borderTop: '0',
   borderRight: '0',
   borderLeft: '0',
-  borderBottom: '1px solid black',
-  marginTop: '32px'
+  borderBottom: '1px solid #6a7070',
+  marginTop: '32px',
+  fontSize: '18px',
+  color: '#252525',
+  letterSpacing: '-0.2px',
+  color: '#c7c7c7'
+  
 };
 
 const titleInputBoxDisabled = {
@@ -138,7 +147,9 @@ const noteTextArea = {
   outline: '0px',
   marginTop: '32px',
   background: 'white',
-  fontFamily: 'Open Sans'
+  fontFamily: 'Open Sans',
+  color: '#c7c7c7',
+  letterSpacing: '-0.2px',
 };
 
 const addNote = {
@@ -146,7 +157,9 @@ const addNote = {
   fontWeight: '600',
   lineHeight: '1.57',
   fontSize: '14px',
-  letterSpacing: '-0.2px'
+  letterSpacing: '-0.2px',
+  textAlign: 'center',
+  height: '22px'
   
 };
 
@@ -276,7 +289,7 @@ export default class Card extends Component {
       >
         {item.cardFormat === 'note' && item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
-            Main Idea
+            Main ideas
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'I' ? (
@@ -304,17 +317,17 @@ export default class Card extends Component {
           <div style={{ paddingTop: '100px' }} />
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <center>
+          <div style={{ 'text-align': 'center' }}>
             <button
               onClick={this.handleAddCard}
               style={{ border: '0', background: 'transparent' }}
             >
              <img src={addPng} />
             </button>
-          </center>
+          </div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <div style={addNote}><center>Add Note</center></div>
+          <div style={addNote}>Add Note</div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
           <div style={{ paddingBottom: '100px' }} />
