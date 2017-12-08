@@ -173,7 +173,8 @@ export default class Card extends Component {
       item: props.item,
       titleMaxLength: 25,
       noteMaxLength: 3000,
-      noteMaxLengthWarning: ''
+      noteMaxLengthWarning: '',
+      hideSave: true
     };
   }  
 
@@ -244,8 +245,11 @@ export default class Card extends Component {
     } else {
       noteMaxLengthWarning = '';
     }
+    //Visible Save button after entering note text
+    let hideSave = inputCharLength > 0 ? false : true;
     this.setState({
-      noteMaxLengthWarning
+      noteMaxLengthWarning,
+      hideSave
     });
   }
 
@@ -407,12 +411,15 @@ export default class Card extends Component {
           <div className="item-perfomers">
             {item.cardFormat === 'create new' ? (
               <div>
+                {!this.state.hideSave ?
                 <a
                   style={{ float: 'right', paddingRight: '5px', color: '#1ca6a5' }}
                   onClick={() => this.handleSaveCard(item)}
                 >
                  <span style={saveStyle}>SAVE</span>
                 </a>
+                :null
+                }
                 <a
                   style={{ float: 'right', paddingRight: '15px', color: '#1ca6a5' }}
                   onClick={() => { this.handleCancelAddCard(item); }}
