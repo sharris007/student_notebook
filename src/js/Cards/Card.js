@@ -121,6 +121,14 @@ const titleInputBox = {
   marginTop: '32px'
 };
 
+const titleInputBoxDisabled = {
+  outline: '0',
+  width: '100%',
+  background: 'transparent',
+  border: '0',
+  marginTop: '32px'
+};
+
 const noteTextArea = {
   borderRight: '0px',
   borderTop: '0px',
@@ -171,7 +179,7 @@ export default class Card extends Component {
     this.handleAddCard = this.handleAddCard.bind(this);
     this.state = {
       item: props.item,
-      titleMaxLength: 25,
+      titleMaxLength: 100,
       noteMaxLength: 3000,
       noteMaxLengthWarning: '',
       hideSave: true
@@ -186,6 +194,7 @@ export default class Card extends Component {
       card.cardFormat = 'note';
       this.setState({ item: card });
     }
+    this.setState({hideSave: true});
   };
 
   handleSaveCard = (card) => {
@@ -236,6 +245,7 @@ export default class Card extends Component {
 
   checkNoteMaxLengthValidation= () => {
     const inputCharLength = this.contentArea.value.length;
+    const inputCharLengthTitle = this.titleInput.value.length;
     const remainingCount = this.state.noteMaxLength - inputCharLength;
     let noteMaxLengthWarning = '';
     if (remainingCount > 0 && remainingCount < 51) {
@@ -246,7 +256,7 @@ export default class Card extends Component {
       noteMaxLengthWarning = '';
     }
     //Visible Save button after entering note text
-    let hideSave = inputCharLength > 0 ? false : true;
+    let hideSave = inputCharLength > 0 || inputCharLengthTitle > 0 ? false : true;
     this.setState({
       noteMaxLengthWarning,
       hideSave
@@ -314,9 +324,22 @@ export default class Card extends Component {
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
-                {item.cardFormat !== 'add mode' ? (
+                {item.cardFormat !== 'add mode' && !item.noteText ? (
                   <input
                     style={titleInputBox}
+                    ref={(el) => {
+                      this.titleInput = el;
+                    }}
+                    placeholder="Title"
+                    maxLength={this.state.titleMaxLength}
+                    {...disablehighLightText}
+                    onKeyUp={this.checkNoteMaxLengthValidation}
+                  />
+                ) : null}
+
+                {item.cardFormat !== 'add mode' && item.noteText ? (
+                  <input
+                    style={titleInputBoxDisabled}
                     ref={(el) => {
                       this.titleInput = el;
                     }}
@@ -357,10 +380,6 @@ export default class Card extends Component {
             {item.cardFormat === 'note' && item.noteText ? 
             <div style={line} /> : null}
 
-
-           
-
-
             {item.cardFormat === 'note' && !item.noteText ? <div className="item-container">
               <div className="item-content">
                 <span style={styleContent2}>{item.content}</span>
@@ -388,7 +407,7 @@ export default class Card extends Component {
              
             </div>}
 
-            {item.noteText === 'I' ? null : <div style={{width: '24px'}} className="add-perfomers">&nbsp;</div>}
+            {item.noteText === 'I' ? null : <div style={{width: '5px'}} className="add-perfomers">&nbsp;</div>}
 
 
             {item.noteText === 'I' ? null:<div  className="add-perfomers">
