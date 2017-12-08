@@ -102,14 +102,14 @@ const saveStyle = {
   fontWeight: '600',
   letterSpacing: '-0.4px',
   color: '#047a9c'
-}
+};
 
 const cancelStyle = {
   fontSize: '16px',
   fontWeight: '600',
   letterSpacing: '-0.4px',
   color: '#74797b'
-}
+};
 const titleInputBox = {
   outline: '0',
   width: '100%',
@@ -374,7 +374,7 @@ export default class Card extends Component {
         {item.cardFormat === 'note' ? (
           <div className="item-perfomers">
             {item.noteText === 'I' ? null : <div className="add-perfomers">
-              <a href="#" onClick={() => this.handleDeleteCard(item)}>
+              <a onClick={() => this.handleDeleteCard(item)}>
                 <img
                   style={{ height: '18px', width: '18px' }}
                   src={deletePng}
@@ -383,7 +383,7 @@ export default class Card extends Component {
               </a>
             </div>}
             {item.noteText === 'I' ? null:<div style={{  paddingLeft: '24px' }} className="add-perfomers">
-              <a href="#" onClick={() => this.handleEditCard(item)}>
+              <a onClick={() => this.handleEditCard(item)}>
                 <img
                   style={{  height: '18px', width: '18px' }}
                   src={editPng}
@@ -393,7 +393,7 @@ export default class Card extends Component {
             </div>}
             <div className="delete-perfomers">
               {item.noteText?<div className="perfomer">
-                <a href="#" onClick={() => this.handleNavigate(item)}>
+                <a onClick={() => this.handleNavigate(item)}>
                   <img
                     style={{ height: '24px', width: '24px' }}
                     src={gotoPng}
@@ -409,14 +409,12 @@ export default class Card extends Component {
               <div>
                 <a
                   style={{ float: 'right', paddingRight: '5px', color: '#1ca6a5' }}
-                  href="#"
                   onClick={() => this.handleSaveCard(item)}
                 >
                  <span style={saveStyle}>SAVE</span>
                 </a>
                 <a
                   style={{ float: 'right', paddingRight: '15px', color: '#1ca6a5' }}
-                  href="#"
                   onClick={() => { this.handleCancelAddCard(item); }}
                 >
                 <span style={cancelStyle}>CANCEL</span>
