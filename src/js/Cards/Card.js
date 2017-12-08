@@ -378,33 +378,36 @@ export default class Card extends Component {
         {item.cardFormat === 'note' ? (
           <div className="item-perfomers">
             {item.noteText === 'I' ? null : <div className="add-perfomers">
-              <a onClick={() => this.handleDeleteCard(item)}>
+              <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleDeleteCard(item)}>
                 <img
-                  style={{ height: '18px', width: '18px' }}
+                  style={{ height: '16px', width: '16px' }}
                   src={deletePng}
                   alt="delete"
                 />
               </a>
+             
             </div>}
-            {item.noteText === 'I' ? null:<div style={{  paddingLeft: '24px' }} className="add-perfomers">
-              <a onClick={() => this.handleEditCard(item)}>
-                <img
-                  style={{  height: '18px', width: '18px' }}
+
+            {item.noteText === 'I' ? null : <div style={{width: '24px'}} className="add-perfomers">&nbsp;</div>}
+
+
+            {item.noteText === 'I' ? null:<div  className="add-perfomers">
+              <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleEditCard(item)}>
+                <img 
+                  style={{  height: '16px', width: '16px' }}
                   src={editPng}
                   alt="edit"
                 />
               </a>
             </div>}
             <div className="delete-perfomers">
-              {item.noteText?<div className="perfomer">
-                <a onClick={() => this.handleNavigate(item)}>
+                <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px' }} onClick={() => this.handleNavigate(item)}>
                   <img
                     style={{ height: '24px', width: '24px' }}
                     src={gotoPng}
                     alt="navigate"
                   />
                 </a>
-              </div>:null}
             </div>
           </div>
         ) : (
