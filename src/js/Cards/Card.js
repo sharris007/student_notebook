@@ -318,7 +318,7 @@ export default class Card extends Component {
           <div style={{ paddingTop: '100px' }} />
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <div style={{ 'text-align': 'center' }}>
+          <div style={{ 'textAlign': 'center' }}>
             <button
               onClick={this.handleAddCard}
               style={{ border: '0', background: 'transparent' }}
@@ -424,7 +424,6 @@ export default class Card extends Component {
 
             {item.noteText === 'I' ? null : <div style={{width: '5px'}} className="add-perfomers">&nbsp;</div>}
 
-
             {item.noteText === 'I' ? null:<div  className="add-perfomers">
               <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleEditCard(item)}>
                 <img 
@@ -434,6 +433,8 @@ export default class Card extends Component {
                 />
               </a>
             </div>}
+            
+            {!!item.noteText ? 
             <div className="delete-perfomers">
                 <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px' }} onClick={() => this.handleNavigate(item)}>
                   <img
@@ -443,6 +444,7 @@ export default class Card extends Component {
                   />
                 </a>
             </div>
+            : null }
           </div>
         ) : (
           <div className="item-perfomers">

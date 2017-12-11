@@ -74,7 +74,7 @@ class ComponentOwner extends React.Component {
     const { notesList } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} callback={this.callback} coloums={4}/>
+        <NoteBook notesList={notesList} callback={this.callback} coloums={3}/>
       </div>
     );
   };  
