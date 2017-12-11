@@ -126,7 +126,7 @@ const titleInputBox = {
   fontSize: '18px',
   color: '#252525',
   letterSpacing: '-0.2px',
-  color: '#c7c7c7'
+  color: '#252525'
   
 };
 
@@ -148,7 +148,8 @@ const noteTextArea = {
   marginTop: '32px',
   background: 'white',
   fontFamily: 'Open Sans',
-  color: '#c7c7c7',
+  fontSize: '14px',
+  color: '#252525',
   letterSpacing: '-0.2px',
 };
 
@@ -269,7 +270,7 @@ export default class Card extends Component {
       noteMaxLengthWarning = '';
     }
     //Visible Save button after entering note text
-    let hideSave = inputCharLength > 0 || inputCharLengthTitle > 0 ? false : true;
+    const hideSave = inputCharLength > 0 || inputCharLengthTitle > 0 ? false : true;
     this.setState({
       noteMaxLengthWarning,
       hideSave
@@ -347,6 +348,7 @@ export default class Card extends Component {
                     maxLength={this.state.titleMaxLength}
                     {...disablehighLightText}
                     onKeyUp={this.checkNoteMaxLengthValidation}
+                    autoFocus
                   />
                 ) : null}
 
