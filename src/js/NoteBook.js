@@ -145,7 +145,6 @@ export default class Board extends Component {
   }
 
   moveCard(lastX, lastY, nextX, nextY) {
-    debugger;
     //this.props.moveCard(lastX, lastY, nextX, nextY);
     const newLists = [...this.state.lists];
     if (lastX === nextX) {
