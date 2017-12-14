@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 // import ImageUploader from './ImageUploader';
 import Moment from 'moment';
+import Linkify from 'react-linkify';
 
 // const propTypes = {
 //   item: PropTypes.object.isRequired,
@@ -397,13 +398,13 @@ export default class Card extends Component {
 
             {item.cardFormat === 'note' && !item.noteText ? <div className="item-container">
               <div className="item-content">
-                <span style={styleContent2}>{item.content}</span>
+                <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
               </div>
             </div> : null}
 
             {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
             <div className="item-content">
-              <span style={styleContent2}>{item.content}</span>
+              <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
             </div>
           </div> : null}
           </div>
@@ -444,7 +445,7 @@ export default class Card extends Component {
                   />
                 </a>
             </div>
-            : null }
+            : null}
           </div>
         ) : (
           <div className="item-perfomers">

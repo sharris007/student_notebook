@@ -33,7 +33,7 @@ export const notes={
         'colorCode': '#ccf5fd',
         'shareable': true,
         'lastColor': '#55DF49',
-        'text': 'dd',
+        'text': 'dd www.google.com amazon.in',
         'updatedTimestamp': null,
         'source': {
           'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
