@@ -435,7 +435,7 @@ export default class Card extends Component {
               </a>
             </div>}
             
-            {!!item.noteText ? 
+            {!!item.pageId ? 
             <div className="delete-perfomers">
                 <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px' }} onClick={() => this.handleNavigate(item)}>
                   <img
