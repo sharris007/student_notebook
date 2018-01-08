@@ -219,14 +219,15 @@ export default class Card extends Component {
 
     const newNote = {
       id: card.id,
-      title: card.noteText?card.title:this.titleInput.value,
+      title: card.pageId?card.title:this.titleInput.value,
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
       noteText: card.noteText ? card.noteText : '',
       cardFormat: 'note',
       colorCode: card.colorCode ? card.colorCode : '',
       pageId: card.pageId ? card.pageId : '',
-      highLightText:card.highLightText?card.highLightText:''
+      highLightText:card.highLightText?card.highLightText:'',
+      customAnnotation:card.customAnnotation?card.customAnnotation:false
     };
     const msg = (card.id === 'new' || card.id === '') ? 'ADD' : 'SAVE';
     if (msg === 'ADD') {
@@ -241,7 +242,7 @@ export default class Card extends Component {
   handleEditCard = (card) => {
     card.cardFormat = 'create new';
     this.setState({ item: card }, () => {
-      this.titleInput.value = card.noteText?card.highLightText:card.title;
+      this.titleInput.value = card.pageId?card.highLightText:card.title;
       this.contentArea.value = card.content;
     });
   }
@@ -282,7 +283,7 @@ export default class Card extends Component {
     const { style } = this.props;
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
-    const disablehighLightText=item.noteText?{'disabled':'disabled'}:{};
+    const disablehighLightText=item.pageId?{'disabled':'disabled'}:{};
     return (
       <div
         style={{ background: 'white' }}
@@ -339,7 +340,7 @@ export default class Card extends Component {
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
-                {item.cardFormat !== 'add mode' && !item.noteText ? (
+                {item.cardFormat !== 'add mode' && !item.pageId ? (
                   <input
                     style={titleInputBox}
                     ref={(el) => {
@@ -353,7 +354,7 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {item.cardFormat !== 'add mode' && item.noteText ? (
+                {item.cardFormat !== 'add mode' && item.pageId ? (
                   <input
                     style={titleInputBoxDisabled}
                     ref={(el) => {
@@ -384,25 +385,25 @@ export default class Card extends Component {
           </div>
         ) : (
           <div>
-          {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
+          {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
               <div className="item-content">
                 <span style={styleContent}>“{item.highLightText}”</span>
               </div>
             </div> : null}
 
-            {item.cardFormat === 'note' && item.noteText ? 
+            {item.cardFormat === 'note' && item.pageId ? 
             null : <br />}
 
-            {item.cardFormat === 'note' && item.noteText ? 
+            {item.cardFormat === 'note' && item.pageId ? 
             <div style={line} /> : null}
 
-            {item.cardFormat === 'note' && !item.noteText ? <div className="item-container">
+            {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
               <div className="item-content">
                 <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
               </div>
             </div> : null}
 
-            {item.cardFormat === 'note' && item.noteText ? <div className="item-container">
+            {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
             <div className="item-content">
               <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
             </div>
