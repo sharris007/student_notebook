@@ -32,7 +32,7 @@ const specs = {
     } else if (lastX !== nextX) { // insert into another list
       nextY += 1;
     }
-
+console.log(nextX, nextY, lastX, lastY)
     if (lastX === nextX && lastY === nextY) { // if position equel
       return;
     }
@@ -54,7 +54,7 @@ const specs = {
       }
     } else {
       if (window.innerWidth - monitor.getClientOffset().x > 200 &&
-          monitor.getClientOffset().x > 200
+        monitor.getClientOffset().x > 200
       ) {
         props.stopScrolling();
       }
@@ -109,15 +109,29 @@ export default class Cards extends Component {
   render() {
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
     const { placeholderIndex } = this.state;
-
     let isPlaceHold = false;
     const cardList = [];
-    
+    let topper = false;
+
+
     cards.forEach((item, i) => {
+  //    debugger;
+      //   console.log('eachcard', item);
+      //  topper = false;
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-          cardList.push(<div key="placeholder" className="item placeholder" />);
+          //      debugger;
+          if (x !== 0) { // scott - don't put placeholder in top left special card
+            cardList.push(<div key="placeholder" className="item placeholder" />);
+          }
+
+          if (x === 0) {
+            topper = true;
+          //  console.log('Cards.js - dragged to group')
+         //   alert('first card group');
+          };
+
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
         }
@@ -126,7 +140,7 @@ export default class Cards extends Component {
         if (item.cardFormat === 'note') {
           cardList.push(
             <Card x={x} y={i}
-              canDrag={false}
+              canDrag={true}
               item={item}
               key={item.id}
               stopScrolling={this.props.stopScrolling}
@@ -134,8 +148,7 @@ export default class Cards extends Component {
               saveCard={this.props.saveCard}
               addCard={this.props.addCard} />
           );
-        } else {
-
+        } else {  // scott prevent top left card from dragging
           cardList.push(
             <Card x={x} y={i}
               canDrag={false}
@@ -148,8 +161,11 @@ export default class Cards extends Component {
           );
         }
       }
+
       if (isOver && canDrop && placeholderIndex === i) {
         cardList.push(<div key="placeholder" className="item placeholder" />);
+ //console.log('Cards.jstttttttttt topper, cardList, x, isOver', topper, cardList, x, isOver, cardList);
+        
       }
     });
 
@@ -162,7 +178,7 @@ export default class Cards extends Component {
     if (isOver && canDrop && cards.length === 0) {
       cardList.push(<div key="placeholder" className="item placeholder" />);
     }
-
+ //console.log('Cards.js topper, cardList, x, isOver', topper, cardList, x, isOver, cardList);
     return connectDropTarget(
       <div className="desk-items">
         {cardList}

@@ -197,7 +197,7 @@ export default class Card extends Component {
       titleMaxLength: 100,
       noteMaxLength: 3000,
       noteMaxLengthWarning: '',
-      hideSave: true
+      hideSave: true,
     };
   }  
 
@@ -285,6 +285,7 @@ export default class Card extends Component {
     const item = Object.assign({}, this.state.item);
     const disablehighLightText=item.pageId?{'disabled':'disabled'}:{};
     return (
+      
       <div
         style={{ background: 'white' }}
         className="item"

@@ -146,6 +146,11 @@ export default class Board extends Component {
 
   moveCard(lastX, lastY, nextX, nextY) {
     //this.props.moveCard(lastX, lastY, nextX, nextY);
+    console.log('Notebook.js', lastX, lastY, nextX, nextY);
+    if (nextX == 0 && (nextY == 0 || nextY == 1)) {
+      console.log('Notebook.js - grouped!!!!!', [...this.state.lists], this.state.lists, lastX, lastY);
+      return;
+    }
     const newLists = [...this.state.lists];
     if (lastX === nextX) {
       newLists[lastX].cards.splice(

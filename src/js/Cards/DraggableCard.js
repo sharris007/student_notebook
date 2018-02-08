@@ -81,13 +81,13 @@ export default class CardComponent extends Component {
 
   render() {
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard } = this.props;
-
     return connectDragSource(
       <div>
         <Card 
-            canDrag={false}
+            canDrag={true}
             style={getStyles(isDragging)} 
-            item={item} cancelAddCard={cancelAddCard} 
+            item={item} 
+            cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 
             addCard={addCard} 
         />

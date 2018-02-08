@@ -74,7 +74,6 @@ export default class CardsContainer extends Component {
     const opacity = isDragging ? 0.5 : 1;
     //const background = x == 0 ? 'gold' : null;
     // const cancelPng = require('../../assets/images/cancel.png');
-
     return connectDragSource(connectDropTarget(
       // shortcut for background:background
       <div className="desk" style={{ opacity }}>
