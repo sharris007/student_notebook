@@ -129,7 +129,7 @@ export default class Cards extends Component {
           if (x === 0) {
             topper = true;
           //  console.log('Cards.js - dragged to group')
-         //   alert('first card group');
+            alert('first card group');
           };
 
         } else if (placeholderIndex > i) {
