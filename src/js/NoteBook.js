@@ -31,7 +31,7 @@ export default class Board extends Component {
     const notesList = [...props.notesList];
 
     notesList.splice(0, 0, {
-      id:'new',
+      id: 'new',
       title: '',
       cardFormat: 'add mode',
       content: '',
@@ -61,14 +61,14 @@ export default class Board extends Component {
       isScrolling: false,
       search: '',
       lists: lists,
-      notesList:notesList,
+      notesList: notesList,
       ider: null
     };
   }
   createLists = (nextProps) => {
-    const notesList=[...nextProps.notesList];
+    const notesList = [...nextProps.notesList];
     notesList.splice(0, 0, {
-      id:'new',
+      id: 'new',
       title: '',
       cardFormat: 'add mode',
       content: '',
@@ -88,7 +88,7 @@ export default class Board extends Component {
     notesList.map((item, i) => {
       const index = i % nextProps.coloums;
       if (!item.cardFormat) {
-        item.cardFormat='note';
+        item.cardFormat = 'note';
       }
       lists[index].cards.push(item);
     });
@@ -147,27 +147,22 @@ export default class Board extends Component {
 
   moveCard(lastX, lastY, nextX, nextY) {
     //this.props.moveCard(lastX, lastY, nextX, nextY);
-    console.log('Notebook.js', lastX, lastY, nextX, nextY);
-    if (nextX == 0 && (nextY == 0 || nextY == 1)) {
-      console.log('Notebook.js - grouped!!!!!', [...this.state.lists], this.state.lists, lastX, lastY);
-      return;
-    }
     const newLists = [...this.state.lists];
+    if (!!newLists[nextX].cards[nextY]) {
+      if (newLists[nextX].cards[nextY].colorCode === '#ccf5fd') {
 
-  //  if (newLists[nextX].cards[nextY].colorCode === '#ccf5fd') {
+        let txt;
+        let r = confirm("Add to group " + newLists[nextX].cards[nextY].quote);
+        if (r == true) {
+          txt = "You pressed OK!";
+          newLists[lastX].cards.splice(lastY, 1)[0]
+          this.setState({ lists: newLists });
+          return;
+        }
 
-   //   let txt;
-   //   let r = confirm("Add to group " + newLists[nextX].cards[nextY].selectedText);
-   //   if (r == true) {
-   //       txt = "You pressed OK!";
-  //       newLists[lastX].cards.splice(lastY, 1)[0]
-  //    this.setState({ lists: newLists });
-   //   return;
-  //    } 
-      
- //   }
-    newLists[lastX].cards.splice(lastY, 1)[0]
-    
+      }
+    }
+
     if (lastX === nextX) {
       newLists[lastX].cards.splice(
         nextY,

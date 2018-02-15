@@ -22,7 +22,12 @@ const cardSource = {
     return { id, title, item, x, y, clientWidth, clientHeight };
   },
   endDrag(props, monitor) {
+
+    try { // scott used to prevent drag error check if error means card was removed and added to group
     document.getElementById(monitor.getItem().id).style.display = 'block';
+    } catch(e){
+
+    }
     props.stopScrolling();
   },
   isDragging(props, monitor) {

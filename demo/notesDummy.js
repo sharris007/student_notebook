@@ -23,7 +23,7 @@ export const notes={
             'endOffset': 122
           }
         ],
-        'quote': 'ntion to the w',
+        'quote': 'Study guides',
         'highlights': [
           {
             'jQuery1910741607432568206': 39
