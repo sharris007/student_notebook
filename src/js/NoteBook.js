@@ -41,7 +41,7 @@ export default class Board extends Component {
 
 
     const lists = [];
-      // initialize lists
+    // initialize lists
     for (let ic = 0; ic < props.coloums; ic++) {
       lists.push({
         id: ic,
@@ -52,7 +52,7 @@ export default class Board extends Component {
     notesList.map((item, i) => {
       const index = i % props.coloums;
       if (!item.cardFormat) {
-        item.cardFormat='note';
+        item.cardFormat = 'note';
       }
       lists[index].cards.push(item);
     });
@@ -77,7 +77,7 @@ export default class Board extends Component {
     });
 
     const lists = [];
-      // initialize lists
+    // initialize lists
     for (let ic = 0; ic < nextProps.coloums; ic++) {
       lists.push({
         id: ic,
@@ -92,11 +92,12 @@ export default class Board extends Component {
       }
       lists[index].cards.push(item);
     });
-    this.setState({lists});
+    this.setState({ lists });
   }
-  componentWillMount() {}
+  componentWillMount() { }
 
-  componentWillReceiveProps(nextProps) {;
+  componentWillReceiveProps(nextProps) {
+    ;
     // console.log(nextProps);
     // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
     //  //Added new note 
@@ -114,14 +115,14 @@ export default class Board extends Component {
   startScrolling(direction) {
     // if (!this.state.isScrolling) {
     switch (direction) {
-    case 'toLeft':
-      this.setState({ isScrolling: true }, this.scrollLeft());
-      break;
-    case 'toRight':
-      this.setState({ isScrolling: true }, this.scrollRight());
-      break;
-    default:
-      break;
+      case 'toLeft':
+        this.setState({ isScrolling: true }, this.scrollLeft());
+        break;
+      case 'toRight':
+        this.setState({ isScrolling: true }, this.scrollRight());
+        break;
+      default:
+        break;
     }
     // }
   }
@@ -152,6 +153,21 @@ export default class Board extends Component {
       return;
     }
     const newLists = [...this.state.lists];
+
+  //  if (newLists[nextX].cards[nextY].colorCode === '#ccf5fd') {
+
+   //   let txt;
+   //   let r = confirm("Add to group " + newLists[nextX].cards[nextY].selectedText);
+   //   if (r == true) {
+   //       txt = "You pressed OK!";
+  //       newLists[lastX].cards.splice(lastY, 1)[0]
+  //    this.setState({ lists: newLists });
+   //   return;
+  //    } 
+      
+ //   }
+    newLists[lastX].cards.splice(lastY, 1)[0]
+    
     if (lastX === nextX) {
       newLists[lastX].cards.splice(
         nextY,
@@ -188,7 +204,7 @@ export default class Board extends Component {
   }
 
   addCard() {
-       //this.props.addCard();
+    //this.props.addCard();
     const newLists = [...this.state.lists];
 
     newLists[0].cards[0] = {
@@ -217,8 +233,8 @@ export default class Board extends Component {
   }
 
   saveCard(newNote, msg) {
-    if (msg==='ADD') {
-      newNote.id='';
+    if (msg === 'ADD') {
+      newNote.id = '';
     }
     this.props.callback(msg, newNote);
   }
@@ -233,11 +249,11 @@ export default class Board extends Component {
 
     const filteredList = lists.filter(list => {
       list.cards = list.cards.filter(card => {
-        if (card.title||card.title==='') {
+        if (card.title || card.title === '') {
           return (card.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
         }
       });
-    
+
       return true;
     });
 

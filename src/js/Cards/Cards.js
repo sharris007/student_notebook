@@ -14,7 +14,7 @@ function getPlaceholderIndex(y, scrollY) {
     placeholderIndex = -1; // place at the start
   } else {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
-  }
+  } 
   return placeholderIndex;
 }
 
@@ -32,7 +32,6 @@ const specs = {
     } else if (lastX !== nextX) { // insert into another list
       nextY += 1;
     }
-console.log(nextX, nextY, lastX, lastY)
     if (lastX === nextX && lastY === nextY) { // if position equel
       return;
     }
@@ -111,26 +110,13 @@ export default class Cards extends Component {
     const { placeholderIndex } = this.state;
     let isPlaceHold = false;
     const cardList = [];
-    let topper = false;
-
-
     cards.forEach((item, i) => {
-  //    debugger;
-      //   console.log('eachcard', item);
-      //  topper = false;
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-          //      debugger;
           if (x !== 0) { // scott - don't put placeholder in top left special card
             cardList.push(<div key="placeholder" className="item placeholder" />);
           }
-
-          if (x === 0) {
-            topper = true;
-          //  console.log('Cards.js - dragged to group')
-            alert('first card group');
-          };
 
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
@@ -139,7 +125,7 @@ export default class Cards extends Component {
       if (item !== undefined) {
         if (item.cardFormat === 'note') {
           cardList.push(
-            <Card x={x} y={i}
+            <Card x={x} y={i} 
               canDrag={true}
               item={item}
               key={item.id}
@@ -163,9 +149,7 @@ export default class Cards extends Component {
       }
 
       if (isOver && canDrop && placeholderIndex === i) {
-        cardList.push(<div key="placeholder" className="item placeholder" />);
- //console.log('Cards.jstttttttttt topper, cardList, x, isOver', topper, cardList, x, isOver, cardList);
-        
+      cardList.push(<div key="placeholder" className="item placeholder" />);
       }
     });
 
@@ -178,7 +162,6 @@ export default class Cards extends Component {
     if (isOver && canDrop && cards.length === 0) {
       cardList.push(<div key="placeholder" className="item placeholder" />);
     }
- //console.log('Cards.js topper, cardList, x, isOver', topper, cardList, x, isOver, cardList);
     return connectDropTarget(
       <div className="desk-items">
         {cardList}
