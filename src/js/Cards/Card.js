@@ -3,19 +3,12 @@ import React, { Component, PropTypes } from 'react';
 import Moment from 'moment';
 import Linkify from 'react-linkify';
 
-// const propTypes = {
-//   item: PropTypes.object.isRequired,
-//   style: PropTypes.object,
-//   cancelAddCard: PropTypes.func,
-//   saveCard: PropTypes.func,
-//   addCard: PropTypes.func
-// };
-// test
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
+const checkmarkPng = require('../../assets/images/checkmark.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -128,7 +121,7 @@ const titleInputBox = {
   color: '#252525',
   letterSpacing: '-0.2px',
   color: '#252525'
-  
+
 };
 
 const titleInputBoxDisabled = {
@@ -162,7 +155,7 @@ const addNote = {
   letterSpacing: '-0.2px',
   textAlign: 'center',
   height: '22px'
-  
+
 };
 
 const line = {
@@ -179,16 +172,46 @@ const line2 = {
   marginRight: '15px',
 };
 
+
+
+
+
+const Rtest = {
+  width: '30px',
+  height: '30px',
+  borderRadius: '50%',
+  background: 'white',
+  position: 'relative',
+  top: '-50px',
+  left: '-10px',
+  border: 'solid',
+  borderWidth: '2px',
+  borderColor: 'pink',
+  marginBottom: '-30px',
+  outline: 'none'
+};
+
+
+
+const Buttony = ({ className }) => (
+  <div style={className}> </div>
+);
+
+
+
 export default class Card extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
     style: PropTypes.object,
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
-    addCard: PropTypes.func
+    addCard: PropTypes.func,
+    groupModeFlag: PropTypes.bool
   };
 
   constructor(props) {
+    alert('ggsssgg');
+    
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
@@ -198,8 +221,19 @@ export default class Card extends Component {
       noteMaxLength: 3000,
       noteMaxLengthWarning: '',
       hideSave: true,
+      selected: false,
+      groupModeFlag: props.groupModeFlag
     };
-  }  
+
+    console.log('state groupmodeflag ' + this.state.groupModeFlag);
+    console.log('props groupmodeflag ' + this.props.groupModeFlag);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    alert('gggg');
+    this.setState({groupModeFlag: nextProps.groupModeFlag});
+    console.log('state groupmodeflag ' + nextProps.groupModeFlag);
+  }
 
 
   handleCancelAddCard = (card) => {
@@ -209,7 +243,7 @@ export default class Card extends Component {
       card.cardFormat = 'note';
       this.setState({ item: card });
     }
-    this.setState({hideSave: true});
+    this.setState({ hideSave: true });
   };
 
   handleSaveCard = (card) => {
@@ -219,15 +253,15 @@ export default class Card extends Component {
 
     const newNote = {
       id: card.id,
-      title: card.pageId?card.title:this.titleInput.value,
+      title: card.pageId ? card.title : this.titleInput.value,
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
       noteText: card.noteText ? card.noteText : '',
       cardFormat: 'note',
       colorCode: card.colorCode ? card.colorCode : '',
       pageId: card.pageId ? card.pageId : '',
-      highLightText:card.highLightText?card.highLightText:'',
-      customAnnotation:card.customAnnotation?card.customAnnotation:false
+      highLightText: card.highLightText ? card.highLightText : '',
+      customAnnotation: card.customAnnotation ? card.customAnnotation : false
     };
     const msg = (card.id === 'new' || card.id === '') ? 'ADD' : 'SAVE';
     if (msg === 'ADD') {
@@ -242,7 +276,7 @@ export default class Card extends Component {
   handleEditCard = (card) => {
     card.cardFormat = 'create new';
     this.setState({ item: card }, () => {
-      this.titleInput.value = card.pageId?card.highLightText:card.title;
+      this.titleInput.value = card.pageId ? card.highLightText : card.title;
       this.contentArea.value = card.content;
     });
   }
@@ -259,7 +293,12 @@ export default class Card extends Component {
     this.props.addCard();
   };
 
-  checkNoteMaxLengthValidation= () => {
+  handleSelectCard = (selected) => {
+    this.setState({ selected: !selected });
+    // alert('ddd');
+  };
+
+  checkNoteMaxLengthValidation = () => {
     const inputCharLength = this.contentArea.value.length;
     const inputCharLengthTitle = this.titleInput.value.length;
     const remainingCount = this.state.noteMaxLength - inputCharLength;
@@ -280,17 +319,23 @@ export default class Card extends Component {
   }
 
   render() {
+    debugger;
+  console.log('render state groupmodeflag ' + this.state.groupModeFlag);
+    console.log('render props groupmodeflag ' + this.props.groupModeFlag);
     const { style } = this.props;
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
-    const disablehighLightText=item.pageId?{'disabled':'disabled'}:{};
+    const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     return (
-      
       <div
         style={{ background: 'white' }}
         className="item"
         id={style ? item.id : null}
       >
+
+{this.state.groupModeFlag===true?'statetrue':'statefalse'}  
+{this.props.groupModeFlag===true?'propstrue':'propsfalse'}  
+
         {item.cardFormat === 'note' && item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
             Main ideas
@@ -311,6 +356,13 @@ export default class Card extends Component {
             Questions
           </div>
         ) : null}
+
+        {item.cardFormat === 'note' && this.state.groupModeFlag === true ?
+          <button style={Rtest} onClick={() => this.handleSelectCard(this.state.selected)}>
+            {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
+          : null}
+
+
         {item.cardFormat === 'note' ? (
           <div style={date}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div> // eslint-disable-line
         ) : null}
@@ -326,7 +378,7 @@ export default class Card extends Component {
               onClick={this.handleAddCard}
               style={{ border: '0', background: 'transparent' }}
             >
-             <img src={addPng} />
+              <img src={addPng} />
             </button>
           </div>
         ) : null}
@@ -385,32 +437,32 @@ export default class Card extends Component {
             </div>
           </div>
         ) : (
-          <div>
-          {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
-              <div className="item-content">
-                <span style={styleContent}>“{item.highLightText}”</span>
-              </div>
-            </div> : null}
+            <div>
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <span style={styleContent}>“{item.highLightText}”</span>
+                </div>
+              </div> : null}
 
-            {item.cardFormat === 'note' && item.pageId ? 
-            null : <br />}
+              {item.cardFormat === 'note' && item.pageId ?
+                null : <br />}
 
-            {item.cardFormat === 'note' && item.pageId ? 
-            <div style={line} /> : null}
+              {item.cardFormat === 'note' && item.pageId ?
+                <div style={line} /> : null}
 
-            {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
-              <div className="item-content">
-                <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
-              </div>
-            </div> : null}
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                </div>
+              </div> : null}
 
-            {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
-            <div className="item-content">
-              <span style={styleContent2}><Linkify properties={{target: '_blank'}}>{item.content}</Linkify></span>
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                </div>
+              </div> : null}
             </div>
-          </div> : null}
-          </div>
-        )}
+          )}
 
         {item.cardFormat === 'note' ? (
           <div className="item-perfomers">
@@ -422,23 +474,23 @@ export default class Card extends Component {
                   alt="delete"
                 />
               </a>
-             
+
             </div>}
 
-            {item.noteText === 'I' ? null : <div style={{width: '5px'}} className="add-perfomers">&nbsp;</div>}
+            {item.noteText === 'I' ? null : <div style={{ width: '5px' }} className="add-perfomers">&nbsp;</div>}
 
-            {item.noteText === 'I' ? null:<div  className="add-perfomers">
+            {item.noteText === 'I' ? null : <div className="add-perfomers">
               <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleEditCard(item)}>
-                <img 
-                  style={{  height: '16px', width: '16px' }}
+                <img
+                  style={{ height: '16px', width: '16px' }}
                   src={editPng}
                   alt="edit"
                 />
               </a>
             </div>}
-            
-            {!!item.pageId ? 
-            <div className="delete-perfomers">
+
+            {!!item.pageId ?
+              <div className="delete-perfomers">
                 <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px' }} onClick={() => this.handleNavigate(item)}>
                   <img
                     style={{ height: '24px', width: '24px' }}
@@ -446,33 +498,34 @@ export default class Card extends Component {
                     alt="navigate"
                   />
                 </a>
-            </div>
-            : null}
+              </div>
+              : null}
           </div>
         ) : (
-          <div className="item-perfomers">
-            {item.cardFormat === 'create new' ? (
-              <div>
-                {!this.state.hideSave ?
-                <a
-                  style={{ float: 'right', paddingRight: '5px', color: '#1ca6a5' }}
-                  onClick={() => this.handleSaveCard(item)}
-                >
-                 <span style={saveStyle}>SAVE</span>
-                </a>
-                :null
-                }
-                <a
-                  style={{ float: 'right', paddingRight: '15px', color: '#1ca6a5' }}
-                  onClick={() => { this.handleCancelAddCard(item); }}
-                >
-                <span style={cancelStyle}>CANCEL</span>
-                </a>
-                {this.state.noteMaxLengthWarning.length ? <span style={{ color: '#db0020' }}>{this.state.noteMaxLengthWarning}</span> : null}
-              </div>
-            ) : null}
-          </div>
-        )}
+            <div className="item-perfomers">
+              {item.cardFormat === 'create new' ? (
+                <div>
+                  {!this.state.hideSave ?
+                    <a
+                      style={{ float: 'right', paddingRight: '5px', color: '#1ca6a5' }}
+                      onClick={() => this.handleSaveCard(item)}
+                    >
+                      <span style={saveStyle}>SAVE</span>
+                    </a>
+                    : null
+                  }
+                  <a
+                    style={{ float: 'right', paddingRight: '15px', color: '#1ca6a5' }}
+                    onClick={() => { this.handleCancelAddCard(item); }}
+                  >
+                    <span style={cancelStyle}>CANCEL</span>
+                  </a>
+                  {this.state.noteMaxLengthWarning.length ? <span style={{ color: '#db0020' }}>{this.state.noteMaxLengthWarning}</span> : null}
+                </div>
+              ) : null}
+            </div>
+          )}
+
       </div>
     );
   }

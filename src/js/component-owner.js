@@ -11,6 +11,7 @@ import {injectIntl} from 'react-intl';
 import _ from 'lodash';
 
 import NoteBook from './NoteBook';
+import NoteBookHeader from './NoteBookHeader';
 
 
 class ComponentOwner extends React.Component {
@@ -20,16 +21,18 @@ class ComponentOwner extends React.Component {
   // This is defined using an ES7 class property (transpiled by Babel Stage 0)
   //
   static propTypes = {
-    notesList:PropTypes.array.isRequired
+    notesList:PropTypes.array.isRequired,
+    groupModeFlag:PropTypes.bool
   };
   constructor(props) {
     super(props);
     this.state={
       lists:props.lists,
+      groupModeFlag: props.groupModeFlag,
       notesList:props.notesList
     };
   }
-  callback=(msg, data)=> {;
+  callback=(msg, data)=> {
     const notesList=[...this.state.notesList];
     if (msg==='ADD') {
       notesList.splice(0, 0, {
@@ -61,8 +64,14 @@ class ComponentOwner extends React.Component {
       }
     }else if (msg==='NAVIGATE') {
       console.log('Navigation', data);
+    } else if (msg==="GROUP"){
+      this.setState({
+        groupModeFlag: data
+      });
     }
   }
+
+ 
 
   //
   // Note that combining the fat arrow syntax with ES7 class properties (transpiled by Babel Stage 0), we eliminate the
@@ -71,10 +80,12 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { notesList } = this.state;
+    debugger;
+    const { notesList, groupModeFlag } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} callback={this.callback} coloums={3}/>
+        <NoteBookHeader  callback={this.callback}></NoteBookHeader>
+        <NoteBook notesList={notesList} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3}/>
       </div>
     );
   };  

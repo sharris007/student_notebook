@@ -56,7 +56,8 @@ export default class CustomDragLayer extends Component {
       y: PropTypes.number.isRequired
     }),
     isDragging: PropTypes.bool.isRequired,
-    snapToGrid: PropTypes.bool.isRequired
+    snapToGrid: PropTypes.bool.isRequired,
+    groupModeFlag: PropTypes.bool
   };
 
   renderItem(type, item) {
@@ -71,6 +72,7 @@ export default class CustomDragLayer extends Component {
   }
 
   render() {
+    debugger;
     const { item, itemType, isDragging } = this.props;
 
     if (!isDragging) {

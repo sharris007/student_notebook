@@ -4,6 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import CardsContainer from './Cards/CardsContainer';
 import CustomDragLayer from './CustomDragLayer';
+import NoteBookHeader from './NoteBookHeader';
 
 import '../assets/temp.styl';
 
@@ -11,6 +12,7 @@ import '../assets/temp.styl';
 export default class Board extends Component {
   static propTypes = {
     notesList: PropTypes.array.isRequired,
+    groupModeFlag: PropTypes.bool,
     callback: PropTypes.func
   };
 
@@ -29,6 +31,7 @@ export default class Board extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     // const lists = [...props.lists];
     const notesList = [...props.notesList];
+
 
     notesList.splice(0, 0, {
       id: 'new',
@@ -62,7 +65,8 @@ export default class Board extends Component {
       search: '',
       lists: lists,
       notesList: notesList,
-      ider: null
+      ider: null,
+      groupModeFlag: props.groupModeFlag
     };
   }
   createLists = (nextProps) => {
@@ -97,7 +101,8 @@ export default class Board extends Component {
   componentWillMount() { }
 
   componentWillReceiveProps(nextProps) {
-    ;
+
+    debugger;
     // console.log(nextProps);
     // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
     //  //Added new note 
@@ -107,6 +112,8 @@ export default class Board extends Component {
     //   this.createLists(nextProps);
     // }else if (nextProps.coloums!==this.props.coloums) {
     //   // Resize of window
+    
+    this.setState({groupModeFlag: nextProps.groupModeFlag});
     this.createLists(nextProps);
     // }
   }
@@ -210,6 +217,7 @@ export default class Board extends Component {
       content2: '',
       changeDate: new Date()
     };
+    
     this.setState({ lists: newLists });
   }
 
@@ -234,12 +242,14 @@ export default class Board extends Component {
     this.props.callback(msg, newNote);
   }
 
+
   handleOnChange(event) {
     this.props.getLists(6);
     this.setState({ search: event.target.value });
   }
 
   render() {
+   debugger;
     const { lists } = this.state;
 
     const filteredList = lists.filter(list => {
@@ -254,6 +264,7 @@ export default class Board extends Component {
 
     return (
       <main>
+
         <div style={{ height: '100%' }}>
           <CustomDragLayer snapToGrid={false} />{" "}
           {filteredList.map((item, i) => (
@@ -269,6 +280,7 @@ export default class Board extends Component {
               cancelAddCard={this.cancelAddCard}
               saveCard={this.saveCard}
               addCard={this.addCard}
+              groupModeFlag={this.state.groupModeFlag}
               x={i}
             />
           ))}

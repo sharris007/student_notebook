@@ -75,16 +75,31 @@ export default class CardComponent extends Component {
     stopScrolling: PropTypes.func,
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
-    addCard: PropTypes.func
+    addCard: PropTypes.func,
+    groupModeFlag: PropTypes.bool
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      groupModeFlag: props.groupModeFlag
+    };
   }
 
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {
       captureDraggingState: true
     });
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState = {groupModeFlag: nextProps.groupModeFlag};
   }
 
   render() {
+    debugger;
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard } = this.props;
     return connectDragSource(
       <div>
@@ -94,7 +109,8 @@ export default class CardComponent extends Component {
             item={item} 
             cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 
-            addCard={addCard} 
+            addCard={addCard}
+            groupModeFlag={this.state.groupModeFlag} 
         />
       </div>
     );

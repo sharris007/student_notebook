@@ -25,7 +25,7 @@ export default class NoteBookComponent {
     const App = () => (
       <IntlProvider locale={locale}>
         <MuiThemeProvider>
-          <ComponentOwner notesList={config.notesList} callback={config.callback}/>
+          <ComponentOwner notesList={config.notesList} groupModeFlag={config.groupModeFlag} callback={config.callback}/>
         </MuiThemeProvider>
       </IntlProvider>
      );

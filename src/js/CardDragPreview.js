@@ -8,7 +8,8 @@ const styles = {
 };
 
 const propTypes = {
-  card: PropTypes.object
+  card: PropTypes.object,
+  groupModeFlag: PropTypes.bool
 };
 
 const CardDragPreview = (props) => {
@@ -17,7 +18,7 @@ const CardDragPreview = (props) => {
 
   return (
     <div style={styles}>
-      <Card canDrag={true} item={props.card.item} />
+      <Card canDrag={true} item={props.card.item} groupModeFlag={props.groupModeFlag} />
     </div>
   );
 };

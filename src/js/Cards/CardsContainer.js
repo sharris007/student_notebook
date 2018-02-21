@@ -65,12 +65,25 @@ export default class CardsContainer extends Component {
     isScrolling: PropTypes.bool,
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
-    addCard: PropTypes.func
+    addCard: PropTypes.func,
+    groupModeFlag: PropTypes.bool
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {groupModeFlag: props.groupModeFlag};
+  //  this.moveCard = this.moveCard.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({groupModeFlag: nextProps.groupModeFlag});
+  }
 
   render() {
+    debugger;
     const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging } = this.props;
+
     const opacity = isDragging ? 0.5 : 1;
     //const background = x == 0 ? 'gold' : null;
     // const cancelPng = require('../../assets/images/cancel.png');
@@ -90,6 +103,7 @@ export default class CardsContainer extends Component {
           cancelAddCard={this.props.cancelAddCard}
           saveCard={this.props.saveCard}
           addCard={this.props.addCard}
+          groupModeFlag={this.state.groupModeFlag} 
         />
       </div>
     ));

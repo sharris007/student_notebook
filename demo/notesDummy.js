@@ -23,7 +23,7 @@ export const notes={
             'endOffset': 122
           }
         ],
-        'quote': 'Study guides',
+        'quote': 'Study guide group',
         'highlights': [
           {
             'jQuery1910741607432568206': 39
@@ -158,6 +158,58 @@ export const notes={
       'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
       'createdTime': 1512384942792,
       'updatedTime': 1512384950015
+    },
+    {
+      'userId': 'ffffffff57a9f814ddr00d0a20bf6029',
+      'contextId': '59b7c8cbe4b0b957rr1373cf',
+      'isBookMark': false,
+      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
+      'pageNo': '',
+      'color': '#ccf5fd',
+      'role': null,
+      'selectedText': 'From Instructor ntion to the w',
+      'subContextId': '',
+      'clientApp': 'ETEXT_WEB',
+      'sharable': true,
+      'status': 'Active',
+      'data': {
+        'ranges': [
+          {
+            'start': '/section[1]/p[1]',
+            'startOffset': 108,
+            'end': '/section[1]/p[1]',
+            'endOffset': 122
+          }
+        ],
+        'quote': 'Final Exam notes',
+        'highlights': [
+          {
+            'jQuery1910741607432568206': 39
+          }
+        ],
+        'createdTimestamp': '2017-11-30T09:30:48.173Z',
+        'colorCode': '#ccf5fd',
+        'shareable': true,
+        'lastColor': '#55DF49',
+        'text': 'dd www.google.com amazon.in',
+        'updatedTimestamp': null,
+        'source': {
+          'id': 'a02517fb62bc058d93245ss29efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
+          'title': '1.4 Composition of the Atmosphere',
+          'playOrder': 0,
+          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
+          'type': 'page',
+          'label': '1.4 Composition of the Atmosphere',
+          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
+          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689'
+        },
+        'context': '59b7c8cbe4b0ssb957f51373cf',
+        'user': 'ffffffff57a9fss814e4b00d0a20bf6029',
+        'id': '013781be-9f7d-414ww0-9c93-c024a13a62ba'
+      },
+      'id': '013781be-9f7d-4140-9c93-c024a13a62ba',
+      'createdTime': 1512027485421,
+      'updatedTime': 1512034862608
     },
     {
       'userId': 'ffffffff59b8c629e4b09efb34405de7',

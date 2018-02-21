@@ -14,13 +14,21 @@ function getPlaceholderIndex(y, scrollY) {
     placeholderIndex = -1; // place at the start
   } else {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
-  } 
+  }
   return placeholderIndex;
 }
 
 const specs = {
   drop(props, monitor, component) {
     document.getElementById(monitor.getItem().id).style.display = 'block';
+
+
+    let newStyle = { 'display': 'none', 'left': '0px' };
+
+    newStyle.display = 'block';
+    newStyle.left = monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
+
+
     const { placeholderIndex } = component.state;
     const lastX = monitor.getItem().x;
     const lastY = monitor.getItem().y;
@@ -39,6 +47,19 @@ const specs = {
   },
   hover(props, monitor, component) {
     // defines where placeholder is rendered
+
+    //  const draggedPosition = item.position;
+    const hoverPosition = props.position;
+
+    let newStyle = { 'display': 'none', 'left': '0px' };
+
+    newStyle.display = 'block';
+    newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
+    component.setState({ style: newStyle });
+
+    // document.getElementById(monitor.getItem().id).style.left
+    //The current mouse position where the "on hover indicator" is expected
+
     const placeholderIndex = getPlaceholderIndex(
       monitor.getClientOffset().y,
       findDOMNode(component).scrollTop
@@ -94,20 +115,28 @@ export default class Cards extends Component {
     isScrolling: PropTypes.bool,
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
-    addCard: PropTypes.func
+    addCard: PropTypes.func,
+    groupModeFlag: PropTypes.bool
   }
 
   constructor(props) {
     super(props);
     this.state = {
       placeholderIndex: undefined,
-      isScrolling: false
+      isScrolling: false,
+      groupModeFlag: props.groupModeFlag
     };
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({groupModeFlag: nextProps.groupModeFlag});
+  }
+
   render() {
+    debugger;
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
-    const { placeholderIndex } = this.state;
+    const { placeholderIndex, groupModeFlag } = this.state;
     let isPlaceHold = false;
     const cardList = [];
     cards.forEach((item, i) => {
@@ -125,14 +154,15 @@ export default class Cards extends Component {
       if (item !== undefined) {
         if (item.cardFormat === 'note') {
           cardList.push(
-            <Card x={x} y={i} 
+            <Card x={x} y={i}
               canDrag={true}
               item={item}
               key={item.id}
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}
-              addCard={this.props.addCard} />
+              addCard={this.props.addCard}
+              groupModeFlag={groupModeFlag} />
           );
         } else {  // scott prevent top left card from dragging
           cardList.push(
@@ -143,13 +173,15 @@ export default class Cards extends Component {
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}
-              addCard={this.props.addCard} />
+              addCard={this.props.addCard}
+              groupModeFlag={groupModeFlag} />
+
           );
         }
       }
 
       if (isOver && canDrop && placeholderIndex === i) {
-      cardList.push(<div key="placeholder" className="item placeholder" />);
+        cardList.push(<div key="placeholder" className="item placeholder" />);
       }
     });
 

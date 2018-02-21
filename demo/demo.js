@@ -35,7 +35,8 @@ function init() {
     callback: (msg, data) => {
       console.log(msg, data);
     },
-    notesList: notesList
+    notesList: notesList,
+    groupModeFlag: false
   //  responsiveColumns
   });
 }
