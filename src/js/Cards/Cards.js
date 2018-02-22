@@ -134,7 +134,6 @@ export default class Cards extends Component {
   }
 
   render() {
-    debugger;
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
     const { placeholderIndex, groupModeFlag } = this.state;
     let isPlaceHold = false;
@@ -157,7 +156,7 @@ export default class Cards extends Component {
             <Card x={x} y={i}
               canDrag={true}
               item={item}
-              key={item.id}
+              key={item.keyId}
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}
@@ -168,15 +167,15 @@ export default class Cards extends Component {
           cardList.push(
             <Card x={x} y={i}
               canDrag={false}
-              key={item.id}
+              key={item.keyId}
               item={item}
               stopScrolling={this.props.stopScrolling}
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}
               addCard={this.props.addCard}
               groupModeFlag={groupModeFlag} />
-
           );
+
         }
       }
 
@@ -193,7 +192,12 @@ export default class Cards extends Component {
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
       cardList.push(<div key="placeholder" className="item placeholder" />);
-    }
+    }  
+
+    console.log('row');
+    cardList.forEach((item, i) => {
+      console.log(item.props + ' ' + item.key);
+    });
     return connectDropTarget(
       <div className="desk-items">
         {cardList}

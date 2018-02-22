@@ -2,12 +2,18 @@ import React, { Component, PropTypes } from 'react';
 // import ImageUploader from './ImageUploader';
 import Moment from 'moment';
 import Linkify from 'react-linkify';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
+const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
 
 const ellipsis = {
@@ -48,6 +54,14 @@ const questions = {
   paddingTop: '10px',
   paddingLeft: '10px',
   color: '#000000'
+};
+
+const group = {
+  backgroundColor: 'black',
+  height: '36px',
+  paddingTop: '10px',
+  paddingLeft: '10px',
+  color: 'white'
 };
 
 const styleContent = {
@@ -210,8 +224,7 @@ export default class Card extends Component {
   };
 
   constructor(props) {
-    alert('ggsssgg');
-    
+
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
@@ -225,14 +238,10 @@ export default class Card extends Component {
       groupModeFlag: props.groupModeFlag
     };
 
-    console.log('state groupmodeflag ' + this.state.groupModeFlag);
-    console.log('props groupmodeflag ' + this.props.groupModeFlag);
   }
 
   componentWillReceiveProps(nextProps) {
-    alert('gggg');
-    this.setState({groupModeFlag: nextProps.groupModeFlag});
-    console.log('state groupmodeflag ' + nextProps.groupModeFlag);
+    this.setState({ groupModeFlag: nextProps.groupModeFlag });
   }
 
 
@@ -293,9 +302,19 @@ export default class Card extends Component {
     this.props.addCard();
   };
 
-  handleSelectCard = (selected) => {
-    this.setState({ selected: !selected });
-    // alert('ddd');
+  handleSelectCard = () => {
+    const msg = (!this.state.selected === true) ? 'SELECTED' : 'UNSELECTED';
+
+    // if (this.state.selected === true){
+    //   msg = 'Selected';
+    // } else {
+    //   msg = 'Unselected';
+    // }
+    this.setState({ selected: !this.state.selected }, () => {
+
+    this.props.saveCard(this.state.item, msg);
+    // this.props.selectCard(card);
+    });
   };
 
   checkNoteMaxLengthValidation = () => {
@@ -319,9 +338,6 @@ export default class Card extends Component {
   }
 
   render() {
-    debugger;
-  console.log('render state groupmodeflag ' + this.state.groupModeFlag);
-    console.log('render props groupmodeflag ' + this.props.groupModeFlag);
     const { style } = this.props;
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
@@ -332,10 +348,6 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
-
-{this.state.groupModeFlag===true?'statetrue':'statefalse'}  
-{this.props.groupModeFlag===true?'propstrue':'propsfalse'}  
-
         {item.cardFormat === 'note' && item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
             Main ideas
@@ -356,9 +368,35 @@ export default class Card extends Component {
             Questions
           </div>
         ) : null}
+        {item.cardFormat === 'note' && item.noteText === 'G' ? (
+          <div className="item-name" style={group}>
+            Group
+              {/* <div className="delete-perfomers" style={{ float: 'right' }}>
+              <a style={{ height: '36px', width: '36px', margin: '0', padding: '10px' }} onClick={() => this.handleNavigate(item)}>
+                <img
+                  style={{ height: '20px', width: '24px' }}
+                  src={menuPng}
+                  alt="navigate"
+                />
+              </a>
+            </div> */}
+            <div className="delete-perfomers" style={{ float: 'right', 'margin-top': '-5px' }}>
+            <IconMenu
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+              targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+              iconStyle={{ fill: 'rgba(255, 255, 255, 0.87)', 'margin-top': '-20px' }}
+            >
+              <MenuItem primaryText="Rename group" />
+              <MenuItem primaryText="Ungroup notes" />
+            </IconMenu>
+            </div>
 
-        {item.cardFormat === 'note' && this.state.groupModeFlag === true ?
-          <button style={Rtest} onClick={() => this.handleSelectCard(this.state.selected)}>
+          </div>
+        ) : null}
+
+        {item.cardFormat === 'note' && this.state.groupModeFlag === true && item.colorCode !== 'GROUP' ?
+          <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
             {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
           : null}
 

@@ -99,7 +99,6 @@ export default class CardComponent extends Component {
   }
 
   render() {
-    debugger;
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard } = this.props;
     return connectDragSource(
       <div>

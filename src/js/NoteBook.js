@@ -32,16 +32,16 @@ export default class Board extends Component {
     // const lists = [...props.lists];
     const notesList = [...props.notesList];
 
-
-    notesList.splice(0, 0, {
-      id: 'new',
-      title: '',
-      cardFormat: 'add mode',
-      content: '',
-      content2: '',
-      changeDate: ''
-    });
-
+    if (props.groupModeFlag === false) {
+      notesList.splice(0, 0, {
+        id: 'new',
+        title: '',
+        cardFormat: 'add mode',
+        content: '',
+        content2: '',
+        changeDate: ''
+      });
+    }
 
     const lists = [];
     // initialize lists
@@ -71,14 +71,16 @@ export default class Board extends Component {
   }
   createLists = (nextProps) => {
     const notesList = [...nextProps.notesList];
-    notesList.splice(0, 0, {
-      id: 'new',
-      title: '',
-      cardFormat: 'add mode',
-      content: '',
-      content2: '',
-      changeDate: ''
-    });
+    if (nextProps.groupModeFlag === false) {
+      notesList.splice(0, 0, {
+        id: 'new',
+        title: '',
+        cardFormat: 'add mode',
+        content: '',
+        content2: '',
+        changeDate: ''
+      });
+    }
 
     const lists = [];
     // initialize lists
@@ -96,13 +98,14 @@ export default class Board extends Component {
       }
       lists[index].cards.push(item);
     });
-    this.setState({ lists });
+    this.setState({ lists,
+      groupModeFlag: nextProps.groupModeFlag
+     });
   }
   componentWillMount() { }
 
   componentWillReceiveProps(nextProps) {
 
-    debugger;
     // console.log(nextProps);
     // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
     //  //Added new note 
@@ -112,8 +115,8 @@ export default class Board extends Component {
     //   this.createLists(nextProps);
     // }else if (nextProps.coloums!==this.props.coloums) {
     //   // Resize of window
-    
-    this.setState({groupModeFlag: nextProps.groupModeFlag});
+
+    this.setState({ groupModeFlag: nextProps.groupModeFlag });
     this.createLists(nextProps);
     // }
   }
@@ -155,8 +158,10 @@ export default class Board extends Component {
   moveCard(lastX, lastY, nextX, nextY) {
     //this.props.moveCard(lastX, lastY, nextX, nextY);
     const newLists = [...this.state.lists];
+
     if (!!newLists[nextX].cards[nextY]) {
-      if (newLists[nextX].cards[nextY].colorCode === '#ccf5fd') {
+      if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
+
 
         let txt;
         let r = confirm("Add to group " + newLists[nextX].cards[nextY].quote);
@@ -182,6 +187,13 @@ export default class Board extends Component {
       // delete element from old place
       newLists[lastX].cards.splice(lastY, 1);
     }
+    newLists.forEach((item, i) => {
+      console.log(item);
+    });
+
+    console.log(newLists[1].cards[1]);
+    newLists[2].cards[0].content = 'hello';
+    newLists[1].cards.push(newLists[2].cards[0]);
     this.setState({ lists: newLists });
   }
 
@@ -217,7 +229,7 @@ export default class Board extends Component {
       content2: '',
       changeDate: new Date()
     };
-    
+
     this.setState({ lists: newLists });
   }
 
@@ -249,7 +261,6 @@ export default class Board extends Component {
   }
 
   render() {
-   debugger;
     const { lists } = this.state;
 
     const filteredList = lists.filter(list => {
@@ -269,7 +280,7 @@ export default class Board extends Component {
           <CustomDragLayer snapToGrid={false} />{" "}
           {filteredList.map((item, i) => (
             <CardsContainer
-              key={item.id}
+              key={item.keyId}
               id={item.id}
               item={item}
               moveCard={this.moveCard}

@@ -71,7 +71,6 @@ export default class CardsContainer extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {groupModeFlag: props.groupModeFlag};
   //  this.moveCard = this.moveCard.bind(this);
   }
@@ -81,7 +80,6 @@ export default class CardsContainer extends Component {
   }
 
   render() {
-    debugger;
     const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging } = this.props;
 
     const opacity = isDragging ? 0.5 : 1;

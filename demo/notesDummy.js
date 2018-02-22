@@ -1,5 +1,5 @@
 export const notes={
-  'total': 6,
+  'total': 7,
   'response': [
     {
       'userId': 'ffffffff57a9f814e4b00d0a20bf6029',
@@ -136,7 +136,7 @@ export const notes={
           }
         ],
         'createdTimestamp': '2017-12-04T10:55:37.186Z',
-        'colorCode': '#FFD232',
+        'colorCode': 'GROUP',
         'shareable': false,
         'lastColor': '#FFD232',
         'text': 'ssss',
@@ -219,7 +219,7 @@ export const notes={
       'pageNo': '',
       'color': '#55DF49',
       'role': null,
-      'selectedText': 'someone',
+      'selectedText': 'This is a main idea',
       'subContextId': '',
       'clientApp': 'ETEXT_WEB',
       'sharable': false,
@@ -233,7 +233,7 @@ export const notes={
             'endOffset': 30
           }
         ],
-        'quote': 'someone',
+        'quote': 'This is a main idea',
         'highlights': [
           {
             'jQuery19104064103849826948': 48
@@ -249,7 +249,7 @@ export const notes={
         
         'source': {
           'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'title': '1.1 Focus On the Atmosphere',
+          'title': '1.3 World As A Marble',
           'playOrder': 0,
           'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
           'type': 'page',
@@ -257,6 +257,7 @@ export const notes={
           'label': '1.1 Focus On the Atmosphere',
           'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
         },
+        
         'context': '59b7c8cbe4b0b957f51373cf',
         'user': 'ffffffff59b8c629e4b09efb34405de7'
       },
@@ -367,6 +368,58 @@ export const notes={
       'id': '2a7f45c6-e40e-4303-901f-058213641667',
       'createdTime': 1512567124859,
       'updatedTime': 1512626505378
-    }
+    },
+    {
+      'userId': 'ffffffff59b8c629e4b09efb34405de7',
+      'contextId': '59b7c8cbe4b0b957f51373cf',
+      'isBookMark': false,
+      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
+      'pageNo': '',
+      'color': '#FC92CF',
+      'role': null,
+      'selectedText': 'this will be a group',
+      'subContextId': '',
+      'clientApp': 'ETEXT_WEB',
+      'sharable': false,
+      'status': 'Active',
+      'data': {
+        'ranges': [
+          {
+            'start': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
+            'startOffset': 9,
+            'end': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
+            'endOffset': 15
+          }
+        ],
+        'quote': 'major',
+        'highlights': [
+          {
+            'jQuery191040270088761648304': 46
+          }
+        ],
+        'createdTimestamp': '2017-12-06T09:48:10.454Z',
+        'colorCode': '#FC92CF',
+        'shareable': false,
+        'lastColor': '#FC92CF',
+        'text': 'Notebook Testing',
+        'updatedTimestamp': null,
+        'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
+        'source': {
+          'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
+          'title': '1.4 Composition of the Atmosphere',
+          'playOrder': 0,
+          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
+          'type': 'page',
+          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
+          'label': '1.4 Composition of the Atmosphere',
+          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
+        },
+        'context': '59b7c8cbe4b0b957f51373cf',
+        'user': 'ffffffff59b8c629e4b09efb34405de7'
+      },
+      'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
+      'createdTime': 1512553712133,
+      'updatedTime': 1512553944468
+    },
   ]
 };

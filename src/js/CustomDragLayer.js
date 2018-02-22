@@ -72,7 +72,6 @@ export default class CustomDragLayer extends Component {
   }
 
   render() {
-    debugger;
     const { item, itemType, isDragging } = this.props;
 
     if (!isDragging) {

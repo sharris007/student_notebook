@@ -25,6 +25,8 @@ function init() {
       note.noteText = 'O'; //Observations
     } else if (note.colorCode === '#ccf5fd') { //Share(Blue)
       note.noteText = 'I'; // From Instructor
+    } else if (note.colorCode === 'GROUP') { //Group Card (Blue)
+      note.noteText = 'G'; // Group
     }
     notesList.push(note);
   }
@@ -36,7 +38,8 @@ function init() {
       console.log(msg, data);
     },
     notesList: notesList,
-    groupModeFlag: false
+    groupModeFlag: false,
+    toolbarMode: 'DEFAULT'
   //  responsiveColumns
   });
 }
