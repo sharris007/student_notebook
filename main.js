@@ -3,7 +3,7 @@ import './main.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // i18n, set up for French out-of-the-box
-import {addLocaleData, IntlProvider} from 'react-intl';
+import { addLocaleData, IntlProvider } from 'react-intl';
 import frLocaleData from 'react-intl/locale-data/fr';
 
 import ComponentOwner from './src/js/component-owner';
@@ -20,19 +20,19 @@ export default class NoteBookComponent {
     this.init(config);
   }
 
-  init=config=>{
+  init = config => {
     const locale = config.locale ? config.locale : 'en';
     const App = () => (
       <IntlProvider locale={locale}>
         <MuiThemeProvider>
-          <ComponentOwner notesList={config.notesList} groupModeFlag={config.groupModeFlag} callback={config.callback}/>
+          <ComponentOwner notesList={config.notesList} toolbarMode={config.toolbarMode} groupModeFlag={config.groupModeFlag} callback={config.callback} />
         </MuiThemeProvider>
       </IntlProvider>
-     );
-    ReactDOM.render(
-       <App/>, document.getElementById(config.elementId)
     );
-  };  
+    ReactDOM.render(
+      <App />, document.getElementById(config.elementId)
+    );
+  };
 };
 
 export NoteBook from './src/js/NoteBook';

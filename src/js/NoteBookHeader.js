@@ -2,66 +2,39 @@ import React, { Component, PropTypes } from 'react';
 import '../assets/temp.styl';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
+import { orange500, blue500 } from 'material-ui/styles/colors';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Checkbox from 'material-ui/Checkbox';
 
 const VerticalLine = () => (
   <div style={{ float: 'left', borderLeft: '2px solid lightgrey', height: '40px', marginLeft: '10px', marginRight: '10px' }}></div>
 );
 
 
-
-const buttonAllStyle = {
-  background: 'grey',
-  borderRadius: '30px',
-  fontSize: '12px',
-  width: '75px',
-  height: '40px',
-  color: 'white'
+const styles = {
+  errorStyle: {
+    color: orange500,
+  },
+  underlineStyle: {
+    borderColor: blue500,
+  },
+  floatingLabelStyle: {
+    color: orange500,
+  },
+  floatingLabelFocusStyle: {
+    color: blue500,
+  }
 };
 
-const buttonStyles = {
-  float: 'left',
-  marginRight: '10px',
-  background: 'white',
-  borderColor: 'grey',
-  borderWidth: '2px',
-  borderRadius: '2px',
-  fontSize: '15px',
-  width: '100px',
-  height: '40px',
-  color: 'grey'
-};
 
-const buttonGroupStyle = {
-  float: 'right',
-  background: 'white',
-  borderColor: 'grey',
-  borderWidth: '2px',
-  borderRadius: '2px',
-  fontSize: '15px',
-  height: '40px',
-  color: 'grey',
-  outline: 'none'
-};
 
 
 let groupModeToggleFlag = false;
 
-let groupOn = {
-  background: 'grey',
-  height: '40px',
-  'padding-right': '180px'
-}
 
-let groupOff = {
-  height: '40px',
-  'padding-right': '180px'
-
-}
 
 export default class NoteBookHeader extends Component {
   static propTypes = {
@@ -74,21 +47,27 @@ export default class NoteBookHeader extends Component {
 
   constructor(props) {
     super(props);
-debugger;
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleGroupSaveButton = this.handleGroupSaveButton.bind(this);
+    this.handleGroupNotesButton = this.handleGroupNotesButton.bind(this);
+    this.handleNewGroupButton = this.handleNewGroupButton.bind(this);
+    this.handleCancelButton = this.handleCancelButton.bind(this);
     // const lists = [...props.lists];
 
     this.state = {
       isScrolling: false,
       search: '',
       ider: null,
-      menuBarClass: 'test'
+      menuBarClass: 'test',
+      showGroupInputTitle: false,
+      toolbarMode: props.toolbarMode,
+      groupTitle: ''
     };
 
   }
 
 
-
+  
   handleOnChange(event) {
     this.props.getLists(6);
     this.setState({ search: event.target.value });
@@ -99,33 +78,76 @@ debugger;
     this.props.callback('GROUP', groupModeToggleFlag);
   }
 
+  handleCancelButton(event) {
+    groupModeToggleFlag = !groupModeToggleFlag;
+    this.setState({ showGroupTitleInput: false, groupTitle: '' });
+    this.props.callback('GROUP', groupModeToggleFlag);
+  } 
+
+  handleNewGroupButton(event) {
+    let toolbarMode =
+      this.setState({ showGroupTitleInput: true });
+  }
+
+  handleGroupSaveButton(event) {
+    let toolbarMode = this.props.toolbarMode;
+    toolbarMode.groupTitle = this.state.groupTitle;
+    toolbarMode.groupMode = 'DEFAULT';
+    groupModeToggleFlag = false;
+    this.setState({ showGroupTitleInput: false, groupTitle: '' });
+    this.props.callback('SAVEGROUP', toolbarMode);
+  }
+
+  handleGroupTitleChange(e) {
+    let toolbarMode = this.state.toolbarMode;
+    toolbarMode.groupTitle = e.target.value;
+    this.setState({ groupTitle: e.target.value, toolbarMode });
+  }
+
   render() {
+    const { toolbarMode } = this.state;
     return (
 
-        
 
-        <div style={{marginLeft: '-180px'}}>
-          <Toolbar>
-            <ToolbarGroup>
-              <FontIcon className="muidocs-icon-custom-sort" />
-              {groupModeToggleFlag === false ? <RaisedButton label="All" buttonStyle={{ borderRadius: 25 }} labelColor={'white'} backgroundColor={"gray"} style={{ borderRadius: 25 }} onClick={() => this.handleGroupNotesButton()} />
-                : null}
-              {groupModeToggleFlag === false ? <ToolbarSeparator />
-                : null}
-                 {groupModeToggleFlag === false ? <RaisedButton label='Chapters'  onClick={() => this.handleGroupNotesButton()} />
-                : null}
-                 {groupModeToggleFlag === false ? <RaisedButton label="Label"  onClick={() => this.handleGroupNotesButton()} />
-                : null}
-            </ToolbarGroup>
-            <ToolbarGroup>
-              <FontIcon className="muidocs-icon-custom-sort" />
-              {groupModeToggleFlag === false ? <RaisedButton label="Group notes" style={{ float: 'right' }} onClick={() => this.handleGroupNotesButton()} />
-                : null}
-              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleGroupNotesButton()} />
-                : null}
-            </ToolbarGroup>
-          </Toolbar>
-        </div>
+
+      <div style={{ marginLeft: '-180px' }}>
+
+        <Toolbar style={{ height: '90px' }}>
+          <ToolbarGroup >
+            <FontIcon className="muidocs-icon-custom-sort" />
+            {groupModeToggleFlag === false ? <RaisedButton label="All" buttonStyle={{ borderRadius: 25 }} labelColor={'white'} backgroundColor={"gray"} style={{ borderRadius: 25 }} onClick={() => this.handleGroupNotesButton()} />
+              : null}
+            {groupModeToggleFlag === false ? <ToolbarSeparator />
+              : null}
+            {groupModeToggleFlag === false ? <RaisedButton label='Chapters' onClick={() => this.handleGroupNotesButton()} />
+              : null}
+            {groupModeToggleFlag === false ? <RaisedButton label="Label" onClick={() => this.handleGroupNotesButton()} />
+              : null}
+
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <FontIcon className="muidocs-icon-custom-sort" />
+
+            {this.state.showGroupTitleInput === true ? <div><TextField
+              onChange={(e) => { this.handleGroupTitleChange(e) }}
+              // value={this.state.groupTitle}
+              style={{ marginBottom: '10px' }}
+              floatingLabelText="Group title"
+              defaultValue="Untitled group"
+              underlineStyle={styles.underlineStyle}
+            /><span style={{ paddingRight: '50px' }}></span></div> : null}
+            {groupModeToggleFlag === false ? <RaisedButton label="Group notes" style={{ float: 'right' }} onClick={() => this.handleGroupNotesButton()} />
+              : null}
+            {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleCancelButton()} />
+              : null}
+
+            {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{ float: 'right' }} onClick={() => this.handleNewGroupButton()} />
+              : null}
+            {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" onClick={() => this.handleGroupSaveButton(event)} />
+              : null}
+          </ToolbarGroup>
+        </Toolbar>
+      </div>
     );
   }
 }

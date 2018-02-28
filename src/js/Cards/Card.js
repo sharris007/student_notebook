@@ -6,7 +6,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {blue500, red500, greenA200} from 'material-ui/styles/colors';
+import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
 
 const deletePng = require('../../assets/images/ic-trash.png');
@@ -61,7 +61,8 @@ const group = {
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
-  color: 'white'
+  color: 'white',
+  textOverflow: 'ellipsis'
 };
 
 const styleContent = {
@@ -224,10 +225,11 @@ export default class Card extends Component {
   };
 
   constructor(props) {
-
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
+    this.handleDeleteCard = this.handleDeleteCard.bind(this);
+    this.handleDeleteMenuItem = this.handleDeleteMenuItem.bind(this);
     this.state = {
       item: props.item,
       titleMaxLength: 100,
@@ -235,9 +237,9 @@ export default class Card extends Component {
       noteMaxLengthWarning: '',
       hideSave: true,
       selected: false,
-      groupModeFlag: props.groupModeFlag
+      groupModeFlag: props.groupModeFlag,
+      deleteMenuItem: null
     };
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -262,6 +264,7 @@ export default class Card extends Component {
 
     const newNote = {
       id: card.id,
+      keyId: card.keyId,
       title: card.pageId ? card.title : this.titleInput.value,
       changeDate: Date.parse(new Date()),
       content: this.contentArea.value,
@@ -294,6 +297,10 @@ export default class Card extends Component {
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
+  handleDeleteMenuItem = (event, value) => {
+    this.props.saveCard(this.state.item, 'DELETE');
+  }
+
   handleNavigate = () => {
     this.props.saveCard(this.state.item, 'NAVIGATE');
   }
@@ -305,15 +312,10 @@ export default class Card extends Component {
   handleSelectCard = () => {
     const msg = (!this.state.selected === true) ? 'SELECTED' : 'UNSELECTED';
 
-    // if (this.state.selected === true){
-    //   msg = 'Selected';
-    // } else {
-    //   msg = 'Unselected';
-    // }
     this.setState({ selected: !this.state.selected }, () => {
 
-    this.props.saveCard(this.state.item, msg);
-    // this.props.selectCard(card);
+      this.props.saveCard(this.state.item, msg);
+      // this.props.selectCard(card);
     });
   };
 
@@ -365,31 +367,35 @@ export default class Card extends Component {
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'Q' ? (
           <div className="item-name" style={questions}>
-            Questions
+            <div>Questions</div>
+            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                onChange={this.handleDeleteMenuItem}
+                value={this.state.deleteMenuItem}
+                >
+                <MenuItem value='Delete note' primaryText="Delete note" />
+                <MenuItem value= 'Edit note' primaryText="Edit note" />
+              </IconMenu>
+            </div>
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
           <div className="item-name" style={group}>
-            Group
-              {/* <div className="delete-perfomers" style={{ float: 'right' }}>
-              <a style={{ height: '36px', width: '36px', margin: '0', padding: '10px' }} onClick={() => this.handleNavigate(item)}>
-                <img
-                  style={{ height: '20px', width: '24px' }}
-                  src={menuPng}
-                  alt="navigate"
-                />
-              </a>
-            </div> */}
-            <div className="delete-perfomers" style={{ float: 'right', 'margin-top': '-5px' }}>
-            <IconMenu
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-              targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-              iconStyle={{ fill: 'rgba(255, 255, 255, 0.87)', 'margin-top': '-20px' }}
-            >
-              <MenuItem primaryText="Rename group" />
-              <MenuItem primaryText="Ungroup notes" />
-            </IconMenu>
+            <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.title}</div>
+            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'rgba(255, 255, 255, 0.87)', 'marginTop': '-20px' }}
+              >
+                <MenuItem primaryText="Rename group" />
+                <MenuItem primaryText="Ungroup notes" />
+              </IconMenu>
             </div>
 
           </div>
@@ -562,8 +568,21 @@ export default class Card extends Component {
                 </div>
               ) : null}
             </div>
+
           )}
 
+        {item.noteText === 'G' ?
+          <div style={{ boxShadow: '0px 3px 5px silver', height: '17px', background: 'pink', marginBottom: '5px', marginLeft: '1px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.3 Biology</div>
+          : null}
+        {item.noteText === 'G' ?
+          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(204, 245, 253)', marginTop: '-1px', marginLeft: '2px', marginBottom: '5px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.1 plants</div>
+          : null}
+        {item.noteText === 'G' ?
+          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(204, 245, 253)', marginTop: '-1px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.2 roots and leaves</div>
+          : null}
+        {item.noteText === 'G' ?
+          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(187, 242, 182)', marginTop: '4px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>Watering your garden</div>
+          : null}
       </div>
     );
   }

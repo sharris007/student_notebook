@@ -24,8 +24,8 @@ const cardSource = {
   endDrag(props, monitor) {
 
     try { // scott used to prevent drag error check if error means card was removed and added to group
-    document.getElementById(monitor.getItem().id).style.display = 'block';
-    } catch(e){
+      document.getElementById(monitor.getItem().id).style.display = 'block';
+    } catch (e) {
 
     }
     props.stopScrolling();
@@ -36,7 +36,7 @@ const cardSource = {
   },
   canDrag(props, monitor) {
     return props.canDrag;
-  },
+  }
 };
 
 // options: 4rd param to DragSource https://gaearon.github.io/react-dnd/docs-drag-source.html
@@ -44,9 +44,9 @@ const OPTIONS = {
   arePropsEqual: function arePropsEqual(props, otherProps) {
     let isEqual = true;
     if (props.item.id === otherProps.item.id &&
-        props.x === otherProps.x &&
-        props.y === otherProps.y
-       ) {
+      props.x === otherProps.x &&
+      props.y === otherProps.y
+    ) {
       isEqual = true;
     } else {
       isEqual = false;
@@ -95,21 +95,21 @@ export default class CardComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState = {groupModeFlag: nextProps.groupModeFlag};
+    this.setState = { groupModeFlag: nextProps.groupModeFlag };
   }
 
   render() {
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard } = this.props;
     return connectDragSource(
       <div>
-        <Card 
-            canDrag={true}
-            style={getStyles(isDragging)} 
-            item={item} 
-            cancelAddCard={cancelAddCard} 
-            saveCard={saveCard} 
-            addCard={addCard}
-            groupModeFlag={this.state.groupModeFlag} 
+        <Card
+          canDrag={true}
+          style={getStyles(isDragging)}
+          item={item}
+          cancelAddCard={cancelAddCard}
+          saveCard={saveCard}
+          addCard={addCard}
+          groupModeFlag={this.state.groupModeFlag}
         />
       </div>
     );

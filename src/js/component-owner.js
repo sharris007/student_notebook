@@ -31,7 +31,6 @@ class ComponentOwner extends React.Component {
     let temporaryArray = props.notesList;
     temporaryArray.forEach(function (obj) { obj.keyId = obj.id + Date.now(); obj.selected = false; });
 
-
     this.state = {
       lists: props.lists,
       groupModeFlag: props.groupModeFlag,
@@ -41,11 +40,11 @@ class ComponentOwner extends React.Component {
 
   }
   callback = (msg, data) => {
-    debugger;
     const notesList = [...this.state.notesList];
     if (msg === 'ADD') {
       notesList.splice(0, 0, {
         id: 'created' + notesList.length + 1,
+        keyId: Date.now(),
         title: data.title,
         cardFormat: 'note',
         content: data.content,
@@ -67,38 +66,41 @@ class ComponentOwner extends React.Component {
       const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
       if (index > -1) {
         notesList.splice(index, 1);
-        this.setState({
-          notesList: notesList
-        });
       }
+     notesList.forEach((item, i) => {
+       item.keyId = item.id + Date.now();
+     });
+
+      this.setState({
+        notesList: notesList
+      });
+
     } else if (msg === 'NAVIGATE') {
       console.log('Navigation', data);
 
     } else if (msg === "GROUP") {
-      const temporaryNotesList = [...this.state.notesList];
-      //   var newArray = JSON.parse(JSON.stringify(notesList));
 
-      temporaryNotesList.forEach((item, i) => {
+      notesList.forEach((item, i) => {
         item.keyId = item.id + Date.now();
         if (data === false) {
           item.selected = false;
         }
-        notesList.splice(i, 1, item);
       });
 
-      notesList.forEach((item, i) => {
-        item.keyId = item.id + Date.now();
-      });
-
+      let toolbarMode = this.props.toolbarMode;
+      toolbarMode.groupMode = 'GROUPSELECT'
       this.setState({
         notesList: notesList,
-        toolbarMode: 'GROUPSELECT',
+        toolbarMode: toolbarMode,
         groupModeFlag: data
       });
     } else if (msg === "SELECTED") {
+
+      let toolbarMode = this.props.toolbarMode;
+      toolbarMode.groupMode = 'SELECTED'
+
       //   var newArray = JSON.parse(JSON.stringify(notesList));
       const notesList = [...this.state.notesList];
-      debugger;
       notesList.forEach((item, i) => {
         if (item.id === data.id) {
           item.selected = true;
@@ -108,9 +110,74 @@ class ComponentOwner extends React.Component {
 
       this.setState({
         notesList: notesList,
-        toolbarMode: 'GroupSelect',
+        toolbarMode: toolbarMode,
         groupModeFlag: true
       });
+    } else if (msg === "UNSELECTED") {
+
+      let toolbarMode = this.props.toolbarMode;
+
+      //   var newArray = JSON.parse(JSON.stringify(notesList));
+      const notesList = [...this.state.notesList];
+      let selectedCount = 0;
+      notesList.forEach((item, i) => {
+        if (item.id === data.id) {
+          item.selected = false;
+        }
+        if (item.selected == true) {
+          selectedCount++;
+        }
+      });
+
+      if (selectedCount > 0) {
+        toolbarMode.groupMode = 'SELECTED';
+        toolbarMode.selectedCount = selectedCount;
+      } else {
+        toolbarMode.groupMode = 'GROUPSELECT';
+        toolbarMode.selectedCount = selectedCount;
+      }
+
+      this.setState({
+        notesList: notesList,
+        toolbarMode: toolbarMode,
+        groupModeFlag: true
+      });
+    } else if (msg === "SAVEGROUP") {
+      let toolbarMode = this.props.toolbarMode;
+      toolbarMode.groupMode = 'DEFAULT'
+
+      const notesList = [...this.state.notesList];
+
+      notesList.splice(0, 0, {
+        id: 'created' + notesList.length + 1,
+        keyId: notesList.length + Date.now(),
+        colorCode: 'GROUP',
+        title: data.groupTitle,
+        cardFormat: 'note',
+        noteText: 'G',
+        content: data.content,
+        content2: 'this is test data',
+        changeDate: Date.now()
+      });
+
+
+
+      notesList.forEach((item, i) => {
+        if (item.selected) {
+          notesList.splice(i, 1);
+        }
+      });
+
+      notesList.forEach((item, i) => {
+        item.keyId = item.id + Date.now();
+      });
+
+      this.setState({
+        notesList: notesList,
+        toolbarMode: toolbarMode,
+        groupModeFlag: false
+      });
+
     }
   }
 

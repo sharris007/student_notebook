@@ -6,6 +6,7 @@ import CardsContainer from './Cards/CardsContainer';
 import CustomDragLayer from './CustomDragLayer';
 import NoteBookHeader from './NoteBookHeader';
 
+
 import '../assets/temp.styl';
 
 @DragDropContext(HTML5Backend)  // eslint-disable-line
@@ -32,11 +33,13 @@ export default class Board extends Component {
     // const lists = [...props.lists];
     const notesList = [...props.notesList];
 
+
     if (props.groupModeFlag === false) {
       notesList.splice(0, 0, {
         id: 'new',
-        title: '',
+        keyId: Date.now(),
         cardFormat: 'add mode',
+        title: '',
         content: '',
         content2: '',
         changeDate: ''
@@ -57,8 +60,10 @@ export default class Board extends Component {
       if (!item.cardFormat) {
         item.cardFormat = 'note';
       }
+      item.keyId = item.id + Date.now();
       lists[index].cards.push(item);
     });
+
 
     this.state = {
       isScrolling: false,
@@ -68,12 +73,17 @@ export default class Board extends Component {
       ider: null,
       groupModeFlag: props.groupModeFlag
     };
+
   }
+
+
+
   createLists = (nextProps) => {
     const notesList = [...nextProps.notesList];
     if (nextProps.groupModeFlag === false) {
       notesList.splice(0, 0, {
         id: 'new',
+        keyId: notesList.length + Date.now(),
         title: '',
         cardFormat: 'add mode',
         content: '',
@@ -98,32 +108,21 @@ export default class Board extends Component {
       }
       lists[index].cards.push(item);
     });
-    this.setState({ lists,
+
+    this.setState({
+      lists,
       groupModeFlag: nextProps.groupModeFlag
-     });
+    });
   }
   componentWillMount() { }
 
   componentWillReceiveProps(nextProps) {
-
-    // console.log(nextProps);
-    // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
-    //  //Added new note 
-    //   this.createLists(nextProps);
-    // }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
-    //   // Deleted note
-    //   this.createLists(nextProps);
-    // }else if (nextProps.coloums!==this.props.coloums) {
-    //   // Resize of window
-
     this.setState({ groupModeFlag: nextProps.groupModeFlag });
     this.createLists(nextProps);
-    // }
   }
 
 
   startScrolling(direction) {
-    // if (!this.state.isScrolling) {
     switch (direction) {
       case 'toLeft':
         this.setState({ isScrolling: true }, this.scrollLeft());
@@ -134,7 +133,6 @@ export default class Board extends Component {
       default:
         break;
     }
-    // }
   }
 
   scrollRight() {
@@ -187,13 +185,7 @@ export default class Board extends Component {
       // delete element from old place
       newLists[lastX].cards.splice(lastY, 1);
     }
-    newLists.forEach((item, i) => {
-      console.log(item);
-    });
 
-    console.log(newLists[1].cards[1]);
-    newLists[2].cards[0].content = 'hello';
-    newLists[1].cards.push(newLists[2].cards[0]);
     this.setState({ lists: newLists });
   }
 
@@ -223,6 +215,7 @@ export default class Board extends Component {
 
     newLists[0].cards[0] = {
       id: '',
+      keyId: Date.now(),
       title: '',
       cardFormat: 'create new',
       content: '',
@@ -238,6 +231,7 @@ export default class Board extends Component {
     newLists[0].cards[0] = {
       id: 0,
       title: '',
+      keyId: newLists.length + Date.now(),
       cardFormat: 'add mode',
       content: '',
       content2: '',
@@ -268,11 +262,10 @@ export default class Board extends Component {
         if (card.title || card.title === '') {
           return (card.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
         }
-      });
 
+      });
       return true;
     });
-
     return (
       <main>
 

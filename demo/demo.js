@@ -31,6 +31,8 @@ function init() {
     notesList.push(note);
   }
 
+  let toolbarModeProp = new toolbarMode();
+
   new NoteBookComponent({
     elementId: 'demo',
     locale: 'en-us',
@@ -39,9 +41,16 @@ function init() {
     },
     notesList: notesList,
     groupModeFlag: false,
-    toolbarMode: 'DEFAULT'
+    toolbarMode: toolbarModeProp
   //  responsiveColumns
   });
+}
+
+class toolbarMode {
+  constructor() {
+    this.groupMode = 'DEFAULT';
+    this.groupTitle = null;
+  }
 }
 
 window.onload = init();

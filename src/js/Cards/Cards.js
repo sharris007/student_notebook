@@ -23,7 +23,7 @@ const specs = {
     document.getElementById(monitor.getItem().id).style.display = 'block';
 
 
-    let newStyle = { 'display': 'none', 'left': '0px' };
+    const newStyle = { 'display': 'none', 'left': '0px' };
 
     newStyle.display = 'block';
     newStyle.left = monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
@@ -51,7 +51,7 @@ const specs = {
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
 
-    let newStyle = { 'display': 'none', 'left': '0px' };
+    const newStyle = { 'display': 'none', 'left': '0px' };
 
     newStyle.display = 'block';
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
@@ -194,10 +194,7 @@ export default class Cards extends Component {
       cardList.push(<div key="placeholder" className="item placeholder" />);
     }  
 
-    console.log('row');
-    cardList.forEach((item, i) => {
-      console.log(item.props + ' ' + item.key);
-    });
+   
     return connectDropTarget(
       <div className="desk-items">
         {cardList}
