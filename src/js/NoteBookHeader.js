@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import '../assets/temp.styl';
-
-
+import '../scss/notebook.scss';
+import MenuItem from './menuItem';
 
 const VerticalLine = () => (
   <div style={{ float: 'left', borderLeft: '2px solid lightgrey', height: '40px', marginLeft: '10px', marginRight: '10px' }}></div>
@@ -28,7 +28,8 @@ const buttonStyles = {
   fontSize: '15px',
   width: '100px',
   height: '40px',
-  color: 'grey'
+  color: 'grey',
+  cursor: 'pointer'
 };
 
 const buttonGroupStyle = {
@@ -44,36 +45,48 @@ const buttonGroupStyle = {
 };
 
 
+const listStyle = {
+  padding : '10px'
+}
+const listboxStyle = {
+  border : '1px solid gray',
+  padding:'10px 50px 10px 10px',
+  background: '#fff',
+  position: 'absolute',
+  top: '48px'
+}
+const chkBoxiconStyle = {
+  fill: 'gray'
+}
+
 
 export default class NoteBookHeader extends Component {
   static propTypes = {
     callback: PropTypes.func
   };
 
-
-
-
   constructor(props) {
     super(props);
-
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.menuItems = this.menuItems.bind(this);
     // const lists = [...props.lists];
-
+    
     this.state = {
       isScrolling: false,
       search: '',
-      ider: null
+      ider: null,
+      values: [],
+      showChapterMenu : false,
+      showLabelMenu : false
     };
 
+    const labelAllObj = {"id": "All",
+         "title": "All Labels",
+         "labelName": 'All'};
+          (this.props.tocData.content.list).unshift(labelAllObj);
 
-
+    
   }
-
-
- 
-
- 
-
 
   handleOnChange(event) {
     this.props.getLists(6);
@@ -86,14 +99,72 @@ export default class NoteBookHeader extends Component {
   //  this.setState({ search: event.target.value });
   }
 
+  handleChange = (getVal) => {
+    if(getVal === 'chapter') {
+      const toggledIsOpen = this.state.showChapterMenu ? false : true;
+      this.setState({showChapterMenu : toggledIsOpen, showLabelMenu : false});
+    }
+    else{
+      const toggledIsOpen = this.state.showLabelMenu ? false : true;
+      this.setState({showLabelMenu : toggledIsOpen , showChapterMenu : false});
+    }
+      
+  }
+  getSelectedVal = (val) => {
+    const props = this.props;
+    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem"));
+    const selectedLabel = JSON.parse(localStorage.getItem("labelItem"));
+    var tocLevel = props.tocData.content.list
+    const tocListItem = [];
+    for (let i=0; i<selectedChapter.length;i++) {
+      tocLevel.find((toc) => {
+        if( toc.id === selectedChapter[i]) 
+          { 
+            tocListItem.push(toc); 
+          } 
+      });
+    }
+
+
+    let chapterList = [];
+    let finalFilteredList = [];
+    const note = props.notesList
+    for (let i1=0;i1<tocListItem.length;i1++) {
+      if (typeof tocListItem[i1].children !== 'undefined' && tocListItem[i1].children.length > 0) {
+        for (let j1=0;j1<tocListItem[i1].children.length;j1++) {
+          note.find((note) => {
+            if( tocListItem[i1].children[j1].id === note.pageId) 
+              { 
+                chapterList.push(note) 
+              } 
+          });
+        }
+      }
+    }
+    console.log("chapterList", chapterList);
+    for (let c=0;c<chapterList.length;c++) {
+      selectedLabel.find((label) => {
+        if( chapterList[c].noteText === label) 
+          { 
+            finalFilteredList.push(chapterList[c]) 
+          } 
+      });
+    }
+    console.log("finalFilteredList", finalFilteredList);
+    // chapterList = chapterList.length > 0 ? chapterList : props.notesList;
+    this.props.getFilterArr(finalFilteredList);
+  }
+
+  menuItems = (values, fun) => {
+    return values.map((val) => (
+      <MenuItem content={val} label={val.labelName ? val.labelName : val.title} labelCode={val.labelCode?val.labelCode:''} getSelectedVal={this.getSelectedVal} />
+    ));
+  }
+  
+  
   render() {
 
-
-debugger;
-
-
-
-    //const { lists } = this.state;
+    //const { lists } = this.state.values;
 
     // const filteredList = lists.filter(list => {
     //   list.cards = list.cards.filter(card => {
@@ -104,7 +175,35 @@ debugger;
 
     //   return true;
     // });
-
+    
+    const labelObj = [
+            {
+              "labelName": "All Labels",
+              "labelCode": "All",
+              "id":"all"
+            },
+            {
+              "labelName": "From Instructor",
+              "labelCode": "I",
+              "id":"from_instructor"
+            },
+            {
+              "labelName": "Observations",
+              "labelCode": "O",
+              "id":"observations"
+            },
+            {
+              "labelName": "Questions",
+              "labelCode": "Q",
+              "id":"questions"
+            },
+            {
+              "labelName": "Main ideas",
+              "labelCode": "M",
+              "id":"main_ideas"
+            }
+          ];
+          
     return (
       <div>
         <table>
@@ -117,10 +216,15 @@ debugger;
                 <VerticalLine></VerticalLine>
               </td>
               <td>
-                <button style={buttonStyles}>Chapters</button>
+              <button style={buttonStyles} onClick={() => this.handleChange('chapter')}>Chapter</button>
+              {this.state.showChapterMenu ?
+              <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }
+                
               </td>
               <td>
-                <button style={buttonStyles}>Labels</button>
+                <button style={buttonStyles} onClick={() => this.handleChange('label')}>Labels</button>
+                {this.state.showLabelMenu ?
+              <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }
               </td>
               <td style={{ width: '68%' }}>
                 <button style={buttonGroupStyle} onClick={() => this.handleGroupNotesButton()}>Group notes</button>
@@ -129,6 +233,9 @@ debugger;
           </tbody>
 
         </table>
+
+
+        
       </div>
     );
   }

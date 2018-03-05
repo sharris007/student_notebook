@@ -1,5 +1,5 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-import {notes} from './notesDummy';
+import {notes, tocData} from './notesDummy';
 
 function init() {
   const notesList = [];
@@ -36,6 +36,7 @@ function init() {
       console.log(msg, data);
     },
     notesList: notesList,
+    tocData : tocData,
     groupModeFlag: false
   //  responsiveColumns
   });

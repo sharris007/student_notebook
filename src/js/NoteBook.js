@@ -29,7 +29,9 @@ export default class Board extends Component {
     this.cancelAddCard = this.cancelAddCard.bind(this);
     this.saveCard = this.saveCard.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.getFilterArr = this.getFilterArr.bind(this);
     // const lists = [...props.lists];
+    console.log("nextProps1", props.notesList);
     const notesList = [...props.notesList];
 
 
@@ -70,6 +72,7 @@ export default class Board extends Component {
     };
   }
   createLists = (nextProps) => {
+    console.log("nextProps", nextProps.notesList);
     const notesList = [...nextProps.notesList];
     notesList.splice(0, 0, {
       id: 'new',
@@ -248,6 +251,15 @@ export default class Board extends Component {
     this.setState({ search: event.target.value });
   }
 
+  getFilterArr(list){
+    console.log("%%%%%%%", this.props.coloums);
+    const notesList = {};
+    notesList.notesList = list;
+    notesList.coloums = this.props.coloums;
+    this.createLists(notesList);
+
+  }
+
   render() {
    debugger;
     const { lists } = this.state;
@@ -263,8 +275,9 @@ export default class Board extends Component {
     });
 
     return (
+      <div>
+      <NoteBookHeader getFilterArr={this.getFilterArr} callback={this.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
       <main>
-
         <div style={{ height: '100%' }}>
           <CustomDragLayer snapToGrid={false} />{" "}
           {filteredList.map((item, i) => (
@@ -286,6 +299,7 @@ export default class Board extends Component {
           ))}
         </div>
       </main>
+      </div>
     );
   }
 }

@@ -1,0 +1,69 @@
+.select-box {
+  position: absolute; 
+  opacity: 0; 
+  & + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  & + label:before {
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 17px;
+    height: 16px;
+    background: white;
+    border: 1px solid #6a7070;
+    border-radius: 3px;
+  }
+
+  &:checked + label:before {
+    background: #fff;
+  }
+  
+  &:checked + label:after {
+    content: '';
+   position: absolute;
+   width: 1.2ex;
+   height: 0.4ex;
+   background: rgba(0, 0, 0, 0);
+   top: 0.8ex;
+   left: 0.6ex;
+   border: 2px solid #6a7070;
+   border-top: none;
+   border-right: none;
+   -webkit-transform: rotate(-45deg);
+   -moz-transform: rotate(-45deg);
+   -o-transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   transform: rotate(-45deg);
+  }
+
+  &:checked + label{
+  	color:#383838;
+  	font-weight: bold;
+  	letter-spacing: -1px;
+  }
+  &.I {
+  	& + label:before {
+  		background:#ccf5fd;
+  	}
+  }
+  &.O {
+  	& + label:before {
+  		background:#FC92CF;
+  	}
+  }
+  &.Q {
+  	& + label:before {
+  		background:#FFD232;
+  	}
+  }
+  &.M {
+  	& + label:before {
+  		background:#55DF49;
+  	}
+  }
+}

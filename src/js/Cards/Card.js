@@ -210,7 +210,7 @@ export default class Card extends Component {
   };
 
   constructor(props) {
-    alert('ggsssgg');
+    // alert('ggsssgg');
     
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
@@ -230,7 +230,7 @@ export default class Card extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    alert('gggg');
+    //alert('gggg');
     this.setState({groupModeFlag: nextProps.groupModeFlag});
     console.log('state groupmodeflag ' + nextProps.groupModeFlag);
   }
