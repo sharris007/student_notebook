@@ -189,7 +189,7 @@ export default class Board extends Component {
       newLists[nextX].cards.splice(nextY, 0, newLists[lastX].cards[lastY]);
       // delete element from old place
       newLists[lastX].cards.splice(lastY, 1);
-    }*/
+    }
     // this.setState({ lists: newLists });
     const nextLists = {notesList:[], coloums:this.props.coloums};
     newLists.forEach((list, listIndex) =>{

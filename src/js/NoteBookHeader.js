@@ -85,7 +85,7 @@ export default class NoteBookHeader extends Component {
       ider: null,
   	  values: [],
       showChapterMenu : false,
-      showLabelMenu : false
+      showLabelMenu : false,
       menuBarClass: 'test',
       showGroupInputTitle: false,
       toolbarMode: props.toolbarMode,
@@ -137,15 +137,7 @@ export default class NoteBookHeader extends Component {
           } 
       });
     }
-handleCancelButton(event) {
-    groupModeToggleFlag = !groupModeToggleFlag;
-    this.setState({ showGroupTitleInput: false, groupTitle: '' });
-    this.props.callback('GROUP', groupModeToggleFlag);
-  } 
-  handleNewGroupButton(event) {
-    let toolbarMode =
-      this.setState({ showGroupTitleInput: true });
-  }
+
 
     let chapterList = [];
     let finalFilteredList = [];
@@ -179,6 +171,15 @@ handleCancelButton(event) {
     }
     
   }
+  handleCancelButton(event) {
+    groupModeToggleFlag = !groupModeToggleFlag;
+    this.setState({ showGroupTitleInput: false, groupTitle: '' });
+    this.props.callback('GROUP', groupModeToggleFlag);
+  } 
+  handleNewGroupButton(event) {
+    let toolbarMode =
+      this.setState({ showGroupTitleInput: true });
+  }
   handleGroupSaveButton(event) {
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = this.state.groupTitle;
@@ -202,12 +203,6 @@ handleCancelButton(event) {
 
   render() {
     const { toolbarMode } = this.state;
-    return (
-
-
-
-      <div style={{ marginLeft: '-180px' }}>
-    
     const labelObj = [
             {
               "labelName": "All Labels",
@@ -235,6 +230,14 @@ handleCancelButton(event) {
               "id":"main_ideas"
             }
           ];
+          
+    return (
+
+
+
+      <div style={{ marginLeft: '-180px' }}>
+    
+    
           
         <Toolbar style={{ height: '90px' }}>
           <ToolbarGroup >
