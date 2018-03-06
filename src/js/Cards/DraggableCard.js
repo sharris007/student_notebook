@@ -22,16 +22,16 @@ const cardSource = {
     return { id, title, item, x, y, clientWidth, clientHeight };
   },
   endDrag(props, monitor) {
-    document.getElementById(monitor.getItem().id).style.display = 'block';
+    if (monitor.getItem().id)document.getElementById(monitor.getItem().id).style.opacity = 1;
     props.stopScrolling();
   },
   isDragging(props, monitor) {
     const isDragging = props.item && props.item.id === monitor.getItem().id;
     return isDragging;
   },
-  canDrag(props, monitor) {
+  canDrag(props) {
     return props.canDrag;
-  },
+  }
 };
 
 // options: 4rd param to DragSource https://gaearon.github.io/react-dnd/docs-drag-source.html
@@ -85,7 +85,6 @@ export default class CardComponent extends Component {
     return connectDragSource(
       <div>
         <Card 
-            canDrag={false}
             style={getStyles(isDragging)} 
             item={item} cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 

@@ -27,55 +27,28 @@ export default class Board extends Component {
     this.cancelAddCard = this.cancelAddCard.bind(this);
     this.saveCard = this.saveCard.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    // const lists = [...props.lists];
+
     const notesList = [...props.notesList];
-
-    notesList.splice(0, 0, {
-      id:'new',
-      title: '',
-      cardFormat: 'add mode',
-      content: '',
-      content2: '',
-      changeDate: ''
-    });
-
-
-    const lists = [];
-      // initialize lists
-    for (let ic = 0; ic < props.coloums; ic++) {
-      lists.push({
-        id: ic,
-        cards: []
-      });
-    }
-
-    notesList.map((item, i) => {
-      const index = i % props.coloums;
-      if (!item.cardFormat) {
-        item.cardFormat='note';
-      }
-      lists[index].cards.push(item);
-    });
-
     this.state = {
       isScrolling: false,
       search: '',
-      lists: lists,
+      lists: [],
       notesList:notesList,
       ider: null
     };
   }
-  createLists = (nextProps) => {
+  createLists = (nextProps, cardDropped) => {
     const notesList=[...nextProps.notesList];
-    notesList.splice(0, 0, {
-      id:'new',
-      title: '',
-      cardFormat: 'add mode',
-      content: '',
-      content2: '',
-      changeDate: ''
-    });
-
+    if (!cardDropped) {
+      notesList.splice(0, 0, {
+        id:'new',
+        title: '',
+        cardFormat: 'add mode',
+        content: '',
+        content2: '',
+        changeDate: ''
+      }); 
+    }
     const lists = [];
       // initialize lists
     for (let ic = 0; ic < nextProps.coloums; ic++) {
@@ -84,7 +57,6 @@ export default class Board extends Component {
         cards: []
       });
     }
-
     notesList.map((item, i) => {
       const index = i % nextProps.coloums;
       if (!item.cardFormat) {
@@ -92,22 +64,23 @@ export default class Board extends Component {
       }
       lists[index].cards.push(item);
     });
-    this.setState({lists});
+    this.setState({lists}, ()=>{
+      const nextLists = {notesList:[], coloums:nextProps.coloums};
+      const newLists = [...this.state.lists];
+      newLists.forEach((list, listIndex) =>{
+        list.cards.forEach((card, cardIndex)=>{
+          const index = (nextProps.coloums*cardIndex)+listIndex;
+          nextLists.notesList.splice(index, 0, card);
+        });
+      });
+    });
   }
-  componentWillMount() {}
+  componentWillMount() {
+    this.createLists(this.props);
+  }
 
   componentWillReceiveProps(nextProps) {;
-    // console.log(nextProps);
-    // if (nextProps.notesList && nextProps.notesList.length > this.props.notesList.length) {
-    //  //Added new note 
-    //   this.createLists(nextProps);
-    // }else if (nextProps.notesList && nextProps.notesList.length < this.props.notesList.length) {
-    //   // Deleted note
-    //   this.createLists(nextProps);
-    // }else if (nextProps.coloums!==this.props.coloums) {
-    //   // Resize of window
     this.createLists(nextProps);
-    // }
   }
 
 
@@ -145,9 +118,8 @@ export default class Board extends Component {
   }
 
   moveCard(lastX, lastY, nextX, nextY) {
-    //this.props.moveCard(lastX, lastY, nextX, nextY);
     const newLists = [...this.state.lists];
-    if (lastX === nextX) {
+    /*if (lastX === nextX) {
       newLists[lastX].cards.splice(
         nextY,
         0,
@@ -158,8 +130,20 @@ export default class Board extends Component {
       newLists[nextX].cards.splice(nextY, 0, newLists[lastX].cards[lastY]);
       // delete element from old place
       newLists[lastX].cards.splice(lastY, 1);
-    }
-    this.setState({ lists: newLists });
+    }*/
+    // this.setState({ lists: newLists });
+    const nextLists = {notesList:[], coloums:this.props.coloums};
+    newLists.forEach((list, listIndex) =>{
+      list.cards.forEach((card, cardIndex)=>{
+        const index = (this.props.coloums*cardIndex)+listIndex;
+        nextLists.notesList.splice(index, 0, card);
+      });
+    });
+    const dragCardIndex = (this.props.coloums*lastY)+lastX;
+    // const dragCard = nextLists.notesList.splice(dragCardIndex, 1);
+    const dropCardIndex = (this.props.coloums*nextY)+nextX;
+    nextLists.notesList.splice(dropCardIndex, 0, nextLists.notesList.splice(dragCardIndex, 1)[0]);
+    this.createLists(nextLists, true);
   }
 
   moveList(listId, nextX) {
@@ -225,7 +209,6 @@ export default class Board extends Component {
 
   render() {
     const { lists } = this.state;
-
     const filteredList = lists.filter(list => {
       list.cards = list.cards.filter(card => {
         if (card.title||card.title==='') {
@@ -239,7 +222,7 @@ export default class Board extends Component {
     return (
       <main>
         <div style={{ height: '100%' }}>
-          <CustomDragLayer snapToGrid={false} />{" "}
+          <CustomDragLayer snapToGrid={false} />
           {filteredList.map((item, i) => (
             <CardsContainer
               key={item.id}

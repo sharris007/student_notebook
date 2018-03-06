@@ -1,5 +1,5 @@
 export const notes={
-  'total': 6,
+  'total': 5,
   'response': [
     {
       'userId': 'ffffffff57a9f814e4b00d0a20bf6029',
@@ -156,57 +156,6 @@ export const notes={
       'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
       'createdTime': 1512384942792,
       'updatedTime': 1512384950015
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-      'pageNo': '',
-      'color': '#55DF49',
-      'role': null,
-      'selectedText': 'someone',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[4]/p[6]',
-            'startOffset': 23,
-            'end': '/section[1]/section[4]/p[6]',
-            'endOffset': 30
-          }
-        ],
-        'quote': 'someone',
-        'highlights': [
-          {
-            'jQuery19104064103849826948': 48
-          }
-        ],
-        'createdTimestamp': '2017-12-05T06:47:30.482Z',
-        'colorCode': '#55DF49',
-        'shareable': false,
-        'lastColor': '#55DF49',
-        'text': 'test',
-        'updatedTimestamp': null,
-        'source': {
-          'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'title': '1.1 Focus On the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'label': '1.1 Focus On the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
-        },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      'id': 'df6a2307-d860-4621-9dfc-b5ade601a4ff',
-      'createdTime': 1512456466500,
-      'updatedTime': 1512456466500
     },
     {
       'userId': 'ffffffff59b8c629e4b09efb34405de7',
