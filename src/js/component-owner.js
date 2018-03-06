@@ -194,7 +194,7 @@ class ComponentOwner extends React.Component {
     return (
       <div>
         <NoteBookHeader toolbarMode={toolbarMode} callback={this.callback}></NoteBookHeader>
-        <NoteBook notesList={notesList} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3} />
+        <NoteBook notesList={notesList} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3} />
       </div>
     );
   };

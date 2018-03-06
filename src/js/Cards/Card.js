@@ -225,6 +225,8 @@ export default class Card extends Component {
   };
 
   constructor(props) {
+    // alert('ggsssgg');
+    
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
