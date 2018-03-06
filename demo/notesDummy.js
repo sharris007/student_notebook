@@ -1,14 +1,20 @@
-export const notes={
+export const notes = {
   'total': 7,
   'response': [
     {
       'userId': 'ffffffff57a9f814e4b00d0a20bf6029',
       'contextId': '59b7c8cbe4b0b957f51373cf',
+      "contextualInfo": [
+        { "key": "ChapterID", "value": "2" },
+        { "key": "SectionID", "value": "1" },
+        { "key": "Playorder", "value": "20" }
+      ],
+      "productModel": "ETEXT_SMS",
+      "role": "Instructor",
       'isBookMark': false,
       'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
       'pageNo': '',
       'color': '#ccf5fd',
-      'role': null,
       'selectedText': 'From Instructor ntion to the w',
       'subContextId': '',
       'clientApp': 'ETEXT_WEB',
@@ -49,6 +55,10 @@ export const notes={
         'user': 'ffffffff57a9f814e4b00d0a20bf6029',
         'id': '013781be-9f7d-4140-9c93-c024a13a62ba'
       },
+      "tagId": "c9194fb6-c493-44dc-9595-091d4f7a3df5",
+      "tagName": "Group 1",
+      "insetSeq": 1514735569235,
+      "outsetSeq": 1512735569235,
       'id': '013781be-9f7d-4140-9c93-c024a13a62ba',
       'createdTime': 1512027485421,
       'updatedTime': 1512034862608
@@ -214,6 +224,13 @@ export const notes={
     {
       'userId': 'ffffffff59b8c629e4b09efb34405de7',
       'contextId': '59b7c8cbe4b0b957f51373cf',
+      "contextualInfo": [
+        { "key": "ChapterID", "value": "2" },
+        { "key": "SectionID", "value": "1" },
+        { "key": "Playorder", "value": "20" }
+      ],
+      "productModel": "ETEXT_SMS",
+      "role": "Instructor",
       'isBookMark': false,
       'pageId': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
       'pageNo': '',
@@ -246,7 +263,7 @@ export const notes={
         'text': 'test',
         'updatedTimestamp': null,
         'id': 'b3rrb46e-e543-4a17-8257-f9a4ee25b73f',
-        
+
         'source': {
           'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
           'title': '1.3 World As A Marble',
@@ -257,10 +274,14 @@ export const notes={
           'label': '1.1 Focus On the Atmosphere',
           'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
         },
-        
+
         'context': '59b7c8cbe4b0b957f51373cf',
         'user': 'ffffffff59b8c629e4b09efb34405de7'
       },
+      "tagId": "c9194fb6-c493-44dc-9595-091d4f7a3df5",
+      "tagName": "Group 1",
+      "insetSeq": 1513735569235,
+      "outsetSeq": 1512735569235,
       'id': 'df6a2307-d860-4621-9dfc-b5ade601a4ff',
       'createdTime': 1512456466500,
       'updatedTime': 1512456466500
