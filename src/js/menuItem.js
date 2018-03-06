@@ -34,7 +34,6 @@ export default class MenuItem extends Component {
         checkboxes = document.getElementsByClassName('select-box');
         this.getCheckedboxval(checkboxes);
       }
-      
   }
 
   getCheckedboxval = (checkboxes, isLabelEle) => {
@@ -49,22 +48,24 @@ export default class MenuItem extends Component {
         }
     }
     console.log("itemArr", itemArr);
-    if (val) { 
+    if (val) {
       // val = val.substring(1); 
-      console.log(val);
-      if(isLabelEle){
+      this.formArrayVal(isLabelEle, itemArr);
+      
+    }
+    else{
+      this.formArrayVal(isLabelEle, []);
+    }
+    this.props.getSelectedVal(JSON.parse(localStorage.getItem('chapterItem')) , JSON.parse(localStorage.getItem('labelItem')));
+  }
+
+  formArrayVal = (flag, itemArr) => {
+    if(flag){
         localStorage.setItem('labelItem', JSON.stringify(itemArr));
       }
       else{
         localStorage.setItem('chapterItem', JSON.stringify(itemArr));
       }
-      
-    }
-    else{
-      localStorage.setItem('chapterItem', JSON.stringify([]));
-      localStorage.setItem('labelItem', JSON.stringify([]));
-    }
-    this.props.getSelectedVal(JSON.parse(localStorage.getItem('chapterItem')) , JSON.parse(localStorage.getItem('labelItem')));
   }
 
   render() {

@@ -19,6 +19,7 @@
     border-radius: 3px;
   }
 
+
   &:checked + label:before {
     background: #fff;
   }
@@ -66,4 +67,7 @@
   		background:#55DF49;
   	}
   }
+}
+.listbox:first-child label:before {
+    border: none;
 }

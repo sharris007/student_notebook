@@ -252,12 +252,15 @@ export default class Board extends Component {
   }
 
   getFilterArr(list){
-    console.log("%%%%%%%", this.props.coloums);
     const notesList = {};
-    notesList.notesList = list;
     notesList.coloums = this.props.coloums;
+    if(JSON.parse(localStorage.getItem('chapterItem')).length > 0 || JSON.parse(localStorage.getItem('chapterItem')).length > 0){
+      notesList.notesList = list;
+    }
+    else{
+      notesList.notesList = this.props.notesList;
+    }
     this.createLists(notesList);
-
   }
 
   render() {

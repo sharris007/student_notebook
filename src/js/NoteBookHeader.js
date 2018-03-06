@@ -141,7 +141,6 @@ export default class NoteBookHeader extends Component {
         }
       }
     }
-    console.log("chapterList", chapterList);
     for (let c=0;c<chapterList.length;c++) {
       selectedLabel.find((label) => {
         if( chapterList[c].noteText === label) 
@@ -150,9 +149,14 @@ export default class NoteBookHeader extends Component {
           } 
       });
     }
-    console.log("finalFilteredList", finalFilteredList);
     // chapterList = chapterList.length > 0 ? chapterList : props.notesList;
-    this.props.getFilterArr(finalFilteredList);
+    if(finalFilteredList.length > 0 ){
+      this.props.getFilterArr(finalFilteredList);
+    }
+    else{
+      this.props.getFilterArr(chapterList);
+    }
+    
   }
 
   menuItems = (values, fun) => {
@@ -179,8 +183,8 @@ export default class NoteBookHeader extends Component {
     const labelObj = [
             {
               "labelName": "All Labels",
-              "labelCode": "All",
-              "id":"all"
+              "labelCode": "all-label",
+              "id":"all-label"
             },
             {
               "labelName": "From Instructor",
