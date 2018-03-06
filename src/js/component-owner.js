@@ -193,7 +193,7 @@ class ComponentOwner extends React.Component {
     const { notesList, groupModeFlag, toolbarMode } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3} />
+        <NoteBook notesList={notesList}  toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3} />
       </div>
     );
   };
