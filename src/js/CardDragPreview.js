@@ -18,7 +18,7 @@ const CardDragPreview = (props) => {
 
   return (
     <div style={styles}>
-      <Card canDrag={true} item={props.card.item} groupModeFlag={props.groupModeFlag} />
+      <Card item={props.card.item} groupModeFlag={props.groupModeFlag} />
     </div>
   );
 };

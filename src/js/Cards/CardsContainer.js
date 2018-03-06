@@ -14,7 +14,7 @@ const listSource = {
     props.stopScrolling();
   },
   canDrag(props) {
-    return false;
+    return props.canDrag;
   }
 };
 

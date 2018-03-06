@@ -22,19 +22,14 @@ const cardSource = {
     return { id, title, item, x, y, clientWidth, clientHeight };
   },
   endDrag(props, monitor) {
-
-    try { // scott used to prevent drag error check if error means card was removed and added to group
-      document.getElementById(monitor.getItem().id).style.display = 'block';
-    } catch (e) {
-
-    }
+    if (monitor.getItem().id)document.getElementById(monitor.getItem().id).style.opacity = 1;
     props.stopScrolling();
   },
   isDragging(props, monitor) {
     const isDragging = props.item && props.item.id === monitor.getItem().id;
     return isDragging;
   },
-  canDrag(props, monitor) {
+  canDrag(props) {
     return props.canDrag;
   }
 };
@@ -102,14 +97,12 @@ export default class CardComponent extends Component {
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard } = this.props;
     return connectDragSource(
       <div>
-        <Card
-          canDrag={true}
-          style={getStyles(isDragging)}
-          item={item}
-          cancelAddCard={cancelAddCard}
-          saveCard={saveCard}
-          addCard={addCard}
-          groupModeFlag={this.state.groupModeFlag}
+        <Card 
+            style={getStyles(isDragging)} 
+            item={item} cancelAddCard={cancelAddCard} 
+            saveCard={saveCard} 
+            addCard={addCard} 
+groupModeFlag={this.state.groupModeFlag}
         />
       </div>
     );

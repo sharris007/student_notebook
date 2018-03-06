@@ -90,7 +90,7 @@ const specs = {
 
     // when drag begins, we hide the card and only display cardDragPreview
     const item = monitor.getItem();
-    document.getElementById(item.id).style.display = 'none';
+    document.getElementById(item.id).style.opacity = 0.5;
   }
 };
 
@@ -142,19 +142,15 @@ export default class Cards extends Component {
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-          if (x !== 0) { // scott - don't put placeholder in top left special card
-            cardList.push(<div key="placeholder" className="item placeholder" />);
-          }
-
+          // cardList.push(<div key="placeholder" className="item placeholder" />);
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
         }
       }
       if (item !== undefined) {
-        if (item.cardFormat === 'note') {
-          cardList.push(
+        cardList.push(
             <Card x={x} y={i}
-              canDrag={true}
+              canDrag={item.cardFormat === 'note'? true:false}
               item={item}
               key={item.keyId}
               stopScrolling={this.props.stopScrolling}
@@ -180,18 +176,18 @@ export default class Cards extends Component {
       }
 
       if (isOver && canDrop && placeholderIndex === i) {
-        cardList.push(<div key="placeholder" className="item placeholder" />);
+        // cardList.push(<div key="placeholder" className="item placeholder" />);
       }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-      cardList.push(<div key="placeholder" className="item placeholder" />);
+      // cardList.push(<div key="placeholder" className="item placeholder" />);
     }
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-      cardList.push(<div key="placeholder" className="item placeholder" />);
+      // cardList.push(<div key="placeholder" className="item placeholder" />);
     }  
 
    
