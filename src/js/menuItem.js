@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import '../assets/temp.styl';
 import '../scss/notebook.scss';
-
+const listStyle = {
+  padding : '10px'
+};
 
 export default class MenuItem extends Component {
   constructor(props) {
@@ -29,13 +31,22 @@ export default class MenuItem extends Component {
       this.getCheckedboxval(checkboxes, true);
     }
     else {
-      checkboxes = document.getElementsByClassName('select-box');
+      const getAllcheckboxes = document.getElementsByClassName('select-box');
+      if (e.target.id === 'All') {
+        document.getElementById(e.target.id).checked = true;
+        checkboxes = document.getElementById(e.target.id);
+        this.makeCheckboxAschecked(getAllcheckboxes, e.target.id);
+      }
+      else { 
+        document.getElementById('All').checked = false;
+        checkboxes = getAllcheckboxes;
+      }
       this.getCheckedboxval(checkboxes);
     }
   }
 
   getCheckedboxval = (checkboxes, isLabelEle) => {
-    let val = "";
+    let val = '';
     const itemArr = [];
     for (let i=0, n=checkboxes.length;i<n;i++) 
     {
@@ -64,12 +75,26 @@ export default class MenuItem extends Component {
       localStorage.setItem('chapterItem', JSON.stringify(itemArr));
     }
   }
+  
+  allTypeChckBox = () => {
+    document.getElementById('All').checked = false;
+  }
+
+  makeCheckboxAschecked = (checkboxes, id) => {
+    for (let i=0, n=checkboxes.length;i<n;i++) 
+    {
+      if ( checkboxes[i].id !== id ) {
+        document.getElementsByClassName('select-box')[i].checked = false;
+      }
+      
+    }
+  }
 
   render() {
     this.props.labelCode ? this.props.labelCode : '';
     if (this.props.labelCode) {
       return (
-        <div className="listbox" >
+        <div className="listbox" style={listStyle}>
         <input className={`select-box label ${this.props.labelCode}`} id={this.props.content.labelCode} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e,true)}/ >
         <label htmlFor={this.props.content.labelCode} >{this.props.label}</label>
         </div>
@@ -77,7 +102,7 @@ export default class MenuItem extends Component {
     }
     else {
       return (
-        <div className="listbox">
+        <div className="listbox" style={listStyle}>
         <input className={`select-box ${this.props.labelCode}`} id={this.props.content.id} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e)}/ >
         <label htmlFor={this.props.content.id} >{this.props.label}</label>
         </div>

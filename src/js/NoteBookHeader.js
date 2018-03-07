@@ -52,10 +52,11 @@ const listStyle = {
 }
 const listboxStyle = {
   border : '1px solid gray',
-  padding:'10px 50px 10px 10px',
+  padding:'10px',
   background: '#fff',
   position: 'absolute',
-  top: '75px'
+  top: '75px',
+  minWidth: '280px'
 }
 const chkBoxiconStyle = {
   fill: 'gray'
@@ -246,10 +247,11 @@ export default class NoteBookHeader extends Component {
               : null}
             {groupModeToggleFlag === false ? <ToolbarSeparator />
               : null}
-            {groupModeToggleFlag === false ? <div><RaisedButton style={{ 'margin': '0px 14px' }} label='Chapters' onClick={() => this.handleChange('chapter')} />{this.state.showChapterMenu ?
+            {groupModeToggleFlag === false ?<div> <RaisedButton style={{ 'margin': '0px 14px' }} label='Chapters' onClick={() => this.handleChange('chapter')} />{this.state.showChapterMenu ?
               <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
-
               : null}
+              
+
             {groupModeToggleFlag === false ? <div><RaisedButton label="Label" onClick={() => this.handleChange('label')} />{this.state.showLabelMenu ?
               <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }</div>
               : null}
