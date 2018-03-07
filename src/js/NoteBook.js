@@ -251,13 +251,7 @@ export default class Board extends Component {
     });
     return (
       <div>
-      <NoteBookHeader  
-        toolbarMode={this.props.toolbarMode} 
-        getFilterArr={this.getFilterArr} 
-        callback={this.callback} 
-        tocData={this.props.tocData} 
-        notesList={this.props.notesList}>
-      </NoteBookHeader>
+      <NoteBookHeader  toolbarMode={this.props.toolbarMode} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
       <main>
         <div style={{ height: '100%' }}>
           <CustomDragLayer snapToGrid={false} />
