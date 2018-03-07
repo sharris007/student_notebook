@@ -67,9 +67,9 @@ class ComponentOwner extends React.Component {
       if (index > -1) {
         notesList.splice(index, 1);
       }
-     notesList.forEach((item, i) => {
-       item.keyId = item.id + Date.now();
-     });
+      notesList.forEach((item, i) => {
+        item.keyId = item.id + Date.now();
+      });
 
       this.setState({
         notesList: notesList
@@ -98,12 +98,17 @@ class ComponentOwner extends React.Component {
 
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'SELECTED'
-
+      toolbarMode.selectedCount = 0;
+      debugger;
       //   var newArray = JSON.parse(JSON.stringify(notesList));
       const notesList = [...this.state.notesList];
       notesList.forEach((item, i) => {
         if (item.id === data.id) {
           item.selected = true;
+        }
+        if (item.selected){
+          toolbarMode.selectedCount++;
+          debugger;
         }
       });
 
@@ -190,6 +195,7 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
+    debugger;
     const { notesList, groupModeFlag, toolbarMode } = this.state;
     return (
       <div>

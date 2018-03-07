@@ -231,7 +231,9 @@ export default class Card extends Component {
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleDeleteCard = this.handleDeleteCard.bind(this);
+    this.handleMenuItemChange = this.handleMenuItemChange.bind(this);
     this.handleDeleteMenuItem = this.handleDeleteMenuItem.bind(this);
+    this.handleEditMenuItem = this.handleEditMenuItem.bind(this);
     this.state = {
       item: props.item,
       titleMaxLength: 100,
@@ -240,7 +242,7 @@ export default class Card extends Component {
       hideSave: true,
       selected: false,
       groupModeFlag: props.groupModeFlag,
-      deleteMenuItem: null
+      selectedMenuItem: null
     };
   }
 
@@ -299,7 +301,24 @@ export default class Card extends Component {
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
+  handleMenuItemChange = (event, value) => {
+    if (value === 'Delete note')
+      this.props.saveCard(this.state.item, 'DELETE');
+    else if (value === 'Edit note') {
+      let card = this.state.item;
+      card.cardFormat = 'create new';
+      this.setState({ item: card }, () => {
+        this.titleInput.value = card.pageId ? card.highLightText : card.title;
+        this.contentArea.value = card.content;
+      });
+    }
+  }
+
   handleDeleteMenuItem = (event, value) => {
+    this.props.saveCard(this.state.item, 'DELETE');
+  }
+
+  handleEditMenuItem = (event, value) => {
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
@@ -352,22 +371,61 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
-        {item.cardFormat === 'note' && item.noteText === 'M' ? (
+        {item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
-            Main ideas
+            <div>Main ideas</div>
+            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                onChange={this.handleMenuItemChange}
+                value={this.state.selectedMenuItem}
+              >
+                <MenuItem value='Delete note' primaryText="Delete note" />
+                <MenuItem value='Edit note' primaryText="Edit note" />
+              </IconMenu>
+            </div>
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'I' ? (
+        {item.noteText === 'I' ? (
           <div className="item-name" style={fromInstructor}>
-            From Instructor
+            <div>From Instructor</div>
+            {/* <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                onChange={this.handleMenuItemChange}
+                value={this.state.selectedMenuItem}
+              >
+                <MenuItem value='Delete note' primaryText="Delete note" />
+                <MenuItem value='Edit note' primaryText="Edit note" />
+              </IconMenu>
+            </div> */}
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'O' ? (
+        {item.noteText === 'O' ? (
           <div className="item-name" style={observations}>
-            Observations
+            <div>Observations</div>
+            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                onChange={this.handleMenuItemChange}
+                value={this.state.selectedMenuItem}
+              >
+                <MenuItem value='Delete note' primaryText="Delete note" />
+                <MenuItem value='Edit note' primaryText="Edit note" />
+              </IconMenu>
+            </div>
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'Q' ? (
+        {item.noteText === 'Q' ? (
           <div className="item-name" style={questions}>
             <div>Questions</div>
             <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
@@ -376,11 +434,11 @@ export default class Card extends Component {
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
-                onChange={this.handleDeleteMenuItem}
-                value={this.state.deleteMenuItem}
-                >
+                onChange={this.handleMenuItemOnChange}
+                value={this.state.selectedMenuItem}
+              >
                 <MenuItem value='Delete note' primaryText="Delete note" />
-                <MenuItem value= 'Edit note' primaryText="Edit note" />
+                <MenuItem value='Edit note' primaryText="Edit note" />
               </IconMenu>
             </div>
           </div>
@@ -584,6 +642,9 @@ export default class Card extends Component {
           : null}
         {item.noteText === 'G' ?
           <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(187, 242, 182)', marginTop: '4px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>Watering your garden</div>
+          : null}
+        {item.noteText === 'G' ?
+          <div style={{ boxShadow: '0px 3px 5px silver', background: 'black', color: 'white', marginTop: '4px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}><center>more notes</center></div>
           : null}
       </div>
     );

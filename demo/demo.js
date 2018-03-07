@@ -7,6 +7,8 @@ function init() {
   for (let ic = 0; ic < notes.total; ic++) {
     const note = notes.response[ic].data;
     note.cardFormat='note';
+    debugger;
+    note.tagId = note.tagId;
     if (notes.response[ic].pageId) {
       note.title=note.source.title;
       note.highLightText=note.quote;

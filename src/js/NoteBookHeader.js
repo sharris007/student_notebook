@@ -5,7 +5,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 import FontIcon from 'material-ui/FontIcon';
 import TextField from 'material-ui/TextField';
 import { orange500, blue500 } from 'material-ui/styles/colors';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import '../scss/notebook.scss';
@@ -70,6 +70,7 @@ export default class NoteBookHeader extends Component {
   };
 
   constructor(props) {
+    debugger;
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
  this.menuItems = this.menuItems.bind(this);
@@ -101,7 +102,7 @@ export default class NoteBookHeader extends Component {
   }
 
 
-  
+
   handleOnChange(event) {
     this.props.getLists(6);
     this.setState({ search: event.target.value });
@@ -175,7 +176,7 @@ export default class NoteBookHeader extends Component {
     groupModeToggleFlag = !groupModeToggleFlag;
     this.setState({ showGroupTitleInput: false, groupTitle: '' });
     this.props.callback('GROUP', groupModeToggleFlag);
-  } 
+  }
   handleNewGroupButton(event) {
     let toolbarMode =
       this.setState({ showGroupTitleInput: true });
@@ -202,6 +203,8 @@ export default class NoteBookHeader extends Component {
 
 
   render() {
+    debugger;
+
     const { toolbarMode } = this.state;
     const labelObj = [
             {
@@ -239,7 +242,7 @@ export default class NoteBookHeader extends Component {
     
     
           
-        <Toolbar style={{ height: '90px' }}>
+        <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
           <ToolbarGroup >
             <FontIcon className="muidocs-icon-custom-sort" />
             {groupModeToggleFlag === false ? <RaisedButton label="All" buttonStyle={{ borderRadius: 25 }} labelColor={'white'} backgroundColor={"gray"} style={{ borderRadius: 25 }} onClick={() => this.handleGroupNotesButton()} />
@@ -249,6 +252,15 @@ export default class NoteBookHeader extends Component {
             {groupModeToggleFlag === false ? <RaisedButton label='Chapters' onClick={() => this.handleGroupNotesButton()} />
               : null}
             {groupModeToggleFlag === false ? <RaisedButton label="Label" onClick={() => this.handleGroupNotesButton()} />
+              : null}
+
+            {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%' }}>Select notes to group</span>
+              : null}
+
+            {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%' }}>{toolbarMode.selectedCount} note selected</span>
+              : null}
+
+            {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%' }}>{toolbarMode.selectedCount} notes selected</span>
               : null}
 
           </ToolbarGroup>
@@ -274,9 +286,7 @@ export default class NoteBookHeader extends Component {
               : null}
           </ToolbarGroup>
         </Toolbar>
-
-
-        
+        <br />
       </div>
     );
   }
