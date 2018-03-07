@@ -22,8 +22,15 @@ const cardSource = {
     return { id, title, item, x, y, clientWidth, clientHeight };
   },
   endDrag(props, monitor) {
-    if (monitor.getItem().id)document.getElementById(monitor.getItem().id).style.opacity = 1;
-    props.stopScrolling();
+    try  {
+      if (monitor.getItem().id) {
+        document.getElementById(monitor.getItem().id).style.opacity = 1;
+      }
+      props.stopScrolling();
+    }catch (e) {
+      console.log(e);
+    }
+    
   },
   isDragging(props, monitor) {
     const isDragging = props.item && props.item.id === monitor.getItem().id;
@@ -102,7 +109,7 @@ export default class CardComponent extends Component {
             item={item} cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 
             addCard={addCard} 
-groupModeFlag={this.state.groupModeFlag}
+            groupModeFlag={this.state.groupModeFlag}
         />
       </div>
     );

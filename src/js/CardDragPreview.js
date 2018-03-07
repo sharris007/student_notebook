@@ -3,8 +3,8 @@ import Card from './Cards/Card';
 
 const styles = {
   display: 'inline-block',
-  transform: 'rotate(-7deg)',
-  WebkitTransform: 'rotate(-7deg)'
+  transform: 'rotate(-3deg)',
+  WebkitTransform: 'rotate(-3deg)'
 };
 
 const propTypes = {

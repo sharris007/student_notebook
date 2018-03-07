@@ -28,8 +28,8 @@ function getItemStyles(props) {
     x += initialOffset.x;
     y += initialOffset.y;
   }
-
-  const transform = `translate(${x}px, ${y}px)`;
+  const transform = `translate(${x-100}px, ${y-100}px)`;
+  console.log('transform', `${x}px, ${y}px)`);
   return {
     WebkitTransform: transform,
     transform
