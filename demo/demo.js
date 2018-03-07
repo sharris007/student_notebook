@@ -6,18 +6,27 @@ function init() {
 
   for (let ic = 0; ic < notes.total; ic++) {
     const note = notes.response[ic].data;
-    note.cardFormat='note';
-    note.tagId = note.tagId;
-    if (notes.response[ic].pageId) {
-      note.title=note.source.title;
-      note.highLightText=note.quote;
-      note.pageId=notes.response[ic].pageId;
-    }else  {
-      note.title=note.quote; 
+    const groupNote = notes.response[ic].data;
+    const group = notes.response[ic];
+    note.cardFormat = 'note';
+    if (group.tagId) {
+      note.tagId = group.tagId;
+      const index = _.findIndex(notesList, function (o) { return o.tagId === group.tagId; });
+      note.groupedNotes = [];
+      note.groupedNotes.push(groupNote);
     }
-    note.content=note.text;
-    const timeStamp=note.updatedTimestamp?note.updatedTimestamp:note.createdTimestamp;
-    note.changeDate=timeStamp;
+
+
+    if (notes.response[ic].pageId) {
+      note.title = note.source.title;
+      note.highLightText = note.quote;
+      note.pageId = notes.response[ic].pageId;
+    } else {
+      note.title = note.quote;
+    }
+    note.content = note.text;
+    const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
+    note.changeDate = timeStamp;
     if (note.colorCode === '#FFD232') { //Yellow
       note.noteText = 'Q'; //Questions
     } else if (note.colorCode === '#55DF49') { //Green
@@ -43,7 +52,7 @@ function init() {
     notesList: notesList,
     tocData : tocData,
     toolbarMode: toolbarModeProp
-  //  responsiveColumns
+    //  responsiveColumns
   });
 }
 

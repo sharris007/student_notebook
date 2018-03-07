@@ -9,6 +9,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
 
+
+
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
@@ -57,11 +59,11 @@ const questions = {
 };
 
 const group = {
-  backgroundColor: 'black',
+  backgroundColor: 'white',
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
-  color: 'white',
+  color: 'black',
   textOverflow: 'ellipsis'
 };
 
@@ -451,7 +453,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'rgba(255, 255, 255, 0.87)', 'marginTop': '-20px' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
               >
                 <MenuItem primaryText="Rename group" />
                 <MenuItem primaryText="Ungroup notes" />
@@ -631,21 +633,24 @@ export default class Card extends Component {
 
           )}
 
+
+
+        
+
+       
         {item.noteText === 'G' ?
-          <div style={{ boxShadow: '0px 3px 5px silver', height: '17px', background: 'pink', marginBottom: '5px', marginLeft: '1px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.3 Biology</div>
+          <div style={{  height: '60px', background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.3em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: 'rgb(233, 233, 233)' }}><div style={{ background: 'pink', width: '11px', height: '60px', borderBottomLeftRadius: '.3em',  marginLeft: '-1px' }}><br/><table><tr><td><div style={{  textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>1.1 plants</div></td><td><div style={{fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white'}}>December 06, 2017</div></td></tr></table></div></div>
           : null}
+
+
         {item.noteText === 'G' ?
-          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(204, 245, 253)', marginTop: '-1px', marginLeft: '2px', marginBottom: '5px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.1 plants</div>
+          <div style={{  background: 'white', marginBottom: '0px',  borderBottomLeftRadius: '.9em' }}><div style={{ background: 'rgb(255, 237, 173)', width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}></div></div>
           : null}
-        {item.noteText === 'G' ?
-          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(204, 245, 253)', marginTop: '-1px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>1.2 roots and leaves</div>
-          : null}
-        {item.noteText === 'G' ?
-          <div style={{ boxShadow: '0px 3px 5px silver', background: 'rgb(187, 242, 182)', marginTop: '4px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}>Watering your garden</div>
-          : null}
-        {item.noteText === 'G' ?
-          <div style={{ boxShadow: '0px 3px 5px silver', background: 'black', color: 'white', marginTop: '4px', marginLeft: '3px', height: '17px', borderRightWidth: '12px', borderRightStyle: 'solid', borderRightColor: 'silver', }}><center>more notes</center></div>
-          : null}
+
+       
+
+
+       
       </div>
     );
   }
