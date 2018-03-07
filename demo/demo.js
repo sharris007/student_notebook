@@ -12,7 +12,7 @@ function init() {
     debugger;
     if (group.tagId) {
       note.tagId = group.tagId;
-      const index = _.findIndex(notesList, function (o) { return o.groupNotes.tagId === group.tagId; });
+      const index = _.findIndex(notesList, function (o) { return o.tagId === group.tagId; });
       note.groupedNotes = [];
       note.groupedNotes.push(groupNote);
     }
