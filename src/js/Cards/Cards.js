@@ -159,25 +159,10 @@ export default class Cards extends Component {
               addCard={this.props.addCard}
               groupModeFlag={groupModeFlag} />
           );
-        } else {  // scott prevent top left card from dragging
-          cardList.push(
-            <Card x={x} y={i}
-              canDrag={false}
-              key={item.keyId}
-              item={item}
-              stopScrolling={this.props.stopScrolling}
-              cancelAddCard={this.props.cancelAddCard}
-              saveCard={this.props.saveCard}
-              addCard={this.props.addCard}
-              groupModeFlag={groupModeFlag} />
-          );
-
-        }
-      
-
-      // if (isOver && canDrop && placeholderIndex === i) {
+      }
+      if (isOver && canDrop && placeholderIndex === i) {
       //   // cardList.push(<div key="placeholder" className="item placeholder" />);
-      // }
+      }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last

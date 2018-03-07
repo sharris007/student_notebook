@@ -31,17 +31,27 @@ export default class Board extends Component {
     this.saveCard = this.saveCard.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.getFilterArr = this.getFilterArr.bind(this);
-    // const lists = [...props.lists];
-    console.log("nextProps1", props.notesList);
+
+    this.state = {
+      isScrolling: false,
+      search: '',
+      lists: [],
+      notesList: [],
+      ider: null,
+      groupModeFlag: props.groupModeFlag
+    };
+
+  }
+  createLists = (props, cardDropped) => {
     const notesList = [...props.notesList];
-
-
-    if (props.groupModeFlag === false) {
+    this.setState({notesList});
+    console.log('mount', notesList);
+    if (!cardDropped || props.groupModeFlag === false) {
       notesList.splice(0, 0, {
         id: 'new',
-        keyId: Date.now(),
-        cardFormat: 'add mode',
+        keyId: notesList.length + Date.now(),
         title: '',
+        cardFormat: 'add mode',
         content: '',
         content2: '',
         changeDate: ''
@@ -56,7 +66,6 @@ export default class Board extends Component {
         cards: []
       });
     }
-
     notesList.map((item, i) => {
       const index = i % props.coloums;
       if (!item.cardFormat) {
@@ -65,58 +74,7 @@ export default class Board extends Component {
       item.keyId = item.id + Date.now();
       lists[index].cards.push(item);
     });
-
-
-    this.state = {
-      isScrolling: false,
-      search: '',
-      lists: [],
-      notesList: notesList,
-      ider: null,
-      groupModeFlag: props.groupModeFlag
-    };
-
-  }
-  createLists = (nextProps, cardDropped) => {
-    console.log("nextProps", nextProps.notesList);
-    const notesList = [...nextProps.notesList];
-    if (!cardDropped || nextProps.groupModeFlag === false) {
-      notesList.splice(0, 0, {
-        id: 'new',
-        keyId: notesList.length + Date.now(),
-        title: '',
-        cardFormat: 'add mode',
-        content: '',
-        content2: '',
-        changeDate: ''
-      });
-    }
-
-    const lists = [];
-    // initialize lists
-    for (let ic = 0; ic < nextProps.coloums; ic++) {
-      lists.push({
-        id: ic,
-        cards: []
-      });
-    }
-    notesList.map((item, i) => {
-      const index = i % nextProps.coloums;
-      if (!item.cardFormat) {
-        item.cardFormat = 'note';
-      }
-      lists[index].cards.push(item);
-    });
-    this.setState({lists,  groupModeFlag: nextProps.groupModeFlag}, ()=>{
-      const nextLists = {notesList:[], coloums:nextProps.coloums};
-      const newLists = [...this.state.lists];
-      newLists.forEach((list, listIndex) =>{
-        list.cards.forEach((card, cardIndex)=>{
-          const index = (nextProps.coloums*cardIndex)+listIndex;
-          nextLists.notesList.splice(index, 0, card);
-        });
-      });
-    });
+    this.setState({lists,  groupModeFlag: props.groupModeFlag});
   }
   componentWillMount() {
     this.createLists(this.props);
@@ -130,14 +88,14 @@ export default class Board extends Component {
 
   startScrolling(direction) {
     switch (direction) {
-      case 'toLeft':
-        this.setState({ isScrolling: true }, this.scrollLeft());
-        break;
-      case 'toRight':
-        this.setState({ isScrolling: true }, this.scrollRight());
-        break;
-      default:
-        break;
+    case 'toLeft':
+      this.setState({ isScrolling: true }, this.scrollLeft());
+      break;
+    case 'toRight':
+      this.setState({ isScrolling: true }, this.scrollRight());
+      break;
+    default:
+      break;
     }
   }
 
@@ -164,13 +122,11 @@ export default class Board extends Component {
 
     if (!!newLists[nextX].cards[nextY]) {
       if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
-
-
         let txt;
-        let r = confirm("Add to group " + newLists[nextX].cards[nextY].quote);
-        if (r == true) {
-          txt = "You pressed OK!";
-          newLists[lastX].cards.splice(lastY, 1)[0]
+        let r = confirm('Add to group ' + newLists[nextX].cards[nextY].quote);
+        if (r === true) {
+          txt = 'You pressed OK!';
+          newLists[lastX].cards.splice(lastY, 1)[0];
           this.setState({ lists: newLists });
           return;
         }
@@ -178,7 +134,7 @@ export default class Board extends Component {
       }
     }
 
-    if (lastX === nextX) {
+    /*if (lastX === nextX) {
       newLists[lastX].cards.splice(
         nextY,
         0,
@@ -190,12 +146,12 @@ export default class Board extends Component {
       // delete element from old place
       newLists[lastX].cards.splice(lastY, 1);
     }
-    // this.setState({ lists: newLists });
-    const nextLists = {notesList:[], coloums:this.props.coloums};
+    // this.setState({ lists: newLists });*/
+    const nextLists = Object.assign({...this.props}, {notesList:new Array(this.state.notesList.length)});
     newLists.forEach((list, listIndex) =>{
       list.cards.forEach((card, cardIndex)=>{
         const index = (this.props.coloums*cardIndex)+listIndex;
-        nextLists.notesList.splice(index, 0, card);
+        nextLists.notesList.splice(index, 1, card);
       });
     });
     const dragCardIndex = (this.props.coloums*lastY)+lastX;
@@ -270,13 +226,13 @@ export default class Board extends Component {
     this.setState({ search: event.target.value });
   }
 
-  getFilterArr(list){
+  getFilterArr(list) {
     const notesList = {};
     notesList.coloums = this.props.coloums;
-    if(JSON.parse(localStorage.getItem('chapterItem')).length > 0 || JSON.parse(localStorage.getItem('chapterItem')).length > 0){
+    if (JSON.parse(localStorage.getItem('chapterItem')).length > 0 || JSON.parse(localStorage.getItem('chapterItem')).length > 0) {
       notesList.notesList = list;
     }
-    else{
+    else  {
       notesList.notesList = this.props.notesList;
     }
     this.createLists(notesList);
@@ -295,7 +251,13 @@ export default class Board extends Component {
     });
     return (
       <div>
-      <NoteBookHeader  toolbarMode={this.props.toolbarMode} getFilterArr={this.getFilterArr} callback={this.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
+      <NoteBookHeader  
+        toolbarMode={this.props.toolbarMode} 
+        getFilterArr={this.getFilterArr} 
+        callback={this.callback} 
+        tocData={this.props.tocData} 
+        notesList={this.props.notesList}>
+      </NoteBookHeader>
       <main>
         <div style={{ height: '100%' }}>
           <CustomDragLayer snapToGrid={false} />
