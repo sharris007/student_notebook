@@ -99,7 +99,6 @@ class ComponentOwner extends React.Component {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'SELECTED'
       toolbarMode.selectedCount = 0;
-      debugger;
       //   var newArray = JSON.parse(JSON.stringify(notesList));
       const notesList = [...this.state.notesList];
       notesList.forEach((item, i) => {
@@ -108,7 +107,6 @@ class ComponentOwner extends React.Component {
         }
         if (item.selected){
           toolbarMode.selectedCount++;
-          debugger;
         }
       });
 
@@ -195,7 +193,6 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    debugger;
     const { notesList, groupModeFlag, toolbarMode } = this.state;
     return (
       <div>

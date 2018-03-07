@@ -70,7 +70,6 @@ export default class NoteBookHeader extends Component {
   };
 
   constructor(props) {
-    debugger;
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
  this.menuItems = this.menuItems.bind(this);
@@ -203,8 +202,6 @@ export default class NoteBookHeader extends Component {
 
 
   render() {
-    debugger;
-
     const { toolbarMode } = this.state;
     const labelObj = [
             {
