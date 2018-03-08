@@ -30,6 +30,7 @@ export default class MenuItem extends Component {
       const getAllLabelcheckBox = document.querySelectorAll('.select-box.label');
       if (e.target.id === 'all-label') {
         this.enableAllTypeChekbox(getAllLabelcheckBox, e.target.id);
+        checkboxes = document.getElementById(e.target.id);
       }
       else{
         document.getElementById('all-label').checked = false;
@@ -40,7 +41,8 @@ export default class MenuItem extends Component {
     else {
       const getAllcheckboxes = document.getElementsByClassName('select-box');
       if (e.target.id === 'All') {
-        this.enableAllTypeChekbox(getAllcheckboxes, e.target.id)
+        this.enableAllTypeChekbox(getAllcheckboxes, e.target.id);
+        checkboxes = document.getElementById(e.target.id);
       }
       else { 
         document.getElementById('All').checked = false;
@@ -52,7 +54,6 @@ export default class MenuItem extends Component {
  
   enableAllTypeChekbox = (getAllLabelcheckBox, id) => {
     document.getElementById(id).checked = true;
-    checkboxes = document.getElementById(id);
     this.unselectCheckBox(getAllLabelcheckBox, id);
   }
 
