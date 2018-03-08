@@ -71,3 +71,24 @@
 .listbox:first-child label:before {
     border: none;
 }
+.all {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.29;
+  letter-spacing: 0.3px;
+  text-align: center;
+  color: #252525;
+  cursor:pointer;
+  padding: 0 10px;
+  &.filterLabel{
+    width: 100px;
+    height: 18px;
+    padding-left: 0;
+    text-align: left;
+  }
+  .dropdownImg {
+    margin-left: 10px;
+  }
+}

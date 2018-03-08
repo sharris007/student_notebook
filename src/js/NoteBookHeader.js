@@ -9,6 +9,7 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
 import '../scss/notebook.scss';
+import dropdown from '../images/dropdown.png';
 import MenuItem from './menuItem';
 
 const VerticalLine = () => (
@@ -255,18 +256,18 @@ export default class NoteBookHeader extends Component {
     
           
         <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
-          <ToolbarGroup >
+          <ToolbarGroup style={{paddingLeft : '70px'}}>
             <FontIcon className="muidocs-icon-custom-sort" />
-            {groupModeToggleFlag === false ? <RaisedButton label="All" buttonStyle={{ borderRadius: 25 }} labelColor={'white'} backgroundColor={"gray"} style={{ borderRadius: 25 }} onClick={() => this.handleGroupNotesButton()} />
+            {groupModeToggleFlag === false ? <div className='all'>All</div>
               : null}
-            {groupModeToggleFlag === false ? <ToolbarSeparator />
+            {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px'}}/>
               : null}
-            {groupModeToggleFlag === false ?<div> <RaisedButton style={{ 'margin': '0px 14px' }} label='Chapters' onClick={() => this.handleChange('chapter')} />{this.state.showChapterMenu ?
+            {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span>Chapter</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
               <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
               : null}
               
 
-            {groupModeToggleFlag === false ? <div><RaisedButton label="Label" onClick={() => this.handleChange('label')} />{this.state.showLabelMenu ?
+            {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span>Labels</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
               <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }</div>
               : null}
 
