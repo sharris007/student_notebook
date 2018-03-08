@@ -24,7 +24,7 @@ const ellipsis = {
 };
 
 const mainIdea = {
-  backgroundColor: '#bbf2b6',
+  //backgroundColor: '#bbf2b6',
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
@@ -32,7 +32,7 @@ const mainIdea = {
 };
 
 const fromInstructor = {
-  backgroundColor: '#ccf5fd',
+  //  backgroundColor: '#ccf5fd',
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
@@ -40,7 +40,7 @@ const fromInstructor = {
 };
 
 const observations = {
-  backgroundColor: '#fed3ec',
+  //  backgroundColor: '#fed3ec',
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
@@ -48,7 +48,7 @@ const observations = {
 };
 
 const questions = {
-  backgroundColor: '#ffedad',
+  ///backgroundColor: '#ffedad',
   height: '36px',
   paddingTop: '10px',
   paddingLeft: '10px',
@@ -97,13 +97,14 @@ const date = {
 };
 
 const title = {
-  fontSize: '18px',
-  letterSpacing: '-0.4px',
+  fontSize: '12px',
+  letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
   fontWeight: '300',
-  lineHeight: '1.44',
-  padding: '15px',
+  lineHeight: '1.5',
+  padding: '10px',
+  paddingLeft: '16px',
   paddingBottom: 0,
   whiteSpace: 'normal',
   background: 'white'
@@ -224,8 +225,6 @@ export default class Card extends Component {
   };
 
   constructor(props) {
-    // alert('ggsssgg');
-    
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
@@ -239,7 +238,7 @@ export default class Card extends Component {
       noteMaxLength: 3000,
       noteMaxLengthWarning: '',
       hideSave: true,
-      selected: false,
+      selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
       selectedMenuItem: null
     };
@@ -372,13 +371,12 @@ export default class Card extends Component {
       >
         {item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
-            <div>Main ideas</div>
-            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -390,31 +388,16 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'I' ? (
           <div className="item-name" style={fromInstructor}>
-            <div>From Instructor</div>
-             <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
-              <IconMenu
-                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
-                onChange={this.handleMenuItemChange}
-                value={this.state.selectedMenuItem}
-              >
-                <MenuItem value='Delete note' primaryText="Delete note" />
-                <MenuItem value='Edit note' primaryText="Edit note" />
-              </IconMenu>
-            </div> 
           </div>
         ) : null}
         {item.noteText === 'O' ? (
           <div className="item-name" style={observations}>
-            <div>Observations</div>
-            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -426,14 +409,13 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'Q' ? (
           <div className="item-name" style={questions}>
-            <div>Questions</div>
-            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
-                onChange={this.handleMenuItemOnChange}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
@@ -465,10 +447,6 @@ export default class Card extends Component {
             {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
           : null}
 
-
-        {item.cardFormat === 'note' ? (
-          <div style={date}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div> // eslint-disable-line
-        ) : null}
         {item.cardFormat === 'note' ? (
           <div style={title}>{item.title}</div>
         ) : null}
@@ -543,7 +521,19 @@ export default class Card extends Component {
             <div>
               {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
                 <div className="item-content">
-                  <span style={styleContent}>“{item.highLightText}”</span>
+                  <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
+                    <td width='80%'>
+                      <span style={styleContent}>“{item.highLightText}”</span>
+                    </td>
+                    <td>
+                      {!!item.pageId ?
+                        <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
+                          <img
+                            style={{ height: '24px', width: '24px' }}
+                            src={gotoPng}
+                            alt="navigate"
+                          />
+                        </a> : null}</td></tr></tbody></table>
                 </div>
               </div> : null}
 
@@ -569,40 +559,6 @@ export default class Card extends Component {
 
         {item.cardFormat === 'note' ? (
           <div className="item-perfomers">
-            {item.noteText === 'I' ? null : <div className="add-perfomers">
-              <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleDeleteCard(item)}>
-                <img
-                  style={{ height: '16px', width: '16px' }}
-                  src={deletePng}
-                  alt="delete"
-                />
-              </a>
-
-            </div>}
-
-            {item.noteText === 'I' ? null : <div style={{ width: '5px' }} className="add-perfomers">&nbsp;</div>}
-
-            {item.noteText === 'I' ? null : <div className="add-perfomers">
-              <a style={{ height: '36px', width: '36px', padding: '10px', margin: '0' }} onClick={() => this.handleEditCard(item)}>
-                <img
-                  style={{ height: '16px', width: '16px' }}
-                  src={editPng}
-                  alt="edit"
-                />
-              </a>
-            </div>}
-
-            {!!item.pageId ?
-              <div className="delete-perfomers">
-                <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px' }} onClick={() => this.handleNavigate(item)}>
-                  <img
-                    style={{ height: '24px', width: '24px' }}
-                    src={gotoPng}
-                    alt="navigate"
-                  />
-                </a>
-              </div>
-              : null}
           </div>
         ) : (
             <div className="item-perfomers">
@@ -632,22 +588,36 @@ export default class Card extends Component {
 
 
 
-        
 
-       
+        {item.noteText === 'I' ? (
+          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        ) : null}
+
+        {item.noteText === 'M' ? (
+          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        ) : null}
+
+        {item.noteText === 'O' ? (
+          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        ) : null}
+
+        {item.noteText === 'Q' ? (
+          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        ) : null}
+
         {item.noteText === 'G' ?
-          <div style={{  height: '60px', background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.3em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: 'rgb(233, 233, 233)' }}><div style={{ background: 'pink', width: '11px', height: '60px', borderBottomLeftRadius: '.3em',  marginLeft: '-1px' }}><br/><table><tr><td><div style={{  textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>1.1 plants</div></td><td><div style={{fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white'}}>December 06, 2017</div></td></tr></table></div></div>
+          <div style={{ height: '60px', background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.3em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: 'rgb(233, 233, 233)' }}><div style={{ background: 'pink', width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>1.1 plants</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>December 06, 2017</div></td></tr></tbody></table></div></div>
           : null}
 
 
         {item.noteText === 'G' ?
-          <div style={{  background: 'white', marginBottom: '0px',  borderBottomLeftRadius: '.9em' }}><div style={{ background: 'rgb(255, 237, 173)', width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}></div></div>
+          <div style={{ background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.9em' }}><div style={{ background: 'rgb(255, 237, 173)', width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}></div></div>
           : null}
 
-       
 
 
-       
+
+
       </div>
     );
   }
