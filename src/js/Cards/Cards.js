@@ -160,9 +160,9 @@ export default class Cards extends Component {
               groupModeFlag={groupModeFlag} />
           );
       }
-      if (isOver && canDrop && placeholderIndex === i) {
-      //   // cardList.push(<div key="placeholder" className="item placeholder" />);
-      }
+      // if (isOver && canDrop && placeholderIndex === i) {
+      // //   // cardList.push(<div key="placeholder" className="item placeholder" />);
+      // }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
