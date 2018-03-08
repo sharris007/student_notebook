@@ -8,9 +8,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
-
-
-
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
@@ -394,7 +391,7 @@ export default class Card extends Component {
         {item.noteText === 'I' ? (
           <div className="item-name" style={fromInstructor}>
             <div>From Instructor</div>
-            {/* <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+             <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -406,7 +403,7 @@ export default class Card extends Component {
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
               </IconMenu>
-            </div> */}
+            </div> 
           </div>
         ) : null}
         {item.noteText === 'O' ? (
