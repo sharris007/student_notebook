@@ -229,7 +229,9 @@ export default class Board extends Component {
   getFilterArr(list) {
     const notesList = {};
     notesList.coloums = this.props.coloums;
-    if (JSON.parse(localStorage.getItem('chapterItem')).length > 0 || JSON.parse(localStorage.getItem('chapterItem')).length > 0) {
+    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
+    const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
+    if (selectedChapter.length > 0 || selectedLabel.length > 0) {
       notesList.notesList = list;
     }
     else  {

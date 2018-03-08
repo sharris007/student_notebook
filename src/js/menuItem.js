@@ -27,15 +27,20 @@ export default class MenuItem extends Component {
   getSelctedVal = (e, labelFlag) => {
     let checkboxes;
     if (labelFlag) {
-      checkboxes = document.querySelectorAll('.select-box.label');
+      const getAllLabelcheckBox = document.querySelectorAll('.select-box.label');
+      if (e.target.id === 'all-label') {
+        this.enableAllTypeChekbox(getAllLabelcheckBox, e.target.id);
+      }
+      else{
+        document.getElementById('all-label').checked = false;
+        checkboxes = getAllLabelcheckBox;
+      }
       this.getCheckedboxval(checkboxes, true);
     }
     else {
       const getAllcheckboxes = document.getElementsByClassName('select-box');
       if (e.target.id === 'All') {
-        document.getElementById(e.target.id).checked = true;
-        checkboxes = document.getElementById(e.target.id);
-        this.makeCheckboxAschecked(getAllcheckboxes, e.target.id);
+        this.enableAllTypeChekbox(getAllcheckboxes, e.target.id)
       }
       else { 
         document.getElementById('All').checked = false;
@@ -43,6 +48,12 @@ export default class MenuItem extends Component {
       }
       this.getCheckedboxval(checkboxes);
     }
+  }
+ 
+  enableAllTypeChekbox = (getAllLabelcheckBox, id) => {
+    document.getElementById(id).checked = true;
+    checkboxes = document.getElementById(id);
+    this.unselectCheckBox(getAllLabelcheckBox, id);
   }
 
   getCheckedboxval = (checkboxes, isLabelEle) => {
@@ -80,7 +91,7 @@ export default class MenuItem extends Component {
     document.getElementById('All').checked = false;
   }
 
-  makeCheckboxAschecked = (checkboxes, id) => {
+  unselectCheckBox = (checkboxes, id) => {
     for (let i=0, n=checkboxes.length;i<n;i++) 
     {
       if ( checkboxes[i].id !== id ) {

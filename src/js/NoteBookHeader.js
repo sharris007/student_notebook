@@ -126,8 +126,8 @@ export default class NoteBookHeader extends Component {
   }
   getSelectedVal = (val) => {
     const props = this.props;
-    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem"));
-    const selectedLabel = JSON.parse(localStorage.getItem("labelItem"));
+    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
+    const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
     var tocLevel = props.tocData.content.list
     const tocListItem = [];
     for (let i=0; i<selectedChapter.length;i++) {
@@ -142,7 +142,7 @@ export default class NoteBookHeader extends Component {
 
     let chapterList = [];
     let finalFilteredList = [];
-    const note = props.notesList
+    const note = props.notesList;
     for (let i1=0;i1<tocListItem.length;i1++) {
       if (typeof tocListItem[i1].children !== 'undefined' && tocListItem[i1].children.length > 0) {
         for (let j1=0;j1<tocListItem[i1].children.length;j1++) {
@@ -155,14 +155,28 @@ export default class NoteBookHeader extends Component {
         }
       }
     }
-    for (let c=0;c<chapterList.length;c++) {
-      selectedLabel.find((label) => {
-        if( chapterList[c].noteText === label) 
-          { 
-            finalFilteredList.push(chapterList[c]) 
-          } 
-      });
+    const checkChapterList = chapterList.length;
+    if(checkChapterList > 0){
+      for (let c=0;c<chapterList.length;c++) {
+        selectedLabel.find((label) => {
+          if( chapterList[c].noteText === label) 
+            { 
+              finalFilteredList.push(chapterList[c]) 
+            } 
+        });
+      }
     }
+    else{
+      for (let c=0;c<note.length;c++) {
+        selectedLabel.find((label) => {
+          if( note[c].noteText === label) 
+            { 
+              finalFilteredList.push(note[c]); 
+            } 
+        });
+      }
+    }
+    
     // chapterList = chapterList.length > 0 ? chapterList : props.notesList;
     if(finalFilteredList.length > 0 ){
       this.props.getFilterArr(finalFilteredList);
