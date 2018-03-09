@@ -181,6 +181,12 @@ class ComponentOwner extends React.Component {
         groupModeFlag: false
       });
 
+    } else if (msg === "RENAME") {
+      console.log('Re Name');
+      console.log('Data', data);
+    } else if (msg === "UNGROUP") {
+      console.log('UNGROUP');
+      console.log('Data', data);
     }
   }
 
