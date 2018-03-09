@@ -25,6 +25,11 @@ function init() {
       note.title = note.quote;
     }
     note.content = note.text;
+    note.tagId      = notes.response[ic].tagId;
+    note.tagName    = notes.response[ic].tagName;
+    note.insetSeq   = notes.response[ic].insetSeq;
+    note.outsetSeq  = notes.response[ic].outsetSeq;
+    note.notes      = notes.response[ic].notes;
     const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
     note.changeDate = timeStamp;
     if (note.colorCode === '#FFD232') { //Yellow

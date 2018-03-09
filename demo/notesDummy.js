@@ -130,6 +130,18 @@ export const notes = {
       'clientApp': 'ETEXT_WEB',
       'sharable': false,
       'status': 'Active',
+      'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
+      'tagName':'Group Name',
+      'insetSeq':1514735569235,
+      'outsetSeq':1514735569235,
+      "notes":[
+           {   
+             "_id" : "b9194fb6-c493-44dc-9595-091d4f7a3df9",   
+           },
+           {   
+             "_id" : "b9194fb6-c493-44dc-9595-091d4f7a3dfa",   
+           }
+      ],
       'data': {
         'ranges': [
           {

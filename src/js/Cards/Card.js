@@ -64,6 +64,20 @@ const group = {
   textOverflow: 'ellipsis'
 };
 
+const renameDiv = {
+  display:'none',
+  borderBottom: '8px solid #252525'
+}
+
+const renameInput = {
+  height: '36px',
+  cursor: 'pointer',
+  border: 'none',
+  backgroundColor: '#FFFFFF',
+  padding: '10px',
+  width:'97%'
+}
+
 const styleContent = {
   width: '228px',
   height: '154px',
@@ -206,6 +220,20 @@ const Rtest = {
   outline: 'none'
 };
 
+const optionListStyle = {
+  fontFamily:'Open Sans',
+  fontSize:'14px',
+  fontWeight:'normal',
+  fontStyle:'normal',
+  fontStretch:'normal',
+  lineHeight:'normal',
+  letterSpacing:'normal',
+  textAlign:'left',
+  color:'#252525',
+  padding:'8px 5px 0 5px',
+  height:'19px',
+  minHeight:'40px'
+};
 
 
 const Buttony = ({ className }) => (
@@ -232,6 +260,10 @@ export default class Card extends Component {
     this.handleMenuItemChange = this.handleMenuItemChange.bind(this);
     this.handleDeleteMenuItem = this.handleDeleteMenuItem.bind(this);
     this.handleEditMenuItem = this.handleEditMenuItem.bind(this);
+    this.handleRenameGroup  = this.handleRenameGroup.bind(this);
+    this.handleUnGroupNotes = this.handleUnGroupNotes.bind(this);
+    this.handleRenameSave = this.handleRenameSave.bind(this);
+    
     this.state = {
       item: props.item,
       titleMaxLength: 100,
@@ -327,6 +359,30 @@ export default class Card extends Component {
   handleAddCard = () => {
     this.props.addCard();
   };
+
+  handleRenameGroup = (event, value) => {
+    this.groupTitle.style.display = 'none';
+    this.renameDiv.style.display = 'block';
+  }
+
+  handleUnGroupNotes = (event, value) => {
+    let updatedItem = this.state.item;
+    updatedItem.tagId = '';
+    updatedItem.insetSeq = '';
+    this.setState({ item: updatedItem}, () => {
+        this.props.saveCard(this.state.item, 'UNGROUP');
+    });
+  }
+
+  handleRenameSave = (event, value) => {
+    let updatedItem = this.state.item;
+    updatedItem.tagName = this.renameInput.value;
+    this.setState({ item: updatedItem}, () => {
+        this.props.saveCard(this.state.item, 'RENAME');
+        this.groupTitle.style.display = 'block';
+        this.renameDiv.style.display = 'none';
+    });
+  }
 
   handleSelectCard = () => {
     const msg = (!this.state.selected === true) ? 'SELECTED' : 'UNSELECTED';
@@ -425,20 +481,37 @@ export default class Card extends Component {
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
-          <div className="item-name" style={group}>
-            <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.title}</div>
-            <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
-              <IconMenu
-                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
-              >
-                <MenuItem primaryText="Rename group" />
-                <MenuItem primaryText="Ungroup notes" />
-              </IconMenu>
+          <div>
+            <div className="item-name" style={group} ref={(ele) => {
+                        this.groupTitle = ele;
+                      }} >
+              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  iconStyle={{ fill: 'black', 'marginTop': '-20px'}}
+                >
+                  <MenuItem onClick= {this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
+                  <MenuItem onClick= {this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
+                </IconMenu>
+              </div>
             </div>
-
+            <div className="rename-group" id="rename-group" ref={(ele) => {
+                      this.renameDiv = ele;
+                    }} style={renameDiv}>
+              <input 
+                type="text" 
+                className="renamegroup"
+                ref={(ele) => {
+                      this.renameInput = ele;
+                    }} 
+                defaultValue={item.tagName}
+                style={renameInput}
+                onBlur={this.handleRenameSave} 
+              />
+            </div>
           </div>
         ) : null}
 
