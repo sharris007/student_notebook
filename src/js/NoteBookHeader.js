@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import '../assets/temp.styl';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
@@ -88,6 +89,8 @@ export default class NoteBookHeader extends Component {
   	  values: [],
       showChapterMenu : false,
       showLabelMenu : false,
+      chapterText: 'Chapter',
+      labelText: 'Labels',
       menuBarClass: 'test',
       showGroupInputTitle: false,
       toolbarMode: props.toolbarMode,
@@ -102,7 +105,18 @@ export default class NoteBookHeader extends Component {
     
   }
 
+  componentDidMount = () => {
+     window.addEventListener('click', this.domClick, false);
+  }
 
+  domClick = (e) => {
+    if (!ReactDOM.findDOMNode(this).contains(e.target)) {
+      this.setState({
+          showChapterMenu : false , showLabelMenu : false
+      });
+    }
+        
+  }
 
   handleOnChange(event) {
     this.props.getLists(6);
@@ -119,17 +133,26 @@ export default class NoteBookHeader extends Component {
       const toggledIsOpen = this.state.showChapterMenu ? false : true;
       this.setState({showChapterMenu : toggledIsOpen, showLabelMenu : false});
     }
-    else{
+    else if( getVal === 'label'){
       const toggledIsOpen = this.state.showLabelMenu ? false : true;
       this.setState({showLabelMenu : toggledIsOpen , showChapterMenu : false});
     }
+    else{
+      this.setState({showChapterMenu : false , showLabelMenu : false, chapterText : 'Chapter', labelText : 'Labels'});
+      localStorage.setItem('labelItem', JSON.stringify([]));
+      localStorage.setItem('chapterItem', JSON.stringify([]));
+      this.getSelectedVal();
+    }
       
   }
-  getSelectedVal = (val) => {
+  getSelectedVal = () => {
     const props = this.props;
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
     const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
-    var tocLevel = props.tocData.content.list
+    var tocLevel = props.tocData.content.list;
+    let updateChapterTxt = selectedChapter.length > 0 ? "Chapter" + ' ' +selectedChapter.length :'Chapter';
+    let updateLabelTxt = selectedLabel.length > 0 ? "Labels" + ' ' +selectedLabel.length : 'Labels';
+    this.setState( { chapterText : updateChapterTxt, labelText : updateLabelTxt});
     const tocListItem = [];
     for (let i=0; i<selectedChapter.length;i++) {
       tocLevel.find((toc) => {
@@ -160,7 +183,7 @@ export default class NoteBookHeader extends Component {
     if(checkChapterList > 0){
       for (let c=0;c<chapterList.length;c++) {
         selectedLabel.find((label) => {
-          if( chapterList[c].noteText === label) 
+          if( chapterList[c].noteText === label||(label==='NL' && !chapterList[c].noteText) )
             { 
               finalFilteredList.push(chapterList[c]) 
             } 
@@ -170,7 +193,7 @@ export default class NoteBookHeader extends Component {
     else{
       for (let c=0;c<note.length;c++) {
         selectedLabel.find((label) => {
-          if( note[c].noteText === label) 
+          if( note[c].noteText === label || (label==='NL' && !note[c].noteText)) 
             { 
               finalFilteredList.push(note[c]); 
             } 
@@ -258,16 +281,16 @@ export default class NoteBookHeader extends Component {
         <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
           <ToolbarGroup style={{paddingLeft : '70px'}}>
             <FontIcon className="muidocs-icon-custom-sort" />
-            {groupModeToggleFlag === false ? <div className='all'>All</div>
+            {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleChange('all')}>All</div>
               : null}
             {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px'}}/>
               : null}
-            {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span>Chapter</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
+            {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
               <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
               : null}
               
 
-            {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span>Labels</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
+            {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
               <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }</div>
               : null}
 
