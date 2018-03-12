@@ -364,8 +364,8 @@ export default class Card extends Component {
   };
 
   handleClickGroup = () => {
-    let tagId = this.state.item ? this.state.item.tagId : null;
-    this.props.handleGroupClick(tagId);
+    let _item = this.state.item ? this.state.item : null;
+    this.props.handleGroupClick(_item.tagId, _item.tagName);
   }
   handleRenameGroup = (event, value) => {
     this.groupTitle.style.display = 'none';

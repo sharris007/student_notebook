@@ -69,7 +69,8 @@ let groupModeToggleFlag = false;
 export default class NoteBookHeader extends Component {
   static propTypes = {
     callback: PropTypes.func,
-    toolbarMode: PropTypes.object
+    toolbarMode: PropTypes.object,
+    groupExpanded: PropTypes.bool
   };
 
   constructor(props) {
@@ -238,7 +239,9 @@ export default class NoteBookHeader extends Component {
     this.setState({ groupTitle: e.target.value, toolbarMode });
   }
 
-
+  handleGoToNotes = () => {
+    this.props.handleBack();
+  }
   render() {
     const { toolbarMode } = this.state;
     const labelObj = [
@@ -270,13 +273,8 @@ export default class NoteBookHeader extends Component {
           ];
           
     return (
-
-
-
       <div style={{ marginLeft: '-180px' }}>
-    
-    
-          
+        {this.props.groupExpanded === false ?
         <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
           <ToolbarGroup style={{paddingLeft : '70px'}}>
             <FontIcon className="muidocs-icon-custom-sort" />
@@ -287,12 +285,9 @@ export default class NoteBookHeader extends Component {
             {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
               <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
               : null}
-              
-
             {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
               <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }</div>
               : null}
-
             {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%' }}>Select notes to group</span>
               : null}
 
@@ -323,9 +318,23 @@ export default class NoteBookHeader extends Component {
               : null}
             {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" onClick={() => this.handleGroupSaveButton(event)} />
               : null}
+          </ToolbarGroup>          
+        </Toolbar>
+        :
+        <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
+          <ToolbarGroup style={{paddingLeft : '70px'}}>
+            <FontIcon className="muidocs-icon-custom-sort" />
+            {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleGoToNotes()}>Notes</div>
+              : null}
+            {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px'}}/>
+              : null}
+            {groupModeToggleFlag === false ?<div> <div className='all filterLabel'><span><strong>{this.props.expandedTagName}</strong></span></div>  {this.state.showChapterMenu ?
+              <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
+              : null}
           </ToolbarGroup>
         </Toolbar>
-        <br />
+        }
+        <br />       
       </div>
     );
   }

@@ -24,6 +24,7 @@ class ComponentOwner extends React.Component {
     notesList: PropTypes.array.isRequired,
     toolbarMode: PropTypes.object,
     groupModeFlag: PropTypes.bool
+    
   };
   constructor(props) {
     super(props);
@@ -35,7 +36,9 @@ class ComponentOwner extends React.Component {
       lists: props.lists,
       groupModeFlag: props.groupModeFlag,
       toolbarMode: props.toolbarMode,
-      notesList: temporaryArray
+      notesList: temporaryArray,
+      groupExpanded: false,
+      expandedTagName: null
     };
 
   }
@@ -190,7 +193,7 @@ class ComponentOwner extends React.Component {
     }
   }
 
-  handleGroupClick = (tagId) => {
+  handleGroupClick = (tagId, tagName) => {
     console.log('BEFORE..');
     const notesList = [...this.state.notesList];
     console.log(notesList);
@@ -198,10 +201,19 @@ class ComponentOwner extends React.Component {
     console.log('AFTER..');
     console.log(filterList);
      this.setState({
-        notesList: filterList
+        notesList: filterList,
+        groupExpanded: true,
+        expandedTagName: tagName
       });
   }
 
+  handleBack = () => {
+      this.setState({
+        notesList: this.props.notesList,
+        groupExpanded: false,
+        expandedTagName: null
+      });
+  }
   //
   // Note that combining the fat arrow syntax with ES7 class properties (transpiled by Babel Stage 0), we eliminate the
   // need to do manual binding of the 'this' context in event handlers or callbacks. React binds all other contexts
@@ -210,10 +222,10 @@ class ComponentOwner extends React.Component {
 
   render() {
     console.log('Owner RENDER called');
-    const { notesList, groupModeFlag, toolbarMode } = this.state;
+    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList}  toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={3} />
+        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={3} />
       </div>
     );
   };

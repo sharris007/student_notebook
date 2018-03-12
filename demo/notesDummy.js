@@ -131,7 +131,7 @@ export const notes = {
       'sharable': false,
       'status': 'Active',
       'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
-      'tagName':'Group Name',
+      'tagName':'Group 1',
       'insetSeq':1514735569235,
       'outsetSeq':1514735569235,
       "notes":[

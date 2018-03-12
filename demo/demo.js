@@ -57,7 +57,7 @@ function init() {
     notesList: notesList,
     tocData : tocData,
     toolbarMode: toolbarModeProp,
-    handleGroupClick: (tagId) => {
+    handleGroupClick: (tagId, tagName) => {
       console.log('tagId: ', tagId);
     }
     //  responsiveColumns
