@@ -180,15 +180,21 @@ export default class NoteBookHeader extends Component {
       }
     }
     const checkChapterList = chapterList.length;
-    if(checkChapterList > 0){
-      for (let c=0;c<chapterList.length;c++) {
-        selectedLabel.find((label) => {
-          if( chapterList[c].noteText === label||(label==='NL' && !chapterList[c].noteText) )
-            { 
-              finalFilteredList.push(chapterList[c]) 
-            } 
-        });
+    if (checkChapterList > 0) { 
+      if (selectedLabel.length > 0) { 
+        for (let c=0;c<chapterList.length;c++) {
+          selectedLabel.find((label) => {
+            if ( chapterList[c].noteText === label||(label==='NL' && !chapterList[c].noteText) )
+              { 
+                finalFilteredList.push(chapterList[c]);
+              } 
+          });
+        }
       }
+      else {
+        finalFilteredList = chapterList; 
+      }
+      
     }
     else{
       for (let c=0;c<note.length;c++) {
@@ -200,14 +206,7 @@ export default class NoteBookHeader extends Component {
         });
       }
     }
-    
-    // chapterList = chapterList.length > 0 ? chapterList : props.notesList;
-    if(finalFilteredList.length > 0 ){
-      this.props.getFilterArr(finalFilteredList);
-    }
-    else{
-      this.props.getFilterArr(chapterList);
-    }
+    this.props.getFilterArr(finalFilteredList);
     
   }
   handleCancelButton(event) {
