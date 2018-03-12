@@ -66,7 +66,8 @@ export default class CardsContainer extends Component {
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
-    groupModeFlag: PropTypes.bool
+    groupModeFlag: PropTypes.bool,
+    handleGroupClick: PropTypes.func
   }
 
   constructor(props) {
@@ -102,6 +103,7 @@ export default class CardsContainer extends Component {
           saveCard={this.props.saveCard}
           addCard={this.props.addCard}
           groupModeFlag={this.state.groupModeFlag} 
+          handleGroupClick={this.props.handleGroupClick}
         />
       </div>
     ));

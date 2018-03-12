@@ -23,7 +23,7 @@ class NoteBook extends React.Component {
     return (
       <div>
         <NoteBookHeader callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
-        <NoteBookBoard notesList={this.props.notesList} tocData={this.props.tocData} groupModeFlag={this.props.groupModeFlag} callback={this.props.callback} coloums={this.props.coloums}/>
+        <NoteBookBoard notesList={this.props.notesList} tocData={this.props.tocData} groupModeFlag={this.props.groupModeFlag} callback={this.props.callback} handleGroupClick={this.props.handleGroupClick} coloums={this.props.coloums}/>
       </div>
     );
   };  

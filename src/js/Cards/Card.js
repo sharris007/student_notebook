@@ -249,7 +249,9 @@ export default class Card extends Component {
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
-    groupModeFlag: PropTypes.bool
+    groupModeFlag: PropTypes.bool,
+    tagId:  PropTypes.func,
+    handleGroupClick: PropTypes.func
   };
 
   constructor(props) {
@@ -263,6 +265,7 @@ export default class Card extends Component {
     this.handleRenameGroup  = this.handleRenameGroup.bind(this);
     this.handleUnGroupNotes = this.handleUnGroupNotes.bind(this);
     this.handleRenameSave = this.handleRenameSave.bind(this);
+    this.handleClickGroup = this.handleClickGroup.bind(this);
     
     this.state = {
       item: props.item,
@@ -360,6 +363,10 @@ export default class Card extends Component {
     this.props.addCard();
   };
 
+  handleClickGroup = () => {
+    let tagId = this.state.item ? this.state.item.tagId : null;
+    this.props.handleGroupClick(tagId);
+  }
   handleRenameGroup = (event, value) => {
     this.groupTitle.style.display = 'none';
     this.renameDiv.style.display = 'block';
@@ -481,7 +488,7 @@ export default class Card extends Component {
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
-          <div>
+          <div onClick={this.handleClickGroup}>
             <div className="item-name" style={group} ref={(ele) => {
                         this.groupTitle = ele;
                       }} >

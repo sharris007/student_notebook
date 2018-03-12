@@ -56,7 +56,10 @@ function init() {
     },
     notesList: notesList,
     tocData : tocData,
-    toolbarMode: toolbarModeProp
+    toolbarMode: toolbarModeProp,
+    handleGroupClick: (tagId) => {
+      console.log('tagId: ', tagId);
+    }
     //  responsiveColumns
   });
 }

@@ -190,7 +190,17 @@ class ComponentOwner extends React.Component {
     }
   }
 
-
+  handleGroupClick = (tagId) => {
+    console.log('BEFORE..');
+    const notesList = [...this.state.notesList];
+    console.log(notesList);
+    let filterList = notesList.filter(notesList => notesList.tagId === tagId);
+    console.log('AFTER..');
+    console.log(filterList);
+     this.setState({
+        notesList: filterList
+      });
+  }
 
   //
   // Note that combining the fat arrow syntax with ES7 class properties (transpiled by Babel Stage 0), we eliminate the
@@ -199,10 +209,11 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
+    console.log('Owner RENDER called');
     const { notesList, groupModeFlag, toolbarMode } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList}  toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} coloums={3} />
+        <NoteBook notesList={notesList}  toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={3} />
       </div>
     );
   };

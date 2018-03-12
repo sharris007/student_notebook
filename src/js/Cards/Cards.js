@@ -116,7 +116,8 @@ export default class Cards extends Component {
     cancelAddCard: PropTypes.func,
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
-    groupModeFlag: PropTypes.bool
+    groupModeFlag: PropTypes.bool,
+    handleGroupClick: PropTypes.func
   }
 
   constructor(props) {
@@ -157,7 +158,9 @@ export default class Cards extends Component {
               cancelAddCard={this.props.cancelAddCard}
               saveCard={this.props.saveCard}
               addCard={this.props.addCard}
-              groupModeFlag={groupModeFlag} />
+              groupModeFlag={groupModeFlag}
+              handleGroupClick={this.props.handleGroupClick}
+            />
           );
       }
       // if (isOver && canDrop && placeholderIndex === i) {

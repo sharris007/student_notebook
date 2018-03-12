@@ -14,7 +14,8 @@ export default class Board extends Component {
   static propTypes = {
     notesList: PropTypes.array.isRequired,
     groupModeFlag: PropTypes.bool,
-    callback: PropTypes.func
+    callback: PropTypes.func,
+    handleGroupClick: PropTypes.func
   };
 
   constructor(props) {
@@ -272,6 +273,7 @@ export default class Board extends Component {
               addCard={this.addCard}
               groupModeFlag={this.state.groupModeFlag}
               x={i}
+              handleGroupClick={this.props.handleGroupClick}
             />
           ))}
         </div>
