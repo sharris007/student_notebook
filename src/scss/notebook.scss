@@ -70,7 +70,13 @@
   }
 }
 .listbox:first-child label:before {
-    border: none;
+    /*border: none;*/
+}
+.listbox:first-child{
+  padding : 10px !important;
+}
+.listbox.label { 
+  padding: 10px;
 }
 .all {
   font-size: 14px;
@@ -80,7 +86,6 @@
   line-height: 1.29;
   letter-spacing: 0.3px;
   text-align: center;
-  color: #252525;
   cursor:pointer;
   padding: 0 10px;
   &.filterLabel{
@@ -88,6 +93,13 @@
     height: 18px;
     padding-left: 0;
     text-align: left;
+    .default{
+      color: #252525;
+    }
+    .active{
+      color: #047a9c;
+      font-weight: bold;
+    }
   }
   .dropdownImg {
     margin-left: 10px;

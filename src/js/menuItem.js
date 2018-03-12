@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../assets/temp.styl';
 import '../scss/notebook.scss';
 const listStyle = {
-  padding : '10px'
+  padding : '10px 10px 10px 28px'
 };
 
 export default class MenuItem extends Component {
@@ -28,15 +28,15 @@ export default class MenuItem extends Component {
     let checkboxes;
     if (labelFlag) {
       const getAllLabelcheckBox = document.querySelectorAll('.select-box.label');
-      if (e.target.id === 'all-label') {
-        this.enableAllTypeChekbox(getAllLabelcheckBox, e.target.id);
-        checkboxes = document.getElementById(e.target.id);
-      }
-      else{
-        document.getElementById('all-label').checked = false;
-        checkboxes = getAllLabelcheckBox;
-      }
-      this.getCheckedboxval(checkboxes, true);
+      // if (e.target.id === 'all-label') {
+      //   this.enableAllTypeChekbox(getAllLabelcheckBox, e.target.id);
+      //   checkboxes = document.getElementById(e.target.id);
+      // }
+      // else{
+      //   document.getElementById('all-label').checked = false;
+      //   checkboxes = getAllLabelcheckBox;
+      // }
+      this.getCheckedboxval(getAllLabelcheckBox, true);
     }
     else {
       const getAllcheckboxes = document.getElementsByClassName('select-box');
@@ -106,7 +106,7 @@ export default class MenuItem extends Component {
     this.props.labelCode ? this.props.labelCode : '';
     if (this.props.labelCode) {
       return (
-        <div className="listbox" style={listStyle}>
+        <div className="listbox label" >
         <input className={`select-box label ${this.props.labelCode}`} id={this.props.content.labelCode} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e,true)}/ >
         <label htmlFor={this.props.content.labelCode} >{this.props.label}</label>
         </div>
