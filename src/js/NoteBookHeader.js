@@ -58,6 +58,14 @@ const listboxStyle = {
   background: '#fff',
   position: 'absolute',
   top: '75px',
+  minWidth: '300px'
+}
+const listboxStyleLabel = {
+  border : '1px solid gray',
+  padding:'10px',
+  background: '#fff',
+  position: 'absolute',
+  top: '75px',
   minWidth: '280px'
 }
 const chkBoxiconStyle = {
@@ -151,7 +159,7 @@ export default class NoteBookHeader extends Component {
     const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
     var tocLevel = props.tocData.content.list;
     let updateChapterTxt = selectedChapter.length > 0 ? "Chapter" + ' ' +selectedChapter.length :'Chapter';
-    let updateLabelTxt = selectedLabel.length > 0 ? "Labels" + ' ' +selectedLabel.length : 'Labels';
+    let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length+' '+ "Labels" : 'Labels';
     this.setState( { chapterText : updateChapterTxt, labelText : updateLabelTxt});
     const tocListItem = [];
     for (let i=0; i<selectedChapter.length;i++) {
@@ -243,11 +251,6 @@ export default class NoteBookHeader extends Component {
     const { toolbarMode } = this.state;
     const labelObj = [
             {
-              "labelName": "All Labels",
-              "labelCode": "all-label",
-              "id":"all-label"
-            },
-            {
               "labelName": "From Instructor",
               "labelCode": "I",
               "id":"from_instructor"
@@ -284,13 +287,16 @@ export default class NoteBookHeader extends Component {
               : null}
             {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px'}}/>
               : null}
-            {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
+            {groupModeToggleFlag === false ?<div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span className={
+              (this.state.chapterText === 'Chapter') ? 'default' : 'active'
+            }>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/> </div>  {this.state.showChapterMenu ?
               <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null }</div>
               : null}
               
 
-            {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
-              <div style={listboxStyle} >{this.menuItems(labelObj)}</div> : null }</div>
+            {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span className={
+              (this.state.labelText === 'Labels') ? 'default' : 'active'}>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow"/></div>{this.state.showLabelMenu ?
+              <div style={listboxStyleLabel} >{this.menuItems(labelObj)}</div> : null }</div>
               : null}
 
             {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%' }}>Select notes to group</span>
