@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
-import '../../assets/ribbon.css';
+const ribbon = require('../../assets/ribbon.css');
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
@@ -440,6 +440,7 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
+      <div className="ribbon ribbon-top-left" />
         {item.noteText === 'C' ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
