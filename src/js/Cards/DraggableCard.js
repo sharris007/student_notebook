@@ -79,7 +79,8 @@ export default class CardComponent extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
-    handleGroupClick: PropTypes.func
+    handleGroupClick: PropTypes.func,
+    groupExpanded: PropTypes.bool
   }
 
   constructor(props) {
@@ -102,7 +103,7 @@ export default class CardComponent extends Component {
   }
 
   render() {
-    const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, handleGroupClick } = this.props;
+    const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, handleGroupClick, groupExpanded } = this.props;
     return connectDragSource(
       <div>
         <Card 
@@ -112,6 +113,7 @@ export default class CardComponent extends Component {
             addCard={addCard} 
             groupModeFlag={this.state.groupModeFlag}
             handleGroupClick={handleGroupClick}
+            groupExpanded={groupExpanded}
         />
       </div>
     );

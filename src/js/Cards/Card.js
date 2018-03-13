@@ -59,9 +59,10 @@ const group = {
   backgroundColor: 'white',
   height: '36px',
   paddingTop: '10px',
-  paddingLeft: '10px',
+  // paddingLeft: '10px',
   color: 'black',
-  textOverflow: 'ellipsis'
+  textOverflow: 'ellipsis',
+  textAlign: 'center'
 };
 
 const renameDiv = {
@@ -234,7 +235,6 @@ const optionListStyle = {
   height:'19px',
   minHeight:'40px'
 };
-
 
 const Buttony = ({ className }) => (
   <div style={className}> </div>
@@ -492,7 +492,9 @@ export default class Card extends Component {
             <div className="item-name" style={group} ref={(ele) => {
                         this.groupTitle = ele;
                       }} >
+                      {this.props.groupExpanded === false ? 
               <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
+                      : <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%', height:'23px' }}></div>}
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -624,7 +626,7 @@ export default class Card extends Component {
                 <div style={line} /> : null}
 
               {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
-                <div className="item-content">
+                <div className="item-content">                  
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
@@ -635,6 +637,8 @@ export default class Card extends Component {
                 </div>
               </div> : null}
             </div>
+
+           
           )}
 
         {item.cardFormat === 'note' ? (
@@ -666,9 +670,7 @@ export default class Card extends Component {
 
           )}
 
-
-
-
+         
         {item.noteText === 'I' ? (
           <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
@@ -694,9 +696,9 @@ export default class Card extends Component {
           <div style={{ background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.9em' }}><div style={{ background: 'rgb(255, 237, 173)', width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}></div></div>
           : null}
 
-
-
-
+        {item.cardFormat === 'note' && !item.pageId ?
+         <div style={{ width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}></div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          : null}
 
       </div>
     );
