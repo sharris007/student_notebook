@@ -104,6 +104,7 @@ export default class CardsContainer extends Component {
           addCard={this.props.addCard}
           groupModeFlag={this.state.groupModeFlag} 
           handleGroupClick={this.props.handleGroupClick}
+          groupExpanded={this.props.groupExpanded}
         />
       </div>
     ));

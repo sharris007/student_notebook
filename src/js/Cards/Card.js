@@ -492,7 +492,9 @@ export default class Card extends Component {
             <div className="item-name" style={group} ref={(ele) => {
                         this.groupTitle = ele;
                       }} >
+                      {this.props.groupExpanded === false ? 
               <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
+                      : <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%', height:'23px' }}></div>}
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

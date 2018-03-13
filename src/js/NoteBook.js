@@ -274,6 +274,7 @@ export default class Board extends Component {
               groupModeFlag={this.state.groupModeFlag}
               x={i}
               handleGroupClick={this.props.handleGroupClick}
+              groupExpanded={this.props.groupExpanded}
             />
           ))}
         </div>

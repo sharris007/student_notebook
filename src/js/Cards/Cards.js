@@ -160,6 +160,7 @@ export default class Cards extends Component {
               addCard={this.props.addCard}
               groupModeFlag={groupModeFlag}
               handleGroupClick={this.props.handleGroupClick}
+              groupExpanded={this.props.groupExpanded}
             />
           );
       }

@@ -197,7 +197,7 @@ class ComponentOwner extends React.Component {
     console.log('BEFORE..');
     const notesList = [...this.state.notesList];
     console.log(notesList);
-    let filterList = notesList.filter(notesList => notesList.tagId === tagId );
+    let filterList = notesList.filter(notesList => notesList.tagId === tagId && notesList.noteText !== 'G');
     console.log('AFTER..');
     console.log(filterList);
      this.setState({
