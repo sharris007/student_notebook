@@ -52,7 +52,8 @@ class ComponentOwner extends React.Component {
         cardFormat: 'note',
         content: data.content,
         content2: 'this is test data',
-        changeDate: data.changeDate
+        changeDate: data.changeDate,
+        noteText: 'C'
       });
       this.setState({
         notesList: notesList
@@ -197,6 +198,7 @@ class ComponentOwner extends React.Component {
     console.log('BEFORE..');
     const notesList = [...this.state.notesList];
     console.log(notesList);
+    debugger;
     let filterList = notesList.filter(notesList => notesList.tagId === tagId && notesList.noteText !== 'G');
     console.log('AFTER..');
     console.log(filterList);

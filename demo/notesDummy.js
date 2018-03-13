@@ -130,10 +130,7 @@ export const notes = {
       'clientApp': 'ETEXT_WEB',
       'sharable': false,
       'status': 'Active',
-      'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
-      'tagName':'Group 1',
-      'insetSeq':1514735569235,
-      'outsetSeq':1514735569235,
+      
       "notes":[
            {   
              "_id" : "b9194fb6-c493-44dc-9595-091d4f7a3df9",   
@@ -158,7 +155,7 @@ export const notes = {
           }
         ],
         'createdTimestamp': '2017-12-04T10:55:37.186Z',
-        'colorCode': 'GROUP',
+        'colorCode': '#FFD232',
         'shareable': false,
         'lastColor': '#FFD232',
         'text': 'ssss',
@@ -177,7 +174,10 @@ export const notes = {
         'context': '59b7c8cbe4b0b957f51373cf',
         'user': 'ffffffff59b8c629e4b09efb34405de7'
       },
-      'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
+      'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
+      'tagName':'Group 1',
+      'insetSeq':1514735569235,
+      'outsetSeq':1514735569235,'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
       'createdTime': 1512384942792,
       'updatedTime': 1512384950015
     },

@@ -121,19 +121,19 @@ export default class Board extends Component {
   moveCard(lastX, lastY, nextX, nextY) {
     const newLists = [...this.state.lists];
 
-    if (!!newLists[nextX].cards[nextY]) {
-      if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
-        let txt;
-        let r = confirm('Add to group ' + newLists[nextX].cards[nextY].quote);
-        if (r === true) {
-          txt = 'You pressed OK!';
-          newLists[lastX].cards.splice(lastY, 1)[0];
-          this.setState({ lists: newLists });
-          return;
-        }
+    // if (!!newLists[nextX].cards[nextY]) {
+    //   if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
+    //     let txt;
+    //     let r = confirm('Add to group ' + newLists[nextX].cards[nextY].quote);
+    //     if (r === true) {
+    //       txt = 'You pressed OK!';
+    //       newLists[lastX].cards.splice(lastY, 1)[0];
+    //       this.setState({ lists: newLists });
+    //       return;
+    //     }
 
-      }
-    }
+    //   }
+    // }
 
     /*if (lastX === nextX) {
       newLists[lastX].cards.splice(

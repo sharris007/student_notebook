@@ -65,7 +65,7 @@ const group = {
 };
 
 const renameDiv = {
-  display:'none',
+  display: 'none',
   borderBottom: '8px solid #252525'
 }
 
@@ -75,7 +75,7 @@ const renameInput = {
   border: 'none',
   backgroundColor: '#FFFFFF',
   padding: '10px',
-  width:'97%'
+  width: '97%'
 }
 
 const styleContent = {
@@ -221,18 +221,18 @@ const Rtest = {
 };
 
 const optionListStyle = {
-  fontFamily:'Open Sans',
-  fontSize:'14px',
-  fontWeight:'normal',
-  fontStyle:'normal',
-  fontStretch:'normal',
-  lineHeight:'normal',
-  letterSpacing:'normal',
-  textAlign:'left',
-  color:'#252525',
-  padding:'8px 5px 0 5px',
-  height:'19px',
-  minHeight:'40px'
+  fontFamily: 'Open Sans',
+  fontSize: '14px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: 'normal',
+  letterSpacing: 'normal',
+  textAlign: 'left',
+  color: '#252525',
+  padding: '8px 5px 0 5px',
+  height: '19px',
+  minHeight: '40px'
 };
 
 
@@ -250,7 +250,7 @@ export default class Card extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
-    tagId:  PropTypes.func,
+    tagId: PropTypes.func,
     handleGroupClick: PropTypes.func
   };
 
@@ -262,11 +262,11 @@ export default class Card extends Component {
     this.handleMenuItemChange = this.handleMenuItemChange.bind(this);
     this.handleDeleteMenuItem = this.handleDeleteMenuItem.bind(this);
     this.handleEditMenuItem = this.handleEditMenuItem.bind(this);
-    this.handleRenameGroup  = this.handleRenameGroup.bind(this);
+    this.handleRenameGroup = this.handleRenameGroup.bind(this);
     this.handleUnGroupNotes = this.handleUnGroupNotes.bind(this);
     this.handleRenameSave = this.handleRenameSave.bind(this);
     this.handleClickGroup = this.handleClickGroup.bind(this);
-    
+
     this.state = {
       item: props.item,
       titleMaxLength: 100,
@@ -364,6 +364,7 @@ export default class Card extends Component {
   };
 
   handleClickGroup = () => {
+    debugger;
     let _item = this.state.item ? this.state.item : null;
     this.props.handleGroupClick(_item.tagId, _item.tagName);
   }
@@ -376,18 +377,18 @@ export default class Card extends Component {
     let updatedItem = this.state.item;
     updatedItem.tagId = '';
     updatedItem.insetSeq = '';
-    this.setState({ item: updatedItem}, () => {
-        this.props.saveCard(this.state.item, 'UNGROUP');
+    this.setState({ item: updatedItem }, () => {
+      this.props.saveCard(this.state.item, 'UNGROUP');
     });
   }
 
   handleRenameSave = (event, value) => {
     let updatedItem = this.state.item;
     updatedItem.tagName = this.renameInput.value;
-    this.setState({ item: updatedItem}, () => {
-        this.props.saveCard(this.state.item, 'RENAME');
-        this.groupTitle.style.display = 'block';
-        this.renameDiv.style.display = 'none';
+    this.setState({ item: updatedItem }, () => {
+      this.props.saveCard(this.state.item, 'RENAME');
+      this.groupTitle.style.display = 'block';
+      this.renameDiv.style.display = 'none';
     });
   }
 
@@ -428,10 +429,28 @@ export default class Card extends Component {
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     return (
       <div
-        style={{ background: 'white' }}
+        //    style={{ background: 'white' }}
+        style={item.noteText === 'G' ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         className="item"
         id={style ? item.id : null}
       >
+        {item.noteText === 'C' ? (
+          <div className="item-name" style={observations}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
+              <IconMenu
+                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                onChange={this.handleMenuItemChange}
+                value={this.state.selectedMenuItem}
+              >
+                <MenuItem value='Delete note' primaryText="Delete note" />
+                <MenuItem value='Edit note' primaryText="Edit note" />
+              </IconMenu>
+            </div>
+          </div>
+        ) : null}
         {item.noteText === 'M' ? (
           <div className="item-name" style={mainIdea}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
@@ -453,6 +472,8 @@ export default class Card extends Component {
           <div className="item-name" style={fromInstructor}>
           </div>
         ) : null}
+
+
         {item.noteText === 'O' ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
@@ -490,39 +511,39 @@ export default class Card extends Component {
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
           <div onClick={this.handleClickGroup}>
             <div className="item-name" style={group} ref={(ele) => {
-                        this.groupTitle = ele;
-                      }} >
+              this.groupTitle = ele;
+            }} >
               <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                   targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  iconStyle={{ fill: 'black', 'marginTop': '-20px'}}
+                  iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
                 >
-                  <MenuItem onClick= {this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
-                  <MenuItem onClick= {this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
+                  <MenuItem onClick={this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
+                  <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
-                      this.renameDiv = ele;
-                    }} style={renameDiv}>
-              <input 
-                type="text" 
+              this.renameDiv = ele;
+            }} style={renameDiv}>
+              <input
+                type="text"
                 className="renamegroup"
                 ref={(ele) => {
-                      this.renameInput = ele;
-                    }} 
+                  this.renameInput = ele;
+                }}
                 defaultValue={item.tagName}
                 style={renameInput}
-                onBlur={this.handleRenameSave} 
+                onBlur={this.handleRenameSave}
               />
             </div>
           </div>
         ) : null}
 
-        {item.cardFormat === 'note' && this.state.groupModeFlag === true && item.colorCode !== 'GROUP' ?
+        {item.cardFormat === 'note' && this.state.groupModeFlag === true && item.noteText !== 'G' ?
           <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
             {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
           : null}
@@ -669,6 +690,9 @@ export default class Card extends Component {
 
 
 
+
+
+
         {item.noteText === 'I' ? (
           <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
@@ -686,16 +710,55 @@ export default class Card extends Component {
         ) : null}
 
         {item.noteText === 'G' ?
-          <div style={{ height: '60px', background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.3em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: 'rgb(233, 233, 233)' }}><div style={{ background: 'pink', width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>1.1 plants</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>December 06, 2017</div></td></tr></tbody></table></div></div>
+          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: `${item.notes[0].colorCode}` }}>
+            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
+              <br />
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>
+
+                        {item.noteText === 'Q' ? 
+                          `Questions`
+                         : null}
+
+
+                        {item.noteText === 'I' ? 
+                          `From instructor`
+                         : null}
+                        {item.noteText === 'M' ? 
+                          `Main ideas`
+                         : null}
+
+                        {item.noteText === 'O' ? 
+                          `Main observations`
+                         : null}
+                        {item.notes[0].noteText}
+
+                        {/* {item.notes[0].title} */}
+                      </div></td>
+                    <td>
+                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           : null}
 
 
         {item.noteText === 'G' ?
-          <div style={{ background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.9em' }}><div style={{ background: 'rgb(255, 237, 173)', width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}></div></div>
-          : null}
+          item.notes.splice(1).map((note, i) => (
+            <div style={{ background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
+              <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
+                <div style={{ marginLeft: '20px', paddingTop: '7px' }}>{note.title}</div>
+              </div>
+            </div>
 
-
-
+          )) : null}
 
 
       </div>

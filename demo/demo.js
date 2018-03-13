@@ -1,20 +1,29 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-import {notes, tocData} from './notesDummy';
+import { notes, tocData } from './notesDummy';
 
 function init() {
   const notesList = [];
 
+  let groups = [];
+
   for (let ic = 0; ic < notes.total; ic++) {
     const note = notes.response[ic].data;
-    const groupNote = notes.response[ic].data;
-    const group = notes.response[ic];
+
+    //   const groupNote = notes.response[ic].data;
+    //  const group = notes.response[ic];
     note.cardFormat = 'note';
-    if (group.tagId) {
-      note.tagId = group.tagId;
-      const index = _.findIndex(notesList, function (o) { return o.tagId === group.tagId; });
-      note.groupedNotes = [];
-      note.groupedNotes.push(groupNote);
-    }
+    // if (notes.response[ic].tagId) {
+    //   note.tagId = notes.response[ic].tagId;
+    //   note.tagName = notes.response[ic].tagName;
+    //   const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
+    //   if (index === -1) {
+    //     note.notes = [];
+    //     groups.push(note);
+    //   } else {
+    //     debugger;
+    //     groups[index].notes.push(note)
+    //   }
+    // } else {
 
 
     if (notes.response[ic].pageId) {
@@ -25,11 +34,11 @@ function init() {
       note.title = note.quote;
     }
     note.content = note.text;
-    note.tagId      = notes.response[ic].tagId;
-    note.tagName    = notes.response[ic].tagName;
-    note.insetSeq   = notes.response[ic].insetSeq;
-    note.outsetSeq  = notes.response[ic].outsetSeq;
-    note.notes      = notes.response[ic].notes;
+    note.tagId = notes.response[ic].tagId;
+    note.tagName = notes.response[ic].tagName;
+    note.insetSeq = notes.response[ic].insetSeq;
+    note.outsetSeq = notes.response[ic].outsetSeq;
+    //  note.notes = notes.response[ic].notes;
     const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
     note.changeDate = timeStamp;
     if (note.colorCode === '#FFD232') { //Yellow
@@ -43,8 +52,35 @@ function init() {
     } else if (note.colorCode === 'GROUP') { //Group Card (Blue)
       note.noteText = 'G'; // Group
     }
-    notesList.push(note);
+
+
+    if (notes.response[ic].tagId) {
+      //  note.tagId = notes.response[ic].tagId;
+      //  note.tagName = notes.response[ic].tagName;
+
+      const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
+      if (index === -1) {
+        note.notes = [];
+        note.notes.push(note);
+        note.noteText = 'G'; // Group
+        groups.push(note);
+      } else {
+        groups[index].notes.push(note)
+      }
+    } else {
+      notesList.push(note);
+    }
   }
+
+  // }
+
+  groups.map((group, i) => {
+    notesList.splice(0, 1, group);
+
+  });
+
+  debugger;
+
 
   let toolbarModeProp = new toolbarMode();
 
@@ -55,7 +91,7 @@ function init() {
       console.log(msg, data);
     },
     notesList: notesList,
-    tocData : tocData,
+    tocData: tocData,
     toolbarMode: toolbarModeProp,
     handleGroupClick: (tagId, tagName) => {
       console.log('tagId: ', tagId);
