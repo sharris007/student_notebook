@@ -8,6 +8,8 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
+import '../../assets/ribbon.css';
+
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
@@ -236,6 +238,8 @@ const optionListStyle = {
 };
 
 
+
+
 const Buttony = ({ className }) => (
   <div style={className}> </div>
 );
@@ -428,6 +432,8 @@ export default class Card extends Component {
     const item = Object.assign({}, this.state.item);
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     return (
+
+
       <div
         //    style={{ background: 'white' }}
         style={item.noteText === 'G' ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
