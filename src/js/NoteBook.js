@@ -237,27 +237,29 @@ export default class Board extends Component {
     });
 
     return (
-      <main>
-        <div style={{ height: '100%' }}>
-          <CustomDragLayer snapToGrid={false} />{" "}
-          {filteredList.map((item, i) => (
-            <CardsContainer
-              key={item.id}
-              id={item.id}
-              item={item}
-              moveCard={this.moveCard}
-              moveList={this.moveList}
-              startScrolling={this.startScrolling}
-              stopScrolling={this.stopScrolling}
-              isScrolling={this.state.isScrolling}
-              cancelAddCard={this.cancelAddCard}
-              saveCard={this.saveCard}
-              addCard={this.addCard}
-              x={i}
-            />
-          ))}
-        </div>
-      </main>
+      <div className="notesContainer">
+        <main>
+          <div style={{ height: '100%' }}>
+            <CustomDragLayer snapToGrid={false} />{" "}
+            {filteredList.map((item, i) => (
+              <CardsContainer
+                key={item.id}
+                id={item.id}
+                item={item}
+                moveCard={this.moveCard}
+                moveList={this.moveList}
+                startScrolling={this.startScrolling}
+                stopScrolling={this.stopScrolling}
+                isScrolling={this.state.isScrolling}
+                cancelAddCard={this.cancelAddCard}
+                saveCard={this.saveCard}
+                addCard={this.addCard}
+                x={i}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
     );
   }
 }
