@@ -159,7 +159,7 @@ export default class NoteBookHeader extends Component {
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
     const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
     var tocLevel = props.tocData.content.list;
-    let updateChapterTxt = selectedChapter.length > 0 ? "Chapter" + ' ' +selectedChapter.length :'Chapter';
+    let updateChapterTxt = selectedChapter.length > 0 ? selectedChapter.length + ' ' + "Chapters"  :'Chapter';
     let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length+' '+ "Labels" : 'Labels';
     this.setState( { chapterText : updateChapterTxt, labelText : updateLabelTxt});
     const tocListItem = [];
