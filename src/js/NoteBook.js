@@ -120,7 +120,8 @@ export default class Board extends Component {
 
   moveCard(lastX, lastY, nextX, nextY) {
     const newLists = [...this.state.lists];
-
+    if(nextX ==0 && nextY ==0)
+      return false;
     if (!!newLists[nextX].cards[nextY]) {
       if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
         let txt;
