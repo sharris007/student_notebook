@@ -488,13 +488,11 @@ export default class Card extends Component {
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
-          <div onClick={this.handleClickGroup}>
+          <div>
             <div className="item-name" style={group} ref={(ele) => {
                         this.groupTitle = ele;
                       }} >
-             
-                      
-              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%', height:'80px' }}>{item.tagName}</div>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
