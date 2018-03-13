@@ -29,7 +29,7 @@ export const notes = {
             'endOffset': 122
           }
         ],
-        'quote': 'Study guide group',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery1910741607432568206': 39
@@ -39,7 +39,7 @@ export const notes = {
         'colorCode': '#ccf5fd',
         'shareable': true,
         'lastColor': '#55DF49',
-        'text': 'dd www.google.com amazon.in',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'source': {
           'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
@@ -85,7 +85,7 @@ export const notes = {
             'endOffset': 509
           }
         ],
-        'quote': 'ulf of Mexico. For those in the center of the country, it is common to experience weather events tri',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery191043536319403452883': 45
@@ -95,7 +95,7 @@ export const notes = {
         'colorCode': '#FC92CF',
         'shareable': false,
         'lastColor': '#FC92CF',
-        'text': 'test',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'id': 'd7593fc5-14db-4b6d-9aa2-b9f58b6ecf71',
         'source': {
@@ -131,7 +131,7 @@ export const notes = {
       'sharable': false,
       'status': 'Active',
       'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
-      'tagName':'Group 1',
+      'tagName':'Mid Term',
       'insetSeq':1514735569235,
       'outsetSeq':1514735569235,
       "notes":[
@@ -151,7 +151,7 @@ export const notes = {
             'endOffset': 56
           }
         ],
-        'quote': 'specific',
+        'quote': 'solo living because global societies have become so interdependent. Dynamic markets, flourishing cities, and open communications systems make modern autonomy more appealing;',
         'highlights': [
           {
             'jQuery191015703942044664698': 57
@@ -161,7 +161,7 @@ export const notes = {
         'colorCode': 'GROUP',
         'shareable': false,
         'lastColor': '#FFD232',
-        'text': 'ssss',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
         'source': {
@@ -203,7 +203,7 @@ export const notes = {
             'endOffset': 122
           }
         ],
-        'quote': 'Final Exam notes',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery1910741607432568206': 39
@@ -213,7 +213,7 @@ export const notes = {
         'colorCode': '#ccf5fd',
         'shareable': true,
         'lastColor': '#55DF49',
-        'text': 'dd www.google.com amazon.in',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'source': {
           'id': 'a02517fb62bc058d93245ss29efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
@@ -262,7 +262,7 @@ export const notes = {
             'endOffset': 30
           }
         ],
-        'quote': 'This is a main idea',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery19104064103849826948': 48
@@ -272,7 +272,7 @@ export const notes = {
         'colorCode': '#55DF49',
         'shareable': false,
         'lastColor': '#55DF49',
-        'text': 'test',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'id': 'b3rrb46e-e543-4a17-8257-f9a4ee25b73f',
 
@@ -320,7 +320,7 @@ export const notes = {
             'endOffset': 15
           }
         ],
-        'quote': 'major',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery191040270088761648304': 46
@@ -330,7 +330,7 @@ export const notes = {
         'colorCode': '#FC92CF',
         'shareable': false,
         'lastColor': '#FC92CF',
-        'text': 'Notebook Testing',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'id': '6a39b014-6e20-4593-a585-2de0aea6ed3f',
         'source': {
@@ -372,7 +372,7 @@ export const notes = {
             'endOffset': 79
           }
         ],
-        'quote': 'hes from the tropics to the Arcti',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery191043536319403452883': 47
@@ -424,7 +424,7 @@ export const notes = {
             'endOffset': 15
           }
         ],
-        'quote': 'major',
+        'quote': 'solo living because global societies have become so',
         'highlights': [
           {
             'jQuery191040270088761648304': 46
@@ -434,7 +434,7 @@ export const notes = {
         'colorCode': '#FC92CF',
         'shareable': false,
         'lastColor': '#FC92CF',
-        'text': 'Notebook Testing',
+        'text': 'Our ability to stay connected 24/7 has changed how we view community or experience isolation. Solo living used to be taboo and now it is the norm or a prized goal. Urban life elevates.',
         'updatedTimestamp': null,
         'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
         'source': {

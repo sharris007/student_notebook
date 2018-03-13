@@ -62,7 +62,9 @@ const group = {
   // paddingLeft: '10px',
   color: 'black',
   textOverflow: 'ellipsis',
-  textAlign: 'center'
+  textAlign: 'center',
+  borderBottom: '1px solid #c7c7c7'
+
 };
 
 const renameDiv = {
@@ -487,6 +489,23 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
+        {item.cardFormat === 'note' && !item.pageId ? (
+<div className="item-name" style={mainIdea}>
+<div className="delete-perfomers" style={{ float: 'right' }}>
+<IconMenu
+iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+onChange={this.handleMenuItemChange}
+value={this.state.selectedMenuItem}
+>
+<MenuItem value='Delete note' primaryText="Delete note" />
+<MenuItem value='Export note' primaryText="Export note" />
+</IconMenu>
+</div>
+</div>
+) : null}
         {item.cardFormat === 'note' && item.noteText === 'G' ? (
           <div>
             <div className="item-name" style={group} ref={(ele) => {
