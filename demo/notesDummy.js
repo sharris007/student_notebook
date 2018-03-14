@@ -43,11 +43,11 @@ export const notes = {
         'updatedTimestamp': null,
         'source': {
           'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
+          'title': '1.6 Composition of the Atmosphere',
           'playOrder': 0,
           'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
           'type': 'page',
-          'label': '1.4 Composition of the Atmosphere',
+          'label': '1.6 Composition of the Atmosphere',
           'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
           'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689'
         },
@@ -336,12 +336,12 @@ export const notes = {
         'id': '6a39b014-6e20-4593-a585-2de0aea6ed3f',
         'source': {
           'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
+          'title': '1.2 Composition of the Atmosphere',
           'playOrder': 0,
           'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
           'type': 'page',
           'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'label': '1.4 Composition of the Atmosphere',
+          'label': '1.2 Composition of the Atmosphere',
           'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
         },
         'context': '59b7c8cbe4b0b957f51373cf',
@@ -440,12 +440,12 @@ export const notes = {
         'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
         'source': {
           'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
+          'title': '1.5 Composition of the Atmosphere',
           'playOrder': 0,
           'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
           'type': 'page',
           'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'label': '1.4 Composition of the Atmosphere',
+          'label': '1.5 Composition of the Atmosphere',
           'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
         },
         'context': '59b7c8cbe4b0b957f51373cf',
