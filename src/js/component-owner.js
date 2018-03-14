@@ -29,6 +29,7 @@ class ComponentOwner extends React.Component {
   constructor(props) {
     super(props);
 
+alert('did it here');
     let temporaryArray = props.notesList;
     temporaryArray.forEach(function (obj) { obj.keyId = obj.id + Date.now(); obj.selected = false; });
 
@@ -37,6 +38,7 @@ class ComponentOwner extends React.Component {
       groupModeFlag: props.groupModeFlag,
       toolbarMode: props.toolbarMode,
       notesList: temporaryArray,
+      saveNotesList: temporaryArray,
       groupExpanded: false,
       expandedTagName: null
     };
@@ -152,29 +154,51 @@ class ComponentOwner extends React.Component {
     } else if (msg === "SAVEGROUP") {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
-
+debugger;
       const notesList = [...this.state.notesList];
 
-      notesList.splice(0, 0, {
-        id: 'created' + notesList.length + 1,
-        keyId: notesList.length + Date.now(),
-        colorCode: 'GROUP',
-        title: data.groupTitle,
-        cardFormat: 'note',
-        noteText: 'G',
-        content: data.content,
-        content2: 'this is test data',
-        changeDate: Date.now()
-      });
+      const tempNotesList = [];
 
+const tagId = Date.now();
 
+      // notesList.splice(0, 0, {
+      //   id: 'created' + notesList.length + 1,
+      //   keyId: notesList.length + Date.now(),
+      //   colorCode: '',
+      //   tagId: tagId,
+      //   tagName: 'Untitled Group',
+      //   title: data.groupTitle,
+      //   cardFormat: 'note',
+      //   noteText: 'G',
+      //   content: data.content,
+      //   content2: 'this is test data',
+      //   changeDate: Date.now()
+      // });
+
+      let filterList = notesList.filter(notesList => notesList.selected === true);
+      let filterList2 = notesList.filter(notesList => notesList.selected === true);
+filterList2.shift();
+filterList[0].tagId = tagId;
+//filterList[0].notes = filterList.shift();
+filterList[0].notes = filterList2;
+//filterList[0].notes.shift();
+
+notesList.push(filterList[0]);
+
+console.log(notesList);
 
       notesList.forEach((item, i) => {
         if (item.selected) {
-          notesList.splice(i, 1);
+          if (i === 0) {
+            item.tagId = tagId;
+          } else {
+            item.tagId = null;
+          }
+          tempNotesList.push(item);
+        //  notesList.splice(i, 1);
         }
       });
-
+debugger;
       notesList.forEach((item, i) => {
         item.keyId = item.id + Date.now();
       });
@@ -197,13 +221,20 @@ class ComponentOwner extends React.Component {
   handleGroupClick = (tagId, tagName) => {
     console.log('BEFORE..');
     const notesList = [...this.state.notesList];
+    
+  //  const tempNotesList = [...this.state.notesList];
+
+    const tempNotesList = _.cloneDeep(notesList);
     console.log(notesList);
-    debugger;
-    let filterList = notesList.filter(notesList => notesList.tagId === tagId && notesList.noteText !== 'G');
+    let filterList = tempNotesList.filter(notesList => notesList.tagId === tagId);
+
+    filterList[0].notes[0].tagId = null;
+    filterList[0].tagId = null;
+
     console.log('AFTER..');
     console.log(filterList);
      this.setState({
-        notesList: filterList,
+        notesList: filterList[0].notes,
         groupExpanded: true,
         expandedTagName: tagName
       });
@@ -211,7 +242,8 @@ class ComponentOwner extends React.Component {
 
   handleBack = () => {
       this.setState({
-        notesList: this.props.notesList,
+      //  notesList: this.props.notesList,
+        notesList: this.state.saveNotesList,
         groupExpanded: false,
         expandedTagName: null
       });

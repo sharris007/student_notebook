@@ -8,8 +8,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 
-const ribbon = require('../../assets/ribbon.css');
-
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
 const addPng = require('../../assets/images/add.png');
@@ -199,8 +197,6 @@ const line = {
 const line2 = {
   height: '2px',
   border: 'solid 1px #e9e9e9',
-  marginLeft: '15px',
-  marginRight: '15px',
 };
 
 
@@ -368,7 +364,6 @@ export default class Card extends Component {
   };
 
   handleClickGroup = () => {
-    debugger;
     let _item = this.state.item ? this.state.item : null;
     this.props.handleGroupClick(_item.tagId, _item.tagName);
   }
@@ -436,12 +431,13 @@ export default class Card extends Component {
 
       <div
         //    style={{ background: 'white' }}
-        style={item.noteText === 'G' ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
+        style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         className="item"
         id={style ? item.id : null}
       >
-      <div className="ribbon ribbon-top-left" />
-        {item.noteText === 'C' ? (
+ 
+
+        {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
@@ -458,7 +454,7 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'M' ? (
+        {item.noteText === 'M' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
@@ -475,13 +471,13 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'I' ? (
+        {item.noteText === 'I' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
           </div>
         ) : null}
 
 
-        {item.noteText === 'O' ? (
+        {item.noteText === 'O' && !item.tagId ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
@@ -498,7 +494,7 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'Q' ? (
+        {item.noteText === 'Q' && !item.tagId ? (
           <div className="item-name" style={questions}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
@@ -515,12 +511,13 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.noteText === 'G' ? (
-          <div onClick={this.handleClickGroup}>
+        {item.cardFormat === 'note' && item.tagId ? (
+          <div>
             <div className="item-name" style={group} ref={(ele) => {
               this.groupTitle = ele;
             }} >
-              <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>{item.tagName}</div>
+
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{item.tagName}</center></div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -532,6 +529,9 @@ export default class Card extends Component {
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
+
+             
+
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
               this.renameDiv = ele;
@@ -548,9 +548,18 @@ export default class Card extends Component {
               />
             </div>
           </div>
+
+
+
         ) : null}
 
-        {item.cardFormat === 'note' && this.state.groupModeFlag === true && item.noteText !== 'G' ?
+
+
+{item.cardFormat === 'note' && item.tagId ?
+                <div style={line2} /> : null}
+
+
+        {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
           <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
             {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
           : null}
@@ -700,23 +709,24 @@ export default class Card extends Component {
 
 
 
-        {item.noteText === 'I' ? (
+        {item.noteText === 'I' && !item.tagId ? (
           <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'M' ? (
+        {item.noteText === 'M' && !item.tagId ? (
           <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'O' ? (
+        {item.noteText === 'O' && !item.tagId ? (
           <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'Q' ? (
+        {item.noteText === 'Q' && !item.tagId ? (
           <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'G' ?
+
+        {item.tagId ?
           <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: `${item.notes[0].colorCode}` }}>
             <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
               <br />
@@ -725,25 +735,22 @@ export default class Card extends Component {
                   <tr>
                     <td>
                       <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>
-
-                        {item.noteText === 'Q' ? 
+                        {item.noteText === 'Q' ?
                           `Questions`
-                         : null}
+                          : null}
 
 
-                        {item.noteText === 'I' ? 
-                          `From instructor`
-                         : null}
-                        {item.noteText === 'M' ? 
+                        {item.noteText === 'I' ?
+                          'From instructor'
+                          : null}
+                        {item.noteText === 'M' ?
                           `Main ideas`
-                         : null}
+                          : null}
 
-                        {item.noteText === 'O' ? 
+                        {item.noteText === 'O' ?
                           `Main observations`
-                         : null}
-                        {item.notes[0].noteText}
+                          : null}
 
-                        {/* {item.notes[0].title} */}
                       </div></td>
                     <td>
                       <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
@@ -757,16 +764,15 @@ export default class Card extends Component {
           : null}
 
 
-        {item.noteText === 'G' ?
-          item.notes.splice(1).map((note, i) => (
-            <div style={{ background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
+        {item.tagId ?
+          item.notes.map((note, i) => (
+          //  item.notes.splice(1).map((note, i) => (
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
               <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
-                <div style={{ marginLeft: '20px', paddingTop: '7px' }}>{note.title}</div>
               </div>
             </div>
 
           )) : null}
-
 
       </div>
     );
