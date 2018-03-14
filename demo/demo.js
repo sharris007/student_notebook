@@ -8,24 +8,7 @@ function init() {
 
   for (let ic = 0; ic < notes.total; ic++) {
     const note = notes.response[ic].data;
-
-    //   const groupNote = notes.response[ic].data;
-    //  const group = notes.response[ic];
     note.cardFormat = 'note';
-    // if (notes.response[ic].tagId) {
-    //   note.tagId = notes.response[ic].tagId;
-    //   note.tagName = notes.response[ic].tagName;
-    //   const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
-    //   if (index === -1) {
-    //     note.notes = [];
-    //     groups.push(note);
-    //   } else {
-    //     debugger;
-    //     groups[index].notes.push(note)
-    //   }
-    // } else {
-
-
     if (notes.response[ic].pageId) {
       note.title = note.source.title;
       note.highLightText = note.quote;
@@ -38,7 +21,6 @@ function init() {
     note.tagName = notes.response[ic].tagName;
     note.insetSeq = notes.response[ic].insetSeq;
     note.outsetSeq = notes.response[ic].outsetSeq;
-    //  note.notes = notes.response[ic].notes;
     const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
     note.changeDate = timeStamp;
     if (note.colorCode === '#FFD232') { //Yellow
@@ -50,21 +32,19 @@ function init() {
     } else if (note.colorCode === '#ccf5fd') { //Share(Blue)
       note.noteText = 'I'; // From Instructor
     } else if (note.colorCode === 'GROUP') { //Group Card (Blue)
-      note.noteText = 'G'; // Group
+   //   note.noteText = 'G'; // Group
     }
 
 
     if (notes.response[ic].tagId) {
-      //  note.tagId = notes.response[ic].tagId;
-      //  note.tagName = notes.response[ic].tagName;
-
       const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
       if (index === -1) {
         note.notes = [];
         note.notes.push(note);
-        note.noteText = 'G'; // Group
         groups.push(note);
       } else {
+        note.tagId = null;
+        note.tagName = null;
         groups[index].notes.push(note)
       }
     } else {
@@ -75,13 +55,13 @@ function init() {
   // }
 
   groups.map((group, i) => {
-    notesList.splice(0, 1, group);
+ //   notesList.splice(0, 1, group);
+    notesList.unshift(group);
 
   });
 
-  debugger;
 
-
+debugger;
   let toolbarModeProp = new toolbarMode();
 
   new NoteBookComponent({

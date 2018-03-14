@@ -24,7 +24,7 @@ class ComponentOwner extends React.Component {
     notesList: PropTypes.array.isRequired,
     toolbarMode: PropTypes.object,
     groupModeFlag: PropTypes.bool
-    
+
   };
   constructor(props) {
     super(props);
@@ -37,6 +37,7 @@ class ComponentOwner extends React.Component {
       groupModeFlag: props.groupModeFlag,
       toolbarMode: props.toolbarMode,
       notesList: temporaryArray,
+      saveNotesList: temporaryArray,
       groupExpanded: false,
       expandedTagName: null
     };
@@ -109,7 +110,7 @@ class ComponentOwner extends React.Component {
         if (item.id === data.id) {
           item.selected = true;
         }
-        if (item.selected){
+        if (item.selected) {
           toolbarMode.selectedCount++;
         }
       });
@@ -152,32 +153,120 @@ class ComponentOwner extends React.Component {
     } else if (msg === "SAVEGROUP") {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
-
+      debugger;
       const notesList = [...this.state.notesList];
 
-      notesList.splice(0, 0, {
-        id: 'created' + notesList.length + 1,
-        keyId: notesList.length + Date.now(),
-        colorCode: 'GROUP',
-        title: data.groupTitle,
-        cardFormat: 'note',
-        noteText: 'G',
-        content: data.content,
-        content2: 'this is test data',
-        changeDate: Date.now()
+      const tempNotesList = [];
+
+      const tagId = Date.now();
+
+      // notesList.splice(0, 0, {
+      //   id: 'created' + notesList.length + 1,
+      //   keyId: notesList.length + Date.now(),
+      //   colorCode: '',
+      //   tagId: tagId,
+      //   tagName: 'Untitled Group',
+      //   title: data.groupTitle,
+      //   cardFormat: 'note',
+      //   noteText: 'G',
+      //   content: data.content,
+      //   content2: 'this is test data',
+      //   changeDate: Date.now()
+      // });
+      let filterList = _.cloneDeep(notesList);
+      let filterList1 = _.cloneDeep(notesList);
+      let filterList2 = _.cloneDeep(notesList);
+      let filterList3 = _.cloneDeep(notesList);
+
+      filterList1 = filterList1.filter(notesList => notesList.selected === true);
+      filterList2 = filterList2.filter(notesList => notesList.selected === true);
+      filterList3 = filterList3.filter(notesList => notesList.selected === false);
+
+      filterList2.forEach((item, i) => {
+            item.tagId = null;
       });
+
+debugger;
+   //   filterList2.splice(0, 1);
+      
+      filterList1[0].tagId = tagId;
+      filterList1[0].tagName = 'goober';
+      filterList1[0].notes = filterList2;
+
+filterList3.push(filterList1[0]);
+
+
+this.setState({
+  notesList: filterList3,
+  toolbarMode: toolbarMode,
+  groupModeFlag: false
+});
+
+
+return;
+
+      filterList.forEach((item, i) => {
+        if (item.selected) {
+          if (i === 0) {
+            item.tagId = tagId;
+          } else {
+            item.tagId = null;
+          }
+        }
+      });
+
+
+      filterList = filterList.filter(notesList => notesList.selected === true);
+      filterList2 = filterList2.filter(notesList => notesList.selected === false);
+
+
+      filterList.forEach((item, i) => {
+        if (item.selected) {
+          if (i === 0) {
+            item.tagId = tagId;
+          } else {
+            item.tagId = null;
+          }
+        }
+      });
+
+
+
+      filterList2[0].notes = filterList2;
+
+
+
+      filterList2[0].notes = filterList2;
+      
+      //  const filterList2 = _.cloneDeep(filterList);
+
+      //   let filterList2 = notesList.filter(notesList => notesList.selected === true);
+      filterList2.shift();
+      filterList[0].tagId = tagId;
+      //filterList[0].notes = filterList.shift();
+      filterList[0].notes = filterList2;
+      //filterList[0].notes.shift();
 
 
 
       notesList.forEach((item, i) => {
         if (item.selected) {
+          if (i === 0) {
+            item.tagId = tagId;
+          } else {
+            item.tagId = null;
+          }
+          tempNotesList.push(item);
           notesList.splice(i, 1);
         }
       });
-
+      debugger;
       notesList.forEach((item, i) => {
         item.keyId = item.id + Date.now();
       });
+
+      notesList.push(filterList[0]);
+
 
       this.setState({
         notesList: notesList,
@@ -195,26 +284,29 @@ class ComponentOwner extends React.Component {
   }
 
   handleGroupClick = (tagId, tagName) => {
-    console.log('BEFORE..');
     const notesList = [...this.state.notesList];
-    console.log(notesList);
-    debugger;
-    let filterList = notesList.filter(notesList => notesList.tagId === tagId && notesList.noteText !== 'G');
-    console.log('AFTER..');
-    console.log(filterList);
-     this.setState({
-        notesList: filterList,
-        groupExpanded: true,
-        expandedTagName: tagName
-      });
+
+    //  const tempNotesList = [...this.state.notesList];
+
+    const tempNotesList = _.cloneDeep(notesList);
+    let filterList = tempNotesList.filter(notesList => notesList.tagId === tagId);
+
+    filterList[0].notes[0].tagId = null;
+    filterList[0].tagId = null;
+    this.setState({
+      notesList: filterList[0].notes,
+      groupExpanded: true,
+      expandedTagName: tagName
+    });
   }
 
   handleBack = () => {
-      this.setState({
-        notesList: this.props.notesList,
-        groupExpanded: false,
-        expandedTagName: null
-      });
+    this.setState({
+      //  notesList: this.props.notesList,
+      notesList: this.state.saveNotesList,
+      groupExpanded: false,
+      expandedTagName: null
+    });
   }
   //
   // Note that combining the fat arrow syntax with ES7 class properties (transpiled by Babel Stage 0), we eliminate the

@@ -120,35 +120,9 @@ export default class Board extends Component {
 
   moveCard(lastX, lastY, nextX, nextY) {
     const newLists = [...this.state.lists];
-    if(nextX ==0 && nextY ==0)
-      return false;
-    // if (!!newLists[nextX].cards[nextY]) {
-    //   if (newLists[nextX].cards[nextY].colorCode === 'GROUP') {
-    //     let txt;
-    //     let r = confirm('Add to group ' + newLists[nextX].cards[nextY].quote);
-    //     if (r === true) {
-    //       txt = 'You pressed OK!';
-    //       newLists[lastX].cards.splice(lastY, 1)[0];
-    //       this.setState({ lists: newLists });
-    //       return;
-    //     }
 
-    //   }
-    // }
+   
 
-    /*if (lastX === nextX) {
-      newLists[lastX].cards.splice(
-        nextY,
-        0,
-        newLists[lastX].cards.splice(lastY, 1)[0]
-      );
-    } else {
-      // move element to new place
-      newLists[nextX].cards.splice(nextY, 0, newLists[lastX].cards[lastY]);
-      // delete element from old place
-      newLists[lastX].cards.splice(lastY, 1);
-    }
-    // this.setState({ lists: newLists });*/
     const nextLists = Object.assign({...this.props}, {notesList:new Array(this.state.notesList.length)});
     newLists.forEach((list, listIndex) =>{
       list.cards.forEach((card, cardIndex)=>{
@@ -184,9 +158,9 @@ export default class Board extends Component {
   }
 
   addCard() {
+    
     //this.props.addCard();
     const newLists = [...this.state.lists];
-
     newLists[0].cards[0] = {
       id: '',
       keyId: Date.now(),
@@ -275,7 +249,6 @@ export default class Board extends Component {
               groupModeFlag={this.state.groupModeFlag}
               x={i}
               handleGroupClick={this.props.handleGroupClick}
-              groupExpanded={this.props.groupExpanded}
             />
           ))}
         </div>

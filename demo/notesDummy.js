@@ -122,8 +122,6 @@ export const notes = {
       'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
       'pageNo': '',
       'color': '#FFD232',
-      'groupId': 23242,
-
       'role': null,
       'selectedText': 'specific',
       'subContextId': '',
