@@ -57,7 +57,7 @@ const questions = {
 
 const group = {
   backgroundColor: 'white',
-  height: '36px',
+  height: '44px',
   paddingTop: '10px',
   paddingLeft: '10px',
   color: 'black',
@@ -81,13 +81,17 @@ const renameInput = {
 const styleContent = {
   width: '228px',
   height: '154px',
-  fontSize: '14px',
-  fontWeight: '600',
-  lineHeight: '1.57',
+  fontSize: '16px',
+  fontWeight: 'bold',
+  lineHeight: '1.38',
   letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
-  wordWrap: 'break-word'
+  wordWrap: 'break-word',
+  fontFamily: 'Palatino',
+  fontStyle: 'normal',
+  fontStretch: 'normal'
+
 };
 
 const styleContent2 = {
@@ -117,8 +121,7 @@ const title = {
   color: '#252525',
   fontWeight: '300',
   lineHeight: '1.5',
-  padding: '10px',
-  paddingLeft: '16px',
+  padding: '16px',
   paddingBottom: 0,
   whiteSpace: 'normal',
   background: 'white'
@@ -233,8 +236,21 @@ const optionListStyle = {
   minHeight: '40px'
 };
 
-
-
+const groupTitle = { 
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  width: '85%',
+  fontFamily:'Open Sans',
+  fontSize:'14px',
+  fontWeight:'normal',
+  fontStyle:'normal',
+  fontStretch:'normal',
+  lineHeight:'normal',
+  letterSpacing: '0.3px',
+  textAlign: 'center',
+  color: '#252525'
+}
 
 const Buttony = ({ className }) => (
   <div style={className}> </div>
@@ -639,7 +655,7 @@ export default class Card extends Component {
               {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
                 <div className="item-content">
                   <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
-                    <td width='80%'>
+                    <td width='85%'>
                       <span style={styleContent}>“{item.highLightText}”</span>
                     </td>
                     <td>
