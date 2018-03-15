@@ -39,7 +39,9 @@ class ComponentOwner extends React.Component {
       notesList: temporaryArray,
       saveNotesList: temporaryArray,
       groupExpanded: false,
-      expandedTagName: null
+      groupModeFlag: false,
+      expandedTagName: null,
+      expandedTagId: null
     };
 
   }
@@ -84,7 +86,6 @@ class ComponentOwner extends React.Component {
       console.log('Navigation', data);
 
     } else if (msg === "GROUP") {
-
       notesList.forEach((item, i) => {
         item.keyId = item.id + Date.now();
         if (data === false) {
@@ -153,26 +154,14 @@ class ComponentOwner extends React.Component {
     } else if (msg === "SAVEGROUP") {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
-      debugger;
       const notesList = [...this.state.notesList];
 
       const tempNotesList = [];
 
       const tagId = Date.now();
+      const tagName = this.state.toolbarMode.groupTitle;
 
-      // notesList.splice(0, 0, {
-      //   id: 'created' + notesList.length + 1,
-      //   keyId: notesList.length + Date.now(),
-      //   colorCode: '',
-      //   tagId: tagId,
-      //   tagName: 'Untitled Group',
-      //   title: data.groupTitle,
-      //   cardFormat: 'note',
-      //   noteText: 'G',
-      //   content: data.content,
-      //   content2: 'this is test data',
-      //   changeDate: Date.now()
-      // });
+      
       let filterList = _.cloneDeep(notesList);
       let filterList1 = _.cloneDeep(notesList);
       let filterList2 = _.cloneDeep(notesList);
@@ -183,96 +172,25 @@ class ComponentOwner extends React.Component {
       filterList3 = filterList3.filter(notesList => notesList.selected === false);
 
       filterList2.forEach((item, i) => {
-            item.tagId = null;
+        item.tagId = null;
       });
 
-debugger;
-   //   filterList2.splice(0, 1);
-      
+      //   filterList2.splice(0, 1);
+
       filterList1[0].tagId = tagId;
-      filterList1[0].tagName = 'goober';
+      filterList1[0].tagName = tagName;
       filterList1[0].notes = filterList2;
 
-filterList3.push(filterList1[0]);
-
-
-this.setState({
-  notesList: filterList3,
-  toolbarMode: toolbarMode,
-  groupModeFlag: false
-});
-
-
-return;
-
-      filterList.forEach((item, i) => {
-        if (item.selected) {
-          if (i === 0) {
-            item.tagId = tagId;
-          } else {
-            item.tagId = null;
-          }
-        }
-      });
-
-
-      filterList = filterList.filter(notesList => notesList.selected === true);
-      filterList2 = filterList2.filter(notesList => notesList.selected === false);
-
-
-      filterList.forEach((item, i) => {
-        if (item.selected) {
-          if (i === 0) {
-            item.tagId = tagId;
-          } else {
-            item.tagId = null;
-          }
-        }
-      });
-
-
-
-      filterList2[0].notes = filterList2;
-
-
-
-      filterList2[0].notes = filterList2;
-      
-      //  const filterList2 = _.cloneDeep(filterList);
-
-      //   let filterList2 = notesList.filter(notesList => notesList.selected === true);
-      filterList2.shift();
-      filterList[0].tagId = tagId;
-      //filterList[0].notes = filterList.shift();
-      filterList[0].notes = filterList2;
-      //filterList[0].notes.shift();
-
-
-
-      notesList.forEach((item, i) => {
-        if (item.selected) {
-          if (i === 0) {
-            item.tagId = tagId;
-          } else {
-            item.tagId = null;
-          }
-          tempNotesList.push(item);
-          notesList.splice(i, 1);
-        }
-      });
-      debugger;
-      notesList.forEach((item, i) => {
-        item.keyId = item.id + Date.now();
-      });
-
-      notesList.push(filterList[0]);
+      filterList3.push(filterList1[0]);
 
 
       this.setState({
-        notesList: notesList,
+        notesList: filterList3,
         toolbarMode: toolbarMode,
         groupModeFlag: false
       });
+
+
 
     } else if (msg === "RENAME") {
       console.log('Re Name');
@@ -280,12 +198,29 @@ return;
     } else if (msg === "UNGROUP") {
       console.log('UNGROUP');
       console.log('Data', data);
+    } else if (msg === "UNGROUP NOTE") {
+
+      const notesList = [...this.state.notesList];
+
+      let filterList = _.cloneDeep(notesList);
+      let filterList1 = _.cloneDeep(notesList);
+      let filterList2 = _.cloneDeep(notesList);
+      let filterList3 = _.cloneDeep(notesList);
+      
+      filterList1 = filterList1.filter(notesList => notesList.selected === true);
+      
+      const tagName = this.state.expandedTagName;
+      const tagId = this.state.expandedTagId;
+      alert(tagName);
+      debugger;
+      alert('ungroup note');
+      console.log('UNGROUP');
+      console.log('Data', data);
     }
   }
 
   handleGroupClick = (tagId, tagName) => {
     const notesList = [...this.state.notesList];
-
     //  const tempNotesList = [...this.state.notesList];
 
     const tempNotesList = _.cloneDeep(notesList);
@@ -296,7 +231,9 @@ return;
     this.setState({
       notesList: filterList[0].notes,
       groupExpanded: true,
-      expandedTagName: tagName
+      //   groupModeFlag: true,
+      expandedTagName: tagName,
+      expandedTagId: tagId
     });
   }
 
@@ -305,7 +242,9 @@ return;
       //  notesList: this.props.notesList,
       notesList: this.state.saveNotesList,
       groupExpanded: false,
-      expandedTagName: null
+      groupModeFlag: false,
+      expandedTagName: null,
+      expandedTagId: null
     });
   }
   //
@@ -316,10 +255,10 @@ return;
 
   render() {
     console.log('Owner RENDER called');
-    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName } = this.state;
+    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, expandedTagId } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={3} />
+        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={3} />
       </div>
     );
   };

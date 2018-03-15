@@ -250,6 +250,7 @@ export default class Card extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
+    groupExpanded: PropTypes.bool,
     tagId: PropTypes.func,
     handleGroupClick: PropTypes.func
   };
@@ -275,7 +276,8 @@ export default class Card extends Component {
       hideSave: true,
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
-      selectedMenuItem: null
+      selectedMenuItem: null,
+      groupExpanded: props.groupExpanded
     };
   }
 
@@ -344,7 +346,9 @@ export default class Card extends Component {
         this.titleInput.value = card.pageId ? card.highLightText : card.title;
         this.contentArea.value = card.content;
       });
-    }
+    } else if (value === 'Ungroup note') {
+      this.props.saveCard(this.state.item, 'UNGROUP NOTE');
+    };
   }
 
   handleDeleteMenuItem = (event, value) => {
@@ -435,7 +439,7 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
- 
+
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
@@ -450,6 +454,9 @@ export default class Card extends Component {
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
@@ -467,12 +474,32 @@ export default class Card extends Component {
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'I' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
+            {this.props.groupExpanded === true ?
+              <div className="delete-perfomers" style={{ float: 'right' }}>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                  onChange={this.handleMenuItemChange}
+                  value={this.state.selectedMenuItem}
+                >
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                </IconMenu>
+              </div>
+              : null}
+
+
+
           </div>
         ) : null}
 
@@ -490,6 +517,9 @@ export default class Card extends Component {
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
@@ -507,6 +537,9 @@ export default class Card extends Component {
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
@@ -530,7 +563,7 @@ export default class Card extends Component {
                 </IconMenu>
               </div>
 
-             
+
 
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
@@ -555,8 +588,8 @@ export default class Card extends Component {
 
 
 
-{item.cardFormat === 'note' && item.tagId ?
-                <div style={line2} /> : null}
+        {item.cardFormat === 'note' && item.tagId ?
+          <div style={line2} /> : null}
 
 
         {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
@@ -766,7 +799,7 @@ export default class Card extends Component {
 
         {item.tagId ?
           item.notes.map((note, i) => (
-          //  item.notes.splice(1).map((note, i) => (
+            //  item.notes.splice(1).map((note, i) => (
             <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
               <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
               </div>

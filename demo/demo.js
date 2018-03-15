@@ -61,7 +61,7 @@ function init() {
   });
 
 
-debugger;
+;
   let toolbarModeProp = new toolbarMode();
 
   new NoteBookComponent({
@@ -84,6 +84,7 @@ class toolbarMode {
   constructor() {
     this.groupMode = 'DEFAULT';
     this.groupTitle = null;
+    this.groupId = null;
   }
 }
 
