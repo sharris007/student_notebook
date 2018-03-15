@@ -131,7 +131,7 @@ const title = {
   fontStretch: 'normal',
   lineHeight: '1.5px',
   lineHeight: '1.5',
-  paddingTop: '16px',
+  paddingTop: '0px',
   paddingLeft: '16px',
   paddingRight: '26px',
   paddingBottom: '10px',
@@ -210,6 +210,7 @@ const line = {
 
 const line2 = {
   border: 'solid 1px #c7c7c7',
+  marginBottom: '16px'
 };
 
 
@@ -456,12 +457,12 @@ export default class Card extends Component {
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right',  paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -476,12 +477,12 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'M' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right',  paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -497,12 +498,12 @@ export default class Card extends Component {
         {item.noteText === 'I' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
             {this.props.groupExpanded === true ?
-              <div className="delete-perfomers" style={{ float: 'right' }}>
+              <div className="delete-perfomers" style={{ float: 'right',  paddingRight: '10px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                   targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                   onChange={this.handleMenuItemChange}
                   value={this.state.selectedMenuItem}
                 >
@@ -519,12 +520,12 @@ export default class Card extends Component {
 
         {item.noteText === 'O' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right',  paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -539,12 +540,12 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'Q' && !item.tagId ? (
           <div className="item-name" style={questions}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right',  paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -778,7 +779,7 @@ export default class Card extends Component {
 
 
         {item.tagId ?
-          <div style={{ background: 'white', marginRight: '.8em', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px',  fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px',  boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
+          <div style={{ background: 'white', marginRight: '.8em', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', marginBottom: '-3px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px',  fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px',  boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
             <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.4em', marginLeft: '-1px' }}>
               <br />
               <table>
@@ -819,7 +820,7 @@ export default class Card extends Component {
         {item.tagId ?
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'none', marginRight: '.7em', marginTop: '-2px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomWidth: '2px', borderBottomRightRadius: '.3em', borderRightWidth: '1px',  marginRight: '.7em', marginTop: '-1px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
               <div style={{ background: `${note.colorCode}`, width: '11px', height: '23px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>

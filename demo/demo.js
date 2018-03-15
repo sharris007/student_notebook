@@ -23,11 +23,11 @@ function init() {
     note.outsetSeq = notes.response[ic].outsetSeq;
     const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
     note.changeDate = timeStamp;
-    if (note.colorCode === '#FFD232') { //Yellow
+    if (note.colorCode === '#ffedad') { //Yellow
       note.noteText = 'Q'; //Questions
-    } else if (note.colorCode === '#55DF49') { //Green
+    } else if (note.colorCode === '#bbf2b6') { //Green 
       note.noteText = 'M'; //Main Idea
-    } else if (note.colorCode === '#FC92CF') { //Pink
+    } else if (note.colorCode === '#fed3ec') { //Pink 
       note.noteText = 'O'; //Observations
     } else if (note.colorCode === '#ccf5fd') { //Share(Blue)
       note.noteText = 'I'; // From Instructor
