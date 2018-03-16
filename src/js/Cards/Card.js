@@ -14,6 +14,8 @@ const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
 const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
+const selectPng = require('../../assets/images/select.png');
+const selectedPng = require('../../assets/images/selected.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -56,12 +58,17 @@ const questions = {
 };
 
 const group = {
-  backgroundColor: 'white',
-  height: '44px',
-  paddingTop: '10px',
+  height: '36px',
+  paddingTop: '12px',
   paddingLeft: '10px',
-  color: 'black',
-  textOverflow: 'ellipsis'
+  color: '#252525',
+  textOverflow: 'ellipsis',
+  textAlign: 'center',
+  fontSize: '14px',
+  letterSpacing: '0.3px',
+  fontWeight: 'normal',
+  fontStretch: 'normal',
+  lineHeight: 'normal'
 };
 
 const renameDiv = {
@@ -84,22 +91,24 @@ const styleContent = {
   fontSize: '16px',
   fontWeight: 'bold',
   lineHeight: '1.38',
+  fontFamily: 'Palantino',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
   letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
-  wordWrap: 'break-word',
-  fontFamily: 'Palatino',
-  fontStyle: 'normal',
-  fontStretch: 'normal'
-
+  wordWrap: 'break-word'
 };
 
 const styleContent2 = {
   width: '228px',
   height: '154px',
   fontSize: '14px',
-  lineHeight: '1.57',
-  letterSpacing: '-0.3px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: '1.43',
+  letterSpacing: 'normal',
   textAlign: 'left',
   color: '#252525'
 };
@@ -119,12 +128,16 @@ const title = {
   letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
-  fontWeight: '300',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: '1.5px',
   lineHeight: '1.5',
-  padding: '16px',
-  paddingBottom: 0,
-  whiteSpace: 'normal',
-  background: 'white'
+  paddingTop: '0px',
+  paddingLeft: '16px',
+  paddingRight: '26px',
+  paddingBottom: '10px',
+  whiteSpace: 'normal'
 };
 
 const saveStyle = {
@@ -191,15 +204,15 @@ const addNote = {
 };
 
 const line = {
-  height: '2px',
   border: 'solid 1px #e9e9e9',
   marginLeft: '15px',
-  marginRight: '15px'
+  marginRight: '15px',
+  marginTop: '10px'
 };
 
 const line2 = {
-  height: '2px',
-  border: 'solid 1px #e9e9e9',
+  border: 'solid 1px #c7c7c7',
+  marginBottom: '16px'
 };
 
 
@@ -236,21 +249,8 @@ const optionListStyle = {
   minHeight: '40px'
 };
 
-const groupTitle = { 
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  width: '85%',
-  fontFamily:'Open Sans',
-  fontSize:'14px',
-  fontWeight:'normal',
-  fontStyle:'normal',
-  fontStretch:'normal',
-  lineHeight:'normal',
-  letterSpacing: '0.3px',
-  textAlign: 'center',
-  color: '#252525'
-}
+
+
 
 const Buttony = ({ className }) => (
   <div style={className}> </div>
@@ -266,6 +266,7 @@ export default class Card extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
+    groupExpanded: PropTypes.bool,
     tagId: PropTypes.func,
     handleGroupClick: PropTypes.func
   };
@@ -291,7 +292,8 @@ export default class Card extends Component {
       hideSave: true,
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
-      selectedMenuItem: null
+      selectedMenuItem: null,
+      groupExpanded: props.groupExpanded
     };
   }
 
@@ -360,7 +362,9 @@ export default class Card extends Component {
         this.titleInput.value = card.pageId ? card.highLightText : card.title;
         this.contentArea.value = card.content;
       });
-    }
+    } else if (value === 'Ungroup note') {
+      this.props.saveCard(this.state.item, 'UNGROUP NOTE');
+    };
   }
 
   handleDeleteMenuItem = (event, value) => {
@@ -451,102 +455,133 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
- 
+
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'M' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'I' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
+            {this.props.groupExpanded === true ?
+              <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                  onChange={this.handleMenuItemChange}
+                  value={this.state.selectedMenuItem}
+                >
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                </IconMenu>
+              </div>
+              : null}
+
+
+
           </div>
         ) : null}
 
 
         {item.noteText === 'O' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'Q' && !item.tagId ? (
           <div className="item-name" style={questions}>
-            <div className="delete-perfomers" style={{ float: 'right' }}>
+            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
+                {this.props.groupExpanded === true ?
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.tagId ? (
-          <div>
-            <div className="item-name" style={group} ref={(ele) => {
+          <div style={{ height: '44px' }}>
+            <div className="item-name" style={group} ref={(ele) => {  // what is this doing SCOTT
               this.groupTitle = ele;
             }} >
 
-              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{item.tagName}</center></div>
-              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>
+                {item.tagName}
+              </div>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px', paddingRight: '10px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                   targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
                 >
                   <MenuItem onClick={this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
 
-             
+
 
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
@@ -570,14 +605,13 @@ export default class Card extends Component {
         ) : null}
 
 
-
-{item.cardFormat === 'note' && item.tagId ?
-                <div style={line2} /> : null}
+        {item.cardFormat === 'note' && item.tagId ?
+          <div style={line2} /> : null}
 
 
         {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
-          <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
-            {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
+          <div style={{ position: 'relative', top: '-50px', left: '-10px' }} onClick={() => this.handleSelectCard(item)}>
+           {this.state.selected ? <img src={selectedPng} /> :  <img src={selectPng} />}</div>
           : null}
 
         {item.cardFormat === 'note' ? (
@@ -652,46 +686,49 @@ export default class Card extends Component {
           </div>
         ) : (
             <div>
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
-                <div className="item-content">
-                  <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
-                    <td width='85%'>
-                      <span style={styleContent}>“{item.highLightText}”</span>
-                    </td>
-                    <td>
-                      {!!item.pageId ?
-                        <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
-                          <img
-                            style={{ height: '24px', width: '24px' }}
-                            src={gotoPng}
-                            alt="navigate"
-                          />
-                        </a> : null}</td></tr></tbody></table>
-                </div>
-              </div> : null}
-
               {item.cardFormat === 'note' && item.pageId ?
-                null : <br />}
+                <div className="item-container" style={{ paddingTop: '0px', marginTop: '-15px', paddingLeft: '16px', paddingBottom: '0px' }}>
+                  <div className="item-content">
+                    <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
+                      <td width='85%'>
+                        <span style={styleContent}>“{item.highLightText}”</span>
+                      </td>
+                      <td>
+                        {!!item.pageId ?
+                          <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
+                            <img
+                              style={{ height: '24px', width: '24px' }}
+                              src={gotoPng}
+                              alt="navigate"
+                            />
+                          </a> : null}</td></tr></tbody></table>
+                  </div>
+                </div> : null}
+
+              {/* {item.cardFormat === 'note' && item.pageId ?
+                null : <br />} */}
 
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
-                <div className="item-content">
-                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
-                </div>
-              </div> : null}
+              {item.cardFormat === 'note' && !item.pageId ?
+                <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
+                  <div className="item-content">
+                    <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                  </div>
+                </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
-                <div className="item-content">
-                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
-                </div>
-              </div> : null}
+              {item.cardFormat === 'note' && item.pageId ?
+                <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
+                  <div className="item-content">
+                    <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                  </div>
+                </div> : null}
             </div>
           )}
 
         {item.cardFormat === 'note' ? (
-          <div className="item-perfomers">
+          <div>
           </div>
         ) : (
             <div className="item-perfomers">
@@ -743,14 +780,14 @@ export default class Card extends Component {
 
 
         {item.tagId ?
-          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: `${item.notes[0].colorCode}` }}>
-            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
+          <div style={{ background: 'white', marginRight: '.8em', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', marginBottom: '-3px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
+            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.4em', marginLeft: '-1px' }}>
               <br />
               <table>
                 <tbody>
                   <tr>
                     <td>
-                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>
+                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', paddingLeft: '20px', width: '150px' }}>
                         {item.noteText === 'Q' ?
                           `Questions`
                           : null}
@@ -769,7 +806,8 @@ export default class Card extends Component {
 
                       </div></td>
                     <td>
-                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: '#6a7070', marginLeft: '36px', background: 'white' }}>
+                        {Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
                       </div>
                     </td>
                   </tr>
@@ -782,9 +820,9 @@ export default class Card extends Component {
 
         {item.tagId ?
           item.notes.map((note, i) => (
-          //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
-              <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
+            //  item.notes.splice(1).map((note, i) => (
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomWidth: '2px', borderBottomRightRadius: '.3em', borderRightWidth: '1px', marginRight: '.7em', marginTop: '-1px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
+              <div style={{ background: `${note.colorCode}`, width: '11px', height: '23px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>
 

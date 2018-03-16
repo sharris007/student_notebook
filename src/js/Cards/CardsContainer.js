@@ -67,17 +67,18 @@ export default class CardsContainer extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
+    groupExpanded: PropTypes.bool,
     handleGroupClick: PropTypes.func
   }
 
   constructor(props) {
     super(props);
-    this.state = {groupModeFlag: props.groupModeFlag};
+    this.state = {groupModeFlag: props.groupModeFlag, groupExpanded: props.groupExpanded};
   //  this.moveCard = this.moveCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({groupModeFlag: nextProps.groupModeFlag});
+    this.setState({groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded});
   }
 
   render() {
@@ -102,7 +103,8 @@ export default class CardsContainer extends Component {
           cancelAddCard={this.props.cancelAddCard}
           saveCard={this.props.saveCard}
           addCard={this.props.addCard}
-          groupModeFlag={this.state.groupModeFlag} 
+          groupModeFlag={this.state.groupModeFlag}
+          groupExpanded={this.state.groupExpanded} 
           handleGroupClick={this.props.handleGroupClick}
           groupExpanded={this.props.groupExpanded}
         />

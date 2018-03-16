@@ -79,15 +79,16 @@ export default class CardComponent extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
-    handleGroupClick: PropTypes.func,
-    groupExpanded: PropTypes.bool
+    groupExpanded: PropTypes.bool,
+    handleGroupClick: PropTypes.func
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      groupModeFlag: props.groupModeFlag
+      groupModeFlag: props.groupModeFlag,
+      groupExpanded: props.groupExpanded
     };
   }
 
@@ -99,11 +100,11 @@ export default class CardComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState = { groupModeFlag: nextProps.groupModeFlag };
+    this.setState = { groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded };
   }
 
   render() {
-    const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, handleGroupClick, groupExpanded } = this.props;
+    const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, ungroupNote, handleGroupClick } = this.props;
     return connectDragSource(
       <div>
         <Card 
@@ -112,8 +113,8 @@ export default class CardComponent extends Component {
             saveCard={saveCard} 
             addCard={addCard} 
             groupModeFlag={this.state.groupModeFlag}
+            groupExpanded={this.state.groupExpanded}
             handleGroupClick={handleGroupClick}
-            groupExpanded={groupExpanded}
         />
       </div>
     );

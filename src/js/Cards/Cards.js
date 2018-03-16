@@ -117,6 +117,7 @@ export default class Cards extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
+    groupExpanded: PropTypes.bool,
     handleGroupClick: PropTypes.func
   }
 
@@ -125,18 +126,19 @@ export default class Cards extends Component {
     this.state = {
       placeholderIndex: undefined,
       isScrolling: false,
-      groupModeFlag: props.groupModeFlag
+      groupModeFlag: props.groupModeFlag,
+      groupExpanded: props.groupExpanded
     };
   }
 
 
   componentWillReceiveProps(nextProps) {
-    this.setState({groupModeFlag: nextProps.groupModeFlag});
+    this.setState({groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded});
   }
 
   render() {
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
-    const { placeholderIndex, groupModeFlag } = this.state;
+    const { placeholderIndex, groupModeFlag, groupExpanded } = this.state;
     let isPlaceHold = false;
     const cardList = [];
     cards.forEach((item, i) => {
@@ -159,6 +161,7 @@ export default class Cards extends Component {
               saveCard={this.props.saveCard}
               addCard={this.props.addCard}
               groupModeFlag={groupModeFlag}
+              groupExpanded={groupExpanded}
               handleGroupClick={this.props.handleGroupClick}
               groupExpanded={this.props.groupExpanded}
             />

@@ -32,6 +32,9 @@ export default class Board extends Component {
     this.saveCard = this.saveCard.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.getFilterArr = this.getFilterArr.bind(this);
+    let groupModeFlag = props.groupModeFlag;
+    if (props.groupExpanded)
+      groupModeFlag = true;
 
     this.state = {
       isScrolling: false,
@@ -39,24 +42,26 @@ export default class Board extends Component {
       lists: [],
       notesList: [],
       ider: null,
-      groupModeFlag: props.groupModeFlag
+      groupModeFlag: groupModeFlag
     };
 
   }
   createLists = (props, cardDropped) => {
     const notesList = [...props.notesList];
-    this.setState({notesList});
+    this.setState({ notesList });
     console.log('mount', notesList);
-    if (!cardDropped || props.groupModeFlag === false) {
-      notesList.splice(0, 0, {
-        id: 'new',
-        keyId: notesList.length + Date.now(),
-        title: '',
-        cardFormat: 'add mode',
-        content: '',
-        content2: '',
-        changeDate: ''
-      });
+    if (props.groupExpanded === false) {
+      if (!cardDropped) {
+        notesList.splice(0, 0, {
+          id: 'new',
+          keyId: notesList.length + Date.now(),
+          title: '',
+          cardFormat: 'add mode',
+          content: '',
+          content2: '',
+          changeDate: ''
+        });
+      }
     }
 
     const lists = [];
@@ -75,28 +80,28 @@ export default class Board extends Component {
       item.keyId = item.id + Date.now();
       lists[index].cards.push(item);
     });
-    this.setState({lists,  groupModeFlag: props.groupModeFlag});
+    this.setState({ lists, groupModeFlag: props.groupModeFlag });
   }
   componentWillMount() {
     this.createLists(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ groupModeFlag: nextProps.groupModeFlag });
+    this.setState({ groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded });
     this.createLists(nextProps);
   }
 
 
   startScrolling(direction) {
     switch (direction) {
-    case 'toLeft':
-      this.setState({ isScrolling: true }, this.scrollLeft());
-      break;
-    case 'toRight':
-      this.setState({ isScrolling: true }, this.scrollRight());
-      break;
-    default:
-      break;
+      case 'toLeft':
+        this.setState({ isScrolling: true }, this.scrollLeft());
+        break;
+      case 'toRight':
+        this.setState({ isScrolling: true }, this.scrollRight());
+        break;
+      default:
+        break;
     }
   }
 
@@ -120,21 +125,21 @@ export default class Board extends Component {
 
   moveCard(lastX, lastY, nextX, nextY) {
     const newLists = [...this.state.lists];
-    
+
  if(nextX ==0 && nextY ==0)
       return false;
-   
 
-    const nextLists = Object.assign({...this.props}, {notesList:new Array(this.state.notesList.length)});
-    newLists.forEach((list, listIndex) =>{
-      list.cards.forEach((card, cardIndex)=>{
-        const index = (this.props.coloums*cardIndex)+listIndex;
+
+    const nextLists = Object.assign({ ...this.props }, { notesList: new Array(this.state.notesList.length) });
+    newLists.forEach((list, listIndex) => {
+      list.cards.forEach((card, cardIndex) => {
+        const index = (this.props.coloums * cardIndex) + listIndex;
         nextLists.notesList.splice(index, 1, card);
       });
     });
-    const dragCardIndex = (this.props.coloums*lastY)+lastX;
+    const dragCardIndex = (this.props.coloums * lastY) + lastX;
     // const dragCard = nextLists.notesList.splice(dragCardIndex, 1);
-    const dropCardIndex = (this.props.coloums*nextY)+nextX;
+    const dropCardIndex = (this.props.coloums * nextY) + nextX;
     nextLists.notesList.splice(dropCardIndex, 0, nextLists.notesList.splice(dragCardIndex, 1)[0]);
     this.createLists(nextLists, true);
   }
@@ -160,7 +165,7 @@ export default class Board extends Component {
   }
 
   addCard() {
-    
+
     //this.props.addCard();
     const newLists = [...this.state.lists];
     newLists[0].cards[0] = {
@@ -212,7 +217,7 @@ export default class Board extends Component {
     if (selectedChapter.length > 0 || selectedLabel.length > 0) {
       notesList.notesList = list;
     }
-    else  {
+    else {
       notesList.notesList = this.props.notesList;
     }
     this.createLists(notesList);
@@ -231,30 +236,31 @@ export default class Board extends Component {
     });
     return (
       <div>
-      <NoteBookHeader  toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
-      <main>
-        <div style={{ height: '100%' }}>
-          <CustomDragLayer snapToGrid={false} />
-          {filteredList.map((item, i) => (
-            <CardsContainer
-              key={item.keyId}
-              id={item.id}
-              item={item}
-              moveCard={this.moveCard}
-              moveList={this.moveList}
-              startScrolling={this.startScrolling}
-              stopScrolling={this.stopScrolling}
-              isScrolling={this.state.isScrolling}
-              cancelAddCard={this.cancelAddCard}
-              saveCard={this.saveCard}
-              addCard={this.addCard}
-              groupModeFlag={this.state.groupModeFlag}
-              x={i}
-              handleGroupClick={this.props.handleGroupClick}
-            />
-          ))}
-        </div>
-      </main>
+        <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
+        <main>
+          <div style={{ height: '100%' }}>
+            <CustomDragLayer snapToGrid={false} />
+            {filteredList.map((item, i) => (
+              <CardsContainer
+                key={item.keyId}
+                id={item.id}
+                item={item}
+                moveCard={this.moveCard}
+                moveList={this.moveList}
+                startScrolling={this.startScrolling}
+                stopScrolling={this.stopScrolling}
+                isScrolling={this.state.isScrolling}
+                cancelAddCard={this.cancelAddCard}
+                saveCard={this.saveCard}
+                addCard={this.addCard}
+                groupModeFlag={this.state.groupModeFlag}
+                groupExpanded={this.state.groupExpanded}
+                x={i}
+                handleGroupClick={this.props.handleGroupClick}
+              />
+            ))}
+          </div>
+        </main>
       </div>
     );
   }
