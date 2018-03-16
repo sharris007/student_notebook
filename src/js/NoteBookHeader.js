@@ -14,7 +14,7 @@ import '../scss/notebook.scss';
 import dropdown from '../images/dropdown.png';
 import MenuItem from './menuItem';
 
-const layerPng = require('../assets/images/69399.png');
+const layerPng = require('../assets/images/ic-group.png');
 
 
 const VerticalLine = () => (
@@ -320,10 +320,15 @@ export default class NoteBookHeader extends Component {
                 defaultValue="Untitled group"
                 underlineStyle={styles.underlineStyle}
               />
-              <span style={{ paddingRight: '50px' }}></span></div> : null}
-              
-              
-              {groupModeToggleFlag === false ? <div><table><tr><td><img  src={layerPng} height='24px' width='24px' onClick={() => this.handleGroupNotesButton()} /></td><td><a onClick={() => this.handleGroupNotesButton()}>Group notes</a></td></tr></table></div>
+                <span style={{ paddingRight: '50px' }}></span></div> : null}
+
+
+              {groupModeToggleFlag === false ? <div>
+                <table>
+                  <tr>
+                    <td style={{paddingTop: '5px'}}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
+                    </td>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600' }}>Group notes</a></td></tr></table></div>
                 : null}
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleCancelButton()} />
                 : null}
