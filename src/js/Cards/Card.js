@@ -126,7 +126,21 @@ const title = {
   whiteSpace: 'normal',
   background: 'white'
 };
-
+const customtitle = {
+  fontSize: '16px',
+  letterSpacing: '-0.2px',
+  textAlign: 'left',
+  color: '#252525',
+  fontWeight: '600',
+  lineHeight: '1.38',
+  padding: '16px',
+  paddingBottom: 0,
+  whiteSpace: 'normal',
+  background: 'white',
+  fontFamily: 'Open Sans',
+  fontStyle: 'normal',
+  fontStretch: 'normal'
+};
 const saveStyle = {
   fontSize: '16px',
   fontWeight: '600',
@@ -194,7 +208,7 @@ const addNote = {
 
 const line = {
   height: '2px',
-  border: 'solid 1px #e9e9e9',
+  borderBottom: '1.5px solid #e9e9e9',
   marginLeft: '15px',
   marginRight: '15px'
 };
@@ -203,10 +217,6 @@ const line2 = {
   height: '2px',
   border: 'solid 1px #e9e9e9',
 };
-
-
-
-
 
 const Rtest = {
   width: '30px',
@@ -598,7 +608,7 @@ export default class Card extends Component {
           : null}
 
         {item.cardFormat === 'note' ? (
-          <div style={title}>{item.title}</div>
+          <div style={item.noteText === 'C' ? customtitle : title}>{item.title}</div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
           <div style={{ paddingTop: '100px' }} />
@@ -669,7 +679,7 @@ export default class Card extends Component {
           </div>
         ) : (
             <div>
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{paddingTop:'10px'}}>
                 <div className="item-content">
                   <table style={{ tableLayout: 'fixed', width: '100%' }}><tbody><tr>
                     <td width='85%'>
@@ -693,13 +703,13 @@ export default class Card extends Component {
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{paddingTop:'20px'}}>
                 <div className="item-content" style={{paddingRight:'8px'}}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{paddingTop:'20px'}}>
                 <div className="item-content" style={{paddingRight:'8px'}}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
@@ -756,6 +766,10 @@ export default class Card extends Component {
 
         {item.noteText === 'Q' && !item.tagId ? (
           <div><span className="verticalAlign" style={{background: '#ffedad', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        ) : null}
+
+        {item.noteText === 'C' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#ffffff', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
