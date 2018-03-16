@@ -106,15 +106,27 @@
     margin-left: 10px;
   }
 }
-.item .item-container {
-  padding-right: 26px;
-  font-family: Open Sans;
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.43;
-  letter-spacing: normal;
-  text-align: left;
-  color: #252525;
+.item {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  &.groupStyle {
+    padding-bottom:30px;
+  }
+  .item-name {
+    border-radius: 4px;
+  }    
+  .item-container {
+    padding-right: 16px;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: left;
+    color: #252525;
+  }
+}
+.desk-items {
+  padding-left: 0;
 }

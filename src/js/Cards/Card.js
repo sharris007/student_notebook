@@ -180,14 +180,16 @@ const noteTextArea = {
 };
 
 const addNote = {
-  color: '#1ca6a5',
-  fontWeight: '600',
-  lineHeight: '1.57',
-  fontSize: '14px',
-  letterSpacing: '-0.2px',
   textAlign: 'center',
-  height: '22px'
-
+  fontFamily: 'Open Sans',
+  fontSize: '13px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: '1.69',
+  letterSpacing: '-0.2px',
+  color: '#6a7070',
+  paddingTop: '5px'
 };
 
 const line = {
@@ -459,7 +461,7 @@ export default class Card extends Component {
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                 iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
@@ -476,7 +478,7 @@ export default class Card extends Component {
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                 iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
@@ -499,7 +501,7 @@ export default class Card extends Component {
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                 iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
@@ -516,7 +518,7 @@ export default class Card extends Component {
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                 iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
@@ -538,7 +540,7 @@ export default class Card extends Component {
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                   iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
                 >
                   <MenuItem onClick={this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
@@ -660,7 +662,7 @@ export default class Card extends Component {
                     </td>
                     <td>
                       {!!item.pageId ?
-                        <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
+                        <a style={{ margin: '0', float: 'right' }} onClick={() => this.handleNavigate(item)}>
                           <img
                             style={{ height: '24px', width: '24px' }}
                             src={gotoPng}
@@ -726,24 +728,24 @@ export default class Card extends Component {
 
 
         {item.noteText === 'I' && !item.tagId ? (
-          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'M' && !item.tagId ? (
-          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'O' && !item.tagId ? (
-          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'Q' && !item.tagId ? (
-          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
         {item.tagId ?
-          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', borderBottomColor: `${item.notes[0].colorCode}` }}>
+          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
             <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
               <br />
               <table>
@@ -769,7 +771,7 @@ export default class Card extends Component {
 
                       </div></td>
                     <td>
-                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
                       </div>
                     </td>
                   </tr>
@@ -783,7 +785,7 @@ export default class Card extends Component {
         {item.tagId ?
           item.notes.map((note, i) => (
           //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomStyle: `${i < item.notes.length ? 'solid' : 'solid'}`, borderBottomWidth: '2px', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', borderRightWidth: '1px', borderRightColor: 'silver', borderRightStyle: 'solid', marginRight: '.7em', marginTop: '2px' }}>
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', zIndex: `${1000 - (i+1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
               <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>
