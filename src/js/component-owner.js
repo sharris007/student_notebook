@@ -28,6 +28,8 @@ function refreshNotesList(originalNotesList) {
     if (note.tagId) {
       const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
 
+      note.selected = false;
+
       if (index === -1) {
         note.notes = [];
         note.notes.push(note);
@@ -191,13 +193,14 @@ class ComponentOwner extends React.Component {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
+      const originalNotesList = [...this.state.originalNotesList];
+      debugger;
 
       const tempNotesList = [];
-debugger;
       const tagId = Date.now();
       let tagName = this.state.toolbarMode.groupTitle;
 
-      if (!!!tagName){
+      if (!!!tagName) {
         tagName = 'Untitled Group';
       }
 
@@ -212,20 +215,28 @@ debugger;
       filterList3 = filterList3.filter(notesList => notesList.selected === false);
 
       filterList2.forEach((item, i) => {
-        item.tagId = null;
+        const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
+        if (index != -1) {
+          originalNotesList[index].tagId = tagId;
+          originalNotesList[index].tagName = tagName;
+        }
+        //    item.tagId = null;
       });
 
       //   filterList2.splice(0, 1);
 
-      filterList1[0].tagId = tagId;
-      filterList1[0].tagName = tagName;
-      filterList1[0].notes = filterList2;
+      // filterList1[0].tagId = tagId;
+      // filterList1[0].tagName = tagName;
+      // filterList1[0].notes = filterList2;
 
-      filterList3.push(filterList1[0]);
-
+      // filterList3.push(filterList1[0]);
+      // filterList3.forEach((item, i) => {
+      //   item.selected = false;
+      // });
 
       this.setState({
-        notesList: filterList3,
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList,
         toolbarMode: toolbarMode,
         groupModeFlag: false
       });
