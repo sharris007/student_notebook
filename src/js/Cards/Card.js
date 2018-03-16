@@ -687,7 +687,7 @@ export default class Card extends Component {
         ) : (
             <div>
               {item.cardFormat === 'note' && item.pageId ?
-                <div className="item-container" style={{ paddingTop: '0px', marginTop: '-15px', paddingLeft: '16px', paddingBottom: '0px' }}>
+                <div className="item-container" style={{ paddingTop: '0px', marginTop: '-10px', paddingLeft: '16px', paddingBottom: '0px' }}>
                   <div className="item-content">
                     <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
                       <td width='85%'>
