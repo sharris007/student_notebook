@@ -65,7 +65,6 @@ function init() {
 
 ;
   let toolbarModeProp = new toolbarMode();
-
   new NoteBookComponent({
     elementId: 'demo',
     locale: 'en-us',

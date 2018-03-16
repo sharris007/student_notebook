@@ -166,7 +166,7 @@ export default class Board extends Component {
   addCard() {
 
     //this.props.addCard();
-    const newLists = [...this.state.lists];
+    const   newLists = [...this.state.lists];
     newLists[0].cards[0] = {
       id: '',
       keyId: Date.now(),
@@ -209,7 +209,6 @@ export default class Board extends Component {
   }
 
   getFilterArr(list) {
-    debugger;
     const notesList = {};
     notesList.coloums = this.props.coloums;
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];

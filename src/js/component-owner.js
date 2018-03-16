@@ -16,37 +16,38 @@ import NoteBookHeader from './NoteBookHeader';
 
 
 function refreshNotesList(originalNotesList) {
+
   //  const tagName = state.expandedTagName;
-   // const tagId = state.expandedTagId;
-    const groups = [];
-    const notesList = [];
+  // const tagId = state.expandedTagId;
+  const groups = [];
+  const notesList = [];
 
-    for (let ic = 0; ic < originalNotesList.length; ic++) {
-      let note = _.cloneDeep(originalNotesList[ic]);
+  for (let ic = 0; ic < originalNotesList.length; ic++) {
+    let note = _.cloneDeep(originalNotesList[ic]);
 
-      if (note.tagId) {
-        const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
+    if (note.tagId) {
+      const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
 
-        if (index === -1) {
-          note.notes = [];
-          note.notes.push(note);
-          groups.push(note);
-          console.log(groups);
-        } else {
-          note.tagId = null;
-          note.tagName = null;
-          groups[index].notes.push(note)
-        }
+      if (index === -1) {
+        note.notes = [];
+        note.notes.push(note);
+        groups.push(note);
+        console.log(groups);
       } else {
-        notesList.push(note);
+        note.tagId = null;
+        note.tagName = null;
+        groups[index].notes.push(note)
       }
+    } else {
+      notesList.push(note);
     }
-    groups.map((group, i) => {
-      notesList.unshift(group);
-    });
-
-   return notesList;
   }
+  groups.map((group, i) => {
+    notesList.unshift(group);
+  });
+
+  return notesList;
+}
 
 
 
@@ -68,7 +69,6 @@ class ComponentOwner extends React.Component {
 
     let temporaryArray = props.notesList;
     temporaryArray.forEach(function (obj) { obj.keyId = obj.id + Date.now(); obj.selected = false; });
-
     this.state = {
       lists: props.lists,
       groupModeFlag: props.groupModeFlag,
@@ -114,7 +114,6 @@ class ComponentOwner extends React.Component {
       if (index > -1) {
         originalNotesList.splice(index, 1);
       }
-
       this.setState({
         notesList: refreshNotesList(originalNotesList),
         originalNotesList: originalNotesList
@@ -194,9 +193,13 @@ class ComponentOwner extends React.Component {
       const notesList = [...this.state.notesList];
 
       const tempNotesList = [];
-
+debugger;
       const tagId = Date.now();
-      const tagName = this.state.toolbarMode.groupTitle;
+      let tagName = this.state.toolbarMode.groupTitle;
+
+      if (!!!tagName){
+        tagName = 'Untitled Group';
+      }
 
 
       let filterList = _.cloneDeep(notesList);
@@ -232,9 +235,6 @@ class ComponentOwner extends React.Component {
     } else if (msg === "RENAME") {
       console.log('Re Name');
       console.log('Data', data);
-    } else if (msg === "UNGROUP") {
-      console.log('UNGROUP');
-      console.log('Data', data);
     } else if (msg === "UNGROUP NOTE") {
 
       const originalNotesList = [...this.state.originalNotesList];
@@ -247,7 +247,27 @@ class ComponentOwner extends React.Component {
       originalNotesList[index].tagId = null;
       originalNotesList[index].tagName = null;
 
-    //  refreshNotesList(originalNotesList);
+      //  refreshNotesList(originalNotesList);
+
+      this.setState({
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList,
+        groupExpanded: false,
+        groupModeFlag: false,
+        expandedTagName: null,
+        expandedTagId: null
+      });
+
+
+    } else if (msg === "UNGROUP NOTES") { // ungroup all notes in a group
+      const originalNotesList = [...this.state.originalNotesList];
+
+      originalNotesList.map((item, i) => {
+        if (item.tagId === data.tagId) {
+          item.tagId = null;
+          item.tagName = null;
+        }
+      });
 
 
       this.setState({
@@ -259,7 +279,7 @@ class ComponentOwner extends React.Component {
         expandedTagId: null
       });
 
-     
+
     }
   }
 
@@ -285,7 +305,7 @@ class ComponentOwner extends React.Component {
     this.setState({
       //  notesList: this.props.notesList,
       notesList: refreshNotesList(this.state.originalNotesList),
-    //  notesList: this.state.saveNotesList,
+      //  notesList: this.state.saveNotesList,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
