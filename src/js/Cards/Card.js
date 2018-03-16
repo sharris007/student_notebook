@@ -14,8 +14,6 @@ const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
 const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
-const selectPng = require('../../assets/images/select.png');
-const selectedPng = require('../../assets/images/selected.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -58,17 +56,12 @@ const questions = {
 };
 
 const group = {
-  height: '36px',
-  paddingTop: '12px',
+  backgroundColor: 'white',
+  height: '44px',
+  paddingTop: '10px',
   paddingLeft: '10px',
-  color: '#252525',
-  textOverflow: 'ellipsis',
-  textAlign: 'center',
-  fontSize: '14px',
-  letterSpacing: '0.3px',
-  fontWeight: 'normal',
-  fontStretch: 'normal',
-  lineHeight: 'normal'
+  color: 'black',
+  textOverflow: 'ellipsis'
 };
 
 const renameDiv = {
@@ -91,24 +84,22 @@ const styleContent = {
   fontSize: '16px',
   fontWeight: 'bold',
   lineHeight: '1.38',
-  fontFamily: 'Palantino',
-  fontStyle: 'normal',
-  fontStretch: 'normal',
   letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
-  wordWrap: 'break-word'
+  wordWrap: 'break-word',
+  fontFamily: 'Palatino',
+  fontStyle: 'normal',
+  fontStretch: 'normal'
+
 };
 
 const styleContent2 = {
   width: '228px',
   height: '154px',
   fontSize: '14px',
-  fontWeight: 'normal',
-  fontStyle: 'normal',
-  fontStretch: 'normal',
-  lineHeight: '1.43',
-  letterSpacing: 'normal',
+  lineHeight: '1.57',
+  letterSpacing: '-0.3px',
   textAlign: 'left',
   color: '#252525'
 };
@@ -128,16 +119,12 @@ const title = {
   letterSpacing: '-0.2px',
   textAlign: 'left',
   color: '#252525',
-  fontWeight: 'normal',
-  fontStyle: 'normal',
-  fontStretch: 'normal',
-  lineHeight: '1.5px',
+  fontWeight: '300',
   lineHeight: '1.5',
-  paddingTop: '0px',
-  paddingLeft: '16px',
-  paddingRight: '26px',
-  paddingBottom: '10px',
-  whiteSpace: 'normal'
+  padding: '16px',
+  paddingBottom: 0,
+  whiteSpace: 'normal',
+  background: 'white'
 };
 
 const saveStyle = {
@@ -193,26 +180,28 @@ const noteTextArea = {
 };
 
 const addNote = {
-  color: '#1ca6a5',
-  fontWeight: '600',
-  lineHeight: '1.57',
-  fontSize: '14px',
-  letterSpacing: '-0.2px',
   textAlign: 'center',
-  height: '22px'
-
+  fontFamily: 'Open Sans',
+  fontSize: '13px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: '1.69',
+  letterSpacing: '-0.2px',
+  color: '#6a7070',
+  paddingTop: '5px'
 };
 
 const line = {
+  height: '2px',
   border: 'solid 1px #e9e9e9',
   marginLeft: '15px',
-  marginRight: '15px',
-  marginTop: '10px'
+  marginRight: '15px'
 };
 
 const line2 = {
-  border: 'solid 1px #c7c7c7',
-  marginBottom: '16px'
+  height: '2px',
+  border: 'solid 1px #e9e9e9',
 };
 
 
@@ -249,8 +238,21 @@ const optionListStyle = {
   minHeight: '40px'
 };
 
-
-
+const groupTitle = { 
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  width: '85%',
+  fontFamily:'Open Sans',
+  fontSize:'14px',
+  fontWeight:'normal',
+  fontStyle:'normal',
+  fontStretch:'normal',
+  lineHeight:'normal',
+  letterSpacing: '0.3px',
+  textAlign: 'center',
+  color: '#252525'
+}
 
 const Buttony = ({ className }) => (
   <div style={className}> </div>
@@ -266,7 +268,6 @@ export default class Card extends Component {
     saveCard: PropTypes.func,
     addCard: PropTypes.func,
     groupModeFlag: PropTypes.bool,
-    groupExpanded: PropTypes.bool,
     tagId: PropTypes.func,
     handleGroupClick: PropTypes.func
   };
@@ -292,8 +293,7 @@ export default class Card extends Component {
       hideSave: true,
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
-      selectedMenuItem: null,
-      groupExpanded: props.groupExpanded
+      selectedMenuItem: null
     };
   }
 
@@ -362,9 +362,7 @@ export default class Card extends Component {
         this.titleInput.value = card.pageId ? card.highLightText : card.title;
         this.contentArea.value = card.content;
       });
-    } else if (value === 'Ungroup note') {
-      this.props.saveCard(this.state.item, 'UNGROUP NOTE');
-    };
+    }
   }
 
   handleDeleteMenuItem = (event, value) => {
@@ -455,133 +453,102 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
-
+ 
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
-                {this.props.groupExpanded === true ?
-                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
-                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'M' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
-            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
-                {this.props.groupExpanded === true ?
-                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
-                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'I' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
-            {this.props.groupExpanded === true ?
-              <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
-                <IconMenu
-                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                  anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
-                  onChange={this.handleMenuItemChange}
-                  value={this.state.selectedMenuItem}
-                >
-                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
-                </IconMenu>
-              </div>
-              : null}
-
-
-
           </div>
         ) : null}
 
 
         {item.noteText === 'O' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
-                {this.props.groupExpanded === true ?
-                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
-                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.noteText === 'Q' && !item.tagId ? (
           <div className="item-name" style={questions}>
-            <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px', 'marginLeft': '-10px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
                 <MenuItem value='Delete note' primaryText="Delete note" />
                 <MenuItem value='Edit note' primaryText="Edit note" />
-                {this.props.groupExpanded === true ?
-                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
-                  : null}
               </IconMenu>
             </div>
           </div>
         ) : null}
         {item.cardFormat === 'note' && item.tagId ? (
-          <div style={{ height: '44px' }}>
-            <div className="item-name" style={group} ref={(ele) => {  // what is this doing SCOTT
+          <div>
+            <div className="item-name" style={group} ref={(ele) => {
               this.groupTitle = ele;
             }} >
 
-              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}>
-                {item.tagName}
-              </div>
-              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px', paddingRight: '10px' }}>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{item.tagName}</center></div>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                  iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
                 >
                   <MenuItem onClick={this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
 
-
+             
 
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
@@ -605,13 +572,14 @@ export default class Card extends Component {
         ) : null}
 
 
-        {item.cardFormat === 'note' && item.tagId ?
-          <div style={line2} /> : null}
+
+{item.cardFormat === 'note' && item.tagId ?
+                <div style={line2} /> : null}
 
 
         {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
-          <div style={{ position: 'relative', top: '-50px', left: '-10px' }} onClick={() => this.handleSelectCard(item)}>
-           {this.state.selected ? <img src={selectedPng} /> :  <img src={selectPng} />}</div>
+          <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
+            {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
           : null}
 
         {item.cardFormat === 'note' ? (
@@ -686,49 +654,46 @@ export default class Card extends Component {
           </div>
         ) : (
             <div>
-              {item.cardFormat === 'note' && item.pageId ?
-                <div className="item-container" style={{ paddingTop: '0px', marginTop: '-15px', paddingLeft: '16px', paddingBottom: '0px' }}>
-                  <div className="item-content">
-                    <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
-                      <td width='85%'>
-                        <span style={styleContent}>“{item.highLightText}”</span>
-                      </td>
-                      <td>
-                        {!!item.pageId ?
-                          <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
-                            <img
-                              style={{ height: '24px', width: '24px' }}
-                              src={gotoPng}
-                              alt="navigate"
-                            />
-                          </a> : null}</td></tr></tbody></table>
-                  </div>
-                </div> : null}
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
+                    <td width='85%'>
+                      <span style={styleContent}>“{item.highLightText}”</span>
+                    </td>
+                    <td>
+                      {!!item.pageId ?
+                        <a style={{ margin: '0', float: 'right' }} onClick={() => this.handleNavigate(item)}>
+                          <img
+                            style={{ height: '24px', width: '24px' }}
+                            src={gotoPng}
+                            alt="navigate"
+                          />
+                        </a> : null}</td></tr></tbody></table>
+                </div>
+              </div> : null}
 
-              {/* {item.cardFormat === 'note' && item.pageId ?
-                null : <br />} */}
+              {item.cardFormat === 'note' && item.pageId ?
+                null : <br />}
 
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ?
-                <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
-                  <div className="item-content">
-                    <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
-                  </div>
-                </div> : null}
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                </div>
+              </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ?
-                <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
-                  <div className="item-content">
-                    <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
-                  </div>
-                </div> : null}
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
+                <div className="item-content">
+                  <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
+                </div>
+              </div> : null}
             </div>
           )}
 
         {item.cardFormat === 'note' ? (
-          <div>
+          <div className="item-perfomers">
           </div>
         ) : (
             <div className="item-perfomers">
@@ -763,31 +728,31 @@ export default class Card extends Component {
 
 
         {item.noteText === 'I' && !item.tagId ? (
-          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'M' && !item.tagId ? (
-          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'O' && !item.tagId ? (
-          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'Q' && !item.tagId ? (
-          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
         {item.tagId ?
-          <div style={{ background: 'white', marginRight: '.8em', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', marginBottom: '-3px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
-            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.4em', marginLeft: '-1px' }}>
+          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
+            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
               <br />
               <table>
                 <tbody>
                   <tr>
                     <td>
-                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', paddingLeft: '20px', width: '150px' }}>
+                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>
                         {item.noteText === 'Q' ?
                           `Questions`
                           : null}
@@ -806,8 +771,7 @@ export default class Card extends Component {
 
                       </div></td>
                     <td>
-                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: '#6a7070', marginLeft: '36px', background: 'white' }}>
-                        {Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 23px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
                       </div>
                     </td>
                   </tr>
@@ -820,9 +784,9 @@ export default class Card extends Component {
 
         {item.tagId ?
           item.notes.map((note, i) => (
-            //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomWidth: '2px', borderBottomRightRadius: '.3em', borderRightWidth: '1px', marginRight: '.7em', marginTop: '-1px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
-              <div style={{ background: `${note.colorCode}`, width: '11px', height: '23px', borderBottomLeftRadius: '.4em' }}>
+          //  item.notes.splice(1).map((note, i) => (
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', zIndex: `${1000 - (i+1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
+              <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>
 
