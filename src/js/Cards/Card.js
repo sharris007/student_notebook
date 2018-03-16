@@ -472,7 +472,7 @@ export default class Card extends Component {
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right', marginRight:'10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -489,7 +489,7 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'M' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
-            <div className="delete-perfomers" style={{ float: 'right', marginRight:'10px'}}>
+            <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -512,7 +512,7 @@ export default class Card extends Component {
 
         {item.noteText === 'O' && !item.tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right', marginRight:'10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -529,7 +529,7 @@ export default class Card extends Component {
         ) : null}
         {item.noteText === 'Q' && !item.tagId ? (
           <div className="item-name" style={questions}>
-            <div className="delete-perfomers" style={{ float: 'right', marginRight:'10px' }}>
+            <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -551,7 +551,7 @@ export default class Card extends Component {
             }} >
 
               <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{item.tagName}</center></div>
-              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px', marginRight:'10px'}}>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px'}}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -671,13 +671,13 @@ export default class Card extends Component {
             <div>
               {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
                 <div className="item-content">
-                  <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
+                  <table style={{ tableLayout: 'fixed', width: '100%' }}><tbody><tr>
                     <td width='85%'>
                       <span style={styleContent}>“{item.highLightText}”</span>
                     </td>
                     <td>
                       {!!item.pageId ?
-                        <a style={{ margin: '0', float: 'right', paddingRight:'6px' }} onClick={() => this.handleNavigate(item)}>
+                        <a style={{ margin: '0', float: 'right' }} onClick={() => this.handleNavigate(item)}>
                           <img
                             style={{ height: '24px', width: '24px' }}
                             src={gotoPng}
@@ -694,13 +694,13 @@ export default class Card extends Component {
                 <div style={line} /> : null}
 
               {item.cardFormat === 'note' && !item.pageId ? <div className="item-container">
-                <div className="item-content">
+                <div className="item-content" style={{paddingRight:'8px'}}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
 
               {item.cardFormat === 'note' && item.pageId ? <div className="item-container">
-                <div className="item-content">
+                <div className="item-content" style={{paddingRight:'8px'}}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
@@ -743,31 +743,31 @@ export default class Card extends Component {
 
 
         {item.noteText === 'I' && !item.tagId ? (
-          <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 16px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{background: '#ccf5fd', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'M' && !item.tagId ? (
-          <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 16px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{background: '#bbf2b6', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'O' && !item.tagId ? (
-          <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 16px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{background: '#fed3ec', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteText === 'Q' && !item.tagId ? (
-          <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 16px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{background: '#ffedad', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
         {item.tagId ?
-          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '96.75%', position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
-            <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}>
-              <br />
-              <table>
+          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
+            <div>
+             <span className="verticalAlign" style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
+              <table className="verticalAlign footerTable">
                 <tbody>
                   <tr>
-                    <td>
-                      <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>
+                    <td width="50%">
+                      <div className="footerNote">
                         {item.noteText === 'Q' ?
                           `Questions`
                           : null}
@@ -785,8 +785,8 @@ export default class Card extends Component {
                           : null}
 
                       </div></td>
-                    <td>
-                      <div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0 0 0 16px', background: 'white' }}>{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                    <td width="50%">
+                      <div className="footerDate">{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
                       </div>
                     </td>
                   </tr>
@@ -800,7 +800,7 @@ export default class Card extends Component {
         {item.tagId ?
           item.notes.map((note, i) => (
           //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '96.75%', zIndex: `${1000 - (i+1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '100%', zIndex: `${1000 - (i+1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
               <div style={{ background: `${note.colorCode}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>
