@@ -13,6 +13,7 @@ import '../assets/temp.styl';
 export default class Board extends Component {
   static propTypes = {
     notesList: PropTypes.array.isRequired,
+    originalNotesList: PropTypes.array.isRequired,
     groupModeFlag: PropTypes.bool,
     callback: PropTypes.func,
     handleGroupClick: PropTypes.func
@@ -208,6 +209,7 @@ export default class Board extends Component {
   }
 
   getFilterArr(list) {
+    debugger;
     const notesList = {};
     notesList.coloums = this.props.coloums;
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
@@ -218,6 +220,7 @@ export default class Board extends Component {
     else {
       notesList.notesList = this.props.notesList;
     }
+    notesList.groupExpanded = false;
     this.createLists(notesList);
   }
 

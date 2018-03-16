@@ -56,7 +56,6 @@ function init() {
       notesList.push(note);
     }
   }
-debugger;
   // }
 // add group to beginning of notes list
   groups.map((group, i) => {
