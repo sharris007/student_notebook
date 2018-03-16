@@ -22,6 +22,7 @@ class ComponentOwner extends React.Component {
   //
   static propTypes = {
     notesList: PropTypes.array.isRequired,
+    originalNotesList: PropTypes.array.isRequired,
     toolbarMode: PropTypes.object,
     groupModeFlag: PropTypes.bool
 
@@ -38,6 +39,7 @@ class ComponentOwner extends React.Component {
       toolbarMode: props.toolbarMode,
       notesList: temporaryArray,
       saveNotesList: temporaryArray,
+      originalNotesList: props.originalNotesList,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
@@ -161,7 +163,7 @@ class ComponentOwner extends React.Component {
       const tagId = Date.now();
       const tagName = this.state.toolbarMode.groupTitle;
 
-      
+
       let filterList = _.cloneDeep(notesList);
       let filterList1 = _.cloneDeep(notesList);
       let filterList2 = _.cloneDeep(notesList);
@@ -200,22 +202,51 @@ class ComponentOwner extends React.Component {
       console.log('Data', data);
     } else if (msg === "UNGROUP NOTE") {
 
-      const notesList = [...this.state.notesList];
-
-      let filterList = _.cloneDeep(notesList);
-      let filterList1 = _.cloneDeep(notesList);
-      let filterList2 = _.cloneDeep(notesList);
-      let filterList3 = _.cloneDeep(notesList);
-      
-      filterList1 = filterList1.filter(notesList => notesList.selected === true);
-      
+      const originalNotesList = [...this.state.originalNotesList];
+     // let originalNotesList = _.cloneDeep(savedNotesList);
       const tagName = this.state.expandedTagName;
       const tagId = this.state.expandedTagId;
-      alert(tagName);
-      debugger;
-      alert('ungroup note');
+      const groups = [];
+      const notesList = [];
+
+      const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
+      originalNotesList.splice(index, 1);
+
+      for (let ic = 0; ic < originalNotesList.length; ic++) {
+        let note = _.cloneDeep(originalNotesList[ic]);
+
+        if (note.tagId) {
+          const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
+
+          if (index === -1) {
+            note.notes = [];
+            note.notes.push(note);
+            groups.push(note);
+            console.log(groups);
+          } else {
+            note.tagId = null;
+            note.tagName = null;
+            groups[index].notes.push(note)
+          }
+        } else {
+          notesList.push(note);
+        }
+      }
+      groups.map((group, i) => {
+        notesList.unshift(group);
+      });
+
+      this.setState({
+        notesList: notesList,
+        originalNotesList: originalNotesList,
+        groupExpanded: false,
+        groupModeFlag: false,
+        expandedTagName: null,
+        expandedTagId: null
+      });
       console.log('UNGROUP');
       console.log('Data', data);
+
     }
   }
 
