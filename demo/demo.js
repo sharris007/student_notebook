@@ -1,5 +1,6 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
 import { notes, tocData } from './notesDummy';
+import _ from 'lodash';
 
 function init() {
   const notesList = [];
@@ -11,49 +12,42 @@ function init() {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjgyOTIxLCJpYXQiOjE1MjEyODExMjEsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2E1N2Y3OTItMGFmNS00NDBmLWFlYWItYzdlNGIwZWU3NjVmIn0.ZsIOPZt9Wz2WGVD24uZh2v4uOas_ux0BWMyuNaMjyv7OGmTdGOVtI_XJgKfJsqUshKSTM9-yvoDsAGV-8TrcRxgnnhZ_5rkSP9ncClx7vhJNfkHFMvQZ-A8TUElzXN1PYcJujvLMfQ6O0_JDpfrOLTb6TrdcYj55OatG1dcPhR8'
+      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjg1NjI0LCJpYXQiOjE1MjEyODM4MjMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2E1N2Y3OTItMGFmNS00NDBmLWFlYWItYzdlNGIwZWU3NjVmIn0.PIBCXvhvtTV2VEynxnFuUY4y5o83m_0_wG1DAANepbAo6PoZ5FG37OK8GgHquc8tD3K8ncveS4xd_XVRmGnqRzJHcVMaNV2FtiGLns5nb3znM-KQwbAUAEsfJ9yLwdxJmQLW1PUEVnk3SCC-hdRu0_kpvCrXhJJXOBa26Na5G1Y'
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
     for (let ic = 0; ic < notes.total; ic++) {
-      const note = notes.response[ic].data;
+       const noteObj = notes.response[ic];
+      const note = noteObj.data;
+      const groupNote = noteObj.data;
       note.cardFormat = 'note';
-      if (notes.response[ic].pageId) {
-        const getContextLen = notes.response[ic].contextualInfo.length;
-        for (let i = 0; i < getContextLen; i++) {
-          note.title = notes.response[ic].contextualInfo[i].value;
-        }
-        note.highLightText = note.quote;
-        note.pageId = notes.response[ic].pageId;
-      } else {
+      const contextualInfo = noteObj.contextualInfo; 
+      if (noteObj.pageId) {
+          let titleIndex = _.findIndex(contextualInfo, function(obj) { return obj.key === 'title'; });
+          note.title = contextualInfo[titleIndex].value;
+          note.highLightText = note.quote;
+          note.pageId = noteObj.pageId;
+      } 
+      else {
         note.title = note.quote;
       }
       note.content = note.text;
-      note.tagId = notes.response[ic].tagId;
-      note.tagName = notes.response[ic].tagName;
-      note.insetSeq = notes.response[ic].insetSeq;
-      note.outsetSeq = notes.response[ic].outsetSeq;
-      const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
-      note.changeDate = timeStamp;
-      if (note.colorCode === '#ffedad') { //Yellow
-        note.noteText = 'Q'; //Questions
-      } else if (note.colorCode === '#bbf2b6') { //Green 
-        note.noteText = 'M'; //Main Idea
-      } else if (note.colorCode === '#fed3ec') { //Pink 
-        note.noteText = 'O'; //Observations
-      } else if (note.colorCode === '#ccf5fd') { //Share(Blue)
-        note.noteText = 'I'; // From Instructor
-      } else if (note.colorCode === 'GROUP') { //Group Card (Blue)
-        //   note.noteText = 'G'; // Group
-      }
+      note.tagId      = noteObj.tagId;
+      note.tagName    = noteObj.tagName;
+      note.insetSeq   = noteObj.insetSeq;
+      note.outsetSeq  = noteObj.outsetSeq;
+      note.notes      = noteObj.notes;
+      note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
+      note.noteType = noteObj.noteType;
+      note.id = noteObj.id;
 
       let dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
 
 
-      if (notes.response[ic].tagId) {
-        const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
+      if (noteObj.tagId) {
+        const index = _.findIndex(groups, function (o) { return o.tagId === noteObj.tagId; });
         if (index === -1) {
           note.notes = [];
           note.notes.push(note);
