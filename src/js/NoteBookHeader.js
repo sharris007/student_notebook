@@ -116,7 +116,7 @@ export default class NoteBookHeader extends Component {
       "title": "All Labels",
       "labelName": 'All'
     };
-    (this.props.tocData.content.list).unshift(labelAllObj);
+    (this.props.tocData.items).unshift(labelAllObj);
 
 
   }
@@ -294,7 +294,7 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === false ? <div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span className={
                 (this.state.chapterText === 'Chapter') ? 'default' : 'active'
               }>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /> </div>  {this.state.showChapterMenu ?
-                <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null}</div>
+                <div style={listboxStyle} >{this.menuItems(this.props.tocData.items)}</div> : null}</div>
                 : null}
               {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span className={
                 (this.state.labelText === 'Labels') ? 'default' : 'active'}>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /></div>{this.state.showLabelMenu ?
@@ -348,7 +348,7 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px' }} />
                 : null}
               {groupModeToggleFlag === false ? <div> <div className='all filterLabel'><span><strong>{this.props.expandedTagName}</strong></span></div>  {this.state.showChapterMenu ?
-                <div style={listboxStyle} >{this.menuItems(this.props.tocData.content.list)}</div> : null}</div>
+                <div style={listboxStyle} >{this.menuItems(this.props.tocData.items)}</div> : null}</div>
                 : null}
             </ToolbarGroup>
           </Toolbar>

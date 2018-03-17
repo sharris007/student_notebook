@@ -1,5 +1,5 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-import { notes, tocData } from './notesDummy';
+import { notes } from './notesDummy';
 import _ from 'lodash';
 
 function init() {
@@ -7,12 +7,13 @@ function init() {
   const originalNotesList = [];
 
   let groups = [];
+  let tocData;
   const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX?pageId=ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c', {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjg1NjI0LCJpYXQiOjE1MjEyODM4MjMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2E1N2Y3OTItMGFmNS00NDBmLWFlYWItYzdlNGIwZWU3NjVmIn0.PIBCXvhvtTV2VEynxnFuUY4y5o83m_0_wG1DAANepbAo6PoZ5FG37OK8GgHquc8tD3K8ncveS4xd_XVRmGnqRzJHcVMaNV2FtiGLns5nb3znM-KQwbAUAEsfJ9yLwdxJmQLW1PUEVnk3SCC-hdRu0_kpvCrXhJJXOBa26Na5G1Y'
+      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjk3NDQ2LCJpYXQiOjE1MjEyODY2NDYsInNlc3NpZCI6ImZkMzQ2MTViLWQ0ODUtNDk4Zi05MmFjLTBhODc1MTA5OWMyMiJ9.VWtky2dcXqBv_73I8OWWD-hZVS6CkOLkgkdvZn9Zxb90wbe8Cwp4Q_4pucUeboFQFjThhn344ikNhGZutJD5WmKNWk3OtBKM4ahadr8hyvzuwHCppFIixSZKtwEdWtUqLPHr8wRMfNDd8Cv2_F8B9JUQlCis1ma6Fj2hsNuRXcM'
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
@@ -68,21 +69,33 @@ function init() {
     });
 
     let toolbarModeProp = new toolbarMode();
-    new NoteBookComponent({
-      elementId: 'demo',
-      locale: 'en-us',
-      callback: (msg, data) => {
-        console.log(msg, data);
-      },
-      notesList: notesList,
-      originalNotesList: originalNotesList,
-      tocData: tocData,
-      toolbarMode: toolbarModeProp,
-      handleGroupClick: (tagId, tagName) => {
-        console.log('tagId: ', tagId);
+    fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjk3NDQ2LCJpYXQiOjE1MjEyODY2NDYsInNlc3NpZCI6ImZkMzQ2MTViLWQ0ODUtNDk4Zi05MmFjLTBhODc1MTA5OWMyMiJ9.VWtky2dcXqBv_73I8OWWD-hZVS6CkOLkgkdvZn9Zxb90wbe8Cwp4Q_4pucUeboFQFjThhn344ikNhGZutJD5WmKNWk3OtBKM4ahadr8hyvzuwHCppFIixSZKtwEdWtUqLPHr8wRMfNDd8Cv2_F8B9JUQlCis1ma6Fj2hsNuRXcM'
       }
-      //  responsiveColumns
+    }).then((res) => res.json()).then((json) => {
+      tocData = json.content;
+      new NoteBookComponent({
+        elementId: 'demo',
+        locale: 'en-us',
+        callback: (msg, data) => {
+          console.log(msg, data);
+        },
+        notesList: notesList,
+        originalNotesList: originalNotesList,
+        tocData: tocData,
+        toolbarMode: toolbarModeProp,
+        handleGroupClick: (tagId, tagName) => {
+          console.log('tagId: ', tagId);
+        }
+        //  responsiveColumns
+      });
+
     });
+    
   });
 }
 
