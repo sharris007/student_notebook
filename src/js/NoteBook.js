@@ -127,6 +127,8 @@ export default class Board extends Component {
   moveCard(lastX, lastY, nextX, nextY) {
     const newLists = [...this.state.lists];
 
+ if(nextX ==0 && nextY ==0)
+      return false;
 
 
     const nextLists = Object.assign({ ...this.props }, { notesList: new Array(this.state.notesList.length) });
