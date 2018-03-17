@@ -14,6 +14,45 @@ import NoteBook from './NoteBook';
 import NoteBookHeader from './NoteBookHeader';
 
 
+
+function refreshNotesList(originalNotesList) {
+
+  //  const tagName = state.expandedTagName;
+  // const tagId = state.expandedTagId;
+  const groups = [];
+  const notesList = [];
+
+  for (let ic = 0; ic < originalNotesList.length; ic++) {
+    let note = _.cloneDeep(originalNotesList[ic]);
+
+    if (note.tagId) {
+      const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
+
+      note.selected = false;
+
+      if (index === -1) {
+        note.notes = [];
+        note.notes.push(note);
+        groups.push(note);
+        console.log(groups);
+      } else {
+        note.tagId = null;
+        note.tagName = null;
+        groups[index].notes.push(note)
+      }
+    } else {
+      notesList.push(note);
+    }
+  }
+  groups.map((group, i) => {
+    notesList.unshift(group);
+  });
+
+  return notesList;
+}
+
+
+
 class ComponentOwner extends React.Component {
 
   //
@@ -22,6 +61,7 @@ class ComponentOwner extends React.Component {
   //
   static propTypes = {
     notesList: PropTypes.array.isRequired,
+    originalNotesList: PropTypes.array.isRequired,
     toolbarMode: PropTypes.object,
     groupModeFlag: PropTypes.bool
 
@@ -31,13 +71,13 @@ class ComponentOwner extends React.Component {
 
     let temporaryArray = props.notesList;
     temporaryArray.forEach(function (obj) { obj.keyId = obj.id + Date.now(); obj.selected = false; });
-
     this.state = {
       lists: props.lists,
       groupModeFlag: props.groupModeFlag,
       toolbarMode: props.toolbarMode,
       notesList: temporaryArray,
       saveNotesList: temporaryArray,
+      originalNotesList: props.originalNotesList,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
@@ -47,6 +87,7 @@ class ComponentOwner extends React.Component {
   }
   callback = (msg, data) => {
     const notesList = [...this.state.notesList];
+    const originalNotesList = [...this.state.originalNotesList];
     if (msg === 'ADD') {
       notesList.splice(0, 0, {
         id: 'created' + notesList.length + 1,
@@ -70,16 +111,14 @@ class ComponentOwner extends React.Component {
         });
       }
     } else if (msg === 'DELETE') {
-      const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
-      if (index > -1) {
-        notesList.splice(index, 1);
-      }
-      notesList.forEach((item, i) => {
-        item.keyId = item.id + Date.now();
-      });
 
+      const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
+      if (index > -1) {
+        originalNotesList.splice(index, 1);
+      }
       this.setState({
-        notesList: notesList
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList
       });
 
     } else if (msg === 'NAVIGATE') {
@@ -105,7 +144,6 @@ class ComponentOwner extends React.Component {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'SELECTED'
       toolbarMode.selectedCount = 0;
-      //   var newArray = JSON.parse(JSON.stringify(notesList));
       const notesList = [...this.state.notesList];
       notesList.forEach((item, i) => {
         if (item.id === data.id) {
@@ -155,13 +193,18 @@ class ComponentOwner extends React.Component {
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
+      const originalNotesList = [...this.state.originalNotesList];
+      debugger;
 
       const tempNotesList = [];
-
       const tagId = Date.now();
-      const tagName = this.state.toolbarMode.groupTitle;
+      let tagName = this.state.toolbarMode.groupTitle;
 
-      
+      if (!!!tagName) {
+        tagName = 'Untitled Group';
+      }
+
+
       let filterList = _.cloneDeep(notesList);
       let filterList1 = _.cloneDeep(notesList);
       let filterList2 = _.cloneDeep(notesList);
@@ -172,20 +215,28 @@ class ComponentOwner extends React.Component {
       filterList3 = filterList3.filter(notesList => notesList.selected === false);
 
       filterList2.forEach((item, i) => {
-        item.tagId = null;
+        const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
+        if (index != -1) {
+          originalNotesList[index].tagId = tagId;
+          originalNotesList[index].tagName = tagName;
+        }
+        //    item.tagId = null;
       });
 
       //   filterList2.splice(0, 1);
 
-      filterList1[0].tagId = tagId;
-      filterList1[0].tagName = tagName;
-      filterList1[0].notes = filterList2;
+      // filterList1[0].tagId = tagId;
+      // filterList1[0].tagName = tagName;
+      // filterList1[0].notes = filterList2;
 
-      filterList3.push(filterList1[0]);
-
+      // filterList3.push(filterList1[0]);
+      // filterList3.forEach((item, i) => {
+      //   item.selected = false;
+      // });
 
       this.setState({
-        notesList: filterList3,
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList,
         toolbarMode: toolbarMode,
         groupModeFlag: false
       });
@@ -195,27 +246,51 @@ class ComponentOwner extends React.Component {
     } else if (msg === "RENAME") {
       console.log('Re Name');
       console.log('Data', data);
-    } else if (msg === "UNGROUP") {
-      console.log('UNGROUP');
-      console.log('Data', data);
     } else if (msg === "UNGROUP NOTE") {
 
-      const notesList = [...this.state.notesList];
-
-      let filterList = _.cloneDeep(notesList);
-      let filterList1 = _.cloneDeep(notesList);
-      let filterList2 = _.cloneDeep(notesList);
-      let filterList3 = _.cloneDeep(notesList);
-      
-      filterList1 = filterList1.filter(notesList => notesList.selected === true);
-      
+      const originalNotesList = [...this.state.originalNotesList];
       const tagName = this.state.expandedTagName;
       const tagId = this.state.expandedTagId;
-      alert(tagName);
-      debugger;
-      alert('ungroup note');
-      console.log('UNGROUP');
-      console.log('Data', data);
+      const groups = [];
+      const notesList = [];
+
+      const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
+      originalNotesList[index].tagId = null;
+      originalNotesList[index].tagName = null;
+
+      //  refreshNotesList(originalNotesList);
+
+      this.setState({
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList,
+        groupExpanded: false,
+        groupModeFlag: false,
+        expandedTagName: null,
+        expandedTagId: null
+      });
+
+
+    } else if (msg === "UNGROUP NOTES") { // ungroup all notes in a group
+      const originalNotesList = [...this.state.originalNotesList];
+
+      originalNotesList.map((item, i) => {
+        if (item.tagId === data.tagId) {
+          item.tagId = null;
+          item.tagName = null;
+        }
+      });
+
+
+      this.setState({
+        notesList: refreshNotesList(originalNotesList),
+        originalNotesList: originalNotesList,
+        groupExpanded: false,
+        groupModeFlag: false,
+        expandedTagName: null,
+        expandedTagId: null
+      });
+
+
     }
   }
 
@@ -240,7 +315,8 @@ class ComponentOwner extends React.Component {
   handleBack = () => {
     this.setState({
       //  notesList: this.props.notesList,
-      notesList: this.state.saveNotesList,
+      notesList: refreshNotesList(this.state.originalNotesList),
+      //  notesList: this.state.saveNotesList,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,

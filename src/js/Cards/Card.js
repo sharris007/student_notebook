@@ -417,10 +417,10 @@ export default class Card extends Component {
 
   handleUnGroupNotes = (event, value) => {
     let updatedItem = this.state.item;
-    updatedItem.tagId = '';
-    updatedItem.insetSeq = '';
+  //  updatedItem.tagId = '';
+  //  updatedItem.insetSeq = '';
     this.setState({ item: updatedItem }, () => {
-      this.props.saveCard(this.state.item, 'UNGROUP');
+      this.props.saveCard(this.state.item, 'UNGROUP NOTES');
     });
   }
 

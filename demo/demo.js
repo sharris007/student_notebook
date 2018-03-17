@@ -3,6 +3,7 @@ import { notes, tocData } from './notesDummy';
 
 function init() {
   const notesList = [];
+  const originalNotesList = [];
 
   let groups = [];
 
@@ -35,6 +36,10 @@ function init() {
    //   note.noteText = 'G'; // Group
     }
 
+    let dupNote = _.cloneDeep(note);
+
+    originalNotesList.push(dupNote);
+
 
     if (notes.response[ic].tagId) {
       const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
@@ -51,19 +56,15 @@ function init() {
       notesList.push(note);
     }
   }
-
   // }
-
+// add group to beginning of notes list
   groups.map((group, i) => {
- //   notesList.splice(0, 1, group);
     notesList.unshift(group);
-
   });
 
 
 ;
   let toolbarModeProp = new toolbarMode();
-
   new NoteBookComponent({
     elementId: 'demo',
     locale: 'en-us',
@@ -71,6 +72,7 @@ function init() {
       console.log(msg, data);
     },
     notesList: notesList,
+    originalNotesList: originalNotesList,
     tocData: tocData,
     toolbarMode: toolbarModeProp,
     handleGroupClick: (tagId, tagName) => {

@@ -13,6 +13,7 @@ import '../assets/temp.styl';
 export default class Board extends Component {
   static propTypes = {
     notesList: PropTypes.array.isRequired,
+    originalNotesList: PropTypes.array.isRequired,
     groupModeFlag: PropTypes.bool,
     callback: PropTypes.func,
     handleGroupClick: PropTypes.func
@@ -167,7 +168,7 @@ export default class Board extends Component {
   addCard() {
 
     //this.props.addCard();
-    const newLists = [...this.state.lists];
+    const   newLists = [...this.state.lists];
     newLists[0].cards[0] = {
       id: '',
       keyId: Date.now(),
@@ -220,6 +221,7 @@ export default class Board extends Component {
     else {
       notesList.notesList = this.props.notesList;
     }
+    notesList.groupExpanded = false;
     this.createLists(notesList);
   }
 
