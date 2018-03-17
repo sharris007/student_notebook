@@ -1,458 +1,159 @@
 export const notes = {
-  'total': 7,
-  'response': [
-    {
-      'userId': 'ffffffff57a9f814e4b00d0a20bf6029',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      "contextualInfo": [
-        { "key": "ChapterID", "value": "2" },
-        { "key": "SectionID", "value": "1" },
-        { "key": "Playorder", "value": "20" }
-      ],
-      "productModel": "ETEXT_SMS",
-      "role": "Instructor",
-      'isBookMark': false,
-      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d666511',
-      'pageNo': '',
-      'color': '#ccf5fd',
-      'selectedText': 'From Instructor ntion to the w',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': true,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/p[1]',
-            'startOffset': 108,
-            'end': '/section[1]/p[1]',
-            'endOffset': 122
-          }
-        ],
-        'quote': 'Study guide group',
-        'highlights': [
-          {
-            'jQuery1910741607432568206': 39
-          }
-        ],
-        'createdTimestamp': '2017-11-30T09:30:48.173Z',
-        'colorCode': '#ccf5fd',
-        'shareable': true,
-        'lastColor': '#bbf2b6',
-        'text': 'dd www.google.com amazon.in',
-        'updatedTimestamp': null,
-        'source': {
-          'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'type': 'page',
-          'label': '1.4 Composition of the Atmosphere',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689'
+    "total": 4,
+    "response": [
+        {
+            "userId": "ffffffff57a9f814e4b00d0a20bf6029",
+            "contextId": "5a9f8a6ce4b0576972d62596",
+            "isBookMark": false,
+            "pageId": "ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c",
+            "clientApp": "ETEXT2_WEB",
+            "productModel": "ETEXT2_PXE",
+            "contextualInfo": [
+                {
+                    "key": "title",
+                    "value": "1 What Is Nutrition?"
+                }
+            ],
+            "shareable": false,
+            "status": "Active",
+            "data": {
+                "ranges": [
+                    {
+                        "start": "//p[@id='P700049944300000000000000001FFA5']",
+                        "startOffset": 13,
+                        "end": "//p[@id='P700049944300000000000000001FFA5']",
+                        "endOffset": 29
+                    }
+                ],
+                "quote": "te you were born",
+                "highlights": [
+                    {
+                        "jQuery19108097573080645994": 42
+                    }
+                ],
+                "text": "test"
+            },
+            "noteType": "OBSERVATIONS",
+            "id": "df1f524a-5aad-4762-bfd1-80dd4e234fec",
+            "createdTime": 1521269607199,
+            "updatedTime": 1521269607199,
+            "outsetSeq": 1521269607199
         },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff57a9f814e4b00d0a20bf6029',
-        'id': '013781be-9f7d-4140-9c93-c024a13a62ba'
-      },
-      "tagId": "c9194fb6-c493-44dc-9595-091d4f7a3df5",
-      "tagName": "Group 1",
-      "insetSeq": 1514735569235,
-      "outsetSeq": 1512735569235,
-      'id': '013781be-9f7d-4140-9c93-c024a13a62ba',
-      'createdTime': 1512027485421,
-      'updatedTime': 1512034862608
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-      'pageNo': '',
-      'color': '#fed3ec',
-      'role': null,
-      'selectedText': 'ulf of Mexico. For those in the center of the country, it is common to experience weather events tri',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[3]/p[1]',
-            'startOffset': 409,
-            'end': '/section[1]/section[3]/p[1]',
-            'endOffset': 509
-          }
-        ],
-        'quote': 'ulf of Mexico. For those in the center of the country, it is common to experience weather events tri',
-        'highlights': [
-          {
-            'jQuery191043536319403452883': 45
-          }
-        ],
-        'createdTimestamp': '2017-12-07T06:01:25.578Z',
-        'colorCode': '#fed3ec',
-        'shareable': false,
-        'lastColor': '#fed3ec',
-        'text': 'test',
-        'updatedTimestamp': null,
-        'id': 'd7593fc5-14db-4b6d-9aa2-b9f58b6ecf71',
-        'source': {
-          'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'title': '1.1 Focus On the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'label': '1.1 Focus On the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
+        {
+            "userId": "ffffffff57a9f814e4b00d0a20bf6029",
+            "contextId": "5a9f8a6ce4b0576972d62596",
+            "isBookMark": false,
+            "pageId": "ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c",
+            "clientApp": "ETEXT2_WEB",
+            "productModel": "ETEXT2_PXE",
+            "contextualInfo": [
+                {
+                    "key": "title",
+                    "value": "1 What Is Nutrition?"
+                }
+            ],
+            "shareable": false,
+            "status": "Active",
+            "data": {
+                "ranges": [
+                    {
+                        "start": "//p[@id='P700049944300000000000000001FFA6']",
+                        "startOffset": 39,
+                        "end": "//p[@id='P700049944300000000000000001FFA6']",
+                        "endOffset": 57
+                    }
+                ],
+                "quote": "articularly the ea",
+                "highlights": [
+                    {
+                        "jQuery19107696418568411592": 43
+                    }
+                ],
+                "text": "note test Que"
+            },
+            "noteType": "QUESTIONS",
+            "id": "f6543d6a-2cc7-4ff2-b351-b7e7cffb5405",
+            "createdTime": 1521269828164,
+            "updatedTime": 1521269828164,
+            "outsetSeq": 1521269828164
         },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      'id': 'd7593fc5-14db-4b6d-9aa2-b9f58b6ecf71',
-      'createdTime': 1512384217459,
-      'updatedTime': 1512626567814
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-      'pageNo': '',
-      'color': '#ffedad',
-      'role': null,
-      'selectedText': 'specific',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      
-      "notes":[
-           {   
-             "_id" : "b9194fb6-c493-44dc-9595-091d4f7a3df9",   
-           },
-           {   
-             "_id" : "b9194fb6-c493-44dc-9595-091d4f7a3dfa",   
-           }
-      ],
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/p[1]',
-            'startOffset': 47,
-            'end': '/section[1]/p[1]',
-            'endOffset': 56
-          }
-        ],
-        'quote': 'specific',
-        'highlights': [
-          {
-            'jQuery191015703942044664698': 57
-          }
-        ],
-        'createdTimestamp': '2017-12-04T10:55:37.186Z',
-        'colorCode': '#ffedad',
-        'shareable': false,
-        'lastColor': '#ffedad',
-        'text': 'ssss',
-        'updatedTimestamp': null,
-        'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
-        'source': {
-          'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': 'Study exam group notes for biology 101 final',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'label': '1.4 Composition of the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
+        {
+            "userId": "ffffffff57a9f814e4b00d0a20bf6029",
+            "contextId": "5a9f8a6ce4b0576972d62596",
+            "isBookMark": false,
+            "pageId": "ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c",
+            "clientApp": "ETEXT2_WEB",
+            "productModel": "ETEXT2_PXE",
+            "contextualInfo": [
+                {
+                    "key": "title",
+                    "value": "1 What Is Nutrition?"
+                }
+            ],
+            "shareable": false,
+            "status": "Active",
+            "data": {
+                "ranges": [
+                    {
+                        "start": "//p[@id='P700049944300000000000000001FFA5']",
+                        "startOffset": 299,
+                        "end": "//p[@id='P700049944300000000000000001FFA5']",
+                        "endOffset": 313
+                    }
+                ],
+                "quote": "where to sleep",
+                "highlights": [
+                    {
+                        "jQuery191005174777925301699": 44
+                    }
+                ],
+                "text": "test Main"
+            },
+            "noteType": "MAIN_IDEAS",
+            "id": "e080f64b-bdba-442d-8f44-9a108748b6a3",
+            "createdTime": 1521270145354,
+            "updatedTime": 1521270145354,
+            "outsetSeq": 1521270145354
         },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      'tagId':'c9194fb6-c493-44dc-9595-091d4f7a3df5',
-      'tagName':'Group 1',
-      'insetSeq':1514735569235,
-      'outsetSeq':1514735569235,'id': 'b3dab46e-e543-4a17-8257-f9a4ee25b73f',
-      'createdTime': 1512384942792,
-      'updatedTime': 1512384950015
-    },
-    {
-      'userId': 'ffffffff57a9f814ddr00d0a20bf6029',
-      'contextId': '59b7c8cbe4b0b957rr1373cf',
-      'isBookMark': false,
-      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-      'pageNo': '',
-      'color': '#ccf5fd',
-      'role': null,
-      'selectedText': 'From Instructor ntion to the w',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': true,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/p[1]',
-            'startOffset': 108,
-            'end': '/section[1]/p[1]',
-            'endOffset': 122
-          }
-        ],
-        'quote': 'Final Exam notes',
-        'highlights': [
-          {
-            'jQuery1910741607432568206': 39
-          }
-        ],
-        'createdTimestamp': '2017-11-30T09:30:48.173Z',
-        'colorCode': '#ccf5fd',
-        'shareable': true,
-        'lastColor': '#bbf2b6',
-        'text': 'dd www.google.com amazon.in',
-        'updatedTimestamp': null,
-        'source': {
-          'id': 'a02517fb62bc058d93245ss29efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'type': 'page',
-          'label': '1.4 Composition of the Atmosphere',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689'
-        },
-        'context': '59b7c8cbe4b0ssb957f51373cf',
-        'user': 'ffffffff57a9fss814e4b00d0a20bf6029',
-        'id': '013781be-9f7d-414ww0-9c93-c024a13a62ba'
-      },
-      'id': '013781be-9f7d-4140-9c93-c024a13a62ba',
-      'createdTime': 1512027485421,
-      'updatedTime': 1512034862608
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      "contextualInfo": [
-        { "key": "ChapterID", "value": "2" },
-        { "key": "SectionID", "value": "1" },
-        { "key": "Playorder", "value": "20" }
-      ],
-      "productModel": "ETEXT_SMS",
-      "role": "Instructor",
-      'isBookMark': false,
-      'pageId': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-      'pageNo': '',
-      'color': '#bbf2b6',
-      'role': null,
-      'selectedText': 'This is a main idea',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[4]/p[6]',
-            'startOffset': 23,
-            'end': '/section[1]/section[4]/p[6]',
-            'endOffset': 30
-          }
-        ],
-        'quote': 'This is a main idea',
-        'highlights': [
-          {
-            'jQuery19104064103849826948': 48
-          }
-        ],
-        'createdTimestamp': '2017-12-05T06:47:30.482Z',
-        'colorCode': '#bbf2b6',
-        'shareable': false,
-        'lastColor': '#bbf2b6',
-        'text': 'test',
-        'updatedTimestamp': null,
-        'id': 'b3rrb46e-e543-4a17-8257-f9a4ee25b73f',
-
-        'source': {
-          'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'title': '1.3 World As A Marble',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'label': '1.1 Focus On the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
-        },
-
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      "tagId": "c9194fb6-c493-44dc-9595-091d4f7a3df5",
-      "tagName": "Group 1",
-      "insetSeq": 1513735569235,
-      "outsetSeq": 1512735569235,
-      'id': 'df6a2307-d860-4621-9dfc-b5ade601a4ff',
-      'createdTime': 1512456466500,
-      'updatedTime': 1512456466500
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-      'pageNo': '',
-      'color': '#fed3ec',
-      'role': null,
-      'selectedText': 'major',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
-            'startOffset': 9,
-            'end': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
-            'endOffset': 15
-          }
-        ],
-        'quote': 'major',
-        'highlights': [
-          {
-            'jQuery191040270088761648304': 46
-          }
-        ],
-        'createdTimestamp': '2017-12-06T09:48:10.454Z',
-        'colorCode': '#fed3ec',
-        'shareable': false,
-        'lastColor': '#fed3ec',
-        'text': 'Notebook Testing',
-        'updatedTimestamp': null,
-        'id': '6a39b014-6e20-4593-a585-2de0aea6ed3f',
-        'source': {
-          'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'label': '1.4 Composition of the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
-        },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      'id': '6a39b014-6e20-4593-a585-2de0aea6ed3f',
-      'createdTime': 1512553712133,
-      'updatedTime': 1512553944468
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-      'pageNo': '',
-      'color': '#ffedad',
-      'role': null,
-      'selectedText': 'hes from the tropics to the Arcti',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[3]/p[1]',
-            'startOffset': 46,
-            'end': '/section[1]/section[3]/p[1]',
-            'endOffset': 79
-          }
-        ],
-        'quote': 'hes from the tropics to the Arcti',
-        'highlights': [
-          {
-            'jQuery191043536319403452883': 47
-          }
-        ],
-        'createdTimestamp': '2017-12-07T06:01:25.586Z',
-        'colorCode': '#ffedad',
-        'shareable': false,
-        'lastColor': '#ffedad',
-        'text': '',
-        'updatedTimestamp': null,
-        'source': {
-          'id': 'a4061373f1e10cef15bc2bd0fcba0e396d7b5636c-data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'title': '1.1 Focus On the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000937.xhtml#data-uuid-8f5ebddeb60f4bafbd43f852f4d75689',
-          'label': '1.1 Focus On the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
-        },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7',
-        'id': '2a7f45c6-e40e-4303-901f-058213641667'
-      },
-      'id': '2a7f45c6-e40e-4303-901f-058213641667',
-      'createdTime': 1512567124859,
-      'updatedTime': 1512626505378
-    },
-    {
-      'userId': 'ffffffff59b8c629e4b09efb34405de7',
-      'contextId': '59b7c8cbe4b0b957f51373cf',
-      'isBookMark': false,
-      'pageId': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-      'pageNo': '',
-      'color': '#fed3ec',
-      'role': null,
-      'selectedText': 'this will be a group',
-      'subContextId': '',
-      'clientApp': 'ETEXT_WEB',
-      'sharable': false,
-      'status': 'Active',
-      'data': {
-        'ranges': [
-          {
-            'start': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
-            'startOffset': 9,
-            'end': '/section[1]/section[1]/ol[1]/li[1]/p[1]',
-            'endOffset': 15
-          }
-        ],
-        'quote': 'major',
-        'highlights': [
-          {
-            'jQuery191040270088761648304': 46
-          }
-        ],
-        'createdTimestamp': '2017-12-06T09:48:10.454Z',
-        'colorCode': '#fed3ec',
-        'shareable': false,
-        'lastColor': '#fed3ec',
-        'text': 'Notebook Testing',
-        'updatedTimestamp': null,
-        'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
-        'source': {
-          'id': 'a02517fb62bc058d9324529efead95042d86e13f6-d259883600494c8bbe7971a356d66651',
-          'title': '1.4 Composition of the Atmosphere',
-          'playOrder': 0,
-          'href': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'type': 'page',
-          'uri': 'OPS/s9ml/chapter01/filep7000496728000000000000000000a55.xhtml#d259883600494c8bbe7971a356d66651',
-          'label': '1.4 Composition of the Atmosphere',
-          'baseUrl': 'https://content.stg-openclass.com/eps/pearson-reader/api/item/542d7ded-e63b-4bc5-9e82-62ccc7c6039c/1/file/LutgensAtm13-071415-MJ-DW/'
-        },
-        'context': '59b7c8cbe4b0b957f51373cf',
-        'user': 'ffffffff59b8c629e4b09efb34405de7'
-      },
-      'id': 'fed6a39b014-6e20-4593-a585-2de0aea6ed3f',
-      'createdTime': 1512553712133,
-      'updatedTime': 1512553944468
-    },
-  ]
+        {
+            "userId": "ffffffff57a9f814e4b00d0a20bf6029",
+            "contextId": "5a9f8a6ce4b0576972d62596",
+            "isBookMark": false,
+            "pageId": "ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c",
+            "clientApp": "ETEXT2_WEB",
+            "productModel": "ETEXT2_PXE",
+            "contextualInfo": [
+                {
+                    "key": "title",
+                    "value": "1 What Is Nutrition?"
+                }
+            ],
+            "shareable": true,
+            "status": "Active",
+            "data": {
+                "ranges": [
+                    {
+                        "start": "//p[@id='P700049944300000000000000001FFA6']",
+                        "startOffset": 305,
+                        "end": "//p[@id='P700049944300000000000000001FFA6']",
+                        "endOffset": 316
+                    }
+                ],
+                "quote": "conflicting",
+                "highlights": [
+                    {
+                        "jQuery19108452109396055891": 52
+                    }
+                ],
+                "text": "test Instr"
+            },
+            "noteType": "FROM_INSTRUCTOR",
+            "id": "d58b5206-df59-44ae-814a-b1aa35b482e1",
+            "createdTime": 1521270307740,
+            "updatedTime": 1521270307740,
+            "outsetSeq": 1521270307740
+        }
+    ]
 };
 
 export const tocData = {

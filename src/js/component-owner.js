@@ -96,8 +96,8 @@ class ComponentOwner extends React.Component {
         cardFormat: 'note',
         content: data.content,
         content2: 'this is test data',
-        changeDate: data.changeDate,
-        noteText: 'C'
+        timeStamp: data.timeStamp,
+        noteType: 'CUSTOM_NOTE'
       });
       this.setState({
         notesList: notesList
