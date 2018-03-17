@@ -346,9 +346,9 @@ export default class Card extends Component {
       id: card.id,
       keyId: card.keyId,
       title: card.pageId ? card.title : this.titleInput.value,
-      changeDate: Date.parse(new Date()),
+      timeStamp: Date.parse(new Date()),
       content: this.contentArea.value,
-      noteText: card.noteText ? card.noteText : '',
+      noteType: card.noteType ? card.noteType : 'CUSTOM_NOTE',
       cardFormat: 'note',
       colorCode: card.colorCode ? card.colorCode : '',
       pageId: card.pageId ? card.pageId : '',
@@ -480,7 +480,7 @@ export default class Card extends Component {
       >
  
 
-        {item.noteText === 'C' && !item.tagId ? (
+        {item.noteType === 'CUSTOM_NOTE' && !item.tagId ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
@@ -497,7 +497,7 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'M' && !item.tagId ? (
+        {item.noteType === 'MAIN_IDEAS' && !item.tagId ? (
           <div className="item-name" style={mainIdea}>
             <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
@@ -514,13 +514,13 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'I' && !item.tagId ? (
+        {item.noteType === 'FROM_INSTRUCTOR' && !item.tagId ? (
           <div className="item-name" style={fromInstructor}>
           </div>
         ) : null}
 
 
-        {item.noteText === 'O' && !item.tagId ? (
+        {item.noteType === 'OBSERVATIONS' && !item.tagId ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
@@ -537,7 +537,7 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'Q' && !item.tagId ? (
+        {item.noteType === 'QUESTIONS' && !item.tagId ? (
           <div className="item-name" style={questions}>
             <div className="delete-perfomers" style={{ float: 'right'}}>
               <IconMenu
@@ -608,7 +608,7 @@ export default class Card extends Component {
           : null}
 
         {item.cardFormat === 'note' ? (
-          <div style={item.noteText === 'C' ? customtitle : title}>{item.title}</div>
+          <div style={item.noteType === 'CUSTOM_NOTE' ? customtitle : title}>{item.title}</div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
           <div style={{ paddingTop: '100px' }} />
@@ -627,7 +627,7 @@ export default class Card extends Component {
           <div style={addNote}>Add Note</div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <div style={{ paddingBottom: '100px' }} />
+          <div style={{ paddingBottom: '92px' }} />
         ) : null}
 
         {item.cardFormat !== 'note' ? (
@@ -698,12 +698,9 @@ export default class Card extends Component {
               </div> : null}
 
               {item.cardFormat === 'note' && item.pageId ?
-                null : <br />}
-
-              {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{paddingTop:'20px'}}>
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{paddingTop:'11.1px', paddingBottom: '0'}}>
                 <div className="item-content" style={{paddingRight:'8px'}}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
@@ -752,24 +749,24 @@ export default class Card extends Component {
 
 
 
-        {item.noteText === 'I' && !item.tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ccf5fd', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        {item.noteType === 'FROM_INSTRUCTOR' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#ccf5fd', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'M' && !item.tagId ? (
-          <div><span className="verticalAlign" style={{background: '#bbf2b6', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        {item.noteType === 'MAIN_IDEAS' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#bbf2b6', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'O' && !item.tagId ? (
-          <div><span className="verticalAlign" style={{background: '#fed3ec', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        {item.noteType === 'OBSERVATIONS' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#fed3ec', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'Q' && !item.tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ffedad', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        {item.noteType === 'QUESTIONS' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#ffedad', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'C' && !item.tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ffffff', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+        {item.noteType === 'CUSTOM_NOTE' && !item.tagId ? (
+          <div><span className="verticalAlign" style={{background: '#ffffff', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
@@ -782,25 +779,25 @@ export default class Card extends Component {
                   <tr>
                     <td width="50%">
                       <div className="footerNote">
-                        {item.noteText === 'Q' ?
+                        {item.noteType === 'QUESTIONS' ?
                           `Questions`
                           : null}
 
 
-                        {item.noteText === 'I' ?
+                        {item.noteType === 'FROM_INSTRUCTOR' ?
                           'From instructor'
                           : null}
-                        {item.noteText === 'M' ?
+                        {item.noteType === 'MAIN_IDEAS' ?
                           `Main ideas`
                           : null}
 
-                        {item.noteText === 'O' ?
+                        {item.noteType === 'OBSERVATIONS' ?
                           `Main observations`
                           : null}
 
                       </div></td>
                     <td width="50%">
-                      <div className="footerDate">{Moment(new Date(item.notes[0].changeDate)).format('MMMM DD, YYYY')}
+                      <div className="footerDate">{Moment(new Date(item.notes[0].timeStamp)).format('MMMM DD, YYYY')}
                       </div>
                     </td>
                   </tr>

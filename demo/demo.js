@@ -1,90 +1,81 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-import { notes, tocData } from './notesDummy';
+import { tocData} from './notesDummy';
+import _ from 'lodash';
 
 function init() {
-  const notesList = [];
+  const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX?pageId=ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c', {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-Authorization' : 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjkyMTE1LCJpYXQiOjE1MjEyODEzMTQsInNlc3NpZCI6IjI0NGVmMThmLTM3ZWEtNGUyZC05ZjBkLTFjOTc4MWQzMjAyMCJ9.KtZPiCCMyou9OCguAj4kkAmvAQ8LNlIZdTEZ_1N8gnCP4FKsNXykxY5f-y-VB8zUR8GubTVuaJ0-Jl1zbE2cxsBWCbD1IE3N2VIcSGG9_rdoN3udLIl-GHIZLKKjcnLO3z8xVuJrOoVfh1V5tWYGTSu5G27s-qd0ymBve8iSYfE'
+  }
+  }).then((res) => res.json()).then((json) => 
+  { 
+   console.log("res", json);
+   const notes = json;
+   const notesList = [];
 
-  let groups = [];
-
-  for (let ic = 0; ic < notes.total; ic++) {
-    const note = notes.response[ic].data;
-    note.cardFormat = 'note';
-    if (notes.response[ic].pageId) {
-      note.title = note.source.title;
-      note.highLightText = note.quote;
-      note.pageId = notes.response[ic].pageId;
-    } else {
-      note.title = note.quote;
-    }
-    note.content = note.text;
-    note.tagId = notes.response[ic].tagId;
-    note.tagName = notes.response[ic].tagName;
-    note.insetSeq = notes.response[ic].insetSeq;
-    note.outsetSeq = notes.response[ic].outsetSeq;
-    const timeStamp = note.updatedTimestamp ? note.updatedTimestamp : note.createdTimestamp;
-    note.changeDate = timeStamp;
-    if (note.colorCode === '#ffedad') { //Yellow
-      note.noteText = 'Q'; //Questions
-    } else if (note.colorCode === '#bbf2b6') { //Green 
-      note.noteText = 'M'; //Main Idea
-    } else if (note.colorCode === '#fed3ec') { //Pink 
-      note.noteText = 'O'; //Observations
-    } else if (note.colorCode === '#ccf5fd') { //Share(Blue)
-      note.noteText = 'I'; // From Instructor
-    } else if (note.colorCode === 'GROUP') { //Group Card (Blue)
-   //   note.noteText = 'G'; // Group
-    }
-
-
-    if (notes.response[ic].tagId) {
-      const index = _.findIndex(groups, function (o) { return o.tagId === notes.response[ic].tagId; });
-      if (index === -1) {
-        note.notes = [];
-        note.notes.push(note);
-        groups.push(note);
-      } else {
-        note.tagId = null;
-        note.tagName = null;
-        groups[index].notes.push(note)
+    for (let ic = 0; ic < notes.total; ic++) {
+      const noteObj = notes.response[ic];
+      const note = noteObj.data;
+      const groupNote = noteObj.data;
+      note.cardFormat = 'note';
+      const contextualInfo = noteObj.contextualInfo; 
+      if (noteObj.tagId) {
+        note.tagId = noteObj.tagId;
+        const index = _.findIndex(notesList, function (o) { return o.tagId === noteObj.tagId; });
+        note.groupedNotes = [];
+        note.groupedNotes.push(groupNote);
       }
-    } else {
+
+      if (noteObj.pageId) {
+          let titleIndex = _.findIndex(contextualInfo, function(obj) { return obj.key === 'title'; });
+          note.title = contextualInfo[titleIndex].value;
+          note.highLightText = note.quote;
+          note.pageId = noteObj.pageId;
+      } else {
+        note.title = note.quote;
+      }
+      note.content = note.text;
+      note.tagId      = noteObj.tagId;
+      note.tagName    = noteObj.tagName;
+      note.insetSeq   = noteObj.insetSeq;
+      note.outsetSeq  = noteObj.outsetSeq;
+      note.notes      = noteObj.notes;
+      note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
+      note.noteType = noteObj.noteType;
+      note.id = noteObj.id;
       notesList.push(note);
     }
-  }
+    let toolbarModeProp = new toolbarMode();
 
-  // }
-
-  groups.map((group, i) => {
- //   notesList.splice(0, 1, group);
-    notesList.unshift(group);
+    new NoteBookComponent({
+      elementId: 'demo',
+      locale: 'en-us',
+      callback: (msg, data) => {
+        console.log(msg, data);
+      },
+      notesList: notesList,
+      tocData : tocData,
+      toolbarMode: toolbarModeProp,
+      handleGroupClick: (tagId, tagName) => {
+        console.log('tagId: ', tagId);
+      }
+      //  responsiveColumns
+    });
 
   });
 
+  
 
-;
-  let toolbarModeProp = new toolbarMode();
-
-  new NoteBookComponent({
-    elementId: 'demo',
-    locale: 'en-us',
-    callback: (msg, data) => {
-      console.log(msg, data);
-    },
-    notesList: notesList,
-    tocData: tocData,
-    toolbarMode: toolbarModeProp,
-    handleGroupClick: (tagId, tagName) => {
-      console.log('tagId: ', tagId);
-    }
-    //  responsiveColumns
-  });
+  
 }
 
 class toolbarMode {
   constructor() {
     this.groupMode = 'DEFAULT';
     this.groupTitle = null;
-    this.groupId = null;
   }
 }
 
