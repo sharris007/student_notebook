@@ -12,12 +12,12 @@ function init() {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjg1NjI0LCJpYXQiOjE1MjEyODM4MjMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2E1N2Y3OTItMGFmNS00NDBmLWFlYWItYzdlNGIwZWU3NjVmIn0.PIBCXvhvtTV2VEynxnFuUY4y5o83m_0_wG1DAANepbAo6PoZ5FG37OK8GgHquc8tD3K8ncveS4xd_XVRmGnqRzJHcVMaNV2FtiGLns5nb3znM-KQwbAUAEsfJ9yLwdxJmQLW1PUEVnk3SCC-hdRu0_kpvCrXhJJXOBa26Na5G1Y'
+      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMzkyNTc1LCJpYXQiOjE1MjEzOTA3NzQsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiZmJiMGE5ZGItMTNmZS00YTQ0LWE3NGEtZjA0YjczODdmNmQyIn0.Mxdq-sfnaIBajQaiWoG5a19E2BFt0ZrRCdwoEf_WSdmsv0CSp1FoSSRDkHvzVO-FL8R0_jpzMAqDKTao1f0-wgF5BcKwXIVVS2gspmv_Vl31B0YcgSkWNgr7rOQZ4n8pE9alO9ToxLrUA-BsK-ZV5-Rskep8dN8eZppMzHKzwwI'
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
     for (let ic = 0; ic < notes.total; ic++) {
-       const noteObj = notes.response[ic];
+      const noteObj = notes.response[ic];
       const note = noteObj.data;
       const groupNote = noteObj.data;
       note.cardFormat = 'note';
@@ -32,30 +32,29 @@ function init() {
         note.title = note.quote;
       }
       note.content = note.text;
-      note.tagId      = noteObj.tagId;
-      note.tagName    = noteObj.tagName;
-      note.insetSeq   = noteObj.insetSeq;
-      note.outsetSeq  = noteObj.outsetSeq;
-      note.notes      = noteObj.notes;
+      note.tags      = noteObj.tags;
+      note.notes     = noteObj.notes;
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
-      note.noteType = noteObj.noteType;
-      note.id = noteObj.id;
+      note.noteType  = noteObj.noteType;
+      note.id        = noteObj.id;
 
       let dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
 
 
-      if (noteObj.tagId) {
-        const index = _.findIndex(groups, function (o) { return o.tagId === noteObj.tagId; });
+      if (noteObj.tags) {
+        const index = _.findIndex(groups, function (o) {
+            return o.tags[0].tagId === noteObj.tags[0].tagId; 
+        });
         if (index === -1) {
           note.notes = [];
           note.notes.push(note);
           groups.push(note);
         } else {
-          note.tagId = null;
-          note.tagName = null;
-          groups[index].notes.push(note)
+            note.tagId = null;
+            note.tagName = null;
+            groups[index].notes.push(note);
         }
       } else {
         notesList.push(note);
@@ -66,7 +65,6 @@ function init() {
     groups.map((group, i) => {
       notesList.unshift(group);
     });
-
     let toolbarModeProp = new toolbarMode();
     new NoteBookComponent({
       elementId: 'demo',

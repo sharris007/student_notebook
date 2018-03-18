@@ -24,9 +24,9 @@ function refreshNotesList(originalNotesList) {
 
   for (let ic = 0; ic < originalNotesList.length; ic++) {
     let note = _.cloneDeep(originalNotesList[ic]);
-
-    if (note.tagId) {
-      const index = _.findIndex(groups, function (o) { return o.tagId === note.tagId; });
+    const tagId = (note.tags) ? note.tags[0].tagId : ''; 
+    if (tagId) {
+      const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
 
       note.selected = false;
 
@@ -217,8 +217,15 @@ class ComponentOwner extends React.Component {
       filterList2.forEach((item, i) => {
         const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
         if (index != -1) {
-          originalNotesList[index].tagId = tagId;
-          originalNotesList[index].tagName = tagName;
+          if (originalNotesList[index].tags) {
+            originalNotesList[index].tags[0].tagId = tagId;
+            originalNotesList[index].tags[0].tagName = tagName;
+          } else {
+            originalNotesList[index].tags = [{
+              'tagId': tagId,
+              'tagName': tagName
+            }];
+          }
         }
         //    item.tagId = null;
       });
@@ -274,9 +281,9 @@ class ComponentOwner extends React.Component {
       const originalNotesList = [...this.state.originalNotesList];
 
       originalNotesList.map((item, i) => {
-        if (item.tagId === data.tagId) {
-          item.tagId = null;
-          item.tagName = null;
+        if (item.tags && item.tags[0].tagId === data.tags[0].tagId) {
+          item.tags[0].tagId = null;
+          item.tags[0].tagName = null;
         }
       });
 
@@ -299,10 +306,12 @@ class ComponentOwner extends React.Component {
     //  const tempNotesList = [...this.state.notesList];
 
     const tempNotesList = _.cloneDeep(notesList);
-    let filterList = tempNotesList.filter(notesList => notesList.tagId === tagId);
+    let filterList = tempNotesList.filter(notesList => notesList.tags && notesList.tags[0].tagId === tagId);
 
-    filterList[0].notes[0].tagId = null;
-    filterList[0].tagId = null;
+    for(let i = 0; i < filterList[0].notes.length; i++) {
+      filterList[0].notes[i].tags[0].tagId = null;
+      filterList[0].tags[0].tagId = null;
+    }
     this.setState({
       notesList: filterList[0].notes,
       groupExpanded: true,
