@@ -4,24 +4,13 @@ import _ from 'lodash';
 
 let piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNDUyODkxIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTQ3MDg5MiwiaWF0IjoxNTIxNDUyODkxLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjJjYTczNGUxLTc5OWQtNGE5MC04Y2NiLWY0NzMwN2M2ZmVkYSJ9.QHF_xNsCITCxGZd36oPRUdVXKNQ31W5K8SVtqZsBtUepW34_40HDTn5jF91sDIwjPzEALnSe4AiZY0TscJSbt7M3bRJ5VlBXMu33WiU2iC51K6R8ZOQw5IKL_-jncc81y-HO28Dchj9du1zcEslfLRXU8YAGPg_2A5de0DT8WFg';
 function init() {
-  // let redirectPiurl = window.location.href;
-  // redirectPiurl = decodeURIComponent(redirectPiurl).replace(/\s/g, "+").replace(/%20/g, "+");
-  // if (piSession) {
-  //   piSession.getToken(function (result, userToken) {
-  //     if (result === piSession['Success']) {
-  //       piToken = userToken;
-  //     } else if (result === 'unknown' || result === 'notoken') {
-  //       piSession.login(redirectPiurl, 10);
-  //     }
-  //   });
-  // }
 
   const notesList = [];
   const originalNotesList = [];
 
   let groups = [];
   let tocData;
-  const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX?pageId=ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c', {
+  const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -109,21 +98,43 @@ function init() {
   });
 }
 function callback(msg, data) {
-  debugger;
-  console.log('msg: ', msg);
-  console.log('data: ', data);
+  if (data) {
+    addNote(msg, data);
+  }
 }
-function addNote() {
-  const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX?pageId=ac2548718ca9f4783409d6b0f2786e86c57387500-e0d1331d346b484a8556f8d810dbdc2c', {
+function addNote(msg, data) {
+  const payLoad = {
+    'payload': [
+      {
+        "clientApp": "ETEXT2_WEB",
+        "productModel": "ETEXT_SMS",
+        "contextualInfo": [
+          {
+            "key": "title",
+            "value": "asjln192882salnsal-saaksm-qsq2"
+          }
+        ],
+        "pageId": null,
+        "noteType": "CUSTOM_NOTE",
+        "shareable": false,
+        "tags": [],
+        "data": {
+          "quote":data.title ? data.title : '',
+          "text": data.content ? data.content : ''
+        }
+      }
+    ]
+  };
+  const addCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'X-Authorization': piToken
-    }
+    },
+    body: JSON.stringify(payLoad)
   }).then((res) => res.json()).then((json) => {
-    console.log('Custom Note added!');
-    console.log(json);
+    console.log('Custom Note successfully created!');
   });
 }
 class toolbarMode {

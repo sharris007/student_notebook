@@ -195,7 +195,6 @@ class ComponentOwner extends React.Component {
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
       const originalNotesList = [...this.state.originalNotesList];
-      debugger;
 
       const tempNotesList = [];
       const tagId = Date.now();
