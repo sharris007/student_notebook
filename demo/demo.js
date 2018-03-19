@@ -18,7 +18,7 @@ function init() {
   }).then((res) => res.json()).then((json) => {
     const notes = json;
     for (let ic = 0; ic < notes.total; ic++) {
-       const noteObj = notes.response[ic];
+      const noteObj = notes.response[ic];
       const note = noteObj.data;
       const groupNote = noteObj.data;
       note.cardFormat = 'note';
@@ -33,30 +33,29 @@ function init() {
         note.title = note.quote;
       }
       note.content = note.text;
-      note.tagId      = noteObj.tagId;
-      note.tagName    = noteObj.tagName;
-      note.insetSeq   = noteObj.insetSeq;
-      note.outsetSeq  = noteObj.outsetSeq;
-      note.notes      = noteObj.notes;
+      note.tags      = noteObj.tags;
+      note.notes     = noteObj.notes;
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
-      note.noteType = noteObj.noteType;
-      note.id = noteObj.id;
+      note.noteType  = noteObj.noteType;
+      note.id        = noteObj.id;
 
       let dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
 
 
-      if (noteObj.tagId) {
-        const index = _.findIndex(groups, function (o) { return o.tagId === noteObj.tagId; });
+      if (noteObj.tags) {
+        const index = _.findIndex(groups, function (o) {
+            return o.tags[0].tagId === noteObj.tags[0].tagId; 
+        });
         if (index === -1) {
           note.notes = [];
           note.notes.push(note);
           groups.push(note);
         } else {
-          note.tagId = null;
-          note.tagName = null;
-          groups[index].notes.push(note)
+            note.tagId = null;
+            note.tagName = null;
+            groups[index].notes.push(note);
         }
       } else {
         notesList.push(note);
@@ -67,7 +66,6 @@ function init() {
     groups.map((group, i) => {
       notesList.unshift(group);
     });
-
     let toolbarModeProp = new toolbarMode();
     fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
       method: 'GET',
