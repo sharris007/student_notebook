@@ -24,7 +24,7 @@ function refreshNotesList(originalNotesList) {
 
   for (let ic = 0; ic < originalNotesList.length; ic++) {
     let note = _.cloneDeep(originalNotesList[ic]);
-    const tagId = (note.tags) ? note.tags[0].tagId : ''; 
+    const tagId = (note.tags) ? note.tags[0].tagId : '';
     if (tagId) {
       const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
 
@@ -85,10 +85,11 @@ class ComponentOwner extends React.Component {
     };
 
   }
-  callback = (msg, data) => {
+  callback = (msg, data) => {    
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     if (msg === 'ADD') {
+      this.props.callback(msg, data);
       notesList.splice(0, 0, {
         id: 'created' + notesList.length + 1,
         keyId: Date.now(),
@@ -308,7 +309,7 @@ class ComponentOwner extends React.Component {
     const tempNotesList = _.cloneDeep(notesList);
     let filterList = tempNotesList.filter(notesList => notesList.tags && notesList.tags[0].tagId === tagId);
 
-    for(let i = 0; i < filterList[0].notes.length; i++) {
+    for (let i = 0; i < filterList[0].notes.length; i++) {
       filterList[0].notes[i].tags[0].tagId = null;
       filterList[0].tags[0].tagId = null;
     }
