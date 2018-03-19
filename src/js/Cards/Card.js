@@ -483,9 +483,9 @@ export default class Card extends Component {
     const { style } = this.props;
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
-    const tagId = (item.tags) ? item.tags[0].tagId : '';
-    const tagName = (item.tags) ? item.tags[0].tagName : '';
-    //const tagName = (item.tags) ? item.tags[0].tagName : 'Test Tag';
+    const tagId = (item.tags && item.tags[0].tagId) ? item.tags[0].tagId : '';
+    const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
+    //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     return (
 
