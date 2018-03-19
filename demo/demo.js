@@ -13,7 +13,7 @@ function init() {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjk3NDQ2LCJpYXQiOjE1MjEyODY2NDYsInNlc3NpZCI6ImZkMzQ2MTViLWQ0ODUtNDk4Zi05MmFjLTBhODc1MTA5OWMyMiJ9.VWtky2dcXqBv_73I8OWWD-hZVS6CkOLkgkdvZn9Zxb90wbe8Cwp4Q_4pucUeboFQFjThhn344ikNhGZutJD5WmKNWk3OtBKM4ahadr8hyvzuwHCppFIixSZKtwEdWtUqLPHr8wRMfNDd8Cv2_F8B9JUQlCis1ma6Fj2hsNuRXcM'
+      'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNDY3MDY0LCJpYXQiOjE1MjE0NTYyNjQsInNlc3NpZCI6ImI1YWVhZjNmLTYyZjQtNGI5Mi05NTQzLWVhYzk1NDc3NThhOCJ9.hBot4sAgiEWGoVy6GvKf8meXJwQFD0klCflLok88rjFORW3oJTODsGdsIq_MfrYYsYv96qhFlk2Z6DRHn5oVls2Vq1hqOETsC-VDTaLRjzTWQRTUyMTb7ZV-wjpRHL1psWE_mqlrq5AFtN6ioigoKzU6BzP4o01Zyc8vOTFlBgw'
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
@@ -25,7 +25,7 @@ function init() {
       const contextualInfo = noteObj.contextualInfo; 
       if (noteObj.pageId) {
           let titleIndex = _.findIndex(contextualInfo, function(obj) { return obj.key === 'title'; });
-          note.title = contextualInfo[titleIndex].value;
+          note.title = contextualInfo[titleIndex] ? contextualInfo[titleIndex].value : '';
           note.highLightText = note.quote;
           note.pageId = noteObj.pageId;
       } 
@@ -72,7 +72,7 @@ function init() {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxMjk3NDQ2LCJpYXQiOjE1MjEyODY2NDYsInNlc3NpZCI6ImZkMzQ2MTViLWQ0ODUtNDk4Zi05MmFjLTBhODc1MTA5OWMyMiJ9.VWtky2dcXqBv_73I8OWWD-hZVS6CkOLkgkdvZn9Zxb90wbe8Cwp4Q_4pucUeboFQFjThhn344ikNhGZutJD5WmKNWk3OtBKM4ahadr8hyvzuwHCppFIixSZKtwEdWtUqLPHr8wRMfNDd8Cv2_F8B9JUQlCis1ma6Fj2hsNuRXcM'
+        'X-Authorization': 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNDY3MDY0LCJpYXQiOjE1MjE0NTYyNjQsInNlc3NpZCI6ImI1YWVhZjNmLTYyZjQtNGI5Mi05NTQzLWVhYzk1NDc3NThhOCJ9.hBot4sAgiEWGoVy6GvKf8meXJwQFD0klCflLok88rjFORW3oJTODsGdsIq_MfrYYsYv96qhFlk2Z6DRHn5oVls2Vq1hqOETsC-VDTaLRjzTWQRTUyMTb7ZV-wjpRHL1psWE_mqlrq5AFtN6ioigoKzU6BzP4o01Zyc8vOTFlBgw'
       }
     }).then((res) => res.json()).then((json) => {
       tocData = json.content;

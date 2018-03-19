@@ -123,22 +123,22 @@
   	font-weight: bold;
   	letter-spacing: -1px;
   }
-  &.I {
+  &.FROM_INSTRUCTOR {
   	& + label:before {
   		background:#ccf5fd;
   	}
   }
-  &.O {
+  &.OBSERVATIONS {
   	& + label:before {
   		background:#FC92CF;
   	}
   }
-  &.Q {
+  &.QUESTIONS {
   	& + label:before {
   		background:#FFD232;
   	}
   }
-  &.M {
+  &.MAIN_IDEAS {
   	& + label:before {
   		background:#55DF49;
   	}
