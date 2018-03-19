@@ -62,7 +62,9 @@ const listboxStyle = {
   background: '#fff',
   position: 'absolute',
   top: '75px',
-  minWidth: '300px'
+  minWidth: '300px',
+  maxHeight: '300px',
+  overflowY: 'auto'
 }
 const listboxStyleLabel = {
   border: '1px solid gray',
@@ -165,7 +167,7 @@ export default class NoteBookHeader extends Component {
     const props = this.props;
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
     const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
-    var tocLevel = props.tocData.content.list;
+    var tocLevel = props.tocData.items;
     let updateChapterTxt = selectedChapter.length > 0 ? "Chapter" + ' ' + selectedChapter.length : 'Chapter';
     let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length + ' ' + "Labels" : 'Labels';
     this.setState({ chapterText: updateChapterTxt, labelText: updateLabelTxt });
@@ -178,15 +180,14 @@ export default class NoteBookHeader extends Component {
       });
     }
 
-
     let chapterList = [];
     let finalFilteredList = [];
     const note = props.notesList;
     for (let i1 = 0; i1 < tocListItem.length; i1++) {
-      if (typeof tocListItem[i1].children !== 'undefined' && tocListItem[i1].children.length > 0) {
-        for (let j1 = 0; j1 < tocListItem[i1].children.length; j1++) {
+      if (typeof tocListItem[i1].items !== 'undefined' && tocListItem[i1].items.length > 0) {
+        for (let j1 = 0; j1 < tocListItem[i1].items.length; j1++) {
           note.find((note) => {
-            if (tocListItem[i1].children[j1].id === note.pageId) {
+            if (tocListItem[i1].items[j1].id === note.pageId) {
               chapterList.push(note)
             }
           });
@@ -198,7 +199,7 @@ export default class NoteBookHeader extends Component {
       if (selectedLabel.length > 0) {
         for (let c = 0; c < chapterList.length; c++) {
           selectedLabel.find((label) => {
-            if (chapterList[c].noteText === label || (label === 'NL' && !chapterList[c].noteText)) {
+            if (chapterList[c].noteType === label || (label === 'NL' && !chapterList[c].noteType)) {
               finalFilteredList.push(chapterList[c]);
             }
           });
@@ -212,7 +213,7 @@ export default class NoteBookHeader extends Component {
     else {
       for (let c = 0; c < note.length; c++) {
         selectedLabel.find((label) => {
-          if (note[c].noteText === label || (label === 'NL' && !note[c].noteText)) {
+          if ((note[c].noteType === label && !note[c].notes) || (label === 'NL' && !note[c].noteType)) {
             finalFilteredList.push(note[c]);
           }
         });
@@ -259,22 +260,22 @@ export default class NoteBookHeader extends Component {
     const labelObj = [
       {
         "labelName": "From Instructor",
-        "labelCode": "I",
+        "labelCode": "FROM_INSTRUCTOR",
         "id": "from_instructor"
       },
       {
         "labelName": "Observations",
-        "labelCode": "O",
+        "labelCode": "OBSERVATIONS",
         "id": "observations"
       },
       {
         "labelName": "Questions",
-        "labelCode": "Q",
+        "labelCode": "QUESTIONS",
         "id": "questions"
       },
       {
         "labelName": "Main ideas",
-        "labelCode": "M",
+        "labelCode": "MAIN_IDEAS",
         "id": "main_ideas"
       }
     ];
