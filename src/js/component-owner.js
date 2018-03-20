@@ -97,7 +97,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTM5MjE1Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU1NzIxNSwiaWF0IjoxNTIxNTM5MjE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjQ2ZmRkMDY4LWNjNDItNGQ1Yy1iYWEwLTM5MzM3NzliYjQwMCJ9.Kkb1ISsK1CK8nAFjEs-qHDHdXCd8mLP719BZk8GRQm64uJXq0ViSCoJA5WhofUODIOxcQbTmf5zZNCl-2DcsqcQ0rKRwDjqHJXrz5xmHFHainfwUb22LgvRsi6y7HSym76VrAlsuReBfKXrDhfrLxKB2eRVm3moSRHQh4wufYKc';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTUwOTU0LCJpYXQiOjE1MjE1NDkxNTMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiZmIwNWI1YjktMmQwOS00MjE3LWFhNTctNmRmYzBmN2VkN2MxIn0.QhvjqCT5BDVEvrCx9Nq-eLmpZVPi-Z2jm_8vfJfofPshIz1aY3AzlOkbSHvTAQQXDkFGntpN59zjjUcPKJwCjVwxQ2oaX7Bx8JXWV-XkLY7cj1leuHPbnXJs0DGn0HrzYKBqo3F6BWr1PARKD0AWtWwYnUkipXLI-h6c-FUb5eI';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
@@ -291,7 +291,7 @@ class ComponentOwner extends React.Component {
         let renamedtagName = json.tagName;
         let updatedtagObj = tagObject;
         _.each(updatedtagObj, (obj, index) => {
-          if (updatedtagObj[index].tagId === renamedtagId) {
+          if (updatedtagObj[index].tagId === tagId) {
             updatedtagObj[index].tagName = renamedtagName;
           }
         });
