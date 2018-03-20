@@ -78,11 +78,11 @@ function init() {
       }).then((res) => res.json()).then((json) => {
         const tagObject = json.tagAttributes;
         tagObject.map ((tag, i) => {
-           for (let i = 0; i < groups.length; i++) {
-              if(groups[i].tags[0].tagId === tag.tagId) {
-                groups[i].tags[0].tagName = tag.tagName;
+           _.each(groups, function(obj, index) {
+              if(groups[index].tags[0].tagId === tag.tagId) {
+                groups[index].tags[0].tagName = tag.tagName;
               }
-           }
+           });
         });
         groups.map((group, i) => {
           notesList.unshift(group);
@@ -103,6 +103,7 @@ function init() {
             notesList: notesList,
             originalNotesList: originalNotesList,
             tocData: tocData,
+            tagAttributes: tagObject,
             toolbarMode: toolbarModeProp,
             handleGroupClick: (tagId, tagName) => {
               console.log('tagId: ', tagId);

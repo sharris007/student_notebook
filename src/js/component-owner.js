@@ -15,7 +15,7 @@ import NoteBookHeader from './NoteBookHeader';
 
 
 
-function refreshNotesList(originalNotesList) {
+function refreshNotesList(originalNotesList, tagObject) {
 
   //  const tagName = state.expandedTagName;
   // const tagId = state.expandedTagId;
@@ -44,12 +44,21 @@ function refreshNotesList(originalNotesList) {
       notesList.push(note);
     }
   }
-  groups.map((group, i) => {
-    notesList.unshift(group);
-  });
-
-  return notesList;
-}
+  if(groups.length) {
+    tagObject.map ((tag, i) => {
+     _.each(groups, function(obj, index) {
+        if(groups[index].tags[0].tagId === tag.tagId) {
+          groups[index].tags[0].tagName = tag.tagName;
+        }
+      });
+    });
+    
+    groups.map((group, i) => {
+      notesList.unshift(group);
+    });
+  }
+    return notesList;
+  }
 
 
 
@@ -64,11 +73,9 @@ class ComponentOwner extends React.Component {
     originalNotesList: PropTypes.array.isRequired,
     toolbarMode: PropTypes.object,
     groupModeFlag: PropTypes.bool
-
   };
   constructor(props) {
     super(props);
-
     let temporaryArray = props.notesList;
     temporaryArray.forEach(function (obj) { obj.keyId = obj.id + Date.now(); obj.selected = false; });
     this.state = {
@@ -78,6 +85,7 @@ class ComponentOwner extends React.Component {
       notesList: temporaryArray,
       saveNotesList: temporaryArray,
       originalNotesList: props.originalNotesList,
+      tagAttributes: props.tagAttributes,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
@@ -88,6 +96,7 @@ class ComponentOwner extends React.Component {
   callback = (msg, data) => {    
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
+    const tagObject = [...this.state.tagAttributes];
     const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTMyODE5LCJpYXQiOjE1MjE1MzEwMTksImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2I4OWZkNWMtOTUyNy00ZmViLWI1YzAtMzlkZGY2Mjk0NzYzIn0.Y587DZHBAw2cd4r1zgnWcZi7zPeNiWy-EE-5GESU6ZPlNAg33c7Zw8vHBu79FtIFZsHxaB8K2dIPyK2xuqU6ebbfuwVe2VLMZxvzkrmFOiJYgZgR5GquIcuorHd5F1bQK96fmt3CG3gx50vp2xov8HslcWRtJl_u7iJPdgtBSe4';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
@@ -119,7 +128,7 @@ class ComponentOwner extends React.Component {
         originalNotesList.splice(index, 1);
       }
       this.setState({
-        notesList: refreshNotesList(originalNotesList),
+        notesList: refreshNotesList(originalNotesList, tagObject),
         originalNotesList: originalNotesList
       });
 
@@ -243,7 +252,7 @@ class ComponentOwner extends React.Component {
             //    item.tagId = null;
           });
           this.setState({
-            notesList: refreshNotesList(originalNotesList),
+            notesList: refreshNotesList(originalNotesList, tagObject),
             originalNotesList: originalNotesList,
             toolbarMode: toolbarMode,
             groupModeFlag: false
@@ -275,7 +284,23 @@ class ComponentOwner extends React.Component {
       },
       body: JSON.stringify(renamePayLoad)
       }).then((res) => res.json()).then((json) => {
-          console.log('Rename JSON', json);
+          let renamedtagId = json.tagId;
+          let renamedtagName = json.tagName;
+          let updatedtagObj = tagObject;
+          _.each(updatedtagObj, (obj, index) => {
+              if(updatedtagObj[index].tagId === renamedtagId) {
+                  updatedtagObj[index].tagName = renamedtagName;
+              }
+          });
+          this.setState({
+            notesList: refreshNotesList(originalNotesList, updatedtagObj),
+            originalNotesList: originalNotesList,
+            tagAttributes: updatedtagObj,
+            groupExpanded: false,
+            groupModeFlag: false,
+            expandedTagName: null,
+            expandedTagId: null
+          });
       });
     } else if (msg === "UNGROUP NOTE") {
 
@@ -292,7 +317,7 @@ class ComponentOwner extends React.Component {
       //  refreshNotesList(originalNotesList);
 
       this.setState({
-        notesList: refreshNotesList(originalNotesList),
+        notesList: refreshNotesList(originalNotesList, tagObject),
         originalNotesList: originalNotesList,
         groupExpanded: false,
         groupModeFlag: false,
@@ -313,7 +338,7 @@ class ComponentOwner extends React.Component {
 
 
       this.setState({
-        notesList: refreshNotesList(originalNotesList),
+        notesList: refreshNotesList(originalNotesList, tagObject),
         originalNotesList: originalNotesList,
         groupExpanded: false,
         groupModeFlag: false,
@@ -348,7 +373,7 @@ class ComponentOwner extends React.Component {
   handleBack = () => {
     this.setState({
       //  notesList: this.props.notesList,
-      notesList: refreshNotesList(this.state.originalNotesList),
+      notesList: refreshNotesList(this.state.originalNotesList, this.state.tagAttributes),
       //  notesList: this.state.saveNotesList,
       groupExpanded: false,
       groupModeFlag: false,
