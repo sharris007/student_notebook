@@ -570,6 +570,13 @@ export default class Card extends Component {
                 {item.tagName}
               </div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px', paddingRight: '10px' }}>
+             
+             
+
+             {/* DON'T DELETE THE BELOW COMMENTS. ITS THE VERTICAL MENU WITH Rename and Ungroup may uncomment later */}
+           
+             
+             
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -694,7 +701,7 @@ export default class Card extends Component {
                         <span style={styleContent}>“{item.highLightText}”</span>
                       </td>
                       <td>
-                        {!!item.pageId ?
+                        {!!item.pageId && !item.tagId ?
                           <a style={{ height: '36px', width: '36px', margin: '0', padding: '5px', float: 'right' }} onClick={() => this.handleNavigate(item)}>
                             <img
                               style={{ height: '24px', width: '24px' }}
@@ -801,7 +808,7 @@ export default class Card extends Component {
                           : null}
 
                         {item.noteText === 'O' ?
-                          `Main observations`
+                          `Observations`
                           : null}
 
                       </div></td>
