@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTMyODE5LCJpYXQiOjE1MjE1MzEwMTksImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2I4OWZkNWMtOTUyNy00ZmViLWI1YzAtMzlkZGY2Mjk0NzYzIn0.Y587DZHBAw2cd4r1zgnWcZi7zPeNiWy-EE-5GESU6ZPlNAg33c7Zw8vHBu79FtIFZsHxaB8K2dIPyK2xuqU6ebbfuwVe2VLMZxvzkrmFOiJYgZgR5GquIcuorHd5F1bQK96fmt3CG3gx50vp2xov8HslcWRtJl_u7iJPdgtBSe4';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTM5MjE1Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU1NzIxNSwiaWF0IjoxNTIxNTM5MjE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjQ2ZmRkMDY4LWNjNDItNGQ1Yy1iYWEwLTM5MzM3NzliYjQwMCJ9.Kkb1ISsK1CK8nAFjEs-qHDHdXCd8mLP719BZk8GRQm64uJXq0ViSCoJA5WhofUODIOxcQbTmf5zZNCl-2DcsqcQ0rKRwDjqHJXrz5xmHFHainfwUb22LgvRsi6y7HSym76VrAlsuReBfKXrDhfrLxKB2eRVm3moSRHQh4wufYKc';
 function init() {
 
   const notesList = [];
@@ -40,6 +40,7 @@ function init() {
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
       note.noteType = noteObj.noteType;
       note.id = noteObj.id;
+      note.outsetSeq = noteObj.outsetSeq;
 
       const dupNote = _.cloneDeep(note);
 
