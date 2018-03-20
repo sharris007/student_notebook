@@ -44,21 +44,21 @@ function refreshNotesList(originalNotesList, tagObject) {
       notesList.push(note);
     }
   }
-  if(groups.length) {
-    tagObject.map ((tag, i) => {
-     _.each(groups, function(obj, index) {
-        if(groups[index].tags[0].tagId === tag.tagId) {
+  if (groups.length) {
+    tagObject.map((tag, i) => {
+      _.each(groups, function (obj, index) {
+        if (groups[index].tags[0].tagId === tag.tagId) {
           groups[index].tags[0].tagName = tag.tagName;
         }
       });
     });
-    
+
     groups.map((group, i) => {
       notesList.unshift(group);
     });
   }
-    return notesList;
-  }
+  return notesList;
+}
 
 
 
@@ -93,11 +93,11 @@ class ComponentOwner extends React.Component {
     };
 
   }
-  callback = (msg, data) => {    
+  callback = (msg, data) => {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTMyODE5LCJpYXQiOjE1MjE1MzEwMTksImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2I4OWZkNWMtOTUyNy00ZmViLWI1YzAtMzlkZGY2Mjk0NzYzIn0.Y587DZHBAw2cd4r1zgnWcZi7zPeNiWy-EE-5GESU6ZPlNAg33c7Zw8vHBu79FtIFZsHxaB8K2dIPyK2xuqU6ebbfuwVe2VLMZxvzkrmFOiJYgZgR5GquIcuorHd5F1bQK96fmt3CG3gx50vp2xov8HslcWRtJl_u7iJPdgtBSe4';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTM5MjE1Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU1NzIxNSwiaWF0IjoxNTIxNTM5MjE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjQ2ZmRkMDY4LWNjNDItNGQ1Yy1iYWEwLTM5MzM3NzliYjQwMCJ9.Kkb1ISsK1CK8nAFjEs-qHDHdXCd8mLP719BZk8GRQm64uJXq0ViSCoJA5WhofUODIOxcQbTmf5zZNCl-2DcsqcQ0rKRwDjqHJXrz5xmHFHainfwUb22LgvRsi6y7HSym76VrAlsuReBfKXrDhfrLxKB2eRVm3moSRHQh4wufYKc';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
@@ -116,13 +116,15 @@ class ComponentOwner extends React.Component {
     } else if (msg === 'SAVE') {
       const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
       if (index > -1) {
-        notesList.splice(index, 1, data);
+        notesList.splice(index, 1, data, function (formattedData) {
+
+        });
         this.setState({
           notesList: notesList
         });
       }
     } else if (msg === 'DELETE') {
-       this.props.callback(msg, data);
+      this.props.callback(msg, data);
       const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
       if (index > -1) {
         originalNotesList.splice(index, 1);
@@ -226,37 +228,37 @@ class ComponentOwner extends React.Component {
         groupPayload.notes.push(selectedObj);
       });
       const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Authorization': piToken
-      },
-      body: JSON.stringify(groupPayload)
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
-          let tagId = json.tagId;
-          let tagName = json.tagName;
-          filterList2.forEach((item, i) => {
-            const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
-            if (index != -1) {
-              if (originalNotesList[index].tags) {
-                originalNotesList[index].tags[0].tagId = tagId;
-                originalNotesList[index].tags[0].tagName = tagName;
-              } else {
-                originalNotesList[index].tags = [{
-                  'tagId': tagId,
-                  'tagName': tagName
-                }];
-              }
+        let tagId = json.tagId;
+        let tagName = json.tagName;
+        filterList2.forEach((item, i) => {
+          const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
+          if (index != -1) {
+            if (originalNotesList[index].tags) {
+              originalNotesList[index].tags[0].tagId = tagId;
+              originalNotesList[index].tags[0].tagName = tagName;
+            } else {
+              originalNotesList[index].tags = [{
+                'tagId': tagId,
+                'tagName': tagName
+              }];
             }
-            //    item.tagId = null;
-          });
-          this.setState({
-            notesList: refreshNotesList(originalNotesList, tagObject),
-            originalNotesList: originalNotesList,
-            toolbarMode: toolbarMode,
-            groupModeFlag: false
-          });
+          }
+          //    item.tagId = null;
+        });
+        this.setState({
+          notesList: refreshNotesList(originalNotesList, tagObject),
+          originalNotesList: originalNotesList,
+          toolbarMode: toolbarMode,
+          groupModeFlag: false
+        });
       });
       //   filterList2.splice(0, 1);
 
@@ -276,31 +278,31 @@ class ComponentOwner extends React.Component {
         "notes": []
       }
       const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/${tagId}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Authorization': piToken
-      },
-      body: JSON.stringify(renamePayLoad)
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(renamePayLoad)
       }).then((res) => res.json()).then((json) => {
-          let renamedtagId = json.tagId;
-          let renamedtagName = json.tagName;
-          let updatedtagObj = tagObject;
-          _.each(updatedtagObj, (obj, index) => {
-              if(updatedtagObj[index].tagId === renamedtagId) {
-                  updatedtagObj[index].tagName = renamedtagName;
-              }
-          });
-          this.setState({
-            notesList: refreshNotesList(originalNotesList, updatedtagObj),
-            originalNotesList: originalNotesList,
-            tagAttributes: updatedtagObj,
-            groupExpanded: false,
-            groupModeFlag: false,
-            expandedTagName: null,
-            expandedTagId: null
-          });
+        let renamedtagId = json.tagId;
+        let renamedtagName = json.tagName;
+        let updatedtagObj = tagObject;
+        _.each(updatedtagObj, (obj, index) => {
+          if (updatedtagObj[index].tagId === renamedtagId) {
+            updatedtagObj[index].tagName = renamedtagName;
+          }
+        });
+        this.setState({
+          notesList: refreshNotesList(originalNotesList, updatedtagObj),
+          originalNotesList: originalNotesList,
+          tagAttributes: updatedtagObj,
+          groupExpanded: false,
+          groupModeFlag: false,
+          expandedTagName: null,
+          expandedTagId: null
+        });
       });
     } else if (msg === "UNGROUP NOTE") {
 
@@ -327,6 +329,7 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "UNGROUP NOTES") { // ungroup all notes in a group
+      this.props.callback(msg, data);
       const originalNotesList = [...this.state.originalNotesList];
 
       originalNotesList.map((item, i) => {

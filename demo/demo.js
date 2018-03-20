@@ -6,6 +6,19 @@ const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTI
 function init() {
   getNotes();
 };
+function callback(msg, data) {
+  if (data) {
+    if (msg === 'ADD') {
+      addNote(msg, data);
+    }
+    else if (msg === 'DELETE') {
+      deleteNote(msg, data);
+    }
+    else if (msg === "UNGROUP NOTES") {
+      ungroupNotes(msg, data);
+    }
+  }
+};
 function getNotes() {
   const notesList = [];
   const originalNotesList = [];
@@ -143,17 +156,7 @@ function getNotes() {
     }
   });
 }
-function callback(msg, data) {
-  if (data) {
-    if (msg === 'ADD') {
-      addNote(msg, data);     
-    }
-    else if (msg === 'DELETE') {
-      deleteNote(msg, data);
-    }
-   
-  }
-};
+
 function addNote(msg, data) {
   const payLoad = {
     'payload': [
@@ -186,8 +189,9 @@ function addNote(msg, data) {
     },
     body: JSON.stringify(payLoad)
   }).then((res) => res.json()).then((json) => {
-     getNotes();
+    getNotes();
     console.log('Custom Note successfully created!');
+    return json;
   });
 };
 function deleteNote(msg, data) {
@@ -204,6 +208,25 @@ function deleteNote(msg, data) {
     console.log('Custom Note successfully deleted!');
   });
 };
+function ungroupNotes(msg, data) {
+  let tagId = null;
+  data.tags.map((tag, i) => {
+    tagId = tag.tagId;
+  });
+
+  const payLoad = { ids: [data.id] };
+  const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/' + tagId, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Authorization': piToken
+    },
+    body: JSON.stringify(payLoad)
+  }).then((res) => res.json()).then((json) => {
+    console.log('Notes successfully ungrouped!');
+  });
+}
 class toolbarMode {
   constructor() {
     this.groupMode = 'DEFAULT';
