@@ -158,8 +158,8 @@ function addNote(msg, data) {
         "productModel": "ETEXT_SMS",
         "contextualInfo": [
           {
-            "key": "title",
-            "value": "asjln192882salnsal-saaksm-qsq2"
+            "key": "",
+            "value": ""
           }
         ],
         "pageId": null,
