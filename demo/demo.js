@@ -4,7 +4,9 @@ import _ from 'lodash';
 
 const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTM5MjE1Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU1NzIxNSwiaWF0IjoxNTIxNTM5MjE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjQ2ZmRkMDY4LWNjNDItNGQ1Yy1iYWEwLTM5MzM3NzliYjQwMCJ9.Kkb1ISsK1CK8nAFjEs-qHDHdXCd8mLP719BZk8GRQm64uJXq0ViSCoJA5WhofUODIOxcQbTmf5zZNCl-2DcsqcQ0rKRwDjqHJXrz5xmHFHainfwUb22LgvRsi6y7HSym76VrAlsuReBfKXrDhfrLxKB2eRVm3moSRHQh4wufYKc';
 function init() {
-
+  getNotes();
+};
+function getNotes() {
   const notesList = [];
   const originalNotesList = [];
 
@@ -69,20 +71,20 @@ function init() {
     const toolbarModeProp = new toolbarMode();
     if (groups.length > 0) {
       const getAllTagName = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/contextLog', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Authorization': piToken
-      }
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        }
       }).then((res) => res.json()).then((json) => {
         const tagObject = json.tagAttributes;
-        tagObject.map ((tag, i) => {
-           _.each(groups, function(obj, index) {
-              if(groups[index].tags[0].tagId === tag.tagId) {
-                groups[index].tags[0].tagName = tag.tagName;
-              }
-           });
+        tagObject.map((tag, i) => {
+          _.each(groups, function (obj, index) {
+            if (groups[index].tags[0].tagId === tag.tagId) {
+              groups[index].tags[0].tagName = tag.tagName;
+            }
+          });
         });
         groups.map((group, i) => {
           notesList.unshift(group);
@@ -114,41 +116,42 @@ function init() {
         });
       });
     } else {
-        fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Authorization': piToken
+      fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        }
+      }).then((res) => res.json()).then((json) => {
+        tocData = json.content;
+        new NoteBookComponent({
+          elementId: 'demo',
+          locale: 'en-us',
+          callback: callback,
+          notesList: notesList,
+          originalNotesList: originalNotesList,
+          tocData: tocData,
+          toolbarMode: toolbarModeProp,
+          handleGroupClick: (tagId, tagName) => {
+            console.log('tagId: ', tagId);
           }
-        }).then((res) => res.json()).then((json) => {
-          tocData = json.content;
-          new NoteBookComponent({
-            elementId: 'demo',
-            locale: 'en-us',
-            callback: callback,
-            notesList: notesList,
-            originalNotesList: originalNotesList,
-            tocData: tocData,
-            toolbarMode: toolbarModeProp,
-            handleGroupClick: (tagId, tagName) => {
-              console.log('tagId: ', tagId);
-            }
-            //  responsiveColumns
-          });
-
+          //  responsiveColumns
         });
+
+      });
     }
   });
-};
+}
 function callback(msg, data) {
   if (data) {
     if (msg === 'ADD') {
-      addNote(msg, data);
+      addNote(msg, data);     
     }
     else if (msg === 'DELETE') {
       deleteNote(msg, data);
     }
+   
   }
 };
 function addNote(msg, data) {
@@ -183,6 +186,7 @@ function addNote(msg, data) {
     },
     body: JSON.stringify(payLoad)
   }).then((res) => res.json()).then((json) => {
+     getNotes();
     console.log('Custom Note successfully created!');
   });
 };

@@ -100,19 +100,19 @@ class ComponentOwner extends React.Component {
     const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTMyODE5LCJpYXQiOjE1MjE1MzEwMTksImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2I4OWZkNWMtOTUyNy00ZmViLWI1YzAtMzlkZGY2Mjk0NzYzIn0.Y587DZHBAw2cd4r1zgnWcZi7zPeNiWy-EE-5GESU6ZPlNAg33c7Zw8vHBu79FtIFZsHxaB8K2dIPyK2xuqU6ebbfuwVe2VLMZxvzkrmFOiJYgZgR5GquIcuorHd5F1bQK96fmt3CG3gx50vp2xov8HslcWRtJl_u7iJPdgtBSe4';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
-      notesList.splice(0, 0, {
-        id: 'created' + notesList.length + 1,
-        keyId: Date.now(),
-        title: data.title,
-        cardFormat: 'note',
-        content: data.content,
-        content2: 'this is test data',
-        timeStamp: data.timeStamp,
-        noteType: 'CUSTOM_NOTE'
-      });
-      this.setState({
-        notesList: notesList
-      });
+      // notesList.splice(0, 0, {
+      //   id: 'created' + notesList.length + 1,
+      //   keyId: Date.now(),
+      //   title: data.title,
+      //   cardFormat: 'note',
+      //   content: data.content,
+      //   content2: 'this is test data',
+      //   timeStamp: data.timeStamp,
+      //   noteType: 'CUSTOM_NOTE'
+      // });
+      // this.setState({
+      //   notesList: notesList
+      // });
     } else if (msg === 'SAVE') {
       const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
       if (index > -1) {
