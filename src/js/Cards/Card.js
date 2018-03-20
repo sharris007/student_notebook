@@ -704,7 +704,7 @@ export default class Card extends Component {
                       <span style={styleContent}>“{item.highLightText}”</span>
                     </td>
                     <td>
-                      {!!item.pageId ?
+                      {(!!item.pageId && !(item.notes && item.notes.length)) ?
                         <a style={{ margin: '0', float: 'right' }} onClick={() => this.handleNavigate(item)}>
                           <img
                             style={{ height: '24px', width: '24px' }}
