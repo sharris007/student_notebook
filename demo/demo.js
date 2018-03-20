@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTI3NjQ4Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU0NTY0OSwiaWF0IjoxNTIxNTI3NjQ4LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImU1NTI1ODA1LWI2YjgtNDljNC05ODI2LWQzZWY0NzM4MmViMCJ9.GLVDlhOOrh5kOubo40zNEcTwbRdXaalI1AdwXaAje4CT6ruTQ6r9M6Q0qYAWRMxbqnZj3YtdPZu43E2uIkRXAyEOrBvn0lAPMw678l1FY8zRiXzXgB9bwcqImxDx6cOFA6Y96jgDXgleTK4aYTa1hgxl2L7U7uxkIicg7kFGs08';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTMyODE5LCJpYXQiOjE1MjE1MzEwMTksImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiN2I4OWZkNWMtOTUyNy00ZmViLWI1YzAtMzlkZGY2Mjk0NzYzIn0.Y587DZHBAw2cd4r1zgnWcZi7zPeNiWy-EE-5GESU6ZPlNAg33c7Zw8vHBu79FtIFZsHxaB8K2dIPyK2xuqU6ebbfuwVe2VLMZxvzkrmFOiJYgZgR5GquIcuorHd5F1bQK96fmt3CG3gx50vp2xov8HslcWRtJl_u7iJPdgtBSe4';
 function init() {
 
   const notesList = [];
@@ -65,36 +65,78 @@ function init() {
     }
     // }
     // add group to beginning of notes list
-    groups.map((group, i) => {
-      notesList.unshift(group);
-    });
-
     const toolbarModeProp = new toolbarMode();
-    fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+    if (groups.length > 0) {
+      const getAllTagName = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/contextLog', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-Authorization': piToken
       }
-    }).then((res) => res.json()).then((json) => {
-      tocData = json.content;
-      new NoteBookComponent({
-        elementId: 'demo',
-        locale: 'en-us',
-        callback: callback,
-        notesList: notesList,
-        originalNotesList: originalNotesList,
-        tocData: tocData,
-        toolbarMode: toolbarModeProp,
-        handleGroupClick: (tagId, tagName) => {
-          console.log('tagId: ', tagId);
-        }
-        //  responsiveColumns
+      }).then((res) => res.json()).then((json) => {
+        const tagObject = json.tagAttributes;
+        tagObject.map ((tag, i) => {
+           for (let i = 0; i < groups.length; i++) {
+              if(groups[i].tags[0].tagId === tag.tagId) {
+                groups[i].tags[0].tagName = tag.tagName;
+              }
+           }
+        });
+        groups.map((group, i) => {
+          notesList.unshift(group);
+        });
+        fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Authorization': piToken
+          }
+        }).then((res) => res.json()).then((json) => {
+          tocData = json.content;
+          new NoteBookComponent({
+            elementId: 'demo',
+            locale: 'en-us',
+            callback: callback,
+            notesList: notesList,
+            originalNotesList: originalNotesList,
+            tocData: tocData,
+            toolbarMode: toolbarModeProp,
+            handleGroupClick: (tagId, tagName) => {
+              console.log('tagId: ', tagId);
+            }
+            //  responsiveColumns
+          });
+
+        });
       });
+    } else {
+        fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Authorization': piToken
+          }
+        }).then((res) => res.json()).then((json) => {
+          tocData = json.content;
+          new NoteBookComponent({
+            elementId: 'demo',
+            locale: 'en-us',
+            callback: callback,
+            notesList: notesList,
+            originalNotesList: originalNotesList,
+            tocData: tocData,
+            toolbarMode: toolbarModeProp,
+            handleGroupClick: (tagId, tagName) => {
+              console.log('tagId: ', tagId);
+            }
+            //  responsiveColumns
+          });
 
-    });
-
+        });
+    }
   });
 };
 function callback(msg, data) {
