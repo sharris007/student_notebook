@@ -114,6 +114,7 @@ class ComponentOwner extends React.Component {
       //   notesList: notesList
       // });
     } else if (msg === 'SAVE') {
+       this.props.callback(msg, data);
       const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
       if (index > -1) {
         notesList.splice(index, 1, data, function (formattedData) {

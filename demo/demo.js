@@ -11,6 +11,9 @@ function callback(msg, data) {
     if (msg === 'ADD') {
       addNote(msg, data);
     }
+    else if (msg === 'SAVE') {
+      saveNote(msg, data);
+    }
     else if (msg === 'DELETE') {
       deleteNote(msg, data);
     }
@@ -36,6 +39,9 @@ function getNotes() {
     const notes = json;
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
+      if(!noteObj.data){
+        break;
+      }
       const note = noteObj.data;
       // const groupNote = noteObj.data;
       note.cardFormat = 'note';
@@ -194,6 +200,41 @@ function addNote(msg, data) {
     return json;
   });
 };
+function saveNote(msg, data) {
+  const payLoad = {
+    'payload': [
+      {
+        "clientApp": 'ETEXT2_WEB',
+        "productModel": "ETEXT_SMS",
+        "contextualInfo": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "pageId": null,
+        "noteType": "CUSTOM_NOTE",
+        "shareable": false,
+        "tags": [],
+        "data": {
+          "quote": data.title ? data.title : '',
+          "text": data.content ? data.content : ''
+        }
+      }
+    ]
+  };
+  const saveNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/' + data.id, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Authorization': piToken
+    },
+    body: JSON.stringify(payLoad)
+  }).then((res) => res.json()).then((json) => {
+    console.log('Custom Note successfully deleted!');
+  });
+};
 function deleteNote(msg, data) {
   const payLoad = { ids: [data.id] };
   const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
@@ -210,11 +251,15 @@ function deleteNote(msg, data) {
 };
 function ungroupNotes(msg, data) {
   let tagId = null;
+  let tagName = null;
   data.tags.map((tag, i) => {
     tagId = tag.tagId;
+    tagName = tag.tagName;
   });
-
-  const payLoad = { ids: [data.id] };
+  const payLoad = {
+    "tagName": tagName,
+    "notes": []
+  };
   const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/' + tagId, {
     method: 'DELETE',
     headers: {
