@@ -112,7 +112,7 @@ class ComponentOwner extends React.Component {
         });
       }
     } else if (msg === 'DELETE') {
-
+       this.props.callback(msg, data);
       const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
       if (index > -1) {
         originalNotesList.splice(index, 1);

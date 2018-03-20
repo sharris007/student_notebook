@@ -1,14 +1,14 @@
 import NoteBookComponent from '../main'; // to demo direct API usage
-import { notes } from './notesDummy';
+// import { notes } from './notesDummy';
 import _ from 'lodash';
 
-let piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNDUyODkxIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTQ3MDg5MiwiaWF0IjoxNTIxNDUyODkxLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjJjYTczNGUxLTc5OWQtNGE5MC04Y2NiLWY0NzMwN2M2ZmVkYSJ9.QHF_xNsCITCxGZd36oPRUdVXKNQ31W5K8SVtqZsBtUepW34_40HDTn5jF91sDIwjPzEALnSe4AiZY0TscJSbt7M3bRJ5VlBXMu33WiU2iC51K6R8ZOQw5IKL_-jncc81y-HO28Dchj9du1zcEslfLRXU8YAGPg_2A5de0DT8WFg';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTI3NjQ4Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU0NTY0OSwiaWF0IjoxNTIxNTI3NjQ4LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImU1NTI1ODA1LWI2YjgtNDljNC05ODI2LWQzZWY0NzM4MmViMCJ9.GLVDlhOOrh5kOubo40zNEcTwbRdXaalI1AdwXaAje4CT6ruTQ6r9M6Q0qYAWRMxbqnZj3YtdPZu43E2uIkRXAyEOrBvn0lAPMw678l1FY8zRiXzXgB9bwcqImxDx6cOFA6Y96jgDXgleTK4aYTa1hgxl2L7U7uxkIicg7kFGs08';
 function init() {
 
   const notesList = [];
   const originalNotesList = [];
 
-  let groups = [];
+  const groups = [];
   let tocData;
   const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
     method: 'GET',
@@ -22,11 +22,11 @@ function init() {
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
       const note = noteObj.data;
-      const groupNote = noteObj.data;
+      // const groupNote = noteObj.data;
       note.cardFormat = 'note';
       const contextualInfo = noteObj.contextualInfo;
       if (noteObj.pageId) {
-        let titleIndex = _.findIndex(contextualInfo, function (obj) { return obj.key === 'title'; });
+        const titleIndex = _.findIndex(contextualInfo, function (obj) { return obj.key === 'title'; });
         note.title = contextualInfo ? contextualInfo[titleIndex].value : null;
         note.highLightText = note.quote;
         note.pageId = noteObj.pageId;
@@ -41,7 +41,7 @@ function init() {
       note.noteType = noteObj.noteType;
       note.id = noteObj.id;
 
-      let dupNote = _.cloneDeep(note);
+      const dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
 
@@ -69,7 +69,7 @@ function init() {
       notesList.unshift(group);
     });
 
-    let toolbarModeProp = new toolbarMode();
+    const toolbarModeProp = new toolbarMode();
     fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
       method: 'GET',
       headers: {
@@ -96,17 +96,22 @@ function init() {
     });
 
   });
-}
+};
 function callback(msg, data) {
   if (data) {
-    addNote(msg, data);
+    if (msg === 'ADD') {
+      addNote(msg, data);
+    }
+    else if (msg === 'DELETE') {
+      deleteNote(msg, data);
+    }
   }
-}
+};
 function addNote(msg, data) {
   const payLoad = {
     'payload': [
       {
-        "clientApp": "ETEXT2_WEB",
+        "clientApp": 'ETEXT2_WEB',
         "productModel": "ETEXT_SMS",
         "contextualInfo": [
           {
@@ -119,7 +124,7 @@ function addNote(msg, data) {
         "shareable": false,
         "tags": [],
         "data": {
-          "quote":data.title ? data.title : '',
+          "quote": data.title ? data.title : '',
           "text": data.content ? data.content : ''
         }
       }
@@ -136,7 +141,21 @@ function addNote(msg, data) {
   }).then((res) => res.json()).then((json) => {
     console.log('Custom Note successfully created!');
   });
-}
+};
+function deleteNote(msg, data) {
+  const payLoad = { ids: [data.id] };
+  const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Authorization': piToken
+    },
+    body: JSON.stringify(payLoad)
+  }).then((res) => res.json()).then((json) => {
+    console.log('Custom Note successfully deleted!');
+  });
+};
 class toolbarMode {
   constructor() {
     this.groupMode = 'DEFAULT';

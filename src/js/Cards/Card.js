@@ -760,13 +760,6 @@ export default class Card extends Component {
             </div>
 
           )}
-
-
-
-
-
-
-
         {item.noteType === 'FROM_INSTRUCTOR' && !tagId ? (
           <div><span className="verticalAlign" style={{background: '#ccf5fd', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
