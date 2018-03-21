@@ -285,7 +285,7 @@ export default class NoteBookHeader extends Component {
 
 
         {this.props.groupExpanded === false ?
-          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
+          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1001' }}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleChange('all')}>All</div>
