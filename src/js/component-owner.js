@@ -94,7 +94,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNjM2NTY2LCJpYXQiOjE1MjE2MjU3NjUsInNlc3NpZCI6ImM0NjdkOGIzLTI3MmUtNDk1ZS1iMWZlLTVlYjgxOTdiZGQ3MSJ9.OhLP3OWU2318l435P82gihJuk3wlBxSbEewFNxtBEga0uDocv2VZL8p8mJdHYTLg3bP0ES6keBBzmnYbD3Nk1pcb5Az7A-VjamAT6JXdIgRPdJrummpe0S61eN8pDjfJ1FCcO4AOHJrVLsZHLygZZm6LCbulkLyulTMNKXuM0Lc';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNjQwNDkyLCJpYXQiOjE1MjE2Mjk2OTIsInNlc3NpZCI6IjczOGVlM2Q4LTUyNDktNDAwYi1iNGEzLTY4MjJjZmFmMjk1ZiJ9.Mf-n-MF8uisfuaeXqCPxcU_Gw_Pg85Ux-CXS6iw6twy8g6U--mP1hVXjZvf08aVMc8T33SgaDIao9I47PBHA5SE304RtK_yu2gUkJrl7uFJrWFZ0VuCCV0uzpWgoJFgFnkI8qF8Nx0tc32FrFhnWbBhKC5pGlgSsYt_Cy0We3Yw';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
@@ -251,10 +251,13 @@ class ComponentOwner extends React.Component {
           }
           //    item.tagId = null;
         });
+        let updatedObject = tagObject;
+        updatedObject.push(json);
         this.setState({
-          notesList: refreshNotesList(originalNotesList, tagObject),
+          notesList: refreshNotesList(originalNotesList, updatedObject),
           originalNotesList: originalNotesList,
           toolbarMode: toolbarMode,
+          tagAttributes: updatedObject,
           groupModeFlag: false
         });
       });
