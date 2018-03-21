@@ -199,7 +199,7 @@ export default class NoteBookHeader extends Component {
       if (selectedLabel.length > 0) {
         for (let c = 0; c < chapterList.length; c++) {
           selectedLabel.find((label) => {
-            if (chapterList[c].noteType === label || (label === 'NL' && !chapterList[c].noteType)) {
+            if ((chapterList[c].noteType === label && !chapterList[c].tags ) || (label === 'NL' && !chapterList[c].noteType)) {
               finalFilteredList.push(chapterList[c]);
             }
           });
@@ -213,7 +213,7 @@ export default class NoteBookHeader extends Component {
     else {
       for (let c = 0; c < note.length; c++) {
         selectedLabel.find((label) => {
-          if ((note[c].noteType === label && !note[c].notes) || (label === 'NL' && !note[c].noteType)) {
+          if ((note[c].noteType === label && !note[c].tags) || (label === 'NL' && !note[c].noteType)) {
             finalFilteredList.push(note[c]);
           }
         });
