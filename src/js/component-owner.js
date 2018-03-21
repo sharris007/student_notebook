@@ -11,9 +11,6 @@ import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 
 import NoteBook from './NoteBook';
-import NoteBookHeader from './NoteBookHeader';
-
-
 
 function refreshNotesList(originalNotesList, tagObject) {
 
@@ -94,6 +91,7 @@ class ComponentOwner extends React.Component {
 
   }
   callback = (msg, data) => {
+    debugger;
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
@@ -392,6 +390,7 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
+    debugger;
     console.log('Owner RENDER called');
     const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, expandedTagId } = this.state;
     return (
