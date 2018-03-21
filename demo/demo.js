@@ -240,6 +240,7 @@ function deleteNote(msg, data) {
     },
     body: JSON.stringify(payLoad)
   }).then((res) => res.json()).then((json) => {
+    getNotes();
     console.log('Custom Note successfully deleted!');
   });
 };
