@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNTM5MjE1Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTU1NzIxNSwiaWF0IjoxNTIxNTM5MjE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjQ2ZmRkMDY4LWNjNDItNGQ1Yy1iYWEwLTM5MzM3NzliYjQwMCJ9.Kkb1ISsK1CK8nAFjEs-qHDHdXCd8mLP719BZk8GRQm64uJXq0ViSCoJA5WhofUODIOxcQbTmf5zZNCl-2DcsqcQ0rKRwDjqHJXrz5xmHFHainfwUb22LgvRsi6y7HSym76VrAlsuReBfKXrDhfrLxKB2eRVm3moSRHQh4wufYKc';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNjE0NzcxIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTYzMjc3MSwiaWF0IjoxNTIxNjE0NzcxLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjhkMTY0YjZhLWZhNDItNDUzMy1hYWM1LTI1MDZlODI4OWJjMyJ9.O3kpreoVkLXFNTzxdk5OSMN6xlj1ZUnLQ1QHfPrA71gbFhpLo0PlWXdld6p-mvwgWhNVzPfL7aMl81VUfaCApn8wZeCHCZBcg4hE32gyTtm0-cfwjGDxpaDk4mm1sxDJjRwshX6GOuerp6kQzA77O5QhXXaCN7vIFtkWj-k__Qw';
 function init() {
   getNotes();
 };
@@ -39,9 +39,6 @@ function getNotes() {
     const notes = json;
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
-      if(!noteObj.data){
-        break;
-      }
       const note = noteObj.data;
       // const groupNote = noteObj.data;
       note.cardFormat = 'note';
@@ -202,26 +199,22 @@ function addNote(msg, data) {
 };
 function saveNote(msg, data) {
   const payLoad = {
-    'payload': [
+    "clientApp": 'ETEXT2_WEB',
+    "productModel": "ETEXT_SMS",
+    "contextualInfo": [
       {
-        "clientApp": 'ETEXT2_WEB',
-        "productModel": "ETEXT_SMS",
-        "contextualInfo": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ],
-        "pageId": null,
-        "noteType": "CUSTOM_NOTE",
-        "shareable": false,
-        "tags": [],
-        "data": {
-          "quote": data.title ? data.title : '',
-          "text": data.content ? data.content : ''
-        }
+        "key": "",
+        "value": ""
       }
-    ]
+    ],
+    "pageId": null,
+    "noteType": "CUSTOM_NOTE",
+    "shareable": false,
+    "tags": [],
+    "data": {
+      "quote": data.title ? data.title : '',
+      "text": data.content ? data.content : ''
+    }
   };
   const saveNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/' + data.id, {
     method: 'PUT',

@@ -97,7 +97,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU5Y2JjMDRiZTRiMDllZmIzNDQwNWU1MiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNTUwOTU0LCJpYXQiOjE1MjE1NDkxNTMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiZmIwNWI1YjktMmQwOS00MjE3LWFhNTctNmRmYzBmN2VkN2MxIn0.QhvjqCT5BDVEvrCx9Nq-eLmpZVPi-Z2jm_8vfJfofPshIz1aY3AzlOkbSHvTAQQXDkFGntpN59zjjUcPKJwCjVwxQ2oaX7Bx8JXWV-XkLY7cj1leuHPbnXJs0DGn0HrzYKBqo3F6BWr1PARKD0AWtWwYnUkipXLI-h6c-FUb5eI';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNjE0NzcxIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTYzMjc3MSwiaWF0IjoxNTIxNjE0NzcxLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6IjhkMTY0YjZhLWZhNDItNDUzMy1hYWM1LTI1MDZlODI4OWJjMyJ9.O3kpreoVkLXFNTzxdk5OSMN6xlj1ZUnLQ1QHfPrA71gbFhpLo0PlWXdld6p-mvwgWhNVzPfL7aMl81VUfaCApn8wZeCHCZBcg4hE32gyTtm0-cfwjGDxpaDk4mm1sxDJjRwshX6GOuerp6kQzA77O5QhXXaCN7vIFtkWj-k__Qw';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
