@@ -45,7 +45,7 @@ function getNotes() {
       const contextualInfo = noteObj.contextualInfo;
       if (noteObj.pageId) {
         const titleIndex = _.findIndex(contextualInfo, function (obj) { return obj.key === 'title'; });
-        note.title = contextualInfo ? contextualInfo[titleIndex].value : null;
+        note.title = contextualInfo && titleIndex !== -1 ? contextualInfo[titleIndex].value : null;
         note.highLightText = note.quote;
         note.pageId = noteObj.pageId;
       }
