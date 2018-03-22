@@ -63,8 +63,9 @@ function init() {
   });
 
 
-;
   let toolbarModeProp = new toolbarMode();
+  toolbarModeProp.groups = groups;
+
   new NoteBookComponent({
     elementId: 'demo',
     locale: 'en-us',

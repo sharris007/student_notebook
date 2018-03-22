@@ -188,16 +188,28 @@ class ComponentOwner extends React.Component {
         groupModeFlag: true
       });
     } else if (msg === "SAVEGROUP") {
+
+      debugger;
+
+
+
+
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
 
       const tempNotesList = [];
-debugger;
-      const tagId = Date.now();
-      let tagName = this.state.toolbarMode.groupTitle;
+      let tagId = Date.now();
+      let tagName = toolbarMode.groupTitle;
 
-      if (!!!tagName){
+
+      if (data.groupId !== null) {
+        tagId = data.groupId;
+        tagName = data.groupTitle;
+      }
+
+
+      if (!!!tagName) {
         tagName = 'Untitled Group';
       }
 
@@ -213,6 +225,7 @@ debugger;
 
       filterList2.forEach((item, i) => {
         item.tagId = null;
+        item.selected = false;
       });
 
       //   filterList2.splice(0, 1);
@@ -220,12 +233,14 @@ debugger;
       filterList1[0].tagId = tagId;
       filterList1[0].tagName = tagName;
       filterList1[0].notes = filterList2;
+      filterList1[0].selected = false;
 
       filterList3.push(filterList1[0]);
 
 
       this.setState({
         notesList: filterList3,
+        orinignalNotesList: filterList3,
         toolbarMode: toolbarMode,
         groupModeFlag: false
       });

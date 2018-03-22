@@ -10,9 +10,13 @@ import { orange500, blue500 } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Checkbox from 'material-ui/Checkbox';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import '../scss/notebook.scss';
 import dropdown from '../images/dropdown.png';
 import MenuItem from './menuItem';
+import MenuItemMaterial from 'material-ui/MenuItem';
+import Menu from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
 
 const layerPng = require('../assets/images/ic-group.png');
 
@@ -37,18 +41,42 @@ const styles = {
   }
 };
 
-const buttonStyles = {
-  float: 'left',
-  marginRight: '10px',
-  background: 'white',
-  borderColor: 'grey',
-  borderWidth: '2px',
+const buttonCancelStyle = {
+  backgroundColor: '#e9e9e9',
+  borderColor: '#c7c7c7',
+  borderWidth: '1px',
+  borderStyle: 'solid',
   borderRadius: '2px',
-  fontSize: '15px',
-  width: '100px',
-  height: '40px',
-  color: 'grey',
-  cursor: 'pointer'
+  fontFamily: 'OpenSans',
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '1.29',
+  width: '110px',
+  height: '36px',
+  cursor: 'pointer',
+  paddingTop: '9px',
+  paddingBottom: '9px',
+  paddingLeft: '12px',
+  paddingRight: '12px'
+};
+
+const buttonAddToGroupStyle = {
+  backgroundColor: '#e9e9e9',
+  borderColor: '#c7c7c7',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderRadius: '2px',
+  fontFamily: 'OpenSans',
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '1.29',
+  // width: '140px',
+  height: '36px',
+  cursor: 'pointer',
+  paddingTop: '9px',
+  paddingBottom: '9px',
+  // paddingLeft: '18px',
+  // paddingRight: '26px'
 };
 
 
@@ -78,6 +106,7 @@ const chkBoxiconStyle = {
 let groupModeToggleFlag = false;
 
 
+
 export default class NoteBookHeader extends Component {
   static propTypes = {
     callback: PropTypes.func,
@@ -90,9 +119,11 @@ export default class NoteBookHeader extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.menuItems = this.menuItems.bind(this);
     this.handleGroupSaveButton = this.handleGroupSaveButton.bind(this);
+    this.handleGroupDropDownMenu = this.handleGroupDropDownMenu.bind(this);
     this.handleGroupNotesButton = this.handleGroupNotesButton.bind(this);
     this.handleNewGroupButton = this.handleNewGroupButton.bind(this);
     this.handleCancelButton = this.handleCancelButton.bind(this);
+    this.handleAddToGroupButton = this.handleAddToGroupButton.bind(this);
     // const lists = [...props.lists];
 
     this.state = {
@@ -108,7 +139,8 @@ export default class NoteBookHeader extends Component {
       showGroupInputTitle: false,
       toolbarMode: props.toolbarMode,
       groupTitle: '',
-      groupId: null
+      groupId: null,
+      groupModeDrop: false
     };
 
     const labelAllObj = {
@@ -226,6 +258,17 @@ export default class NoteBookHeader extends Component {
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
     this.props.callback('GROUP', groupModeToggleFlag);
   }
+
+
+  handleAddToGroupButton(event) {
+    this.setState({ groupModeDrop: true });
+    return;
+
+    groupModeToggleFlag = !groupModeToggleFlag;
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
+    this.props.callback('GROUP', groupModeToggleFlag);
+  }
+
   handleNewGroupButton(event) {
     let toolbarMode =
       this.setState({ showGroupTitleInput: true });
@@ -234,6 +277,17 @@ export default class NoteBookHeader extends Component {
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = this.state.groupTitle;
     toolbarMode.groupId = this.state.groupId;
+    toolbarMode.groupMode = 'DEFAULT';
+    groupModeToggleFlag = false;
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
+    this.props.callback('SAVEGROUP', toolbarMode);
+  }
+
+  handleGroupDropDownMenu(event, index, value) {
+    debugger;
+    let toolbarMode = this.props.toolbarMode;
+    toolbarMode.groupTitle = event.target.outerText;
+    toolbarMode.groupId = value;
     toolbarMode.groupMode = 'DEFAULT';
     groupModeToggleFlag = false;
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
@@ -284,7 +338,7 @@ export default class NoteBookHeader extends Component {
 
 
         {this.props.groupExpanded === false ?
-          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
+          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1', background: 'white' }}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleChange('all')}>All</div>
@@ -326,17 +380,41 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === false ? <div>
                 <table>
                   <tr>
-                    <td style={{paddingTop: '5px'}}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
+                    <td style={{ paddingTop: '5px' }}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
                     <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600' }}>Group notes</a></td></tr></table></div>
                 : null}
-              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleCancelButton()} />
+              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
 
               {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{ float: 'right' }} onClick={() => this.handleNewGroupButton()} />
                 : null}
               {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" onClick={() => this.handleGroupSaveButton(event)} />
                 : null}
+
+              <table style={{ marginTop: this.state.groupModeDrop === true ? '67px' : '0px' }}>
+                <tr>
+                  <td>
+                    {groupModeToggleFlag === true ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
+                      : null}
+                    {groupModeToggleFlag === true && this.state.groupModeDrop === true ? <Paper><Menu onChange={this.handleGroupDropDownMenu}>
+                      {toolbarMode.groups.map((group, index) =>
+                        <MenuItemMaterial key={index} value={group.tagId} primaryText={group.tagName} />
+                      )}
+                    </Menu></Paper> : null}
+                  </td>
+                </tr>
+                {/* <tr>
+                  <td>
+                  {groupModeToggleFlag === true && this.state.groupModeDrop === true ? <Menu onChange={this.handleGroupDropDownMenu}>
+                      {toolbarMode.groups.map((group, index) =>
+                        <MenuItemMaterial key={index} value={group.tagId} primaryText={group.tagName} />
+                      )}
+                    </Menu>: null}
+                  </td>
+                </tr> */}
+              </table>
+
             </ToolbarGroup>
           </Toolbar>
           :
