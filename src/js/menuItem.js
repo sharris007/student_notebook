@@ -10,8 +10,8 @@ export default class MenuItem extends Component {
     super(props);
   }
   componentDidMount = () => {
-   // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('chapterItem')));
-   // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('labelItem')));
+    // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('chapterItem')));
+    // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('labelItem')));
   }
 
   makeCheckboxAschecked = (getCheckedVal) => {
