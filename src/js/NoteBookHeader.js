@@ -57,22 +57,22 @@ const listStyle = {
   padding: '10px'
 }
 const listboxStyle = {
-  border: '1px solid gray',
   padding: '10px',
   background: '#fff',
   position: 'absolute',
   top: '75px',
   minWidth: '300px',
   maxHeight: '300px',
-  overflowY: 'auto'
+  overflowY: 'auto',
+  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)'
 }
 const listboxStyleLabel = {
-  border: '1px solid gray',
   padding: '10px',
   background: '#fff',
   position: 'absolute',
   top: '75px',
-  minWidth: '280px'
+  minWidth: '239px',
+  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)'
 }
 const chkBoxiconStyle = {
   fill: 'gray'
@@ -116,7 +116,7 @@ export default class NoteBookHeader extends Component {
     const labelAllObj = {
       "id": "All",
       "title": "All Labels",
-      "labelName": 'All'
+      "labelName": 'All Chapters'
     };
     (this.props.tocData.items).unshift(labelAllObj);
 
@@ -293,9 +293,11 @@ export default class NoteBookHeader extends Component {
           <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1001' }}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
-              {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleChange('all')}>All</div>
+              {groupModeToggleFlag === false ? <div className={
+                (this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels' ) ? 'all active' : 'all'
+              } onClick={() => this.handleChange('all')}>All</div>
                 : null}
-              {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px' }} />
+              {groupModeToggleFlag === false ? <ToolbarSeparator style={{color:'#e7e7e7', width:'2px', margin: '0px 22px 0px 18px', height: '20px' }} />
                 : null}
               {groupModeToggleFlag === false ? <div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span className={
                 (this.state.chapterText === 'Chapter') ? 'default' : 'active'
