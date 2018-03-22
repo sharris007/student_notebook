@@ -259,6 +259,11 @@ export default class NoteBookHeader extends Component {
     const { toolbarMode } = this.state;
     const labelObj = [
       {
+        "labelName": "Main ideas",
+        "labelCode": "MAIN_IDEAS",
+        "id": "main_ideas"
+      },
+      {
         "labelName": "From Instructor",
         "labelCode": "FROM_INSTRUCTOR",
         "id": "from_instructor"
@@ -274,9 +279,9 @@ export default class NoteBookHeader extends Component {
         "id": "questions"
       },
       {
-        "labelName": "Main ideas",
-        "labelCode": "MAIN_IDEAS",
-        "id": "main_ideas"
+        "labelName": "No Label",
+        "labelCode": "CUSTOM_NOTE",
+        "id": "custom_notes"
       }
     ];
 
