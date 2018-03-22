@@ -25,8 +25,6 @@ function refreshNotesList(originalNotesList, tagObject) {
     if (tagId) {
       const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
 
-      note.selected = false;
-
       if (index === -1) {
         note.notes = [];
         note.notes.push(note);
@@ -206,7 +204,15 @@ class ComponentOwner extends React.Component {
       const notesList = [...this.state.notesList];
       const originalNotesList = [...this.state.originalNotesList];
       const tempNotesList = [];
+debugger;
+      const tagId = Date.now();
       let tagName = this.state.toolbarMode.groupTitle;
+
+      if (!!!tagName){
+        tagName = 'Untitled Group';
+      }
+
+
       let filterList = _.cloneDeep(notesList);
       let filterList1 = _.cloneDeep(notesList);
       let filterList2 = _.cloneDeep(notesList);
@@ -263,14 +269,11 @@ class ComponentOwner extends React.Component {
       });
       //   filterList2.splice(0, 1);
 
-      // filterList1[0].tagId = tagId;
-      // filterList1[0].tagName = tagName;
-      // filterList1[0].notes = filterList2;
+      filterList1[0].tagId = tagId;
+      filterList1[0].tagName = tagName;
+      filterList1[0].notes = filterList2;
 
-      // filterList3.push(filterList1[0]);
-      // filterList3.forEach((item, i) => {
-      //   item.selected = false;
-      // });
+      filterList3.push(filterList1[0]);
     } else if (msg === "RENAME") {
       let tagId = (data.tags && data.tags[0].tagId) ? data.tags[0].tagId : '';
       let tagName = (data.tags && data.tags[0].tagName) ? data.tags[0].tagName : '';
