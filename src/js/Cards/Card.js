@@ -68,7 +68,7 @@ const group = {
 
 const renameDiv = {
   display: 'none',
-  borderBottom: '8px solid #252525'
+  borderBottom: '2px solid #252525'
 }
 
 const renameInput = {

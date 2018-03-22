@@ -288,9 +288,8 @@ export default class NoteBookHeader extends Component {
     return (
       <div style={{ marginLeft: '-180px' }}>
 
-
         {this.props.groupExpanded === false ?
-          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1001' }}>
+          <Toolbar className={(groupModeToggleFlag === true) ? 'groupSelect' : null} style={{ height: '80px', position: 'fixed', width: '100%', zIndex: '1001', backgroundColor: '#f5f5f5'}}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className={
@@ -308,13 +307,13 @@ export default class NoteBookHeader extends Component {
                 (this.state.labelText === 'Labels') ? 'default' : 'active'}>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /></div>{this.state.showLabelMenu ?
                   <div style={listboxStyleLabel} >{this.menuItems(labelObj)}</div> : null}</div>
                 : null}
-              {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%' }}>Select notes to group</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>Select notes to group</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%' }}>{toolbarMode.selectedCount} note selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>{toolbarMode.selectedCount} note selected</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%' }}>{toolbarMode.selectedCount} notes selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>{toolbarMode.selectedCount} notes selected</span>
                 : null}
 
             </ToolbarGroup>
@@ -336,7 +335,7 @@ export default class NoteBookHeader extends Component {
                   <tr>
                     <td style={{paddingTop: '5px'}}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
-                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600' }}>Group notes</a></td></tr></table></div>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px'}}>Group notes</a></td></tr></table></div>
                 : null}
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleCancelButton()} />
                 : null}
