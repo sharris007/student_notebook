@@ -13,6 +13,11 @@ import Checkbox from 'material-ui/Checkbox';
 import '../scss/notebook.scss';
 import dropdown from '../images/dropdown.png';
 import MenuItem from './menuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItemMaterial from 'material-ui/MenuItem';
+import Menu from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
+
 
 const layerPng = require('../assets/images/ic-group.png');
 
@@ -49,6 +54,41 @@ const buttonStyles = {
   height: '40px',
   color: 'grey',
   cursor: 'pointer'
+};
+
+const buttonCancelStyle = {
+  backgroundColor: '#e9e9e9',
+  borderColor: '#c7c7c7',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderRadius: '2px',
+  fontFamily: 'OpenSans',
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '1.29',
+  width: '110px',
+  height: '36px',
+  cursor: 'pointer',
+  paddingTop: '9px',
+  paddingBottom: '9px',
+  paddingLeft: '12px',
+  paddingRight: '12px'
+};
+
+const buttonAddToGroupStyle = {
+  backgroundColor: '#e9e9e9',
+  borderColor: '#c7c7c7',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderRadius: '2px',
+  fontFamily: 'OpenSans',
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '1.29',
+  height: '36px',
+  cursor: 'pointer',
+  paddingTop: '9px',
+  paddingBottom: '9px',
 };
 
 
@@ -95,8 +135,10 @@ export default class NoteBookHeader extends Component {
     this.handleGroupNotesButton = this.handleGroupNotesButton.bind(this);
     this.handleNewGroupButton = this.handleNewGroupButton.bind(this);
     this.handleCancelButton = this.handleCancelButton.bind(this);
+    this.handleGroupDropDownMenu = this.handleGroupDropDownMenu.bind(this);
+    this.handleAddToGroupButton = this.handleAddToGroupButton.bind(this);
     // const lists = [...props.lists];
-
+    console.log(props);
     this.state = {
       isScrolling: false,
       search: '',
@@ -110,7 +152,8 @@ export default class NoteBookHeader extends Component {
       showGroupInputTitle: false,
       toolbarMode: props.toolbarMode,
       groupTitle: '',
-      groupId: null
+      groupId: null,
+      groupModeDrop: false
     };
 
     const labelAllObj = {
@@ -199,7 +242,7 @@ export default class NoteBookHeader extends Component {
       if (selectedLabel.length > 0) {
         for (let c = 0; c < chapterList.length; c++) {
           selectedLabel.find((label) => {
-            if ((chapterList[c].noteType === label && !chapterList[c].tags ) || (label === 'NL' && !chapterList[c].noteType)) {
+            if ((chapterList[c].noteType === label && !chapterList[c].tags) || (label === 'NL' && !chapterList[c].noteType)) {
               finalFilteredList.push(chapterList[c]);
             }
           });
@@ -224,9 +267,26 @@ export default class NoteBookHeader extends Component {
   }
   handleCancelButton(event) {
     groupModeToggleFlag = !groupModeToggleFlag;
-    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null, groupModeDrop: false  });
     this.props.callback('GROUP', groupModeToggleFlag);
   }
+
+  handleAddToGroupButton(event) {
+    this.setState({ groupModeDrop: true });
+  }
+
+  handleGroupDropDownMenu(event, value, index) {
+    debugger;
+    let toolbarMode = this.props.toolbarMode;
+    toolbarMode.groupTitle = event.target.outerText;
+    toolbarMode.groupId = value;
+    toolbarMode.groupMode = 'DEFAULT';
+    groupModeToggleFlag = false;
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
+    this.props.callback('SAVEGROUP', toolbarMode);
+  }
+
+
   handleNewGroupButton(event) {
     let toolbarMode =
       this.setState({ showGroupTitleInput: true });
@@ -289,14 +349,14 @@ export default class NoteBookHeader extends Component {
       <div style={{ marginLeft: '-180px' }}>
 
         {this.props.groupExpanded === false ?
-          <Toolbar className={(groupModeToggleFlag === true) ? 'groupSelect' : null} style={{ height: '80px', position: 'fixed', width: '100%', zIndex: '1001', backgroundColor: '#f5f5f5'}}>
+          <Toolbar className={(groupModeToggleFlag === true) ? 'groupSelect' : null} style={{ height: '80px', position: 'fixed', width: '100%', zIndex: '1001', backgroundColor: '#f5f5f5' }}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className={
-                (this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels' ) ? 'all active' : 'all'
+                (this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels') ? 'all active' : 'all'
               } onClick={() => this.handleChange('all')}>All</div>
                 : null}
-              {groupModeToggleFlag === false ? <ToolbarSeparator style={{color:'#e7e7e7', width:'2px', margin: '0px 22px 0px 18px', height: '20px' }} />
+              {groupModeToggleFlag === false ? <ToolbarSeparator style={{ color: '#e7e7e7', width: '2px', margin: '0px 22px 0px 18px', height: '20px' }} />
                 : null}
               {groupModeToggleFlag === false ? <div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span className={
                 (this.state.chapterText === 'Chapter') ? 'default' : 'active'
@@ -307,13 +367,13 @@ export default class NoteBookHeader extends Component {
                 (this.state.labelText === 'Labels') ? 'default' : 'active'}>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /></div>{this.state.showLabelMenu ?
                   <div style={listboxStyleLabel} >{this.menuItems(labelObj)}</div> : null}</div>
                 : null}
-              {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>Select notes to group</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>Select notes to group</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>{toolbarMode.selectedCount} note selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} note selected</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color:'#252525'}}>{toolbarMode.selectedCount} notes selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} notes selected</span>
                 : null}
 
             </ToolbarGroup>
@@ -333,17 +393,32 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === false ? <div>
                 <table>
                   <tr>
-                    <td style={{paddingTop: '5px'}}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
+                    <td style={{ paddingTop: '5px' }}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
-                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px'}}>Group notes</a></td></tr></table></div>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table></div>
                 : null}
-              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" style={{ float: 'right' }} onClick={() => this.handleCancelButton()} />
+              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
 
               {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{ float: 'right' }} onClick={() => this.handleNewGroupButton()} />
                 : null}
               {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" onClick={() => this.handleGroupSaveButton(event)} />
                 : null}
+
+
+              {groupModeToggleFlag === true ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
+                : null}
+              {groupModeToggleFlag === true && this.state.groupModeDrop === true ?
+                <Paper style={{ position: 'absolute', top: '65px', left: '207px' }}>
+                  <Menu onChange={this.handleGroupDropDownMenu}>
+                    {toolbarMode.groups.map((group, index) =>
+                      <MenuItemMaterial key={index} value={group.tags[0].tagId} primaryText={group.tags[0].tagName} />
+                    )}
+                  </Menu>
+                </Paper> : null}
+
+
+
             </ToolbarGroup>
           </Toolbar>
           :

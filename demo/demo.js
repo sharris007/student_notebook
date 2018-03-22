@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNzA5NzE3Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTcyNzcxOCwiaWF0IjoxNTIxNzA5NzE3LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImFmYmE5NjYxLTRlNjctNDY5Yy1iOGRiLTBlOTVjYjViZDlmMyJ9.Kg3ziF_3vOct9izrNf3zrB6ytedF91weEOC_pxl3IidlhbL-DciJPDdKDg6ZYyhFuufGnoG9ueOVoANK23Tz6RXPAl9qmGh6fMwKdBDPN1cRdrBHeX2nKICkGLYb3eTv7Et_uyZ_wv5fgVgS_7Z0ENRXR9-BAly2I0B6veoAWk8';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzYwMzIxLCJpYXQiOjE1MjE3NTg1MjEsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiYjgyNzExZDktYTVkYi00YTk4LTkxMWQtOTA4ODlkNjJjNTY4In0.fwwbUrmVPqYIKvMAfLcaqHChReSyqS1bvUE6HsZoH5qEiY4YXe3t53dRdjPD3yS81VQo3W5OEcc5iS48VrLNXdfZ8o_5Lg63qSC-JbCiY9uUvqMgYsq9FDOOW50YeOWIBFGNM3MKttZNRtz6qGSlu9Lr2XXC_mNL_C57wb-vEHA';
 function init() {
   getNotes();
 };
@@ -37,6 +37,7 @@ function getNotes() {
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
+    debugger;
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
       const note = noteObj.data;
@@ -57,6 +58,10 @@ function getNotes() {
       note.notes = noteObj.notes;
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
       note.noteType = noteObj.noteType;
+      if (ic === 3) {note.noteType = 'OBSERVATIONS';}
+      if (ic === 4) {note.noteType = 'QUESTIONS';}
+      if (ic === 5) {note.noteType = 'FROM_INSTRUCTOR';}
+      if (ic === 6) {note.noteType = 'MAIN_IDEAS';}
       note.id = noteObj.id;
       note.outsetSeq = noteObj.outsetSeq;
 
@@ -95,6 +100,7 @@ function getNotes() {
         }
       }).then((res) => res.json()).then((json) => {
         const tagObject = json.tagAttributes;
+        debugger;
         tagObject.map((tag, i) => {
           _.each(groups, function (obj, index) {
             if (groups[index].tags[0].tagId === tag.tagId) {
@@ -105,6 +111,9 @@ function getNotes() {
         groups.map((group, i) => {
           notesList.unshift(group);
         });
+
+        toolbarModeProp.groups = groups;
+
         fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
           method: 'GET',
           headers: {

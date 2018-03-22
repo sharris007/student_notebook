@@ -92,7 +92,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNzA5NzE3Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTcyNzcxOCwiaWF0IjoxNTIxNzA5NzE3LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImFmYmE5NjYxLTRlNjctNDY5Yy1iOGRiLTBlOTVjYjViZDlmMyJ9.Kg3ziF_3vOct9izrNf3zrB6ytedF91weEOC_pxl3IidlhbL-DciJPDdKDg6ZYyhFuufGnoG9ueOVoANK23Tz6RXPAl9qmGh6fMwKdBDPN1cRdrBHeX2nKICkGLYb3eTv7Et_uyZ_wv5fgVgS_7Z0ENRXR9-BAly2I0B6veoAWk8';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzYwMzIxLCJpYXQiOjE1MjE3NTg1MjEsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiYjgyNzExZDktYTVkYi00YTk4LTkxMWQtOTA4ODlkNjJjNTY4In0.fwwbUrmVPqYIKvMAfLcaqHChReSyqS1bvUE6HsZoH5qEiY4YXe3t53dRdjPD3yS81VQo3W5OEcc5iS48VrLNXdfZ8o_5Lg63qSC-JbCiY9uUvqMgYsq9FDOOW50YeOWIBFGNM3MKttZNRtz6qGSlu9Lr2XXC_mNL_C57wb-vEHA';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
@@ -205,8 +205,13 @@ class ComponentOwner extends React.Component {
       const originalNotesList = [...this.state.originalNotesList];
       const tempNotesList = [];
 debugger;
-      const tagId = Date.now();
-      let tagName = this.state.toolbarMode.groupTitle;
+      let tagId = Date.now();
+      let tagName = toolbarMode.groupTitle;
+
+      if (data.groupId !== null) {
+        tagId = data.groupId;
+        tagName = data.groupTitle;
+      }
 
       if (!!!tagName){
         tagName = 'Untitled Group';
@@ -272,6 +277,7 @@ debugger;
       filterList1[0].tagId = tagId;
       filterList1[0].tagName = tagName;
       filterList1[0].notes = filterList2;
+      filterList1[0].selected = false;
 
       filterList3.push(filterList1[0]);
     } else if (msg === "RENAME") {
@@ -342,7 +348,6 @@ debugger;
           item.tags[0].tagName = null;
         }
       });
-
 
       this.setState({
         notesList: refreshNotesList(originalNotesList, tagObject),
