@@ -25,8 +25,6 @@ function refreshNotesList(originalNotesList, tagObject) {
     if (tagId) {
       const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
 
-      note.selected = false;
-
       if (index === -1) {
         note.notes = [];
         note.notes.push(note);
@@ -94,7 +92,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNjQwNDkyLCJpYXQiOjE1MjE2Mjk2OTIsInNlc3NpZCI6IjczOGVlM2Q4LTUyNDktNDAwYi1iNGEzLTY4MjJjZmFmMjk1ZiJ9.Mf-n-MF8uisfuaeXqCPxcU_Gw_Pg85Ux-CXS6iw6twy8g6U--mP1hVXjZvf08aVMc8T33SgaDIao9I47PBHA5SE304RtK_yu2gUkJrl7uFJrWFZ0VuCCV0uzpWgoJFgFnkI8qF8Nx0tc32FrFhnWbBhKC5pGlgSsYt_Cy0We3Yw';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNzA5NzE3Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTcyNzcxOCwiaWF0IjoxNTIxNzA5NzE3LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImFmYmE5NjYxLTRlNjctNDY5Yy1iOGRiLTBlOTVjYjViZDlmMyJ9.Kg3ziF_3vOct9izrNf3zrB6ytedF91weEOC_pxl3IidlhbL-DciJPDdKDg6ZYyhFuufGnoG9ueOVoANK23Tz6RXPAl9qmGh6fMwKdBDPN1cRdrBHeX2nKICkGLYb3eTv7Et_uyZ_wv5fgVgS_7Z0ENRXR9-BAly2I0B6veoAWk8';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
       // notesList.splice(0, 0, {
@@ -206,7 +204,15 @@ class ComponentOwner extends React.Component {
       const notesList = [...this.state.notesList];
       const originalNotesList = [...this.state.originalNotesList];
       const tempNotesList = [];
+debugger;
+      const tagId = Date.now();
       let tagName = this.state.toolbarMode.groupTitle;
+
+      if (!!!tagName){
+        tagName = 'Untitled Group';
+      }
+
+
       let filterList = _.cloneDeep(notesList);
       let filterList1 = _.cloneDeep(notesList);
       let filterList2 = _.cloneDeep(notesList);
@@ -263,14 +269,11 @@ class ComponentOwner extends React.Component {
       });
       //   filterList2.splice(0, 1);
 
-      // filterList1[0].tagId = tagId;
-      // filterList1[0].tagName = tagName;
-      // filterList1[0].notes = filterList2;
+      filterList1[0].tagId = tagId;
+      filterList1[0].tagName = tagName;
+      filterList1[0].notes = filterList2;
 
-      // filterList3.push(filterList1[0]);
-      // filterList3.forEach((item, i) => {
-      //   item.selected = false;
-      // });
+      filterList3.push(filterList1[0]);
     } else if (msg === "RENAME") {
       let tagId = (data.tags && data.tags[0].tagId) ? data.tags[0].tagId : '';
       let tagName = (data.tags && data.tags[0].tagName) ? data.tags[0].tagName : '';
