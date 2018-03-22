@@ -14,6 +14,8 @@ const addPng = require('../../assets/images/add.png');
 const editPng = require('../../assets/images/edit.png');
 const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
+const selectPng = require('../../assets/images/select.png');
+const selectedPng = require('../../assets/images/selected.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -248,35 +250,35 @@ const optionListStyle = {
   minHeight: '40px'
 };
 
-const groupTitle = { 
+const groupTitle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   width: '85%',
-  fontFamily:'Open Sans',
-  fontSize:'14px',
-  fontWeight:'normal',
-  fontStyle:'normal',
-  fontStretch:'normal',
-  lineHeight:'normal',
+  fontFamily: 'Open Sans',
+  fontSize: '14px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: 'normal',
   letterSpacing: '0.3px',
   textAlign: 'center',
   color: '#252525'
 }
 
 const menuOption = {
-    fontFamily: 'Open Sans',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    fontStretch: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-    textAlign: 'left',
-    color: '#252525',
-    padding: '8px 0px 0px',
-    minHeight: '40px',
-    height: '19px'
+  fontFamily: 'Open Sans',
+  fontSize: '14px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: 'normal',
+  letterSpacing: 'normal',
+  textAlign: 'left',
+  color: '#252525',
+  padding: '8px 0px 0px',
+  minHeight: '40px',
+  height: '19px'
 }
 
 const Buttony = ({ className }) => (
@@ -467,15 +469,15 @@ export default class Card extends Component {
 
   noteTypebackgroundColor = (notetype) => {
     if (notetype === "FROM_INSTRUCTOR") {
-        return "#ccf5fd";
+      return "#ccf5fd";
     } else if (notetype === "MAIN_IDEAS") {
-        return "#bbf2b6";
+      return "#bbf2b6";
     } else if (notetype === "OBSERVATIONS") {
-        return "#fed3ec";
+      return "#fed3ec";
     } else if (notetype === "QUESTIONS") {
-        return "#ffedad";
+      return "#ffedad";
     } else {
-        return "#ffffff";
+      return "#ffffff";
     }
   }
 
@@ -496,7 +498,7 @@ export default class Card extends Component {
         className="item"
         id={style ? item.id : null}
       >
- 
+
 
         {item.noteType === 'CUSTOM_NOTE' && !tagId ? (
           <div className="item-name" style={observations}>
@@ -505,7 +507,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px'}}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -517,7 +519,7 @@ export default class Card extends Component {
         ) : null}
         {item.noteType === 'MAIN_IDEAS' && !tagId ? (
           <div className="item-name" style={mainIdea}>
-            <div className="delete-perfomers" style={{ float: 'right'}}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -540,12 +542,12 @@ export default class Card extends Component {
 
         {item.noteType === 'OBSERVATIONS' && !tagId ? (
           <div className="item-name" style={observations}>
-            <div className="delete-perfomers" style={{ float: 'right'}}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px'}}
+                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -557,7 +559,7 @@ export default class Card extends Component {
         ) : null}
         {item.noteType === 'QUESTIONS' && !tagId ? (
           <div className="item-name" style={questions}>
-            <div className="delete-perfomers" style={{ float: 'right'}}>
+            <div className="delete-perfomers" style={{ float: 'right' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -579,7 +581,7 @@ export default class Card extends Component {
             }} >
 
               <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{tagName}</center></div>
-              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px'}}>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -591,7 +593,7 @@ export default class Card extends Component {
                 </IconMenu>
               </div>
 
-             
+
 
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
@@ -616,13 +618,13 @@ export default class Card extends Component {
 
 
 
-{item.cardFormat === 'note' && tagId ?
-                <div style={line2} /> : null}
+        {item.cardFormat === 'note' && tagId ?
+          <div style={line2} /> : null}
 
 
         {item.cardFormat === 'note' && this.state.groupModeFlag === true && !tagId ?
-          <button style={Rtest} onClick={() => this.handleSelectCard(item)}>
-            {this.state.selected ? <img src={checkmarkPng} /> : null}</button>
+          <div style={{ position: 'relative', top: '-50px', left: '-10px' }} onClick={() => this.handleSelectCard(item)}>
+            {this.state.selected ? <img src={selectedPng} /> : <img src={selectPng} />}</div>
           : null}
 
         {item.cardFormat === 'note' ? (
@@ -697,7 +699,7 @@ export default class Card extends Component {
           </div>
         ) : (
             <div>
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{paddingTop:'10px'}}>
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{ paddingTop: '10px' }}>
                 <div className="item-content">
                   <table style={{ tableLayout: 'fixed', width: '100%' }}><tbody><tr>
                     <td width='85%'>
@@ -718,14 +720,14 @@ export default class Card extends Component {
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{paddingTop:'11.1px', paddingBottom: '0'}}>
-                <div className="item-content" style={{paddingRight:'8px'}}>
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0' }}>
+                <div className="item-content" style={{ paddingRight: '8px' }}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{paddingTop:'20px'}}>
-                <div className="item-content" style={{paddingRight:'8px'}}>
+              {item.cardFormat === 'note' && item.pageId ? <div className="item-container" style={{ paddingTop: '20px' }}>
+                <div className="item-content" style={{ paddingRight: '8px' }}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
               </div> : null}
@@ -761,30 +763,30 @@ export default class Card extends Component {
 
           )}
         {item.noteType === 'FROM_INSTRUCTOR' && !tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ccf5fd', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ccf5fd', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'MAIN_IDEAS' && !tagId ? (
-          <div><span className="verticalAlign" style={{background: '#bbf2b6', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#bbf2b6', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'OBSERVATIONS' && !tagId ? (
-          <div><span className="verticalAlign" style={{background: '#fed3ec', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#fed3ec', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'QUESTIONS' && !tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ffedad', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ffedad', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'CUSTOM_NOTE' && !tagId ? (
-          <div><span className="verticalAlign" style={{background: '#ffffff', width: '11px', height: '60px'}}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ffffff', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
         {tagId ?
           <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
             <div>
-             <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
+              <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
               <table className="verticalAlign footerTable">
                 <tbody>
                   <tr>
@@ -821,8 +823,8 @@ export default class Card extends Component {
 
         {tagId ?
           item.notes.map((note, i) => (
-          //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '100%', zIndex: `${1000 - (i+1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
+            //  item.notes.splice(1).map((note, i) => (
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)', borderRadius: '4px' }}>
               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
               </div>
             </div>
