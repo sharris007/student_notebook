@@ -47,9 +47,6 @@ function refreshNotesList(originalNotesList, tagObject) {
     });
 
     groups.map((group, i) => {
-      if (!!!group.tags[0].tagName) {
-        group.tags[0].tagName = 'Group ' + i;
-      }
       notesList.unshift(group);
     });
   }
@@ -246,8 +243,6 @@ class ComponentOwner extends React.Component {
         let updatedObject = tagObject;
         ;
         updatedObject.push(json);
-        let newGroups = toolbarMode.groups;
-        newGroups.push(json);
         this.setState({
           notesList: refreshNotesList(originalNotesList, updatedObject),
           originalNotesList: originalNotesList,
@@ -265,6 +260,7 @@ class ComponentOwner extends React.Component {
 
       filterList3.push(filterList1[0]);
     }else if (msg === "EDITGROUP") {
+      console.log('add note group');
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
@@ -302,8 +298,8 @@ class ComponentOwner extends React.Component {
         groupPayload.notes.push(selectedObj);
       });
 
-      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
-        method: 'PUT',
+      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/'+tagId, {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

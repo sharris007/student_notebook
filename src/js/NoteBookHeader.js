@@ -281,7 +281,7 @@ export default class NoteBookHeader extends Component {
     toolbarMode.groupMode = 'DEFAULT';
     groupModeToggleFlag = false;
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
-    this.props.callback('SAVEGROUP', toolbarMode);
+    this.props.callback('EDITGROUP', toolbarMode);
   }
 
 

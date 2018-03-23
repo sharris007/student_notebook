@@ -19,6 +19,8 @@ function callback(msg, data) {
     }
     else if (msg === "GROUP") {
     }
+     else if (msg === "EDITGROUP") {
+    }
     else if (msg === "UNGROUP NOTES") {
       ungroupNotes(msg, data);
     }
@@ -99,14 +101,6 @@ function getNotes() {
       }).then((res) => res.json()).then((json) => {
         const tagObject = json.tagAttributes;
 
-        // QUICK FIX
-
-        _.each(groups, function (group, i) {
-          const index = _.findIndex(tagObject, function (o) { return o.tagId === group.tags[0].tagId; });
-          if (index === -1) {
-            tagObject.push({ tagId: group.tags[0].tagId, tagName: 'Group ' + i });
-          }
-        });
         tagObject.map((tag, i) => {
           _.each(groups, function (obj, index) {
             if (groups[index].tags[0].tagId === tag.tagId) {
@@ -118,9 +112,6 @@ function getNotes() {
 
 
         groups.map((group, i) => {
-          if (!!!group.tags[0].tagName) {
-            group.tags[0].tagName = 'Group ' + i;
-          }
           notesList.unshift(group);
         });
 
