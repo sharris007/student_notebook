@@ -93,7 +93,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzgzNjgwLCJpYXQiOjE1MjE3ODE4NzksImNsaWVudF9pZCI6IktDcGpuYnFBTkIwUmtJOGFvaHo1dVJCTUFHZU41RkdBIiwic2Vzc2lkIjoiMjU4YTE1MTgtOGIxNC00YjQ5LWFhZjUtNjQxNmI0NzI5NzBkIn0.Tupt1OBrEmtUmmcZ6LjKdI0C_JmsZgihO3ds-QBnaBfBHa9HGAdSnKiGZNS76UoZZPMWCADtfbqE9IgHy621cMytgWKrslJ1gVYgIitXqGyw8Lddr01BSxcMnar5658OmcemmgtGrRc8U6OkIODiGNbdkeRkjMNjukLs7ZEkR9o';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNzg1NzEyIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTgwNjQxNSwiaWF0IjoxNTIxNzg4NDE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImI2MmI5OWEyLWJkZTYtNDBmNC04YmM5LTI1OTU0Yjc2MjAwMCJ9.hzDE2R8zQqn5n5YRtA2rYH3Si8XLcrQoxOh5U35nwI00fe6KzEisbOGDHN-LAxzpAshMWVjwtjOMCw3DvzzYLIqvK5DANHxBjFd9JKRtZWGocchlLGKdonCfg6GSckCjtc5lKA_2c0zp8y7sfbwf2-bVxQQWc3luJM8ruNW2Vxs';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -112,9 +112,9 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === 'NAVIGATE') {
-      console.log('Navigation', data);
 
     } else if (msg === "GROUP") {
+      // this.props.callback(msg, data);s
       notesList.forEach((item, i) => {
         item.keyId = item.id + Date.now();
         if (data === false) {
@@ -219,6 +219,91 @@ class ComponentOwner extends React.Component {
 
       const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
         method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(groupPayload)
+      }).then((res) => res.json()).then((json) => {
+        let tagId = json.tagId;
+        let tagName = json.tagName;
+        filterList2.forEach((item, i) => {
+          const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
+          if (index != -1) {
+            if (originalNotesList[index].tags) {
+              originalNotesList[index].tags[0].tagId = tagId;
+              originalNotesList[index].tags[0].tagName = tagName;
+            } else {
+              originalNotesList[index].tags = [{
+                'tagId': tagId,
+                'tagName': tagName
+              }];
+            }
+          }
+          //    item.tagId = null;
+        });
+        let updatedObject = tagObject;
+        ;
+        updatedObject.push(json);
+        let newGroups = toolbarMode.groups;
+        newGroups.push(json);
+        this.setState({
+          notesList: refreshNotesList(originalNotesList, updatedObject),
+          originalNotesList: originalNotesList,
+          toolbarMode: toolbarMode,
+          tagAttributes: updatedObject,
+          groupModeFlag: false
+        });
+      });
+      //   filterList2.splice(0, 1);
+
+      filterList1[0].tagId = tagId;
+      filterList1[0].tagName = tagName;
+      filterList1[0].notes = filterList2;
+      filterList1[0].selected = false;
+
+      filterList3.push(filterList1[0]);
+    }else if (msg === "EDITGROUP") {
+      let toolbarMode = this.props.toolbarMode;
+      toolbarMode.groupMode = 'DEFAULT'
+      const notesList = [...this.state.notesList];
+      const originalNotesList = [...this.state.originalNotesList];
+      const tempNotesList = [];
+      let tagId = Date.now();
+      let tagName = toolbarMode.groupTitle;
+
+      if (data.groupId !== null) {
+        tagId = data.groupId;
+        tagName = data.groupTitle;
+      }
+
+      if (!!!tagName) {
+        tagName = 'Untitled Group';
+      }
+
+
+      let filterList = _.cloneDeep(notesList);
+      let filterList1 = _.cloneDeep(notesList);
+      let filterList2 = _.cloneDeep(notesList);
+      let filterList3 = _.cloneDeep(notesList);
+
+      filterList1 = filterList1.filter(notesList => notesList.selected === true);
+      filterList2 = filterList2.filter(notesList => notesList.selected === true);
+      filterList3 = filterList3.filter(notesList => notesList.selected === false);
+      let groupPayload = {
+        "tagName": tagName,
+        "notes": []
+      };
+      filterList2.forEach((item, i) => {
+        let selectedObj = {
+          "id": item.id
+        }
+        groupPayload.notes.push(selectedObj);
+      });
+
+      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
+        method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -388,10 +473,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, expandedTagId } = this.state;
+    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
+        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
       </div>
     );
   };

@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzgzNjgwLCJpYXQiOjE1MjE3ODE4NzksImNsaWVudF9pZCI6IktDcGpuYnFBTkIwUmtJOGFvaHo1dVJCTUFHZU41RkdBIiwic2Vzc2lkIjoiMjU4YTE1MTgtOGIxNC00YjQ5LWFhZjUtNjQxNmI0NzI5NzBkIn0.Tupt1OBrEmtUmmcZ6LjKdI0C_JmsZgihO3ds-QBnaBfBHa9HGAdSnKiGZNS76UoZZPMWCADtfbqE9IgHy621cMytgWKrslJ1gVYgIitXqGyw8Lddr01BSxcMnar5658OmcemmgtGrRc8U6OkIODiGNbdkeRkjMNjukLs7ZEkR9o';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJvY2QiOiIxNTIxNzg1NzEyIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMTgwNjQxNSwiaWF0IjoxNTIxNzg4NDE1LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImI2MmI5OWEyLWJkZTYtNDBmNC04YmM5LTI1OTU0Yjc2MjAwMCJ9.hzDE2R8zQqn5n5YRtA2rYH3Si8XLcrQoxOh5U35nwI00fe6KzEisbOGDHN-LAxzpAshMWVjwtjOMCw3DvzzYLIqvK5DANHxBjFd9JKRtZWGocchlLGKdonCfg6GSckCjtc5lKA_2c0zp8y7sfbwf2-bVxQQWc3luJM8ruNW2Vxs';
 function init() {
   getNotes();
 };
@@ -16,6 +16,8 @@ function callback(msg, data) {
     }
     else if (msg === 'DELETE') {
       deleteNote(msg, data);
+    }
+    else if (msg === "GROUP") {
     }
     else if (msg === "UNGROUP NOTES") {
       ungroupNotes(msg, data);
@@ -37,7 +39,6 @@ function getNotes() {
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
-    console.log(notes);
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
       const note = noteObj.data;
@@ -58,16 +59,6 @@ function getNotes() {
       note.notes = noteObj.notes;
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
       note.noteType = noteObj.noteType;
-      if (ic === 1) { note.noteType = 'OBSERVATIONS'; }
-      if (ic === 2) { note.noteType = 'OBSERVATIONS'; }
-      if (ic === 3) { note.noteType = 'OBSERVATIONS'; }
-      if (ic === 4) { note.noteType = 'QUESTIONS'; }
-      if (ic === 5) { note.noteType = 'FROM_INSTRUCTOR'; }
-      if (ic === 6) { note.noteType = 'MAIN_IDEAS'; }
-      if (ic === 8) { note.noteType = 'FROM_INSTRUCTOR'; }
-      if (ic === 9) { note.noteType = 'FROM_INSTRUCTOR'; }
-      if (ic === 10) { note.noteType = 'QUESTIONS'; }
-      if (ic === 11) { note.noteType = 'QUESTIONS'; }
       
       note.id = noteObj.id;
       note.outsetSeq = noteObj.outsetSeq;
@@ -110,19 +101,12 @@ function getNotes() {
 
         // QUICK FIX
 
-        debugger;
         _.each(groups, function (group, i) {
           const index = _.findIndex(tagObject, function (o) { return o.tagId === group.tags[0].tagId; });
           if (index === -1) {
             tagObject.push({ tagId: group.tags[0].tagId, tagName: 'Group ' + i });
           }
         });
-
-
-
-        console.log(tagObject);
-
-        debugger;
         tagObject.map((tag, i) => {
           _.each(groups, function (obj, index) {
             if (groups[index].tags[0].tagId === tag.tagId) {
@@ -140,7 +124,7 @@ function getNotes() {
           notesList.unshift(group);
         });
 
-        toolbarModeProp.groups = groups;
+         toolbarModeProp.groups = groups;
 
         fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
           method: 'GET',
@@ -161,7 +145,6 @@ function getNotes() {
             tagAttributes: tagObject,
             toolbarMode: toolbarModeProp,
             handleGroupClick: (tagId, tagName) => {
-              console.log('tagId: ', tagId);
             }
             //  responsiveColumns
           });
@@ -188,7 +171,6 @@ function getNotes() {
           tagAttributes: [],
           toolbarMode: toolbarModeProp,
           handleGroupClick: (tagId, tagName) => {
-            console.log('tagId: ', tagId);
           }
           //  responsiveColumns
         });

@@ -138,7 +138,6 @@ export default class NoteBookHeader extends Component {
     this.handleGroupDropDownMenu = this.handleGroupDropDownMenu.bind(this);
     this.handleAddToGroupButton = this.handleAddToGroupButton.bind(this);
     // const lists = [...props.lists];
-    console.log(props);
     this.state = {
       isScrolling: false,
       search: '',
@@ -267,7 +266,7 @@ export default class NoteBookHeader extends Component {
   }
   handleCancelButton(event) {
     groupModeToggleFlag = !groupModeToggleFlag;
-    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null, groupModeDrop: false  });
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null, groupModeDrop: false });
     this.props.callback('GROUP', groupModeToggleFlag);
   }
 
@@ -316,6 +315,8 @@ export default class NoteBookHeader extends Component {
   }
   render() {
     const { toolbarMode } = this.state;
+    console.log(toolbarMode);
+    console.log(this.props.tagAttributes);
     const labelObj = [
       {
         "labelName": "Main ideas",
@@ -410,8 +411,8 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === true && this.state.groupModeDrop === true ?
                 <Paper style={{ position: 'absolute', top: '65px', left: '207px' }}>
                   <Menu onChange={this.handleGroupDropDownMenu}>
-                    {toolbarMode.groups.map((group, index) =>
-                      <MenuItemMaterial key={index} value={group.tags[0].tagId} primaryText={group.tags[0].tagName} />
+                    {this.props.tagAttributes.map((group, index) =>
+                      <MenuItemMaterial key={index} value={group.tagId ? group.tagId : null} primaryText={group.tagName ? group.tagName : null} />
                     )}
                   </Menu>
                 </Paper> : null}

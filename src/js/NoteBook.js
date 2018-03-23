@@ -50,7 +50,6 @@ export default class Board extends Component {
   createLists = (props, cardDropped) => {
     const notesList = [...props.notesList];
     this.setState({ notesList });
-    console.log('mount', notesList);
     if (props.groupExpanded === false) {
       if (!cardDropped) {
         notesList.splice(0, 0, {
@@ -238,7 +237,7 @@ export default class Board extends Component {
     });
     return (
       <div>
-        <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
+        <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} tagAttributes={this.props.tagAttributes} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
         <main>
           <div style={{ height: '100%' }}>
             <CustomDragLayer snapToGrid={false} />

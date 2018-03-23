@@ -28,7 +28,6 @@ const cardSource = {
       }
       props.stopScrolling();
     }catch (e) {
-      console.log(e);
     }
     
   },
