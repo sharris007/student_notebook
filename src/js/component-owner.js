@@ -13,7 +13,6 @@ import _ from 'lodash';
 import NoteBook from './NoteBook';
 
 function refreshNotesList(originalNotesList, tagObject) {
-
   //  const tagName = state.expandedTagName;
   // const tagId = state.expandedTagId;
   const groups = [];
@@ -29,7 +28,6 @@ function refreshNotesList(originalNotesList, tagObject) {
         note.notes = [];
         note.notes.push(note);
         groups.push(note);
-        console.log(groups);
       } else {
         note.tagId = null;
         note.tagName = null;
@@ -49,6 +47,9 @@ function refreshNotesList(originalNotesList, tagObject) {
     });
 
     groups.map((group, i) => {
+      if (!!!group.tags[0].tagName) {
+        group.tags[0].tagName = 'Group ' + i;
+      }
       notesList.unshift(group);
     });
   }
@@ -92,24 +93,11 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzYwMzIxLCJpYXQiOjE1MjE3NTg1MjEsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiYjgyNzExZDktYTVkYi00YTk4LTkxMWQtOTA4ODlkNjJjNTY4In0.fwwbUrmVPqYIKvMAfLcaqHChReSyqS1bvUE6HsZoH5qEiY4YXe3t53dRdjPD3yS81VQo3W5OEcc5iS48VrLNXdfZ8o_5Lg63qSC-JbCiY9uUvqMgYsq9FDOOW50YeOWIBFGNM3MKttZNRtz6qGSlu9Lr2XXC_mNL_C57wb-vEHA';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzgzNjgwLCJpYXQiOjE1MjE3ODE4NzksImNsaWVudF9pZCI6IktDcGpuYnFBTkIwUmtJOGFvaHo1dVJCTUFHZU41RkdBIiwic2Vzc2lkIjoiMjU4YTE1MTgtOGIxNC00YjQ5LWFhZjUtNjQxNmI0NzI5NzBkIn0.Tupt1OBrEmtUmmcZ6LjKdI0C_JmsZgihO3ds-QBnaBfBHa9HGAdSnKiGZNS76UoZZPMWCADtfbqE9IgHy621cMytgWKrslJ1gVYgIitXqGyw8Lddr01BSxcMnar5658OmcemmgtGrRc8U6OkIODiGNbdkeRkjMNjukLs7ZEkR9o';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
-      // notesList.splice(0, 0, {
-      //   id: 'created' + notesList.length + 1,
-      //   keyId: Date.now(),
-      //   title: data.title,
-      //   cardFormat: 'note',
-      //   content: data.content,
-      //   content2: 'this is test data',
-      //   timeStamp: data.timeStamp,
-      //   noteType: 'CUSTOM_NOTE'
-      // });
-      // this.setState({
-      //   notesList: notesList
-      // });
     } else if (msg === 'SAVE') {
-       this.props.callback(msg, data);
+      this.props.callback(msg, data);
       const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
       if (index > -1) {
         notesList.splice(index, 1, data, function (formattedData) {
@@ -121,14 +109,7 @@ class ComponentOwner extends React.Component {
       }
     } else if (msg === 'DELETE') {
       this.props.callback(msg, data);
-      // const index = _.findIndex(originalNotesList, function (o) { return o.id === data.id; });
-      // if (index > -1) {
-      //   originalNotesList.splice(index, 1);
-      // }
-      // this.setState({
-      //   notesList: refreshNotesList(originalNotesList, tagObject),
-      //   originalNotesList: originalNotesList
-      // });
+
 
     } else if (msg === 'NAVIGATE') {
       console.log('Navigation', data);
@@ -204,7 +185,6 @@ class ComponentOwner extends React.Component {
       const notesList = [...this.state.notesList];
       const originalNotesList = [...this.state.originalNotesList];
       const tempNotesList = [];
-debugger;
       let tagId = Date.now();
       let tagName = toolbarMode.groupTitle;
 
@@ -213,7 +193,7 @@ debugger;
         tagName = data.groupTitle;
       }
 
-      if (!!!tagName){
+      if (!!!tagName) {
         tagName = 'Untitled Group';
       }
 
@@ -236,6 +216,7 @@ debugger;
         }
         groupPayload.notes.push(selectedObj);
       });
+
       const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
         method: 'POST',
         headers: {
@@ -263,7 +244,10 @@ debugger;
           //    item.tagId = null;
         });
         let updatedObject = tagObject;
+        ;
         updatedObject.push(json);
+        let newGroups = toolbarMode.groups;
+        newGroups.push(json);
         this.setState({
           notesList: refreshNotesList(originalNotesList, updatedObject),
           originalNotesList: originalNotesList,
@@ -349,6 +333,10 @@ debugger;
         }
       });
 
+      const index = _.findIndex(tagObject, function (o) { return o.tagId === data.tags[0].tagId; });
+      if (index != -1) {
+        tagObject.splice(index, 1);
+      }
       this.setState({
         notesList: refreshNotesList(originalNotesList, tagObject),
         originalNotesList: originalNotesList,

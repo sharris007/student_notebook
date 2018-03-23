@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzYwMzIxLCJpYXQiOjE1MjE3NTg1MjEsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiYjgyNzExZDktYTVkYi00YTk4LTkxMWQtOTA4ODlkNjJjNTY4In0.fwwbUrmVPqYIKvMAfLcaqHChReSyqS1bvUE6HsZoH5qEiY4YXe3t53dRdjPD3yS81VQo3W5OEcc5iS48VrLNXdfZ8o_5Lg63qSC-JbCiY9uUvqMgYsq9FDOOW50YeOWIBFGNM3MKttZNRtz6qGSlu9Lr2XXC_mNL_C57wb-vEHA';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIxNzgzNjgwLCJpYXQiOjE1MjE3ODE4NzksImNsaWVudF9pZCI6IktDcGpuYnFBTkIwUmtJOGFvaHo1dVJCTUFHZU41RkdBIiwic2Vzc2lkIjoiMjU4YTE1MTgtOGIxNC00YjQ5LWFhZjUtNjQxNmI0NzI5NzBkIn0.Tupt1OBrEmtUmmcZ6LjKdI0C_JmsZgihO3ds-QBnaBfBHa9HGAdSnKiGZNS76UoZZPMWCADtfbqE9IgHy621cMytgWKrslJ1gVYgIitXqGyw8Lddr01BSxcMnar5658OmcemmgtGrRc8U6OkIODiGNbdkeRkjMNjukLs7ZEkR9o';
 function init() {
   getNotes();
 };
@@ -37,7 +37,7 @@ function getNotes() {
     }
   }).then((res) => res.json()).then((json) => {
     const notes = json;
-    debugger;
+    console.log(notes);
     for (let ic = 0; ic < notes.total; ic++) {
       const noteObj = notes.response[ic];
       const note = noteObj.data;
@@ -58,10 +58,17 @@ function getNotes() {
       note.notes = noteObj.notes;
       note.timeStamp = noteObj.updatedTime ? noteObj.updatedTime : noteObj.createdTime;
       note.noteType = noteObj.noteType;
-      if (ic === 3) {note.noteType = 'OBSERVATIONS';}
-      if (ic === 4) {note.noteType = 'QUESTIONS';}
-      if (ic === 5) {note.noteType = 'FROM_INSTRUCTOR';}
-      if (ic === 6) {note.noteType = 'MAIN_IDEAS';}
+      if (ic === 1) { note.noteType = 'OBSERVATIONS'; }
+      if (ic === 2) { note.noteType = 'OBSERVATIONS'; }
+      if (ic === 3) { note.noteType = 'OBSERVATIONS'; }
+      if (ic === 4) { note.noteType = 'QUESTIONS'; }
+      if (ic === 5) { note.noteType = 'FROM_INSTRUCTOR'; }
+      if (ic === 6) { note.noteType = 'MAIN_IDEAS'; }
+      if (ic === 8) { note.noteType = 'FROM_INSTRUCTOR'; }
+      if (ic === 9) { note.noteType = 'FROM_INSTRUCTOR'; }
+      if (ic === 10) { note.noteType = 'QUESTIONS'; }
+      if (ic === 11) { note.noteType = 'QUESTIONS'; }
+      
       note.id = noteObj.id;
       note.outsetSeq = noteObj.outsetSeq;
 
@@ -100,6 +107,21 @@ function getNotes() {
         }
       }).then((res) => res.json()).then((json) => {
         const tagObject = json.tagAttributes;
+
+        // QUICK FIX
+
+        debugger;
+        _.each(groups, function (group, i) {
+          const index = _.findIndex(tagObject, function (o) { return o.tagId === group.tags[0].tagId; });
+          if (index === -1) {
+            tagObject.push({ tagId: group.tags[0].tagId, tagName: 'Group ' + i });
+          }
+        });
+
+
+
+        console.log(tagObject);
+
         debugger;
         tagObject.map((tag, i) => {
           _.each(groups, function (obj, index) {
@@ -108,7 +130,13 @@ function getNotes() {
             }
           });
         });
+
+
+
         groups.map((group, i) => {
+          if (!!!group.tags[0].tagName) {
+            group.tags[0].tagName = 'Group ' + i;
+          }
           notesList.unshift(group);
         });
 

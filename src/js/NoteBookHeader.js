@@ -276,7 +276,6 @@ export default class NoteBookHeader extends Component {
   }
 
   handleGroupDropDownMenu(event, value, index) {
-    debugger;
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = event.target.outerText;
     toolbarMode.groupId = value;
@@ -406,7 +405,7 @@ export default class NoteBookHeader extends Component {
                 : null}
 
 
-              {groupModeToggleFlag === true ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
                 : null}
               {groupModeToggleFlag === true && this.state.groupModeDrop === true ?
                 <Paper style={{ position: 'absolute', top: '65px', left: '207px' }}>
