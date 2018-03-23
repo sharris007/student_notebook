@@ -370,10 +370,10 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === true && toolbarMode.groupMode !== 'SELECTED' ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>Select notes to group</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} note selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount === 1 && !this.state.showGroupTitleInput ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} note selected</span>
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} notes selected</span>
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' && toolbarMode.selectedCount > 1 && !this.state.showGroupTitleInput ? <span style={{ position: 'fixed', right: '50%', fontFamily: 'Open Sans', fontSize: '16px', color: '#252525' }}>{toolbarMode.selectedCount} notes selected</span>
                 : null}
 
             </ToolbarGroup>
