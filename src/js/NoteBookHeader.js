@@ -400,12 +400,6 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
 
-              {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{backgroundColor: '#047a9c'}} labelStyle={{ float: 'right', textTransform: 'capitalize', color: '#ffffff', backgroundColor: '#047a9c', fontWeight: '600', fontFamily:'Open Sans', fontSize:'14px' }} onClick={() => this.handleNewGroupButton()} />
-                : null}
-              {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', fontFamily:'Open Sans', color: '#ffffff',  fontSize:'14px' }} buttonStyle={{backgroundColor: '#047a9c'}} onClick={() => this.handleGroupSaveButton(event)} />
-                : null}
-
-
               {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
                 : null}
               {groupModeToggleFlag === true && this.state.groupModeDrop === true ?
@@ -417,6 +411,14 @@ export default class NoteBookHeader extends Component {
                   </Menu>
                 </Paper> : null}
 
+
+              {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{backgroundColor: '#047a9c'}} labelStyle={{ float: 'right', textTransform: 'capitalize', color: '#ffffff', backgroundColor: '#047a9c', fontWeight: '600', fontFamily:'Open Sans', fontSize:'14px' }} onClick={() => this.handleNewGroupButton()} />
+                : null}
+              {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', fontFamily:'Open Sans', color: '#ffffff',  fontSize:'14px' }} buttonStyle={{backgroundColor: '#047a9c'}} onClick={() => this.handleGroupSaveButton(event)} />
+                : null}
+
+
+              
 
 
             </ToolbarGroup>
