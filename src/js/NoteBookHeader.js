@@ -284,7 +284,6 @@ export default class NoteBookHeader extends Component {
   }
 
   handleGroupDropDownMenu(event, index, value) {
-    debugger;
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = event.target.outerText;
     toolbarMode.groupId = value;

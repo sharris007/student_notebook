@@ -189,7 +189,6 @@ class ComponentOwner extends React.Component {
       });
     } else if (msg === "SAVEGROUP") {
 
-      debugger;
 
 
 
