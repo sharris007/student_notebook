@@ -167,19 +167,19 @@ export default class Cards extends Component {
             />
           );
       }
-      // if (isOver && canDrop && placeholderIndex === i) {
-      // //   // cardList.push(<div key="placeholder" className="item placeholder" />);
-      // }
+      if (isOver && canDrop && placeholderIndex === i) {
+       cardList.push(<div key="placeholder" className="item placeholder" />);
+      }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-      // cardList.push(<div key="placeholder" className="item placeholder" />);
+       cardList.push(<div key="placeholder" className="item placeholder" />);
     }
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-      // cardList.push(<div key="placeholder" className="item placeholder" />);
+       cardList.push(<div key="placeholder" className="item placeholder" />);
     }  
 
    
