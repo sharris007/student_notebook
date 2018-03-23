@@ -477,7 +477,7 @@ export default class Card extends Component {
     } else if (notetype === "QUESTIONS") {
       return "#ffedad";
     } else {
-      return "#ffffff";
+      return "none";
     }
   }
 
@@ -786,9 +786,7 @@ export default class Card extends Component {
         {tagId ?
           <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
             <div>
-              {item.noteType !== "CUSTOM_NOTE" ? (
-                <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
-              ) : null}
+              <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
               <table className="verticalAlign footerTable">
                 <tbody>
                   <tr>
@@ -827,11 +825,10 @@ export default class Card extends Component {
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
             <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
-               {item.noteType !== "CUSTOM_NOTE" ? (
+  
                <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
              
               </div>
-               ) : null}
             </div>
 
           )) : null}
