@@ -213,7 +213,10 @@
       
 }
 .desk {
-  width: 258px !important;
+  width: 268px !important;
+}
+.desk-items {
+  width: 268px !important;
 }
 
 .footerNote { 
@@ -237,7 +240,7 @@
     letter-spacing: -0.1px;
     text-align: right;
     color: rgb(106, 112, 112);
-    padding: 0 0 0 6px;
+    padding: 0 0 0 26px;
     background: white;
     font-family: Open Sans;
  }
@@ -246,7 +249,7 @@
     vertical-align: middle;
  }
  .footerTable {
-    width: 237px;
+    width: 247px;
     padding-right: 15px;
  }
  .groupSelect {
