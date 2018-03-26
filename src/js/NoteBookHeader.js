@@ -270,6 +270,9 @@ export default class NoteBookHeader extends Component {
     if(this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels') {
       this.setState({ groupNoteShow : false});
     }
+    else {
+      this.setState({ groupNoteShow : true});
+    }
   }
   handleCancelButton(event) {
     groupModeToggleFlag = !groupModeToggleFlag;
@@ -389,10 +392,13 @@ export default class NoteBookHeader extends Component {
               {this.state.showGroupTitleInput === true ? <div><TextField
                 onChange={(e) => { this.handleGroupTitleChange(e) }}
                 // value={this.state.groupTitle}
-                style={{ marginBottom: '10px' }}
+                style={{ marginBottom: '10px', fontSize:'14px' }}
                 floatingLabelText="Group title"
+                floatingLabelFocusStyle={{color:'#6a7070'}}
+                floatingLabelStyle={{color:'#6a7070'}}
                 defaultValue="Untitled group"
                 underlineStyle={styles.underlineStyle}
+                underlineFocusStyle={{borderBottom:'4px solid #047a9c'}}
               />
                 <span style={{ paddingRight: '50px' }}></span></div> : null}
 
