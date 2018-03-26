@@ -89,6 +89,7 @@ const buttonAddToGroupStyle = {
   cursor: 'pointer',
   paddingTop: '9px',
   paddingBottom: '9px',
+  width: '140px'
 };
 
 
@@ -397,10 +398,10 @@ export default class NoteBookHeader extends Component {
                     </td>
                     <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table></div>
                 : null}
-              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
+              {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
 
-              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
+              {groupModeToggleFlag === true && toolbarMode.groupMode === 'SELECTED' ? <RaisedButton label="Add to group" icon={<img className='dropdownImg' src={dropdown} alt="arrow" />} labelPosition="before" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29' }} style={{ boxShadow: 'none' }} buttonStyle={buttonAddToGroupStyle} onClick={() => this.handleAddToGroupButton()} />
                 : null}
               {groupModeToggleFlag === true && this.state.groupModeDrop === true ?
                 <Paper style={{ position: 'absolute', top: '65px', left: '207px' }}>
@@ -412,9 +413,9 @@ export default class NoteBookHeader extends Component {
                 </Paper> : null}
 
 
-              {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" style={{backgroundColor: '#047a9c'}} labelStyle={{ float: 'right', textTransform: 'capitalize', color: '#ffffff', backgroundColor: '#047a9c', fontWeight: '600', fontFamily:'Open Sans', fontSize:'14px' }} onClick={() => this.handleNewGroupButton()} />
+              {toolbarMode.groupMode === 'SELECTED' && !this.state.showGroupTitleInput ? <RaisedButton label="New Group" buttonStyle= {{height: '36px', borderRadius: '2px', backgroundColor: '#047a9c', padding:'9px 16px', width:'110px'}} style={{backgroundColor: '#047a9c', height: '36px'}} labelStyle={{ float: 'right', textTransform: 'capitalize', color: '#ffffff', backgroundColor: '#047a9c', fontWeight: '600', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29', padding: '0'}} onClick={() => this.handleNewGroupButton()} />
                 : null}
-              {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', fontFamily:'Open Sans', color: '#ffffff',  fontSize:'14px' }} buttonStyle={{backgroundColor: '#047a9c'}} onClick={() => this.handleGroupSaveButton(event)} />
+              {this.state.showGroupTitleInput === true ? <RaisedButton label="Save" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', fontFamily:'Open Sans', color: '#ffffff',  fontSize:'14px', lineHheight: '1.29', height:'18px', padding: '9px 0'  }} buttonStyle={{backgroundColor: '#047a9c', width:'110px'}} onClick={() => this.handleGroupSaveButton(event)} />
                 : null}
 
 

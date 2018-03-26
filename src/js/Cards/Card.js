@@ -60,8 +60,6 @@ const questions = {
 const group = {
   backgroundColor: 'white',
   height: '44px',
-  paddingTop: '10px',
-  paddingLeft: '10px',
   color: 'black',
   textOverflow: 'ellipsis'
 };
@@ -497,7 +495,7 @@ export default class Card extends Component {
       <div
         //    style={{ background: 'white' }}
         style={tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
-        className="item"
+        className={(item.cardFormat === 'add mode') ? "item addcardStyle" : "item"}
         data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
       >
 
@@ -582,8 +580,8 @@ export default class Card extends Component {
               this.groupTitle = ele;
             }} >
 
-              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '85%' }}> <center>{tagName}</center></div>
-              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px' }}>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', padding:'13px 0'}}> <center>{tagName}</center></div>
+              <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-36px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -740,7 +738,7 @@ export default class Card extends Component {
           <div className="item-perfomers" >
           </div>
         ) : (
-            <div className="item-perfomers" style= {(item.cardFormat === 'add mode')? padding0 : null}>
+            <div className="item-perfomers" style= {(item.cardFormat === 'add mode') ? padding0 : null}>
               {item.cardFormat === 'create new' ? (
                 <div>
                   {!this.state.hideSave ?
@@ -765,30 +763,30 @@ export default class Card extends Component {
 
           )}
         {item.noteType === 'FROM_INSTRUCTOR' && !tagId ? (
-          <div><span className="verticalAlign" style={{ background: '#ccf5fd', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ccf5fd', width: '11px', height: '60px', borderBottomLeftRadius: '4px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">From instructor</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'MAIN_IDEAS' && !tagId ? (
-          <div><span className="verticalAlign" style={{ background: '#bbf2b6', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#bbf2b6', width: '11px', height: '60px', borderBottomLeftRadius: '4px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main ideas</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'OBSERVATIONS' && !tagId ? (
-          <div><span className="verticalAlign" style={{ background: '#fed3ec', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#fed3ec', width: '11px', height: '60px', borderBottomLeftRadius: '4px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Main observations</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'QUESTIONS' && !tagId ? (
-          <div><span className="verticalAlign" style={{ background: '#ffedad', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ffedad', width: '11px', height: '60px', borderBottomLeftRadius: '4px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote">Questions</div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
         {item.noteType === 'CUSTOM_NOTE' && !tagId ? (
-          <div><span className="verticalAlign" style={{ background: '#ffffff', width: '11px', height: '60px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
+          <div><span className="verticalAlign" style={{ background: '#ffffff', width: '11px', height: '60px', borderBottomLeftRadius: '4px' }}></span><table className="verticalAlign footerTable"><tbody><tr><td width="50%"><div className="footerNote"></div></td><td width="50%"><div className="footerDate">{Moment(new Date(item.timeStamp)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
         {tagId ?
           <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
             <div>
-              <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px' }}></span>
+              <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px', borderBottomLeftRadius: '4px' }}></span>
               <table className="verticalAlign footerTable">
                 <tbody>
                   <tr>
