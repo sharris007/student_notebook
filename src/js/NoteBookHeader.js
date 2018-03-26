@@ -152,7 +152,8 @@ export default class NoteBookHeader extends Component {
       toolbarMode: props.toolbarMode,
       groupTitle: '',
       groupId: null,
-      groupModeDrop: false
+      groupModeDrop: false,
+      groupNoteShow : true
     };
 
     const labelAllObj = {
@@ -204,6 +205,7 @@ export default class NoteBookHeader extends Component {
       this.setState({ showChapterMenu: false, showLabelMenu: false, chapterText: 'Chapter', labelText: 'Labels' });
       localStorage.setItem('labelItem', JSON.stringify([]));
       localStorage.setItem('chapterItem', JSON.stringify([]));
+      this.setState({ groupNoteShow : true});
       this.getSelectedVal();
     }
 
@@ -265,7 +267,9 @@ export default class NoteBookHeader extends Component {
       }
     }
     this.props.getFilterArr(finalFilteredList);
-
+    if(this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels') {
+      this.setState({ groupNoteShow : false});
+    }
   }
   handleCancelButton(event) {
     groupModeToggleFlag = !groupModeToggleFlag;
@@ -394,11 +398,11 @@ export default class NoteBookHeader extends Component {
 
 
               {groupModeToggleFlag === false ? <div>
-                <table>
+                {this.state.groupNoteShow ? <table>
                   <tr>
                     <td style={{ paddingTop: '5px' }}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
-                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table></div>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table> : '' }</div>
                 : null}
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
