@@ -35,13 +35,14 @@ const specs = {
     const lastY = monitor.getItem().y;
     const nextX = props.x;
     let nextY = placeholderIndex;
-
+debugger;
     if (lastY > nextY) { // move top
       nextY += 1;
     } else if (lastX !== nextX) { // insert into another list
       nextY += 1;
     }
     if (lastX === nextX && lastY === nextY) { // if position equel
+      alert('put in last position');
       return;
     }
     props.moveCard(lastX, lastY, nextX, nextY);
@@ -50,8 +51,6 @@ const specs = {
     // defines where placeholder is rendered
   
     component.setState({ direction: (monitor.getDifferenceFromInitialOffset().x <=0)? 'left':'right' });
-    
-    console.log(component.state.direction)
 
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
@@ -146,6 +145,7 @@ export default class Cards extends Component {
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
     const { placeholderIndex, groupModeFlag, groupExpanded, direction } = this.state;
     let isPlaceHold = false;
+    let righter = false;
     const cardList = [];
     cards.forEach((item, i) => {
       if (isOver && canDrop) {
@@ -161,6 +161,12 @@ export default class Cards extends Component {
           isPlaceHold = true;
         }
       }
+
+      if (righter){
+        cardList.push(<div key="placeholder" className="item placeholder2" />);
+      righter = false;
+      }
+
       if (item !== undefined) {
         cardList.push(
             <Card x={x} y={i}
@@ -183,7 +189,8 @@ export default class Cards extends Component {
        if (this.state.direction == 'left'){
         cardList.push(<div key="placeholder" className="item placeholder" />);
       } else{
-        cardList.push(<div key="placeholder" className="item placeholder2" />);
+        righter = true;
+     //   cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
       }
     });
@@ -209,7 +216,7 @@ export default class Cards extends Component {
       
     //   cardList.push(<div key="placeholder" className="item placeholder2" style={{float: (this.state.direction<=0)? 'right':'right'}}/>);
     }  
-      cardList.push(<div key="placeholder" className="item placeholder2" />);
+   //   cardList.push(<div key="placeholder" className="item placeholder2" />);
 
     // if (this.state.direction == 'right'){
     //   cardList.push(<div key="placeholder" className="item placeholder" />);
