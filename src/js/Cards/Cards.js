@@ -30,6 +30,7 @@ const specs = {
 
 
     const { placeholderIndex } = component.state;
+    const { direction } = component.state;
     const lastX = monitor.getItem().x;
     const lastY = monitor.getItem().y;
     const nextX = props.x;
@@ -47,6 +48,10 @@ const specs = {
   },
   hover(props, monitor, component) {
     // defines where placeholder is rendered
+  
+    component.setState({ direction: (monitor.getDifferenceFromInitialOffset().x <=0)? 'left':'right' });
+    
+    console.log(component.state.direction)
 
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
@@ -99,7 +104,7 @@ const specs = {
   connectDropTarget: connectDragSource.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
-  item: monitor.getItem()
+  item: monitor.getItem(),
 }))
 export default class Cards extends Component {
   static propTypes = {
@@ -127,7 +132,8 @@ export default class Cards extends Component {
       placeholderIndex: undefined,
       isScrolling: false,
       groupModeFlag: props.groupModeFlag,
-      groupExpanded: props.groupExpanded
+      groupExpanded: props.groupExpanded,
+      direction: 'left'
     };
   }
 
@@ -138,14 +144,19 @@ export default class Cards extends Component {
 
   render() {
     const { connectDropTarget, x, cards, isOver, canDrop } = this.props;
-    const { placeholderIndex, groupModeFlag, groupExpanded } = this.state;
+    const { placeholderIndex, groupModeFlag, groupExpanded, direction } = this.state;
     let isPlaceHold = false;
     const cardList = [];
     cards.forEach((item, i) => {
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-          // cardList.push(<div key="placeholder" className="item placeholder" />);
+         //  cardList.push(<div key="placeholder" className="item placeholder" />);
+           if (this.state.direction == 'left'){
+            cardList.push(<div key="placeholder" className="item placeholder" />);
+          } else{
+            cardList.push(<div key="placeholder" className="item placeholder2" />);
+          }
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
         }
@@ -167,21 +178,47 @@ export default class Cards extends Component {
             />
           );
       }
-      // if (isOver && canDrop && placeholderIndex === i) {
-      // //   // cardList.push(<div key="placeholder" className="item placeholder" />);
-      // }
+      if (isOver && canDrop && placeholderIndex === i) {
+   //    cardList.push(<div key="placeholder" className="item placeholder" />);
+       if (this.state.direction == 'left'){
+        cardList.push(<div key="placeholder" className="item placeholder" />);
+      } else{
+        cardList.push(<div key="placeholder" className="item placeholder2" />);
+      }
+      }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-      // cardList.push(<div key="placeholder" className="item placeholder" />);
+     //  cardList.push(<div key="placeholder" className="item placeholder" />);
+       if (this.state.direction == 'left'){
+        cardList.push(<div key="placeholder" className="item placeholder" />);
+      } else{
+        cardList.push(<div key="placeholder" className="item placeholder2" />);
+      }
     }
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-      // cardList.push(<div key="placeholder" className="item placeholder" />);
+   //   cardList.push(<div key="placeholder" className="item placeholder" />);
+      if (this.state.direction == 'left'){
+        cardList.push(<div key="placeholder" className="item placeholder" />);
+      } else{
+        cardList.push(<div key="placeholder" className="item placeholder2" />);
+      }
+      
+    //   cardList.push(<div key="placeholder" className="item placeholder2" style={{float: (this.state.direction<=0)? 'right':'right'}}/>);
     }  
+      cardList.push(<div key="placeholder" className="item placeholder2" />);
 
+    // if (this.state.direction == 'right'){
+    //   cardList.push(<div key="placeholder" className="item placeholder" />);
+    // } else{
+    //   cardList.push(<div key="placeholder" className="item placeholder2" />);
+    // }
+ //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
+ //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
+    
    
     return connectDropTarget(
       <div className="desk-items">

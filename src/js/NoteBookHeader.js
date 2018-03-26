@@ -42,20 +42,6 @@ const styles = {
   }
 };
 
-const buttonStyles = {
-  float: 'left',
-  marginRight: '10px',
-  background: 'white',
-  borderColor: 'grey',
-  borderWidth: '2px',
-  borderRadius: '2px',
-  fontSize: '15px',
-  width: '100px',
-  height: '40px',
-  color: 'grey',
-  cursor: 'pointer'
-};
-
 const buttonCancelStyle = {
   backgroundColor: '#e9e9e9',
   borderColor: '#c7c7c7',
@@ -120,6 +106,7 @@ const chkBoxiconStyle = {
 let groupModeToggleFlag = false;
 
 
+
 export default class NoteBookHeader extends Component {
   static propTypes = {
     callback: PropTypes.func,
@@ -132,6 +119,7 @@ export default class NoteBookHeader extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.menuItems = this.menuItems.bind(this);
     this.handleGroupSaveButton = this.handleGroupSaveButton.bind(this);
+    this.handleGroupDropDownMenu = this.handleGroupDropDownMenu.bind(this);
     this.handleGroupNotesButton = this.handleGroupNotesButton.bind(this);
     this.handleNewGroupButton = this.handleNewGroupButton.bind(this);
     this.handleCancelButton = this.handleCancelButton.bind(this);
@@ -303,6 +291,16 @@ export default class NoteBookHeader extends Component {
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = this.state.groupTitle;
     toolbarMode.groupId = this.state.groupId;
+    toolbarMode.groupMode = 'DEFAULT';
+    groupModeToggleFlag = false;
+    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
+    this.props.callback('SAVEGROUP', toolbarMode);
+  }
+
+  handleGroupDropDownMenu(event, index, value) {
+    let toolbarMode = this.props.toolbarMode;
+    toolbarMode.groupTitle = event.target.outerText;
+    toolbarMode.groupId = value;
     toolbarMode.groupMode = 'DEFAULT';
     groupModeToggleFlag = false;
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });

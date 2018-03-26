@@ -90,7 +90,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMDc2OTEyLCJpYXQiOjE1MjIwNjYxMTIsInNlc3NpZCI6IjFhZDA1OTdmLWQxMTYtNGU4Mi1hYWFlLTQxM2VlNjU2YThiMCJ9.eb614CaRpiBpVBHzsLXmpfrcDYHjJbvXCL6ZbADgeyScK6dfbtmgjOh98-uctzYL1w4YE3_twAUDymH_KM2COA8p8G28iTTupUVjViw9sjcCpJFqWdock9aajK4EmB_lpWP8MKJhFSCUFDG_W1BLeBIy6qF1lVcYpLlwU7OHaA8';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMDg0NTQ4LCJpYXQiOjE1MjIwNzM3NDcsInNlc3NpZCI6ImU1OWVhZjNmLTAzMGItNDhkZS05ZTQzLTYyYzM0MjJkMTI2MiJ9.ADw2dIr7FmjK6mAAMG_DukS75R-xmOElFM94LPPkIqxmlfWZWBGrhlxjsmfsthT9Qnw382OnnLyIgitECMduv65e0ahdgk_EIJqf3-LER460q4PBbbDUBgQripF7gqNPt1pxCmF8VijzP74x96S1mMbDFyqXbgffFJugs5Ab1AI';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -177,6 +177,11 @@ class ComponentOwner extends React.Component {
         groupModeFlag: true
       });
     } else if (msg === "SAVEGROUP") {
+
+
+
+
+
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
@@ -212,6 +217,7 @@ class ComponentOwner extends React.Component {
           "id": item.id
         }
         groupPayload.notes.push(selectedObj);
+        item.selected = false;
       });
 
       const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
