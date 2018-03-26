@@ -631,7 +631,7 @@ export default class Card extends Component {
           <div style={item.noteType === 'CUSTOM_NOTE' ? customtitle : title}>{item.title}</div>
         ) : null}
         {item.cardFormat === 'add mode' ? (
-          <div style={{ paddingTop: '100px' }} />
+          <div style={{ paddingTop: '115px' }} />
         ) : null}
         {item.cardFormat === 'add mode' ? (
           <div style={{ 'textAlign': 'center' }}>
@@ -824,9 +824,9 @@ export default class Card extends Component {
         {tagId ?
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
+            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset' }}>
   
-               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '30px', borderBottomLeftRadius: '.4em' }}>
+               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '20px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px' }}>
              
               </div>
             </div>
