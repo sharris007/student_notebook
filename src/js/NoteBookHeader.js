@@ -123,7 +123,6 @@ export default class NoteBookHeader extends Component {
     this.handleGroupNotesButton = this.handleGroupNotesButton.bind(this);
     this.handleNewGroupButton = this.handleNewGroupButton.bind(this);
     this.handleCancelButton = this.handleCancelButton.bind(this);
-    this.handleGroupDropDownMenu = this.handleGroupDropDownMenu.bind(this);
     this.handleAddToGroupButton = this.handleAddToGroupButton.bind(this);
     // const lists = [...props.lists];
     this.state = {
@@ -291,16 +290,6 @@ export default class NoteBookHeader extends Component {
     let toolbarMode = this.props.toolbarMode;
     toolbarMode.groupTitle = this.state.groupTitle;
     toolbarMode.groupId = this.state.groupId;
-    toolbarMode.groupMode = 'DEFAULT';
-    groupModeToggleFlag = false;
-    this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
-    this.props.callback('SAVEGROUP', toolbarMode);
-  }
-
-  handleGroupDropDownMenu(event, index, value) {
-    let toolbarMode = this.props.toolbarMode;
-    toolbarMode.groupTitle = event.target.outerText;
-    toolbarMode.groupId = value;
     toolbarMode.groupMode = 'DEFAULT';
     groupModeToggleFlag = false;
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null });
