@@ -103,7 +103,6 @@ const listboxStyle = {
   position: 'absolute',
   top: '75px',
   minWidth: '300px',
-  maxHeight: '300px',
   overflowY: 'auto',
   boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)'
 }
@@ -192,7 +191,10 @@ export default class NoteBookHeader extends Component {
   handleChange = (getVal) => {
     if (getVal === 'chapter') {
       const toggledIsOpen = this.state.showChapterMenu ? false : true;
-      this.setState({ showChapterMenu: toggledIsOpen, showLabelMenu: false });
+      this.setState({ showChapterMenu: toggledIsOpen, showLabelMenu: false }, () => {
+        let node = ReactDOM.findDOMNode(this.refs['listBox']);
+        node.style.maxHeight = (window.innerHeight - 120) + 'px';
+      });
     }
     else if (getVal === 'label') {
       const toggledIsOpen = this.state.showLabelMenu ? false : true;
@@ -362,7 +364,7 @@ export default class NoteBookHeader extends Component {
               {groupModeToggleFlag === false ? <div> <div className='all filterLabel' onClick={() => this.handleChange('chapter')}><span className={
                 (this.state.chapterText === 'Chapter') ? 'default' : 'active'
               }>{this.state.chapterText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /> </div>  {this.state.showChapterMenu ?
-                <div style={listboxStyle} >{this.menuItems(this.props.tocData.items)}</div> : null}</div>
+                <div style={listboxStyle} ref='listBox'>{this.menuItems(this.props.tocData.items)}</div> : null}</div>
                 : null}
               {groupModeToggleFlag === false ? <div><div className='all filterLabel' onClick={() => this.handleChange('label')}><span className={
                 (this.state.labelText === 'Labels') ? 'default' : 'active'}>{this.state.labelText}</span><img className='dropdownImg' src={dropdown} alt="arrow" /></div>{this.state.showLabelMenu ?

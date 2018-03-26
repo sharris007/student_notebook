@@ -78,13 +78,16 @@
 .select-box {
   position: absolute; 
   opacity: 0; 
-  & + label {
+  & + .lab, & + label {
     position: relative;
     cursor: pointer;
     padding: 0;
+    label {
+      cursor: pointer;
+    }
   }
 
-  & + label:before {
+  & + .lab:before, & + label:before {
     content: '';
     margin-right: 10px;
     display: inline-block;
@@ -95,13 +98,16 @@
     border: 1px solid #c7c7c7;
     border-radius: 3px;
   }
+  & + .lab:before {
+    float: left;
+  }
 
 
-  &:checked + label:before {
+  &:checked + .lab:before, &:checked + label:before {
     background: #fff;
   }
   
-  &:checked + label:after {
+  &:checked + .lab:after, &:checked + label:after {
     content: '';
    position: absolute;
    width: 1.2ex;
@@ -119,30 +125,28 @@
    transform: rotate(-45deg);
   }
 
-  &:checked + label{
-  	color:#383838;
-  	font-weight: bold;
-  	letter-spacing: -1px;
+  &:checked + .lab, &:checked + label{
+    color:#383838;
   }
   &.FROM_INSTRUCTOR {
-  	& + label:before {
-  		background:#ccf5fd;
-  	}
+    & + label:before {
+      background:#ccf5fd;
+    }
   }
   &.OBSERVATIONS {
-  	& + label:before {
-  		background:#fed3ec;
-  	}
+    & + label:before {
+      background:#fed3ec;
+    }
   }
   &.QUESTIONS {
-  	& + label:before {
-  		background:#ffedad;
-  	}
+    & + label:before {
+      background:#ffedad;
+    }
   }
   &.MAIN_IDEAS {
-  	& + label:before {
-  		background:#bbf2b6;
-  	}
+    & + label:before {
+      background:#bbf2b6;
+    }
   }
 }
 .listbox:first-child label:before {
@@ -175,9 +179,6 @@
     .active{
       color: #047a9c;
       font-weight: bold;
-    }
-    &.groupnotes {
-      width: auto;
     }
   }
   .dropdownImg {
@@ -212,7 +213,7 @@
       
 }
 .desk {
-  width: 268px !important;
+  width: 258px !important;
 }
 
 .footerNote { 
@@ -236,7 +237,7 @@
     letter-spacing: -0.1px;
     text-align: right;
     color: rgb(106, 112, 112);
-    padding: 0 0 0 26px;
+    padding: 0 0 0 6px;
     background: white;
     font-family: Open Sans;
  }
@@ -245,13 +246,12 @@
     vertical-align: middle;
  }
  .footerTable {
-    width: 247px;
+    width: 237px;
     padding-right: 15px;
  }
  .groupSelect {
     background-color: #ffffff !important;
     border-bottom: solid 1px #c7c7c7 !important;
  }
-  .addcardStyle {
-    height: 300px;
-  }
+    
+

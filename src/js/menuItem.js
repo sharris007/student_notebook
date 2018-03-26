@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../assets/temp.styl';
 import '../scss/notebook.scss';
 const listStyle = {
-  padding : '10px 10px 10px 28px'
+  padding : '10px'
 };
 
 export default class MenuItem extends Component {
@@ -116,7 +116,9 @@ export default class MenuItem extends Component {
       return (
         <div className="listbox" style={listStyle}>
         <input className={`select-box ${this.props.labelCode}`} id={this.props.content.id} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e)}/ >
-        <label htmlFor={this.props.content.id} >{this.props.label}</label>
+        <div className="lab">
+        <div style={{'paddingLeft':'30px', 'cursor':'pointer' }}><label htmlFor={this.props.content.id} >{this.props.label}</label></div>
+        </div>
         </div>
       );
     }
