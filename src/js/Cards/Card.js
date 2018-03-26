@@ -170,6 +170,9 @@ const titleInputBox = {
   color: '#252525'
 
 };
+const padding0 = {
+  padding: '0'
+};
 
 const titleInputBoxDisabled = {
   outline: '0',
@@ -495,7 +498,7 @@ export default class Card extends Component {
         //    style={{ background: 'white' }}
         style={tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         className="item"
-        id={style ? item.id : null}
+        data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
       >
 
 
@@ -734,10 +737,10 @@ export default class Card extends Component {
           )}
 
         {item.cardFormat === 'note' ? (
-          <div className="item-perfomers">
+          <div className="item-perfomers" >
           </div>
         ) : (
-            <div className="item-perfomers">
+            <div className="item-perfomers" style= {(item.cardFormat === 'add mode')? padding0 : null}>
               {item.cardFormat === 'create new' ? (
                 <div>
                   {!this.state.hideSave ?

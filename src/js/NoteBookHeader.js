@@ -32,7 +32,7 @@ const styles = {
     color: orange500,
   },
   underlineStyle: {
-    borderColor: blue500,
+    borderColor: '#6a7070',
   },
   floatingLabelStyle: {
     color: orange500,
@@ -424,14 +424,14 @@ export default class NoteBookHeader extends Component {
             </ToolbarGroup>
           </Toolbar>
           :
-          <Toolbar style={{ height: '90px', position: 'fixed', width: '100%', 'zIndex': '1' }}>
+          <Toolbar style={{ height: '80px', position: 'fixed', width: '100%', 'zIndex': '1001', backgroundColor: '#f5f5f5' }}>
             <ToolbarGroup style={{ paddingLeft: '70px' }}>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleGoToNotes()}>Notes</div>
                 : null}
-              {groupModeToggleFlag === false ? <ToolbarSeparator style={{ margin: '0 15px 0 10px' }} />
+              {groupModeToggleFlag === false ? <ToolbarSeparator style={{ color: '#e7e7e7', width: '2px', margin: '0px 22px 0px 18px', height: '20px' }} />
                 : null}
-              {groupModeToggleFlag === false ? <div> <div className='all filterLabel'><span><strong>{this.props.expandedTagName}</strong></span></div>  {this.state.showChapterMenu ?
+              {groupModeToggleFlag === false ? <div> <div className='all filterLabel groupnotes'><span><strong>{this.props.expandedTagName}</strong></span></div>  {this.state.showChapterMenu ?
                 <div style={listboxStyle} >{this.menuItems(this.props.tocData.items)}</div> : null}</div>
                 : null}
             </ToolbarGroup>
