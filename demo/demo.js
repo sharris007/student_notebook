@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMDg0NTQ4LCJpYXQiOjE1MjIwNzM3NDcsInNlc3NpZCI6ImU1OWVhZjNmLTAzMGItNDhkZS05ZTQzLTYyYzM0MjJkMTI2MiJ9.ADw2dIr7FmjK6mAAMG_DukS75R-xmOElFM94LPPkIqxmlfWZWBGrhlxjsmfsthT9Qnw382OnnLyIgitECMduv65e0ahdgk_EIJqf3-LER460q4PBbbDUBgQripF7gqNPt1pxCmF8VijzP74x96S1mMbDFyqXbgffFJugs5Ab1AI';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMTYwOTA0LCJpYXQiOjE1MjIxNTAxMDQsInNlc3NpZCI6Ijc0MTU1MjI5LTNmN2QtNGE2OS1hNDhmLWM2ZjVlYjVmM2Q1NyJ9.iLCDBJ1ww4b6Ly49PGOqdt8aawhziE3t80VxeccuU-V6f8fP21etOEHjUXXEb8frbNUfn617VxWKO5k4zTbQUx9qO_S5yV1Pa1QKgBjR8v9i2kQl5nTHGtyxFGezFuMc-u3q4uz5NKwiUg548EAPxdXxRKWK-y22uty_KPpzG_g';
 function init() {
   getNotes();
 };
@@ -209,7 +209,7 @@ function addNote(msg, data) {
   });
 };
 function saveNote(msg, data) {
-  const payLoad = {
+  let payLoad = {
     "clientApp": 'ETEXT2_WEB',
     "productModel": "ETEXT_SMS",
     "contextualInfo": [
@@ -227,6 +227,26 @@ function saveNote(msg, data) {
       "text": data.content ? data.content : ''
     }
   };
+  if(data.noteType && data.noteType !== 'CUSTOM_NOTE') {
+    payLoad = {
+      "clientApp": 'ETEXT2_WEB',
+      "productModel": "ETEXT_SMS",
+      "contextualInfo": [
+        {
+          "key": "title",
+          "value": data.title ? data.title : '',
+        }
+      ],
+      "pageId": data.pageId ? data.pageId : '',
+      "noteType": data.noteType ? data.noteType : '',
+      "shareable": false,
+      "tags": data.tags ? data.tags : [],
+      "data": {
+        "quote": data.highLightText ? data.highLightText : '',
+        "text": data.content ? data.content : ''
+      }
+    };
+  }
   const saveNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/' + data.id, {
     method: 'PUT',
     headers: {
