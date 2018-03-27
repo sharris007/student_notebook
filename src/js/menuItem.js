@@ -108,7 +108,7 @@ export default class MenuItem extends Component {
       return (
         <div className="listbox label" >
         <input className={`select-box label ${this.props.labelCode}`} id={this.props.content.labelCode} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e,true)}/ >
-        <label htmlFor={this.props.content.labelCode} >{this.props.label}</label>
+        <label htmlFor={this.props.content.labelCode} ><span style={{'display':'block','paddingLeft':'30px'}}>{this.props.label}</span></label>
         </div>
       );
     }
@@ -116,9 +116,7 @@ export default class MenuItem extends Component {
       return (
         <div className="listbox" style={listStyle}>
         <input className={`select-box ${this.props.labelCode}`} id={this.props.content.id} type="checkbox" value={this.props.label} onClick= { (e) => this.getSelctedVal(e)}/ >
-        <div className="lab">
-        <div style={{'paddingLeft':'30px', 'cursor':'pointer' }}><label htmlFor={this.props.content.id} >{this.props.label}</label></div>
-        </div>
+        <label htmlFor={this.props.content.id} ><span style={{'display':'block','paddingLeft':'30px'}}>{this.props.label}</span></label>
         </div>
       );
     }

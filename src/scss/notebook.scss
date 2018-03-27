@@ -78,7 +78,7 @@
 .select-box {
   position: absolute; 
   opacity: 0; 
-  & + .lab, & + label {
+  & + label {
     position: relative;
     cursor: pointer;
     padding: 0;
@@ -87,7 +87,7 @@
     }
   }
 
-  & + .lab:before, & + label:before {
+ & + label:before {
     content: '';
     margin-right: 10px;
     display: inline-block;
@@ -97,17 +97,13 @@
     background: #fff;
     border: 1px solid #c7c7c7;
     border-radius: 3px;
+    float : left;
   }
-  & + .lab:before {
-    float: left;
-  }
-
-
-  &:checked + .lab:before, &:checked + label:before {
+  &:checked + label:before {
     background: #fff;
   }
   
-  &:checked + .lab:after, &:checked + label:after {
+  &:checked + label > span:before {
     content: '';
    position: absolute;
    width: 1.2ex;
@@ -125,7 +121,7 @@
    transform: rotate(-45deg);
   }
 
-  &:checked + .lab, &:checked + label{
+  &:checked + label{
     color:#383838;
   }
   &.FROM_INSTRUCTOR {
