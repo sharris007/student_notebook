@@ -7,6 +7,8 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
+import { findDOMNode } from 'react-dom';
+
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
@@ -169,6 +171,11 @@ const titleInputBox = {
 
 };
 
+let globalleft;
+let right;
+let top;
+let bottom;
+
 const titleInputBoxDisabled = {
   outline: '0',
   width: '100%',
@@ -251,13 +258,6 @@ const optionListStyle = {
 
 
 
-
-const Buttony = ({ className }) => (
-  <div style={className}> </div>
-);
-
-
-
 export default class Card extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
@@ -271,6 +271,8 @@ export default class Card extends Component {
     handleGroupClick: PropTypes.func
   };
 
+  
+
   constructor(props) {
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
@@ -283,7 +285,6 @@ export default class Card extends Component {
     this.handleUnGroupNotes = this.handleUnGroupNotes.bind(this);
     this.handleRenameSave = this.handleRenameSave.bind(this);
     this.handleClickGroup = this.handleClickGroup.bind(this);
-
     this.state = {
       item: props.item,
       titleMaxLength: 100,
@@ -293,13 +294,26 @@ export default class Card extends Component {
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
       selectedMenuItem: null,
-      groupExpanded: props.groupExpanded
+      groupExpanded: props.groupExpanded,
+      left: 0
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ groupModeFlag: nextProps.groupModeFlag });
   }
+
+  componentDidMount = () => {
+    var node = ReactDOM.findDOMNode(this.refs.hoops);
+    
+//    this.setState({ left: ReactDOM.findDOMNode(this.refs.hoop).getBoundingClientRect().left });
+    this.setState({ left: node.offsetLeft, right: node.offsetRight, top: node.offsetTop });
+
+  }
+
+
+ 
+  
 
 
   handleCancelAddCard = (card) => {
@@ -421,6 +435,7 @@ export default class Card extends Component {
     });
   };
 
+
   checkNoteMaxLengthValidation = () => {
     const inputCharLength = this.contentArea.value.length;
     const inputCharLengthTitle = this.titleInput.value.length;
@@ -446,6 +461,8 @@ export default class Card extends Component {
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
+  //  var x = document.getElementById( item.id ).documentOffsetLeft;
+  //  alert(x);
     return (
 
 
@@ -454,8 +471,12 @@ export default class Card extends Component {
         style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         className="item"
         id={style ? item.id : null}
+        ref="hoops"
+        
       >
-
+{this.state.left},
+{this.state.right},
+{this.state.top},
 
         {item.noteText === 'C' && !item.tagId ? (
           <div className="item-name" style={observations}>

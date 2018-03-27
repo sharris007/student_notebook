@@ -10,7 +10,11 @@ const listSource = {
       x: props.x
     };
   },
-  endDrag(props) {
+  endDrag(props, monitor) {
+    const item = monitor.getItem()
+		const dropResult = monitor.getDropResult()
+
+	
     props.stopScrolling();
   },
   canDrag(props) {
