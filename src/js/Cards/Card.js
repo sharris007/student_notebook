@@ -274,6 +274,8 @@ export default class Card extends Component {
   
 
   constructor(props) {
+    console.log('cartds.js');
+    console.log(props.item.quote);
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
@@ -468,12 +470,14 @@ export default class Card extends Component {
 
       <div
         //    style={{ background: 'white' }}
-        style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
+    //    style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
+        style={item.tagId ? { background: `${this.props.item.color}`, boxShadow: 'none' } : { background: `${this.props.item.color}` }}
         className="item"
         id={style ? item.id : null}
         ref="hoops"
         
       >
+{this.props.color},
 {this.state.left},
 {this.state.right},
 {this.state.top},

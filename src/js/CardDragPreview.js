@@ -17,7 +17,8 @@ const CardDragPreview = (props) => {
   styles.width = `${props.card.clientWidth || 243}px`;
   styles.height = `${props.card.clientHeight || 243}px`;
   let isOver = true;
-
+console.log('cardDragPreview');
+console.log(props.card.item.color);
   return (
     <div style={styles}>
       <Card item={props.card.item} groupModeFlag={props.groupModeFlag} groupExpanded={props.groupExpanded} />
@@ -30,7 +31,7 @@ const CardDragPreview = (props) => {
             width: '100%',
             zIndex: 1,
             opacity: 0.5,
-            backgroundColor: 'yellow',
+            backgroundColor: `${props.card.item.color}`,
           }}></div>}
     </div>
   );

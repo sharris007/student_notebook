@@ -20,6 +20,8 @@ function getPlaceholderIndex(y, scrollY) {
 
 const specs = {
   drop(props, monitor, component) {
+
+   
     document.getElementById(monitor.getItem().id).style.display = 'block';
 
 
@@ -35,7 +37,7 @@ const specs = {
     const lastY = monitor.getItem().y;
     const nextX = props.x;
     let nextY = placeholderIndex;
-    
+
     if (lastY > nextY) { // move top
       nextY += 1;
     } else if (lastX !== nextX) { // insert into another list
@@ -45,33 +47,44 @@ const specs = {
       alert('put in last position');
       return;
     }
+
+debugger;
+    if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue"){
+      alert('ok to group', nextX, nextY);
+      alert('ok to group' + nextX + ' ' + nextY);
+      alert(nextX);
+      console.log('transform', `${nextX}px, ${nextY}px)`);
+
+    }
+
+
     props.moveCard(lastX, lastY, nextX, nextY);
   },
   hover(props, monitor, component) {
-    console.log(component);
-  //  const { placeholderIndex } = component.state;
+//      console.log(component);
+    //  const { placeholderIndex } = component.state;
     // let nextY = placeholderIndex;
-    
+
     // document.getElementById(monitor.getItem().id).style.background = 'purple';
     const nextX = props.x;
     const lastY = monitor.getItem().y;
     const lastX = monitor.getItem().x;
-     
-     let nextY = component.state.placeholderIndex;
+
+    let nextY = component.state.placeholderIndex;
     if (lastY > nextY) { // move top
       nextY += 1;
     } else if (lastX !== nextX) { // insert into another list
       nextY += 1;
     }
 
-    let xxxx=window.innerWidth -monitor.getClientOffset().x;
+    let xxxx = window.innerWidth - monitor.getClientOffset().x;
     var node = findDOMNode(component);
     var getSourceClientOffset = monitor.getSourceClientOffset().x;
-    
-    
+
+
     // defines where placeholder is rendered
     let ress = monitor.getDropResult();
-    component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <=0)? 'left':'right', positioning: getSourceClientOffset });
+   // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
@@ -80,7 +93,7 @@ const specs = {
 
     newStyle.display = 'block';
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
-    component.setState({ style: newStyle });
+    component.setState({ style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     // document.getElementById(monitor.getItem().id).style.left
     //The current mouse position where the "on hover indicator" is expected
@@ -159,7 +172,7 @@ export default class Cards extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    this.setState({groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded});
+    this.setState({ groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded });
   }
 
   render() {
@@ -168,20 +181,27 @@ export default class Cards extends Component {
     let isPlaceHold = false;
     let righter = false;
     const cardList = [];
-   
-    
-    cards.forEach((item, i) => {
-    //  if (isOver){console.log(item)}
-    //  if (isOver){console.log('is Over =>' + placeholderIndex)}
-     // if (isOver){console.log('is Overx =>' + x)}
 
-  //   item.keyId = item.Id + Date.now();
-    console.log(this.state.nextX, this.state.nextY, placeholderIndex, x, i);
+    let filterList = _.cloneDeep(cards);
 
-    let colorr = 'brown';
-   // item.keyId = item.Id + Date.now();
-    if (this.state.nextY === i) {colorr = 'green'; item.keyId = item.Id + Date.now();}
-   // if (this.state.nextX === placeholderIndex+1) {colorr = 'green'; }
+    filterList.forEach((item, i) => {
+
+
+      //  if (isOver){console.log(item)}
+      //  if (isOver){console.log('is Over =>' + placeholderIndex)}
+      // if (isOver){console.log('is Overx =>' + x)}
+
+      let newKey = Date.now();
+ //     item.keyId = item.Id + Date.now();
+    //  console.log(this.state.nextX, x, this.state.nextY, i, placeholderIndex);
+
+      let colorr = 'white';
+      // item.keyId = item.Id + Date.now();
+      //     if (this.state.nextY === i && this.state.nextX === x) { colorr = 'green'; item.keyId = item.Id + Date.now(); } else { colorr = 'blue';}
+      if (this.state.nextY === i && this.state.nextX === x) {
+        colorr = 'green';
+      } else { colorr = 'white'; }
+      // if (this.state.nextX === placeholderIndex+1) {colorr = 'green'; }
 
 
 
@@ -189,33 +209,45 @@ export default class Cards extends Component {
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-         //  cardList.push(<div key="placeholder" className="item placeholder" />);
-           if (this.state.direction == 'left'){
+          //  cardList.push(<div key="placeholder" className="item placeholder" />);
+          if (this.state.direction == 'left') {
             cardList.push(<div key="placeholder" className="item placeholder" />);
-          } else{
+          } else {
             cardList.push(<div key="placeholder" className="item placeholder2" />);
           }
+          cardList.push(<div>ddddd</div>);
+
+
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
         }
       }
 
-      if (righter){
+      if (righter) {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
-      righter = false;
+        cardList.push(<div>ddrrrrr</div>);
+        
+        righter = false;
       }
 
       if (item !== undefined) {
-console.log('lay low'+ x, cardList.length);
+    //    item.keyId = item.Id + Date.now();
+    item.color = colorr;
+
+    //    console.log('lay low' + x, cardList.length);
+    if (isOver && canDrop && placeholderIndex === i) {
+    item.color = "silver";
+    }
         cardList.push(
 
           <div style={{
-          //  backgroundColor: (this.state.positioning<=560)? 'yellow':'red',
+            //  backgroundColor: (this.state.positioning<=560)? 'yellow':'red',
             backgroundColor: colorr,
           }}>
 
             <Card x={x} y={i}
-              canDrag={item.cardFormat === 'note'? true:false}
+            color={colorr}
+              canDrag={item.cardFormat === 'note' ? true : false}
               item={item}
               key={item.keyId}
               stopScrolling={this.props.stopScrolling}
@@ -227,51 +259,57 @@ console.log('lay low'+ x, cardList.length);
               handleGroupClick={this.props.handleGroupClick}
               groupExpanded={this.props.groupExpanded}
             /></div>
-          );
+        );
       }
       if (isOver && canDrop && placeholderIndex === i) {
-   //    cardList.push(<div key="placeholder" className="item placeholder" />);
-       if (this.state.direction == 'left'){
-        cardList.push(<div style={{background: 'pink'}} />);
-         
-        cardList.push(<div key="placeholder" className="item placeholder" />);
-      } else{
-        righter = true;
-     //   cardList.push(<div key="placeholder" className="item placeholder2" />);
-      }
+  //      let z = cardList.splice(0,1);
+        
+        //    cardList.push(<div key="placeholder" className="item placeholder" />);
+        if (this.state.direction == 'left') {
+          cardList.push(<div key="placeholder" className="item placeholder" />);
+        cardList.push(<div>sssssddrrrrr</div>);
+          
+        } else {
+          righter = true;
+          //   cardList.push(<div key="placeholder" className="item placeholder2" />);
+        }
+
+   //     cardList.push(<div style={{background:'silver'}}>{z}</div>)
       }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-     //  cardList.push(<div key="placeholder" className="item placeholder" />);
-       if (this.state.direction == 'left'){
+      //  cardList.push(<div key="placeholder" className="item placeholder" />);
+      if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
-      } else{
+      } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
     }
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-   //   cardList.push(<div key="placeholder" className="item placeholder" />);
-      if (this.state.direction == 'left'){
+      //   cardList.push(<div key="placeholder" className="item placeholder" />);
+      if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
-      } else{
+      } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
-      
-    //   cardList.push(<div key="placeholder" className="item placeholder2" style={{float: (this.state.direction<=0)? 'right':'right'}}/>);
-    }  
-   //   cardList.push(<div key="placeholder" className="item placeholder2" />);
+
+      //   cardList.push(<div key="placeholder" className="item placeholder2" style={{float: (this.state.direction<=0)? 'right':'right'}}/>);
+    }
+    //   cardList.push(<div key="placeholder" className="item placeholder2" />);
 
     // if (this.state.direction == 'right'){
     //   cardList.push(<div key="placeholder" className="item placeholder" />);
     // } else{
     //   cardList.push(<div key="placeholder" className="item placeholder2" />);
     // }
- //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
- //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
+    //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
+    //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
+  
+ // console.log(cardList);
     return connectDropTarget(
       <div className="desk-items">
         {cardList}
