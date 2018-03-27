@@ -507,7 +507,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -524,7 +524,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -547,7 +547,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -564,7 +564,7 @@ export default class Card extends Component {
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                 anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                iconStyle={{ fill: '#6a7070', 'marginTop': '-20px' }}
                 onChange={this.handleMenuItemChange}
                 value={this.state.selectedMenuItem}
               >
@@ -580,13 +580,13 @@ export default class Card extends Component {
               this.groupTitle = ele;
             }} >
 
-              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', padding:'13px 0'}}> <center>{tagName}</center></div>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', padding:'13px 30px', textAlign:'center'}}>{tagName}</div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-36px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                   targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                  iconStyle={{ fill: 'black', 'marginTop': '-20px' }}
+                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px' }}
                 >
                   <MenuItem onClick={this.handleRenameGroup} style={optionListStyle} primaryText="Rename group" />
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
@@ -720,7 +720,7 @@ export default class Card extends Component {
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0' }}>
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0', minHeight: (item.noteType === 'CUSTOM_NOTE') ? "94.4px" : null }}>
                 <div className="item-content" style={{ paddingRight: '8px' }}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>
