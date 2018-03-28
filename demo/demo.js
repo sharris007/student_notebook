@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMTYwOTA0LCJpYXQiOjE1MjIxNTAxMDQsInNlc3NpZCI6Ijc0MTU1MjI5LTNmN2QtNGE2OS1hNDhmLWM2ZjVlYjVmM2Q1NyJ9.iLCDBJ1ww4b6Ly49PGOqdt8aawhziE3t80VxeccuU-V6f8fP21etOEHjUXXEb8frbNUfn617VxWKO5k4zTbQUx9qO_S5yV1Pa1QKgBjR8v9i2kQl5nTHGtyxFGezFuMc-u3q4uz5NKwiUg548EAPxdXxRKWK-y22uty_KPpzG_g';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjM4MzU4LCJpYXQiOjE1MjIyMjc1NTcsInNlc3NpZCI6Ijk1NjNhZTRhLWU5ZTEtNDAzNS1iMmNlLTIyOGM3NGVmOTAzZCJ9.lBDkb5u-UZsh3hKgz9hcUbs9jtbp1MMl_5rmIKxd3U5zcYlTDx3hSvKJH6DFMnc5L0FWYK5OOO-ziBC-3qmraXKMgdOQkIYaVzDQE7V1NaVqM7_-r7EJXzsy0QblbA_a9H1ESWW1Aq8qlpUODXBoAX_U5m8VByyo94T_uOX3-4U';
 function init() {
   getNotes();
 };
@@ -270,7 +270,6 @@ function deleteNote(msg, data) {
     },
     body: JSON.stringify(payLoad)
   }).then((res) => res.json()).then((json) => {
-    getNotes();
     console.log('Custom Note successfully deleted!');
   });
 };

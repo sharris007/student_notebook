@@ -90,22 +90,41 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMTYwOTA0LCJpYXQiOjE1MjIxNTAxMDQsInNlc3NpZCI6Ijc0MTU1MjI5LTNmN2QtNGE2OS1hNDhmLWM2ZjVlYjVmM2Q1NyJ9.iLCDBJ1ww4b6Ly49PGOqdt8aawhziE3t80VxeccuU-V6f8fP21etOEHjUXXEb8frbNUfn617VxWKO5k4zTbQUx9qO_S5yV1Pa1QKgBjR8v9i2kQl5nTHGtyxFGezFuMc-u3q4uz5NKwiUg548EAPxdXxRKWK-y22uty_KPpzG_g';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjM4MzU4LCJpYXQiOjE1MjIyMjc1NTcsInNlc3NpZCI6Ijk1NjNhZTRhLWU5ZTEtNDAzNS1iMmNlLTIyOGM3NGVmOTAzZCJ9.lBDkb5u-UZsh3hKgz9hcUbs9jtbp1MMl_5rmIKxd3U5zcYlTDx3hSvKJH6DFMnc5L0FWYK5OOO-ziBC-3qmraXKMgdOQkIYaVzDQE7V1NaVqM7_-r7EJXzsy0QblbA_a9H1ESWW1Aq8qlpUODXBoAX_U5m8VByyo94T_uOX3-4U';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
       this.props.callback(msg, data);
-      const index = _.findIndex(notesList, function (o) { return o.id === data.id; });
-      if (index > -1) {
-        notesList.splice(index, 1, data, function (formattedData) {
-
-        });
-        this.setState({
-          notesList: notesList
-        });
+      const noteexist = notesList.find(noteobj => noteobj.id === data.id);
+      const original_noteexist = originalNotesList.find(originalobj => originalobj.id === data.id);
+      if(noteexist) {
+        noteexist.content = data.content;
+        noteexist.cardFormat = data.cardFormat;
+        if (data.noteType === 'CUSTOM_NOTE')
+          noteexist.quote = data.title;
       }
+      if(original_noteexist) {
+        original_noteexist.content = data.content;
+        original_noteexist.cardFormat = data.cardFormat;
+        if (data.noteType === 'CUSTOM_NOTE')
+          original_noteexist.quote = data.title;
+      }
+      this.setState({
+          notesList: notesList,
+          originalNotesList: originalNotesList
+      });
     } else if (msg === 'DELETE') {
       this.props.callback(msg, data);
+      _.remove(notesList, {
+          id: data.id
+      });
+      _.remove(originalNotesList, {
+          id: data.id
+      });
+      this.setState({
+          notesList: notesList,
+          originalNotesList: originalNotesList
+      });
     } else if (msg === 'NAVIGATE') {
 
     } else if (msg === "GROUP") {
@@ -175,11 +194,6 @@ class ComponentOwner extends React.Component {
         groupModeFlag: true
       });
     } else if (msg === "SAVEGROUP") {
-
-
-
-
-
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
