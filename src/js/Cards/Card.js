@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 // import ImageUploader from './ImageUploader';
 import Moment from 'moment';
 import Linkify from 'react-linkify';
@@ -7,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
@@ -66,7 +69,7 @@ const group = {
 
 const renameDiv = {
   display: 'none'
-}
+};
 
 const renameInput = {
   height: '36px',
@@ -75,7 +78,7 @@ const renameInput = {
   backgroundColor: '#FFFFFF',
   padding: '10px',
   width: '97%'
-}
+};
 
 const styleContent = {
   width: '228px',
@@ -264,7 +267,7 @@ const groupTitle = {
   letterSpacing: '0.3px',
   textAlign: 'center',
   color: '#252525'
-}
+};
 
 const menuOption = {
   fontFamily: 'Open Sans',
@@ -279,7 +282,7 @@ const menuOption = {
   padding: '8px 0px 0px',
   minHeight: '40px',
   height: '19px'
-}
+};
 
 const Buttony = ({ className }) => (
   <div style={className}> </div>
@@ -321,7 +324,8 @@ export default class Card extends Component {
       hideSave: true,
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
-      selectedMenuItem: null
+      selectedMenuItem: null,
+      openModal:false
     };
   }
 
@@ -377,13 +381,17 @@ export default class Card extends Component {
   }
 
   handleDeleteCard = () => {
+    this.setState({openModal: false});
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
   handleMenuItemChange = (event, value) => {
-    if (value === 'Delete note')
-      this.props.saveCard(this.state.item, 'DELETE');
-    else if (value === 'Edit note') {
+    if (value === 'Delete note') {
+      this.setState({openModal: true}, ()=>{
+        setTimeout(()=>{ReactDOM.findDOMNode(this.deleteButton).focus();}, 200);         
+      });
+      // this.props.saveCard(this.state.item, 'DELETE');
+    }else if (value === 'Edit note') {
       let card = this.state.item;
       card.cardFormat = 'create new';
       this.setState({ item: card }, () => {
@@ -468,18 +476,22 @@ export default class Card extends Component {
   }
 
   noteTypebackgroundColor = (notetype) => {
-    if (notetype === "FROM_INSTRUCTOR") {
-      return "#ccf5fd";
-    } else if (notetype === "MAIN_IDEAS") {
-      return "#bbf2b6";
-    } else if (notetype === "OBSERVATIONS") {
-      return "#fed3ec";
-    } else if (notetype === "QUESTIONS") {
-      return "#ffedad";
+    if (notetype === 'FROM_INSTRUCTOR') {
+      return '#ccf5fd';
+    } else if (notetype === 'MAIN_IDEAS') {
+      return '#bbf2b6';
+    } else if (notetype === 'OBSERVATIONS') {
+      return '#fed3ec';
+    } else if (notetype === 'QUESTIONS') {
+      return '#ffedad';
     } else {
-      return "none";
+      return 'none';
     }
   }
+
+  handleClose = () => {
+    this.setState({openModal: false});
+  };
 
   render() {
     const { style } = this.props;
@@ -489,16 +501,70 @@ export default class Card extends Component {
     const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
     //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+        style={{width: '69px', height: '36px', borderRadius: '2px', backgroundColor: '#e9e9e9', border: 'solid 1px #c7c7c7', marginRight: '16px'}}
+        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#252525', textTransform:'capitalize', verticalAlign:'initial'}}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        ref={(node) => this.deleteButton = node}
+        keyboardFocused={true}
+        onClick={this.handleDeleteCard}
+        style={{  width: '68px', height: '36px', borderRadius: '2px', backgroundColor: '#047a9c'}}
+        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform:'capitalize', verticalAlign:'initial'}}
+      />
+    ];
+
     return (
 
 
       <div
         //    style={{ background: 'white' }}
         style={tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
-        className={(item.cardFormat === 'add mode') ? "item addcardStyle" : "item"}
+        className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
         data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
       >
-
+        <Dialog
+          title="Delete this note?"
+          actions={actions}
+          modal={false}
+          open={this.state.openModal}
+          onRequestClose={this.handleClose}
+          contentStyle={{  width: '600px', height: '214px'}}
+          titleStyle={{
+            padding:'40px 40px 20px',
+            fontFamily: 'Open Sans', 
+            fontSize: '24px', 
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: 1.17,
+            letterSpacing: 'normal',
+            textAlign: 'left',
+            color: '#252525'
+          }}
+          bodyStyle={{
+            padding:'0px 40px 24px',
+            fontFamily: 'Open Sans',
+            fontSize: '14px',
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: '1.57',
+            letterSpacing: 'normal',
+            textAlign: 'left',
+            color: '#252525'
+          }}
+          actionsContainerStyle={{paddingBottom:'40px', paddingRight:'40px'}}
+        >
+          This action cannot be undone.
+        </Dialog>
 
         {item.noteType === 'CUSTOM_NOTE' && !tagId ? (
           <div className="item-name" style={observations}>
