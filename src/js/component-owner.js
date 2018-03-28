@@ -18,39 +18,46 @@ function refreshNotesList(originalNotesList, tagObject) {
   const groups = [];
   const notesList = [];
 
-  for (let ic = 0; ic < originalNotesList.length; ic++) {
-    let note = _.cloneDeep(originalNotesList[ic]);
-    const tagId = (note.tags) ? note.tags[0].tagId : '';
-    if (tagId) {
-      const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
-
-      if (index === -1) {
-        note.notes = [];
-        note.notes.push(note);
-        groups.push(note);
-      } else {
-        note.tagId = null;
-        note.tagName = null;
-        groups[index].notes.push(note)
+  const mapGroupEle = _.groupBy(originalNotesList, function(i){
+      if(i.tags) { 
+        return i.tags[0].tagId; 
       }
-    } else {
-      notesList.push(note);
-    }
-  }
-  if (groups.length) {
-    tagObject.map((tag, i) => {
-      _.each(groups, function (obj, index) {
-        if (groups[index].tags[0].tagId === tag.tagId) {
-          groups[index].tags[0].tagName = tag.tagName;
-        }
+      else{  return i.id;}})
+    const getOrderedArr = _.sortBy(mapGroupEle, function(i){return i[0].outsetSeq * -1});
+    const mapNotesObj = [];
+    let groupFalg;
+    _.forEach(getOrderedArr, function(value, index) {
+      if(value.length=== 1) { 
+        mapNotesObj.push(value[0]) 
+      } 
+      else { 
+        console.log("value", value);
+          value[0].notes = [];
+         _.each(value, function (obj, index) {
+          console.log("value", value[0]);
+          
+          value[0].notes.push(value[index]);
+         });
+         console.log("OBJJ", value[0]);
+        mapNotesObj.push(value[0]); 
+        groupFalg = true;
+      }
+    });
+    if(groupFalg) {
+      tagObject.map((tag, i) => {
+        _.each(mapNotesObj, function (obj, index) {
+          if(obj.notes) {
+            console.log(obj)
+            if (obj.tags[0].tagId === tag.tagId) {
+              obj.tags[0].tagName = tag.tagName;
+            }
+          }
+          
+        });
       });
-    });
-
-    groups.map((group, i) => {
-      notesList.unshift(group);
-    });
-  }
-  return notesList;
+    }
+    
+  return mapNotesObj;
 }
 
 
@@ -90,7 +97,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjM4MzU4LCJpYXQiOjE1MjIyMjc1NTcsInNlc3NpZCI6Ijk1NjNhZTRhLWU5ZTEtNDAzNS1iMmNlLTIyOGM3NGVmOTAzZCJ9.lBDkb5u-UZsh3hKgz9hcUbs9jtbp1MMl_5rmIKxd3U5zcYlTDx3hSvKJH6DFMnc5L0FWYK5OOO-ziBC-3qmraXKMgdOQkIYaVzDQE7V1NaVqM7_-r7EJXzsy0QblbA_a9H1ESWW1Aq8qlpUODXBoAX_U5m8VByyo94T_uOX3-4U';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjQ1ODM2LCJpYXQiOjE1MjIyMzUwMzYsInNlc3NpZCI6IjZmZDk5MzM4LTc5MjctNDU3Yy04YTMxLTAyNzNhNTJmNWM4YyJ9.hK0hx--zAycxYvPB8K2-Dkrf-ZQqfLIwv41jT7ZQ_m-t72ozz21rf_xVPnZrMzOl89KDOJarOLMS33g7YqL270CqVyNzCLI8IT5N0W80Pxkd0-wQtSMI8EOSSBdCZJYfX5tkH71wRC22ZoH58KHlQMV8FZY-PAgTs5tiki3Grkg';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -446,6 +453,19 @@ class ComponentOwner extends React.Component {
         expandedTagId: null
       });
 
+
+    } else if (msg === "MOVECARD") {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.json()).then((json) => {
+        console.log("MOVECARD RES", json);
+      });
 
     }
   }

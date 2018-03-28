@@ -140,8 +140,25 @@ export default class Board extends Component {
     const dragCardIndex = (this.props.coloums * lastY) + lastX;
     // const dragCard = nextLists.notesList.splice(dragCardIndex, 1);
     const dropCardIndex = (this.props.coloums * nextY) + nextX;
+    
+    const getCardId = nextLists.notesList[dragCardIndex].id
+    
     nextLists.notesList.splice(dropCardIndex, 0, nextLists.notesList.splice(dragCardIndex, 1)[0]);
-    this.createLists(nextLists, true);
+    const moveCardObj = {
+            'predecessorSeq': '',
+            'successorSeq': '',
+            'notes': []
+          }
+    const notesVal = {'id' : getCardId};
+    moveCardObj.notes.push(notesVal);
+    nextLists.notesList.find((note, index) => {
+      if(note.id === getCardId) {
+        moveCardObj.predecessorNotePosition = nextLists.notesList[index - 1].outsetSeq ? nextLists.notesList[index - 1].outsetSeq : '';
+        moveCardObj.successorNotePosition = nextLists.notesList[index + 1].outsetSeq ? nextLists.notesList[index + 1].outsetSeq : '';
+      }
+    });
+    this.createLists(nextLists);
+    this.props.callback('MOVECARD', moveCardObj);
   }
 
   moveList(listId, nextX) {

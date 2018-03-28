@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjM4MzU4LCJpYXQiOjE1MjIyMjc1NTcsInNlc3NpZCI6Ijk1NjNhZTRhLWU5ZTEtNDAzNS1iMmNlLTIyOGM3NGVmOTAzZCJ9.lBDkb5u-UZsh3hKgz9hcUbs9jtbp1MMl_5rmIKxd3U5zcYlTDx3hSvKJH6DFMnc5L0FWYK5OOO-ziBC-3qmraXKMgdOQkIYaVzDQE7V1NaVqM7_-r7EJXzsy0QblbA_a9H1ESWW1Aq8qlpUODXBoAX_U5m8VByyo94T_uOX3-4U';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjQ1ODM2LCJpYXQiOjE1MjIyMzUwMzYsInNlc3NpZCI6IjZmZDk5MzM4LTc5MjctNDU3Yy04YTMxLTAyNzNhNTJmNWM4YyJ9.hK0hx--zAycxYvPB8K2-Dkrf-ZQqfLIwv41jT7ZQ_m-t72ozz21rf_xVPnZrMzOl89KDOJarOLMS33g7YqL270CqVyNzCLI8IT5N0W80Pxkd0-wQtSMI8EOSSBdCZJYfX5tkH71wRC22ZoH58KHlQMV8FZY-PAgTs5tiki3Grkg';
 function init() {
   getNotes();
 };
@@ -68,29 +68,34 @@ function getNotes() {
       const dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
-
-
-      if (noteObj.tags) {
-        const index = _.findIndex(groups, function (o) {
-          return o.tags[0].tagId === noteObj.tags[0].tagId;
-        });
-        if (index === -1) {
-          note.notes = [];
-          note.notes.push(note);
-          groups.push(note);
-        } else {
-          note.tagId = null;
-          note.tagName = null;
-          groups[index].notes.push(note);
-        }
-      } else {
-        notesList.push(note);
-      }
+      notesList.push(note);
     }
+    const mapGroupEle = _.groupBy(notesList, function(i){
+      if(i.tags) { 
+        return i.tags[0].tagId; 
+      }
+      else{  return i.id;}})
+    const getOrderedArr = _.sortBy(mapGroupEle, function(i){return i[0].outsetSeq * -1});
+    const mapNotesObj = [];
+    let groupFalg;
+    _.forEach(getOrderedArr, function(value, index) {
+      if(value.length=== 1) { 
+        mapNotesObj.push(value[0]) 
+      } 
+      else { 
+          value[0].notes = [];
+         _.each(value, function (obj, index) {
+          
+          value[0].notes.push(value[index]);
+         });
+        mapNotesObj.push(value[0]); 
+        groupFalg = true;
+      }
+    });
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
-    if (groups.length > 0) {
+    if (groupFalg) {
       const getAllTagName = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/contextLog', {
         method: 'GET',
         headers: {
@@ -102,17 +107,14 @@ function getNotes() {
         const tagObject = json.tagAttributes;
 
         tagObject.map((tag, i) => {
-          _.each(groups, function (obj, index) {
-            if (groups[index].tags[0].tagId === tag.tagId) {
-              groups[index].tags[0].tagName = tag.tagName;
+          _.each(mapNotesObj, function (obj, index) {
+            if(obj.notes) {
+              if (obj.tags[0].tagId === tag.tagId) {
+                obj.tags[0].tagName = tag.tagName;
+              }
             }
+            
           });
-        });
-
-
-
-        groups.map((group, i) => {
-          notesList.unshift(group);
         });
 
          toolbarModeProp.groups = groups;
@@ -130,7 +132,7 @@ function getNotes() {
             elementId: 'demo',
             locale: 'en-us',
             callback: callback,
-            notesList: notesList,
+            notesList: mapNotesObj,
             originalNotesList: originalNotesList,
             tocData: tocData,
             tagAttributes: tagObject,
@@ -156,7 +158,7 @@ function getNotes() {
           elementId: 'demo',
           locale: 'en-us',
           callback: callback,
-          notesList: notesList,
+          notesList: mapNotesObj,
           originalNotesList: originalNotesList,
           tocData: tocData,
           tagAttributes: [],
