@@ -18,39 +18,46 @@ function refreshNotesList(originalNotesList, tagObject) {
   const groups = [];
   const notesList = [];
 
-  for (let ic = 0; ic < originalNotesList.length; ic++) {
-    let note = _.cloneDeep(originalNotesList[ic]);
-    const tagId = (note.tags) ? note.tags[0].tagId : '';
-    if (tagId) {
-      const index = _.findIndex(groups, function (o) { return o.tags[0].tagId === tagId; });
-
-      if (index === -1) {
-        note.notes = [];
-        note.notes.push(note);
-        groups.push(note);
-      } else {
-        note.tagId = null;
-        note.tagName = null;
-        groups[index].notes.push(note)
+  const mapGroupEle = _.groupBy(originalNotesList, function(i){
+      if(i.tags) { 
+        return i.tags[0].tagId; 
       }
-    } else {
-      notesList.push(note);
-    }
-  }
-  if (groups.length) {
-    tagObject.map((tag, i) => {
-      _.each(groups, function (obj, index) {
-        if (groups[index].tags[0].tagId === tag.tagId) {
-          groups[index].tags[0].tagName = tag.tagName;
-        }
+      else{  return i.id;}})
+    const getOrderedArr = _.sortBy(mapGroupEle, function(i){return i[0].outsetSeq * -1});
+    const mapNotesObj = [];
+    let groupFalg;
+    _.forEach(getOrderedArr, function(value, index) {
+      if(value.length=== 1) { 
+        mapNotesObj.push(value[0]) 
+      } 
+      else { 
+        console.log("value", value);
+          value[0].notes = [];
+         _.each(value, function (obj, index) {
+          console.log("value", value[0]);
+          
+          value[0].notes.push(value[index]);
+         });
+         console.log("OBJJ", value[0]);
+        mapNotesObj.push(value[0]); 
+        groupFalg = true;
+      }
+    });
+    if(groupFalg) {
+      tagObject.map((tag, i) => {
+        _.each(mapNotesObj, function (obj, index) {
+          if(obj.notes) {
+            console.log(obj)
+            if (obj.tags[0].tagId === tag.tagId) {
+              obj.tags[0].tagName = tag.tagName;
+            }
+          }
+          
+        });
       });
-    });
-
-    groups.map((group, i) => {
-      notesList.unshift(group);
-    });
-  }
-  return notesList;
+    }
+    
+  return mapNotesObj;
 }
 
 
@@ -446,6 +453,19 @@ class ComponentOwner extends React.Component {
         expandedTagId: null
       });
 
+
+    } else if (msg === "MOVECARD") {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.json()).then((json) => {
+        console.log("MOVECARD RES", json);
+      });
 
     }
   }

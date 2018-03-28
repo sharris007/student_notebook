@@ -68,29 +68,35 @@ function getNotes() {
       const dupNote = _.cloneDeep(note);
 
       originalNotesList.push(dupNote);
-
-
-      if (noteObj.tags) {
-        const index = _.findIndex(groups, function (o) {
-          return o.tags[0].tagId === noteObj.tags[0].tagId;
-        });
-        if (index === -1) {
-          note.notes = [];
-          note.notes.push(note);
-          groups.push(note);
-        } else {
-          note.tagId = null;
-          note.tagName = null;
-          groups[index].notes.push(note);
-        }
-      } else {
-        notesList.push(note);
-      }
+      notesList.push(note);
     }
+    const mapGroupEle = _.groupBy(notesList, function(i){
+      if(i.tags) { 
+        return i.tags[0].tagId; 
+      }
+      else{  return i.id;}})
+    const getOrderedArr = _.sortBy(mapGroupEle, function(i){return i[0].outsetSeq * -1});
+    const mapNotesObj = [];
+    let groupFalg;
+    _.forEach(getOrderedArr, function(value, index) {
+      if(value.length=== 1) { 
+        mapNotesObj.push(value[0]) 
+      } 
+      else { 
+          value[0].notes = [];
+         _.each(value, function (obj, index) {
+          
+          value[0].notes.push(value[index]);
+         });
+        mapNotesObj.push(value[0]); 
+        groupFalg = true;
+      }
+    });
+    console.log(mapNotesObj);
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
-    if (groups.length > 0) {
+    if (groupFalg) {
       const getAllTagName = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/contextLog', {
         method: 'GET',
         headers: {
@@ -102,17 +108,14 @@ function getNotes() {
         const tagObject = json.tagAttributes;
 
         tagObject.map((tag, i) => {
-          _.each(groups, function (obj, index) {
-            if (groups[index].tags[0].tagId === tag.tagId) {
-              groups[index].tags[0].tagName = tag.tagName;
+          _.each(mapNotesObj, function (obj, index) {
+            if(obj.notes) {
+              if (obj.tags[0].tagId === tag.tagId) {
+                obj.tags[0].tagName = tag.tagName;
+              }
             }
+            
           });
-        });
-
-
-
-        groups.map((group, i) => {
-          notesList.unshift(group);
         });
 
          toolbarModeProp.groups = groups;
@@ -130,7 +133,7 @@ function getNotes() {
             elementId: 'demo',
             locale: 'en-us',
             callback: callback,
-            notesList: notesList,
+            notesList: mapNotesObj,
             originalNotesList: originalNotesList,
             tocData: tocData,
             tagAttributes: tagObject,
@@ -156,7 +159,7 @@ function getNotes() {
           elementId: 'demo',
           locale: 'en-us',
           callback: callback,
-          notesList: notesList,
+          notesList: mapNotesObj,
           originalNotesList: originalNotesList,
           tocData: tocData,
           tagAttributes: [],
@@ -305,3 +308,4 @@ class toolbarMode {
 }
 
 window.onload = init();
+
