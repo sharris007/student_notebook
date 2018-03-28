@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjQ1ODM2LCJpYXQiOjE1MjIyMzUwMzYsInNlc3NpZCI6IjZmZDk5MzM4LTc5MjctNDU3Yy04YTMxLTAyNzNhNTJmNWM4YyJ9.hK0hx--zAycxYvPB8K2-Dkrf-ZQqfLIwv41jT7ZQ_m-t72ozz21rf_xVPnZrMzOl89KDOJarOLMS33g7YqL270CqVyNzCLI8IT5N0W80Pxkd0-wQtSMI8EOSSBdCZJYfX5tkH71wRC22ZoH58KHlQMV8FZY-PAgTs5tiki3Grkg';
+const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjU1MDg2LCJpYXQiOjE1MjIyNDQyODYsInNlc3NpZCI6IjIyZWE2ODFlLTU3ZjItNDdjZi04YTM0LTQzODg2ODI2MWFkNyJ9.itLknYk5PFDa_o09zlkeObmYMjYaqVQwqaCIb2MGPycER3pvK42pZg6L3qzRdexxz28xFwL0QVqEXFCYkgtU42_wfQGmv3kDIEW2rj3XXHHfIsTE0IpniS-bS657gnwuwHYxclQIxjv5ibHyaek6ZJid3C29IIPhUXz9Pnn77JE';
 function init() {
   getNotes();
 };
@@ -92,6 +92,7 @@ function getNotes() {
         groupFalg = true;
       }
     });
+    console.log(mapNotesObj);
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
@@ -307,3 +308,4 @@ class toolbarMode {
 }
 
 window.onload = init();
+
