@@ -5,6 +5,11 @@ import { findDOMNode } from 'react-dom';
 import Card from './DraggableCard';
 import { CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT } from '../constants.js';
 
+var xDirection = "";
+    var yDirection = "";
+     
+    var oldX = 0;
+    var oldY = 0;
 
 function getPlaceholderIndex(y, scrollY) {
   // shift placeholder if y position more than card height / 2
@@ -18,12 +23,36 @@ function getPlaceholderIndex(y, scrollY) {
   return placeholderIndex;
 }
 
+
+function getMouseDirection(e) {
+  //deal with the horizontal case
+  if (oldX < e.pageX) {
+      xDirection = "right";
+  } else {
+      xDirection = "left";
+  }
+
+  //deal with the vertical case
+  if (oldY < e.pageY) {
+      yDirection = "down";
+  } else {
+      yDirection = "up";
+  }
+
+  oldX = e.pageX;
+  oldY = e.pageY;
+
+  console.log("-----------> " + xDirection + " " + yDirection);
+}
+
 const specs = {
   drop(props, monitor, component) {
 
+    var bodyElement = document.querySelector("body");
+bodyElement.addEventListener("mousemove", getMouseDirection, false);
    
     document.getElementById(monitor.getItem().id).style.display = 'block';
-
+    
 
     const newStyle = { 'display': 'none', 'left': '0px' };
 
@@ -50,6 +79,7 @@ const specs = {
 
 debugger;
     if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue"){
+      alert(yDirection);
       alert('ok to group', nextX, nextY);
       alert('ok to group' + nextX + ' ' + nextY);
       alert(nextX);
@@ -92,6 +122,18 @@ debugger;
     const newStyle = { 'display': 'none', 'left': '0px' };
 
     newStyle.display = 'block';
+
+let upDown2 = monitor.getClientOffset().y;
+let upDown3 = monitor.getInitialSourceClientOffset().y;
+let upDown4 = monitor.getInitialClientOffset().y;
+let upDown5 = monitor.getSourceClientOffset().y;
+let upDown = monitor.getDifferenceFromInitialOffset().y;
+let upDown6 = upDown2 + upDown;
+let upDown7 = upDown6 - upDown4;
+let leftright = monitor.getDifferenceFromInitialOffset().x;
+
+console.log('updown' + upDown + ' ' + upDown2 + ' ' + upDown3 + ' ' + upDown4 + ' ' + upDown5 + ' ' + upDown7);
+
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
     component.setState({ style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
