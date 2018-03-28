@@ -157,7 +157,7 @@ export default class Board extends Component {
         moveCardObj.successorNotePosition = nextLists.notesList[index + 1].outsetSeq ? nextLists.notesList[index + 1].outsetSeq : '';
       }
     });
-    this.createLists(nextLists);
+    this.createLists(nextLists, true);
     this.props.callback('MOVECARD', moveCardObj);
   }
 
