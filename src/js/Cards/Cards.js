@@ -208,10 +208,28 @@ export default class Cards extends Component {
       isScrolling: false,
       groupModeFlag: props.groupModeFlag,
       groupExpanded: props.groupExpanded,
-      direction: 'left'
+      direction: 'left',
+      verticalDirection: ' ',
+      lastScrollPos:0
     };
+   
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
+  handleScroll(event) {
+    alert('handel');
+    if(this.state.lastScrollPos > event.currentTarget.scrollTop) {
+      this.setState({
+        verticalDirection:'top',
+        lastScrollPos:event.currentTarget.scrollTop
+      });
+    } else if(this.state.lastScrollPos < event.currentTarget.scrollTop) {
+      this.setState({
+        verticalDirection:'bottom',
+        lastScrollPos:event.currentTarget.scrollTop
+      });
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded });
@@ -285,7 +303,7 @@ export default class Cards extends Component {
           <div style={{
             //  backgroundColor: (this.state.positioning<=560)? 'yellow':'red',
             backgroundColor: colorr,
-          }}>
+          }} onScroll={this.handleScroll}>{this.state.verticalDirection}{this.state.direction}
 
             <Card x={x} y={i}
             color={colorr}

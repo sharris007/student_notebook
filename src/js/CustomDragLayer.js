@@ -11,6 +11,7 @@ const layerStyles = {
   zIndex: 100000
 };
 
+
 function getItemStyles(props) {
   console.log('rener1stylx');
   console.log(props);
