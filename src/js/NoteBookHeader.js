@@ -254,7 +254,7 @@ export default class NoteBookHeader extends Component {
       }
     }
     this.props.getFilterArr(finalFilteredList);
-    if(this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels') {
+    if(selectedChapter.length > 0 || selectedLabel.length > 0) {
       this.setState({ groupNoteShow : false});
     }
     else {

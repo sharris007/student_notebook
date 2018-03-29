@@ -43,7 +43,8 @@ export default class Board extends Component {
       lists: [],
       notesList: [],
       ider: null,
-      groupModeFlag: groupModeFlag
+      groupModeFlag: groupModeFlag,
+      updateNoteList: this.props.notesList
     };
 
   }
@@ -158,6 +159,8 @@ export default class Board extends Component {
       }
     });
     this.createLists(nextLists, true);
+    nextLists.notesList.shift();
+    this.setState({updateNoteList : nextLists.notesList});
     this.props.callback('MOVECARD', moveCardObj);
   }
 
@@ -229,16 +232,17 @@ export default class Board extends Component {
   getFilterArr(list) {
     const notesList = {};
     notesList.coloums = this.props.coloums;
+    let addNoteFlag;
     const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
     const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
     if (selectedChapter.length > 0 || selectedLabel.length > 0) {
       notesList.notesList = list;
     }
     else {
-      notesList.notesList = this.props.notesList;
+      notesList.notesList = this.state.updateNoteList;
     }
     notesList.groupExpanded = false;
-    this.createLists(notesList);
+    this.createLists(notesList, false); 
   }
 
   render() {
