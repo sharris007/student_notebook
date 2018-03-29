@@ -6,10 +6,12 @@ import Card from './DraggableCard';
 import { CARD_HEIGHT, CARD_MARGIN, OFFSET_HEIGHT } from '../constants.js';
 
 var xDirection = "";
-    var yDirection = "";
-     
-    var oldX = 0;
-    var oldY = 0;
+var yDirection = "";
+
+var oldX = 0;
+var oldY = 0;
+var bodyElement = document.querySelector("body");
+bodyElement.addEventListener("mousemove", getMouseDirection, false);
 
 function getPlaceholderIndex(y, scrollY) {
   // shift placeholder if y position more than card height / 2
@@ -27,32 +29,30 @@ function getPlaceholderIndex(y, scrollY) {
 function getMouseDirection(e) {
   //deal with the horizontal case
   if (oldX < e.pageX) {
-      xDirection = "right";
+    xDirection = "right";
   } else {
-      xDirection = "left";
+    xDirection = "left";
   }
 
   //deal with the vertical case
   if (oldY < e.pageY) {
-      yDirection = "down";
+    yDirection = "down";
   } else {
-      yDirection = "up";
+    yDirection = "up";
   }
 
   oldX = e.pageX;
   oldY = e.pageY;
 
-  console.log("-----------> " + xDirection + " " + yDirection);
+  //  console.log("-----------> " + xDirection + " " + yDirection);
 }
 
 const specs = {
   drop(props, monitor, component) {
 
-    var bodyElement = document.querySelector("body");
-bodyElement.addEventListener("mousemove", getMouseDirection, false);
-   
+
     document.getElementById(monitor.getItem().id).style.display = 'block';
-    
+
 
     const newStyle = { 'display': 'none', 'left': '0px' };
 
@@ -77,13 +77,9 @@ bodyElement.addEventListener("mousemove", getMouseDirection, false);
       return;
     }
 
-debugger;
-    if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue"){
-      alert(yDirection);
-      alert('ok to group', nextX, nextY);
-      alert('ok to group' + nextX + ' ' + nextY);
-      alert(nextX);
-      console.log('transform', `${nextX}px, ${nextY}px)`);
+    if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue" || component.props.item.item.color === "green") {
+
+      console.log('transform-drop', `${nextX}px, ${nextY}px)`);
 
     }
 
@@ -91,7 +87,7 @@ debugger;
     props.moveCard(lastX, lastY, nextX, nextY);
   },
   hover(props, monitor, component) {
-//      console.log(component);
+    //      console.log(component);
     //  const { placeholderIndex } = component.state;
     // let nextY = placeholderIndex;
 
@@ -99,7 +95,6 @@ debugger;
     const nextX = props.x;
     const lastY = monitor.getItem().y;
     const lastX = monitor.getItem().x;
-
     let nextY = component.state.placeholderIndex;
     if (lastY > nextY) { // move top
       nextY += 1;
@@ -114,7 +109,7 @@ debugger;
 
     // defines where placeholder is rendered
     let ress = monitor.getDropResult();
-   // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
+    // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
@@ -123,16 +118,15 @@ debugger;
 
     newStyle.display = 'block';
 
-let upDown2 = monitor.getClientOffset().y;
-let upDown3 = monitor.getInitialSourceClientOffset().y;
-let upDown4 = monitor.getInitialClientOffset().y;
-let upDown5 = monitor.getSourceClientOffset().y;
-let upDown = monitor.getDifferenceFromInitialOffset().y;
-let upDown6 = upDown2 + upDown;
-let upDown7 = upDown6 - upDown4;
-let leftright = monitor.getDifferenceFromInitialOffset().x;
+    let upDown2 = monitor.getClientOffset().y;
+    let upDown3 = monitor.getInitialSourceClientOffset().y;
+    let upDown4 = monitor.getInitialClientOffset().y;
+    let upDown5 = monitor.getSourceClientOffset().y;
+    let upDown = monitor.getDifferenceFromInitialOffset().y;
+    let upDown6 = upDown2 + upDown;
+    let upDown7 = upDown6 - upDown4;
+    let leftright = monitor.getDifferenceFromInitialOffset().x;
 
-console.log('updown' + upDown + ' ' + upDown2 + ' ' + upDown3 + ' ' + upDown4 + ' ' + upDown5 + ' ' + upDown7);
 
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
     component.setState({ style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
@@ -210,23 +204,22 @@ export default class Cards extends Component {
       groupExpanded: props.groupExpanded,
       direction: 'left',
       verticalDirection: ' ',
-      lastScrollPos:0
+      lastScrollPos: 0
     };
-   
+
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   handleScroll(event) {
-    alert('handel');
-    if(this.state.lastScrollPos > event.currentTarget.scrollTop) {
+    if (this.state.lastScrollPos > event.currentTarget.scrollTop) {
       this.setState({
-        verticalDirection:'top',
-        lastScrollPos:event.currentTarget.scrollTop
+        verticalDirection: 'top',
+        lastScrollPos: event.currentTarget.scrollTop
       });
-    } else if(this.state.lastScrollPos < event.currentTarget.scrollTop) {
+    } else if (this.state.lastScrollPos < event.currentTarget.scrollTop) {
       this.setState({
-        verticalDirection:'bottom',
-        lastScrollPos:event.currentTarget.scrollTop
+        verticalDirection: 'bottom',
+        lastScrollPos: event.currentTarget.scrollTop
       });
     }
   }
@@ -242,18 +235,14 @@ export default class Cards extends Component {
     let righter = false;
     const cardList = [];
 
+
     let filterList = _.cloneDeep(cards);
 
     filterList.forEach((item, i) => {
 
 
-      //  if (isOver){console.log(item)}
-      //  if (isOver){console.log('is Over =>' + placeholderIndex)}
-      // if (isOver){console.log('is Overx =>' + x)}
 
       let newKey = Date.now();
- //     item.keyId = item.Id + Date.now();
-    //  console.log(this.state.nextX, x, this.state.nextY, i, placeholderIndex);
 
       let colorr = 'white';
       // item.keyId = item.Id + Date.now();
@@ -263,7 +252,11 @@ export default class Cards extends Component {
       } else { colorr = 'white'; }
       // if (this.state.nextX === placeholderIndex+1) {colorr = 'green'; }
 
-
+      if (!isOver || !canDrop) {
+        window.clear = true;
+      } else {
+        window.clear = false;
+      }
 
 
       if (isOver && canDrop) {
@@ -275,7 +268,6 @@ export default class Cards extends Component {
           } else {
             cardList.push(<div key="placeholder" className="item placeholder2" />);
           }
-          cardList.push(<div>ddddd</div>);
 
 
         } else if (placeholderIndex > i) {
@@ -285,28 +277,30 @@ export default class Cards extends Component {
 
       if (righter) {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
-        cardList.push(<div>ddrrrrr</div>);
-        
+
         righter = false;
       }
 
       if (item !== undefined) {
-    //    item.keyId = item.Id + Date.now();
-    item.color = colorr;
+        //    item.keyId = item.Id + Date.now();
+        item.color = colorr;
 
-    //    console.log('lay low' + x, cardList.length);
-    if (isOver && canDrop && placeholderIndex === i) {
-    item.color = "silver";
-    }
+        //    console.log('lay low' + x, cardList.length);
+        if (isOver && canDrop && placeholderIndex === i) {
+          item.color = "silver";
+        }
+
         cardList.push(
 
           <div style={{
             //  backgroundColor: (this.state.positioning<=560)? 'yellow':'red',
             backgroundColor: colorr,
-          }} onScroll={this.handleScroll}>{this.state.verticalDirection}{this.state.direction}
+          }} onScroll={this.handleScroll}>{this.state.verticalDirection}-{this.state.direction}
 
             <Card x={x} y={i}
-            color={colorr}
+                    ref="testing"
+
+              color={colorr}
               canDrag={item.cardFormat === 'note' ? true : false}
               item={item}
               key={item.keyId}
@@ -322,19 +316,18 @@ export default class Cards extends Component {
         );
       }
       if (isOver && canDrop && placeholderIndex === i) {
-  //      let z = cardList.splice(0,1);
-        
+        //      let z = cardList.splice(0,1);
+
         //    cardList.push(<div key="placeholder" className="item placeholder" />);
         if (this.state.direction == 'left') {
           cardList.push(<div key="placeholder" className="item placeholder" />);
-        cardList.push(<div>sssssddrrrrr</div>);
-          
+
         } else {
           righter = true;
           //   cardList.push(<div key="placeholder" className="item placeholder2" />);
         }
 
-   //     cardList.push(<div style={{background:'silver'}}>{z}</div>)
+        //     cardList.push(<div style={{background:'silver'}}>{z}</div>)
       }
     });
 
@@ -368,8 +361,8 @@ export default class Cards extends Component {
     // }
     //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
     //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
-  
- // console.log(cardList);
+
+    // console.log(cardList);
     return connectDropTarget(
       <div className="desk-items">
         {cardList}

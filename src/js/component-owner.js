@@ -51,6 +51,7 @@ function refreshNotesList(originalNotesList) {
 
 
 
+
 class ComponentOwner extends React.Component {
 
   //
@@ -82,7 +83,11 @@ class ComponentOwner extends React.Component {
       expandedTagId: null
     };
 
+
   }
+
+
+
   callback = (msg, data) => {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
@@ -325,6 +330,23 @@ class ComponentOwner extends React.Component {
       expandedTagName: null,
       expandedTagId: null
     });
+  }
+
+
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll(event) {
+    console.log(event.target);
+    console.log(event);
+    console.log(document.body.scrollTop);
+    console.log(window.pageYOffset);
+
+  //  alert('scroller');
+    // do something like call `this.setState`
+    // access window.scrollY etc
   }
   //
   // Note that combining the fat arrow syntax with ES7 class properties (transpiled by Babel Stage 0), we eliminate the

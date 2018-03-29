@@ -14,11 +14,10 @@ const propTypes = {
 };
 
 const CardDragPreview = (props) => {
+ // debugger;
   styles.width = `${props.card.clientWidth || 243}px`;
   styles.height = `${props.card.clientHeight || 243}px`;
   let isOver = true;
-console.log('cardDragPreview');
-console.log(props.card.item.color);
   return (
     <div style={styles}>
       <Card item={props.card.item} groupModeFlag={props.groupModeFlag} groupExpanded={props.groupExpanded} />

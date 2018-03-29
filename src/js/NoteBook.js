@@ -241,7 +241,7 @@ export default class Board extends Component {
         <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
         <main>
           <div style={{ height: '100%' }}>
-            <CustomDragLayer snapToGrid={false} />
+            <CustomDragLayer snapToGrid={false}  />
             {filteredList.map((item, i) => (
               <CardsContainer
                 key={item.keyId}

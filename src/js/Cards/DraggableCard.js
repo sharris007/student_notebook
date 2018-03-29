@@ -120,6 +120,7 @@ export default class CardComponent extends Component {
     return connectDragSource(
       <div>
         <Card 
+        y={this.props.y}
             style={getStyles(isDragging)} 
             item={item} cancelAddCard={cancelAddCard} 
             saveCard={saveCard} 

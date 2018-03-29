@@ -3,7 +3,7 @@ import { DragLayer } from 'react-dnd';
 
 import CardDragPreview from './CardDragPreview';
 import snapToGrid from './snapToGrid';
-
+import { findDOMNode } from 'react-dom';
 
 const layerStyles = {
   position: 'fixed',
@@ -13,8 +13,6 @@ const layerStyles = {
 
 
 function getItemStyles(props) {
-  console.log('rener1stylx');
-  console.log(props);
   const { initialOffset, currentOffset } = props;
   if (!initialOffset || !currentOffset) {
     return {
@@ -32,8 +30,8 @@ function getItemStyles(props) {
     x += initialOffset.x;
     y += initialOffset.y;
   }
-  const transform = `translate(${x-100}px, ${y-100}px)`;
-  console.log('transform', `${x}px, ${y}px)`);
+  const transform = `translate(${x - 100}px, ${y - 100}px)`;
+ // console.log('transform', `${x}px, ${y}px)`);
   return {
     WebkitTransform: transform,
     transform
@@ -44,13 +42,10 @@ function getItemStyles(props) {
 
 function getItemX(props) {
 
-  console.log('rener1x');
-  console.log(props);
   const { initialOffset, currentOffset } = props;
 
-
   if (!initialOffset || !currentOffset) {
-    return "pink";
+    return "white";
   }
 
   let { x, y } = currentOffset;
@@ -62,20 +57,19 @@ function getItemX(props) {
     x += initialOffset.x;
     y += initialOffset.y;
   }
-  const transform = `translate(${x-100}px, ${y-100}px)`;
-  console.log('transform', `${x}px, ${y}px)`);
-  console.log('transform', `${initialOffset.x}px, ${initialOffset.y}px)`);
-  console.log('transform', `${currentOffset.x}px, ${currentOffset.y}px)`);
-  console.log(x%350);
-  let color = "red";
-  if (x > 150 && x < 200){
-    color = "orange";
-  }
-  if (x > 500 && x < 600){
+
+ // const transform = `translate(${x - 100}px, ${y - 100}px)`;
+
+  
+  let color = "white";
+  
+  const index = _.findIndex(window.cards, function (o) { return o.left < currentOffset.x+85 && o.left + 100 > currentOffset.x+85 && o.top < ((currentOffset.y-4)+ window.pageYOffset) && (o.top+(o.height/3)) > ((currentOffset.y-4)+ window.pageYOffset) });
+
+  if (index === -1) {
+    color = "yellow";
+
+  } else {
     color = "blue";
-  }
-  if (x > 940 && x < 1000){
-    color = "green";
   }
   return color;
 }
@@ -108,27 +102,27 @@ export default class CustomDragLayer extends Component {
     groupModeFlag: PropTypes.bool
   };
 
+
+
+
+
   renderItem(type, item) {
-   item.item.color = "violet";
-    item.item.color =  getItemX(this.props);
-    console.log(item);
+    item.item.color = getItemX(this.props);
     switch (type) {
-    case 'card':
-      return (
+      case 'card':
+        return (
           <CardDragPreview card={item} />
         );
-    default:
-      return null;
+      default:
+        return null;
     }
   }
 
   render() {
     const { item, itemType, isDragging } = this.props;
-    console.log('rener1');
-    console.log(item);
-    if (item !== null){
- //  item.item.color = getItemX(item);
- //  item.item.color = "red";
+    if (item !== null) {
+      //  item.item.color = getItemX(item);
+      //  item.item.color = "red";
 
     }
 

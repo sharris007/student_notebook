@@ -271,11 +271,9 @@ export default class Card extends Component {
     handleGroupClick: PropTypes.func
   };
 
-  
+
 
   constructor(props) {
-    console.log('cartds.js');
-    console.log(props.item.quote);
     super(props);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
@@ -307,15 +305,29 @@ export default class Card extends Component {
 
   componentDidMount = () => {
     var node = ReactDOM.findDOMNode(this.refs.hoops);
-    
-//    this.setState({ left: ReactDOM.findDOMNode(this.refs.hoop).getBoundingClientRect().left });
-    this.setState({ left: node.offsetLeft, right: node.offsetRight, top: node.offsetTop });
+    //  debugger;
+    if (!window.cards) {
+      window.cards = [];
+    }
 
+    let id = this.props.item.id;
+    const index = _.findIndex(window.cards, function (o) { return o.id === id });
+
+    if (index === -1) { // scott - removes duplicate entries
+      window.cards.push({
+        id: this.props.item.id,
+        left: node.offsetLeft,
+        height: node.offsetHeight,
+        top: node.offsetTop
+      });
+      //    this.setState({ left: ReactDOM.findDOMNode(this.refs.hoop).getBoundingClientRect().left });
+      this.setState({ left: node.offsetLeft, right: node.offsetRight, top: node.offsetTop });
+    }
   }
 
 
- 
-  
+
+
 
 
   handleCancelAddCard = (card) => {
@@ -410,8 +422,8 @@ export default class Card extends Component {
 
   handleUnGroupNotes = (event, value) => {
     let updatedItem = this.state.item;
-  //  updatedItem.tagId = '';
-  //  updatedItem.insetSeq = '';
+    //  updatedItem.tagId = '';
+    //  updatedItem.insetSeq = '';
     this.setState({ item: updatedItem }, () => {
       this.props.saveCard(this.state.item, 'UNGROUP NOTES');
     });
@@ -463,27 +475,20 @@ export default class Card extends Component {
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
-  //  var x = document.getElementById( item.id ).documentOffsetLeft;
-  //  alert(x);
+    //  var x = document.getElementById( item.id ).documentOffsetLeft;
+    //  alert(x);
     return (
-
-
       <div
         //    style={{ background: 'white' }}
-    //    style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
+        //    style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         style={item.tagId ? { background: `${this.props.item.color}`, boxShadow: 'none' } : { background: `${this.props.item.color}` }}
         className="item"
         id={style ? item.id : null}
         ref="hoops"
-        
-      >
-{this.props.color},
-{this.state.left},
-{this.state.right},
-{this.state.top},
 
+      >
         {item.noteText === 'C' && !item.tagId ? (
-          <div className="item-name" style={observations}>
+          <div className="item-name" style={observations} ref={referee}>
             <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -595,13 +600,13 @@ export default class Card extends Component {
                 {item.tagName}
               </div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-23px', paddingRight: '10px' }}>
-             
-             
 
-             {/* DON'T DELETE THE BELOW COMMENTS. ITS THE VERTICAL MENU WITH Rename and Ungroup may uncomment later */}
-           
-             
-             
+
+
+                {/* DON'T DELETE THE BELOW COMMENTS. ITS THE VERTICAL MENU WITH Rename and Ungroup may uncomment later */}
+
+
+
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                   anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
@@ -643,7 +648,7 @@ export default class Card extends Component {
 
         {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
           <div style={{ position: 'relative', top: '-50px', left: '-10px' }} onClick={() => this.handleSelectCard(item)}>
-           {this.state.selected ? <img src={selectedPng} /> :  <img src={selectPng} />}</div>
+            {this.state.selected ? <img src={selectedPng} /> : <img src={selectPng} />}</div>
           : null}
 
         {item.cardFormat === 'note' ? (
