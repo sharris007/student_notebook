@@ -97,7 +97,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMjM4MzU4LCJpYXQiOjE1MjIyMjc1NTcsInNlc3NpZCI6Ijk1NjNhZTRhLWU5ZTEtNDAzNS1iMmNlLTIyOGM3NGVmOTAzZCJ9.lBDkb5u-UZsh3hKgz9hcUbs9jtbp1MMl_5rmIKxd3U5zcYlTDx3hSvKJH6DFMnc5L0FWYK5OOO-ziBC-3qmraXKMgdOQkIYaVzDQE7V1NaVqM7_-r7EJXzsy0QblbA_a9H1ESWW1Aq8qlpUODXBoAX_U5m8VByyo94T_uOX3-4U';
+    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMzE2NTc1LCJpYXQiOjE1MjIzMDU3NzUsInNlc3NpZCI6IjJkMWRjNmVlLWVmYzQtNDUyOS1hYWI3LTc0NTJlNTc2MTYzYSJ9.l1Pp8m9uLGuzz54qBOm_lyrxxyW1uA8zvznZ1j7VyrTOr3PWWM12T3nX4kJFUtg1EXkgmY7SkRUN6KGfsBd-e1wdbn6hSLevkyR5ywafDghzPkLRPmu-G5Noxy1pn8SgnZoJSNS98w7EnuAa0_VE2AGAR-iPfC8k384TOMVmpmI';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -108,13 +108,13 @@ class ComponentOwner extends React.Component {
         noteexist.content = data.content;
         noteexist.cardFormat = data.cardFormat;
         if (data.noteType === 'CUSTOM_NOTE')
-          noteexist.quote = data.title;
+          noteexist.title = data.title;
       }
       if(original_noteexist) {
         original_noteexist.content = data.content;
         original_noteexist.cardFormat = data.cardFormat;
         if (data.noteType === 'CUSTOM_NOTE')
-          original_noteexist.quote = data.title;
+          original_noteexist.title = data.title;
       }
       this.setState({
           notesList: notesList,
