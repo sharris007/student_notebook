@@ -115,10 +115,10 @@ export default class CardComponent extends Component {
 
   render() {
   //  const { clientWidth, clientHeight } = findDOMNode(component);
-    
+    debugger;
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, ungroupNote, handleGroupClick } = this.props;
     return connectDragSource(
-      <div>
+      <div style={{cursor: 'move'}}>
         <Card 
         y={this.props.y}
             style={getStyles(isDragging)} 

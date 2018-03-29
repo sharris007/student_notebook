@@ -481,7 +481,7 @@ export default class Card extends Component {
       <div
         //    style={{ background: 'white' }}
         //    style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
-        style={item.tagId ? { background: `${this.props.item.color}`, boxShadow: 'none' } : { background: `${this.props.item.color}` }}
+        style={item.tagId ? { background: `${this.props.item.color}`, boxShadow: 'none', cursor: 'move' } : { background: `${this.props.item.color}`, cursor: 'move' }}
         className="item"
         id={style ? item.id : null}
         ref="hoops"
