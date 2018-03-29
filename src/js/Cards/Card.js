@@ -18,6 +18,7 @@ const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
 const selectPng = require('../../assets/images/select.png');
 const selectedPng = require('../../assets/images/selected.png');
+const layerPng = require('../../assets/images/biglayer4.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -475,19 +476,29 @@ export default class Card extends Component {
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
+
+    const opacity = this.props.item.color === 'blue' ? '1' : '1';
+    const clearBackground = this.props.item.color === 'blue' ? 'transparent' : 'transparent';
+
+    const  overlap  = this.props.item.color;
+    
+    this.props.item.color === 'blue'
     //  var x = document.getElementById( item.id ).documentOffsetLeft;
     //  alert(x);
     return (
+
       <div
         //    style={{ background: 'white' }}
         //    style={item.tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
-        style={item.tagId ? { background: `${this.props.item.color}`, boxShadow: 'none', cursor: 'move' } : { background: `${this.props.item.color}`, cursor: 'move' }}
+        style={item.tagId ? { background: `${clearBackground}`, boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: `${clearBackground}`, cursor: 'move', opacity: `${opacity}` }}
         className="item"
         id={style ? item.id : null}
-        ref="hoops"
-
+        ref="hoops" 
       >
-        {item.noteText === 'C' && !item.tagId ? (
+
+        {this.props.item.color === 'blue' ? (<img src={layerPng} style={{ opacity: '.3', position: 'absolute', top: '25%', left: '25%', height: '50%' }} />) : null}
+
+        {item.noteText === 'C' && !item.tagId && this.props.item.color != 'blue' ? (
           <div className="item-name" style={observations} ref={referee}>
             <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
@@ -507,7 +518,8 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'M' && !item.tagId ? (
+
+        {item.noteText === 'M' && !item.tagId && this.props.item.color != 'blue' ? (
           <div className="item-name" style={mainIdea}>
             <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
@@ -527,7 +539,8 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'I' && !item.tagId ? (
+
+        {item.noteText === 'I' && !item.tagId && this.props.item.color != 'blue' ? (
           <div className="item-name" style={fromInstructor}>
             {this.props.groupExpanded === true ?
               <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
@@ -543,14 +556,11 @@ export default class Card extends Component {
                 </IconMenu>
               </div>
               : null}
-
-
-
           </div>
         ) : null}
 
 
-        {item.noteText === 'O' && !item.tagId ? (
+        {item.noteText === 'O' && !item.tagId && this.props.item.color != 'blue' ? (
           <div className="item-name" style={observations}>
             <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
@@ -570,7 +580,8 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.noteText === 'Q' && !item.tagId ? (
+
+        {item.noteText === 'Q' && !item.tagId && this.props.item.color != 'blue' ? (
           <div className="item-name" style={questions}>
             <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
               <IconMenu
@@ -590,7 +601,8 @@ export default class Card extends Component {
             </div>
           </div>
         ) : null}
-        {item.cardFormat === 'note' && item.tagId ? (
+
+        {item.cardFormat === 'note' && item.tagId && this.props.item.color != 'blue' ? (
           <div style={{ height: '44px' }}>
             <div className="item-name" style={group} ref={(ele) => {  // what is this doing SCOTT
               this.groupTitle = ele;
@@ -617,9 +629,6 @@ export default class Card extends Component {
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
-
-
-
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
               this.renameDiv = ele;
@@ -636,28 +645,27 @@ export default class Card extends Component {
               />
             </div>
           </div>
-
-
-
         ) : null}
 
 
-        {item.cardFormat === 'note' && item.tagId ?
+        {item.cardFormat === 'note' && item.tagId && this.props.item.color != 'blue' ?
           <div style={line2} /> : null}
 
 
-        {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId ?
+        {item.cardFormat === 'note' && this.state.groupModeFlag === true && !item.tagId && this.props.item.color != 'blue' ?
           <div style={{ position: 'relative', top: '-50px', left: '-10px' }} onClick={() => this.handleSelectCard(item)}>
             {this.state.selected ? <img src={selectedPng} /> : <img src={selectPng} />}</div>
           : null}
 
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
           <div style={title}>{item.title}</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ paddingTop: '100px' }} />
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ 'textAlign': 'center' }}>
             <button
               onClick={this.handleAddCard}
@@ -667,14 +675,16 @@ export default class Card extends Component {
             </button>
           </div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={addNote}>Add Note</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ paddingBottom: '100px' }} />
         ) : null}
 
-        {item.cardFormat !== 'note' ? (
+        {item.cardFormat !== 'note' && this.props.item.color != 'blue' ? (
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
@@ -692,7 +702,7 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {item.cardFormat !== 'add mode' && item.pageId ? (
+                {item.cardFormat !== 'add mode' && item.pageId  && this.props.item.color != 'blue' ? (
                   <input
                     style={titleInputBoxDisabled}
                     ref={(el) => {
@@ -704,8 +714,9 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {this.state.titleInput}
-                {item.cardFormat !== 'add mode' ? (
+                {this.props.item.color != 'blue' ? this.state.titleInput: null}
+
+                {item.cardFormat !== 'add mode'  && this.props.item.color != 'blue' ? (
                   <textarea
                     rows="10"
                     cols="50"
@@ -722,8 +733,8 @@ export default class Card extends Component {
             </div>
           </div>
         ) : (
-            <div>
-              {item.cardFormat === 'note' && item.pageId ?
+            <div style={this.props.item.color != 'blue' ? { background: `${this.props.item.color}`, opacity: `${opacity}` } : { background: `${this.props.item.color}`, cursor: 'move', opacity: `${opacity}` }}>
+              {item.cardFormat === 'note' && item.pageId && this.props.item.color != 'blue' ?
                 <div className="item-container" style={{ paddingTop: '0px', marginTop: '-10px', paddingLeft: '16px', paddingBottom: '0px' }}>
                   <div className="item-content">
                     <table style={{ tableLayout: 'fixed', width: '300px' }}><tbody><tr>
@@ -742,20 +753,19 @@ export default class Card extends Component {
                   </div>
                 </div> : null}
 
-              {/* {item.cardFormat === 'note' && item.pageId ?
-                null : <br />} */}
+           
 
-              {item.cardFormat === 'note' && item.pageId ?
+              {item.cardFormat === 'note' && item.pageId && this.props.item.color != 'blue' ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ?
+              {item.cardFormat === 'note' && !item.pageId && this.props.item.color != 'blue' ?
                 <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
                   <div className="item-content">
                     <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                   </div>
                 </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ?
+              {item.cardFormat === 'note' && item.pageId && this.props.item.color != 'blue' ?
                 <div className="item-container" style={{ paddingTop: '20px', paddingLeft: '16px', paddingBottom: '20px', paddingRight: '26px' }}>
                   <div className="item-content">
                     <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
@@ -764,12 +774,12 @@ export default class Card extends Component {
             </div>
           )}
 
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
           <div>
           </div>
         ) : (
-            <div className="item-perfomers">
-              {item.cardFormat === 'create new' ? (
+            <div className="item-perfomers" style={this.props.item.color == 'blue' ? { background: `${clearBackground}`,  opacity: `${opacity}` } : null }>
+              {item.cardFormat === 'create new' && this.props.item.color != 'blue' ? (
                 <div>
                   {!this.state.hideSave ?
                     <a
@@ -799,24 +809,24 @@ export default class Card extends Component {
 
 
 
-        {item.noteText === 'I' && !item.tagId ? (
+        {item.noteText === 'I' && !item.tagId && this.props.item.color != 'blue' ? (
           <div style={{ background: '#ccf5fd', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>From instructor</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'M' && !item.tagId ? (
+        {item.noteText === 'M' && !item.tagId && this.props.item.color != 'blue' ? (
           <div style={{ background: '#bbf2b6', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main ideas</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'O' && !item.tagId ? (
+        {item.noteText === 'O' && !item.tagId && this.props.item.color != 'blue' ? (
           <div style={{ background: '#fed3ec', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Main observations</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
-        {item.noteText === 'Q' && !item.tagId ? (
+        {item.noteText === 'Q' && !item.tagId && this.props.item.color != 'blue' ? (
           <div style={{ background: '#ffedad', width: '11px', height: '60px' }}><br /><table><tbody><tr><td><div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginLeft: '20px', width: '150px' }}>Questions</div></td><td><div style={{ fontSize: '12px', letterSpacing: '-0.1px', textAlign: 'left', color: 'rgb(106, 112, 112)', padding: '0px 15px 0px', background: 'white' }}>{Moment(new Date(item.changeDate)).format('MMMM DD, YYYY')}</div></td></tr></tbody></table></div>
         ) : null}
 
 
-        {item.tagId ?
+        {item.tagId && this.props.item.color != 'blue' ?
           <div style={{ background: 'white', marginRight: '.8em', borderBottomColor: 'silver', borderBottomRightRadius: '.6em', marginBottom: '-3px', marginLeft: '1px', borderBottomLeftRadius: '.5em', borderBottomStyle: 'solid', borderBottomWidth: '2px', fontSize: '12px', fontWeight: '600', letterSpacing: '-0.2px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>
             <div style={{ background: `${item.notes[0].colorCode}`, width: '11px', height: '60px', borderBottomLeftRadius: '.4em', marginLeft: '-1px' }}>
               <br />
@@ -855,7 +865,7 @@ export default class Card extends Component {
           : null}
 
 
-        {item.tagId ?
+        {item.tagId && this.props.item.color != 'blue' ?
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
             <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '.5em', borderBottomWidth: '2px', borderBottomRightRadius: '.3em', borderRightWidth: '1px', marginRight: '.7em', marginTop: '-1px', boxShadow: 'inset -1px -3px 12px -5px rgba(153,145,153,1)' }}>

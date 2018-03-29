@@ -245,18 +245,9 @@ export default class Cards extends Component {
       let newKey = Date.now();
 
       let colorr = 'white';
-      // item.keyId = item.Id + Date.now();
-      //     if (this.state.nextY === i && this.state.nextX === x) { colorr = 'green'; item.keyId = item.Id + Date.now(); } else { colorr = 'blue';}
-      if (this.state.nextY === i && this.state.nextX === x) {
-        colorr = 'green';
-      } else { colorr = 'white'; }
-      // if (this.state.nextX === placeholderIndex+1) {colorr = 'green'; }
-
-      if (!isOver || !canDrop) {
-        window.clear = true;
-      } else {
-        window.clear = false;
-      }
+      // if (this.state.nextY === i && this.state.nextX === x) {
+      //   colorr = 'green';
+      // } else { colorr = 'white'; }
 
 
       if (isOver && canDrop) {
@@ -287,20 +278,17 @@ export default class Cards extends Component {
 
         //    console.log('lay low' + x, cardList.length);
         if (isOver && canDrop && placeholderIndex === i) {
-          item.color = "silver";
+        //  item.color = "silver";
         }
 
         cardList.push(
 
           <div style={{
-            //  backgroundColor: (this.state.positioning<=560)? 'yellow':'red',
             backgroundColor: colorr,
             cursor: 'move'
           }} onScroll={this.handleScroll}>{this.state.verticalDirection}-{this.state.direction}
 
             <Card x={x} y={i}
-                    ref="testing"
-
               color={colorr}
               canDrag={item.cardFormat === 'note' ? true : false}
               item={item}
