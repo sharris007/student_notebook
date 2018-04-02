@@ -82,7 +82,7 @@ const buttonAddToGroupStyle = {
 
 const listStyle = {
   padding: '10px'
-}
+};
 const listboxStyle = {
   padding: '10px',
   background: '#fff',
@@ -91,7 +91,7 @@ const listboxStyle = {
   minWidth: '300px',
   overflowY: 'auto',
   boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)'
-}
+};
 const listboxStyleLabel = {
   padding: '10px',
   background: '#fff',
@@ -99,10 +99,10 @@ const listboxStyleLabel = {
   top: '75px',
   minWidth: '239px',
   boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)'
-}
+};
 const chkBoxiconStyle = {
   fill: 'gray'
-}
+};
 let groupModeToggleFlag = false;
 
 
@@ -144,9 +144,9 @@ export default class NoteBookHeader extends Component {
     };
 
     const labelAllObj = {
-      "id": "All",
-      "title": "All Labels",
-      "labelName": 'All Chapters'
+      'id': 'All',
+      'title': 'All Labels',
+      'labelName': 'All Chapters'
     };
     (this.props.tocData.items).unshift(labelAllObj);
 
@@ -199,11 +199,11 @@ export default class NoteBookHeader extends Component {
   }
   getSelectedVal = () => {
     const props = this.props;
-    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
-    const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
+    const selectedChapter = JSON.parse(localStorage.getItem('chapterItem')) ? JSON.parse(localStorage.getItem('chapterItem')) : [];
+    const selectedLabel = JSON.parse(localStorage.getItem('labelItem')) ? JSON.parse(localStorage.getItem('labelItem')) : [];
     var tocLevel = props.tocData.items;
-    let updateChapterTxt = selectedChapter.length > 0 ? "Chapter" + ' ' + selectedChapter.length : 'Chapter';
-    let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length + ' ' + "Labels" : 'Labels';
+    let updateChapterTxt = selectedChapter.length > 0 ? 'Chapter' + ' ' + selectedChapter.length : 'Chapter';
+    let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length + ' ' + 'Labels' : 'Labels';
     this.setState({ chapterText: updateChapterTxt, labelText: updateLabelTxt });
     const tocListItem = [];
     for (let i = 0; i < selectedChapter.length; i++) {
@@ -222,7 +222,7 @@ export default class NoteBookHeader extends Component {
         for (let j1 = 0; j1 < tocListItem[i1].items.length; j1++) {
           note.find((note) => {
             if (tocListItem[i1].items[j1].id === note.pageId) {
-              chapterList.push(note)
+              chapterList.push(note);
             }
           });
         }
@@ -254,7 +254,7 @@ export default class NoteBookHeader extends Component {
       }
     }
     this.props.getFilterArr(finalFilteredList);
-    if(selectedChapter.length > 0 || selectedLabel.length > 0) {
+    if (selectedChapter.length > 0 || selectedLabel.length > 0) {
       this.setState({ groupNoteShow : false});
     }
     else {
@@ -316,38 +316,38 @@ export default class NoteBookHeader extends Component {
     console.log(this.props.tagAttributes);
     const labelObj = [
       {
-        "labelName": "Main ideas",
-        "labelCode": "MAIN_IDEAS",
-        "id": "main_ideas"
+        'labelName': 'Main ideas',
+        'labelCode': 'MAIN_IDEAS',
+        'id': 'main_ideas'
       },
       {
-        "labelName": "From Instructor",
-        "labelCode": "FROM_INSTRUCTOR",
-        "id": "from_instructor"
+        'labelName': 'From Instructor',
+        'labelCode': 'FROM_INSTRUCTOR',
+        'id': 'from_instructor'
       },
       {
-        "labelName": "Observations",
-        "labelCode": "OBSERVATIONS",
-        "id": "observations"
+        'labelName': 'Observations',
+        'labelCode': 'OBSERVATIONS',
+        'id': 'observations'
       },
       {
-        "labelName": "Questions",
-        "labelCode": "QUESTIONS",
-        "id": "questions"
+        'labelName': 'Questions',
+        'labelCode': 'QUESTIONS',
+        'id': 'questions'
       },
       {
-        "labelName": "No Label",
-        "labelCode": "CUSTOM_NOTE",
-        "id": "custom_notes"
+        'labelName': 'No Label',
+        'labelCode': 'CUSTOM_NOTE',
+        'id': 'custom_notes'
       }
     ];
 
     return (
-      <div style={{ marginLeft: '-180px' }}>
+      <div>
 
         {this.props.groupExpanded === false ?
           <Toolbar className={(groupModeToggleFlag === true) ? 'groupSelect' : null} style={{ height: '80px', position: 'fixed', width: '100%', zIndex: '1001', backgroundColor: '#f5f5f5' }}>
-            <ToolbarGroup style={{ paddingLeft: '70px' }}>
+            <ToolbarGroup>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className={
                 (this.state.chapterText === 'Chapter' && this.state.labelText === 'Labels') ? 'all active' : 'all'
@@ -377,7 +377,7 @@ export default class NoteBookHeader extends Component {
             <ToolbarGroup>
               <FontIcon className="muidocs-icon-custom-sort" />
               {this.state.showGroupTitleInput === true ? <div><TextField
-                onChange={(e) => { this.handleGroupTitleChange(e) }}
+                onChange={(e) => { this.handleGroupTitleChange(e); }}
                 // value={this.state.groupTitle}
                 style={{ marginBottom: '10px', fontSize:'14px' }}
                 floatingLabelText="Group title"
@@ -395,7 +395,7 @@ export default class NoteBookHeader extends Component {
                   <tr>
                     <td style={{ paddingTop: '5px' }}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
-                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table> : '' }</div>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table> : ''}</div>
                 : null}
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}
@@ -425,7 +425,7 @@ export default class NoteBookHeader extends Component {
           </Toolbar>
           :
           <Toolbar style={{ height: '80px', position: 'fixed', width: '100%', 'zIndex': '1001', backgroundColor: '#f5f5f5' }}>
-            <ToolbarGroup style={{ paddingLeft: '70px' }}>
+            <ToolbarGroup>
               <FontIcon className="muidocs-icon-custom-sort" />
               {groupModeToggleFlag === false ? <div className='all' onClick={() => this.handleGoToNotes()}>Notes</div>
                 : null}

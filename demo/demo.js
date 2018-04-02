@@ -2,7 +2,13 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMzI4NDk0LCJpYXQiOjE1MjIzMTc2OTMsInNlc3NpZCI6ImUwNzFiYjJmLTRkOTUtNGQ0YS1hMGFjLTkxNWQ5ZjkxNjM4ZCJ9.d7IK7y1qT_RLBenZf6MymEhBqgsrSpR2e-tAwgZu6HobWylWc6TikQV_XoNBfTzE3GQsXHdPEZwHtvY_DCsdxz5euuP6aH2wl_uPeGEY7v1TEsIF39pqDsP5MrU5WHK4GJSbdhjphpO5bUOF5Fl8vItzwPDixY9QL0IUw1ww0EM';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjVhMGZiZjE0ZTRiMGI2N2ZjZjI1ZDYxNiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNjU1NzMyLCJpYXQiOjE1MjI2NTM5MzIsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiNDk0MmJlYzUtNDIyNy00YWM0LTgyODktMmFjMDViMDA5ZDMyIn0.iasam21FyecJUsELrEGbfuNizrXnbg5jSTxJui_fUEPEiaDREjT-5eUrimZjJm11Tw66rmuG-K4_6TCJqGZ4hQwMRIbhjRMJjEMUW6MM4Ot0HYdccye-chmnbGzISRXpTfMZoBocKn2WdN1JOTI3h4s-SdMu9J1tn7-wDna1vG8';
+// localStorage.secureToken;
+
+const contextId = '5a855d06e4b05b48d72dedb9' ;
+const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
+const provider ='https://content.stg-openclass.com/eps/pearson-reader/api/item/178634d3-b562-47cd-a38c-72c6c6713eaa/1/file/appling_jh1_09-14-15/OPS/toc.xhtml';
+
 function init() {
   getNotes();
 };
@@ -17,11 +23,11 @@ function callback(msg, data) {
     else if (msg === 'DELETE') {
       deleteNote(msg, data);
     }
-    else if (msg === "GROUP") {
+    else if (msg === 'GROUP') {
     }
-     else if (msg === "EDITGROUP") {
-    }
-    else if (msg === "UNGROUP NOTES") {
+     else if (msg === 'EDITGROUP') {
+     }
+    else if (msg === 'UNGROUP NOTES') {
       ungroupNotes(msg, data);
     }
   }
@@ -32,7 +38,7 @@ function getNotes() {
 
   const groups = [];
   let tocData;
-  const getAllNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
+  const getAllNotes = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -70,24 +76,24 @@ function getNotes() {
       originalNotesList.push(dupNote);
       notesList.push(note);
     }
-    const mapGroupEle = _.groupBy(notesList, function(i){
-      if(i.tags) { 
+    const mapGroupEle = _.groupBy(notesList, function(i) {
+      if (i.tags) { 
         return i.tags[0].tagId; 
       }
-      else{  return i.id;}})
-    const getOrderedArr = _.sortBy(mapGroupEle, function(i){return i[0].outsetSeq * -1});
+      else  {  return i.id;}});
+    const getOrderedArr = _.sortBy(mapGroupEle, function(i) {return i[0].outsetSeq * -1;});
     const mapNotesObj = [];
     let groupFalg;
     _.forEach(getOrderedArr, function(value, index) {
-      if(value.length=== 1) { 
-        mapNotesObj.push(value[0]) 
+      if (value.length=== 1) { 
+        mapNotesObj.push(value[0]); 
       } 
       else { 
-          value[0].notes = [];
-         _.each(value, function (obj, index) {
+        value[0].notes = [];
+        _.each(value, function (obj, index) {
           
           value[0].notes.push(value[index]);
-         });
+        });
         mapNotesObj.push(value[0]); 
         groupFalg = true;
       }
@@ -97,7 +103,7 @@ function getNotes() {
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
     if (groupFalg) {
-      const getAllTagName = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/contextLog', {
+      const getAllTagName = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -109,7 +115,7 @@ function getNotes() {
 
         tagObject.map((tag, i) => {
           _.each(mapNotesObj, function (obj, index) {
-            if(obj.notes) {
+            if (obj.notes) {
               if (obj.tags[0].tagId === tag.tagId) {
                 obj.tags[0].tagName = tag.tagName;
               }
@@ -118,9 +124,9 @@ function getNotes() {
           });
         });
 
-         toolbarModeProp.groups = groups;
+        toolbarModeProp.groups = groups;
 
-        fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+        fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -146,7 +152,7 @@ function getNotes() {
         });
       });
     } else {
-      fetch('https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/5a9f8a6ce4b0576972d62596?provider=https://content.stg-openclass.com/eps/pearson-reader/api/item/591fb53c-a53a-47d8-b32e-f2b850403061/1/file/nay4_5-25a_post/OPS/toc.xhtml', {
+      fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -178,26 +184,26 @@ function addNote(msg, data) {
   const payLoad = {
     'payload': [
       {
-        "clientApp": 'ETEXT2_WEB',
-        "productModel": "ETEXT_SMS",
-        "contextualInfo": [
+        'clientApp': 'ETEXT2_WEB',
+        'productModel': 'ETEXT_SMS',
+        'contextualInfo': [
           {
-            "key": "",
-            "value": ""
+            'key': '',
+            'value': ''
           }
         ],
-        "pageId": null,
-        "noteType": "CUSTOM_NOTE",
-        "shareable": false,
-        "tags": [],
-        "data": {
-          "quote": data.title ? data.title : '',
-          "text": data.content ? data.content : ''
+        'pageId': null,
+        'noteType': 'CUSTOM_NOTE',
+        'shareable': false,
+        'tags': [],
+        'data': {
+          'quote': data.title ? data.title : '',
+          'text': data.content ? data.content : ''
         }
       }
     ]
   };
-  const addCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
+  const addCustomNote = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -213,44 +219,44 @@ function addNote(msg, data) {
 };
 function saveNote(msg, data) {
   let payLoad = {
-    "clientApp": 'ETEXT2_WEB',
-    "productModel": "ETEXT_SMS",
-    "contextualInfo": [
+    'clientApp': 'ETEXT2_WEB',
+    'productModel': 'ETEXT_SMS',
+    'contextualInfo': [
       {
-        "key": "",
-        "value": ""
+        'key': '',
+        'value': ''
       }
     ],
-    "pageId": null,
-    "noteType": "CUSTOM_NOTE",
-    "shareable": false,
-    "tags": [],
-    "data": {
-      "quote": data.title ? data.title : '',
-      "text": data.content ? data.content : ''
+    'pageId': null,
+    'noteType': 'CUSTOM_NOTE',
+    'shareable': false,
+    'tags': [],
+    'data': {
+      'quote': data.title ? data.title : '',
+      'text': data.content ? data.content : ''
     }
   };
-  if(data.noteType && data.noteType !== 'CUSTOM_NOTE') {
+  if (data.noteType && data.noteType !== 'CUSTOM_NOTE') {
     payLoad = {
-      "clientApp": 'ETEXT2_WEB',
-      "productModel": "ETEXT_SMS",
-      "contextualInfo": [
+      'clientApp': 'ETEXT2_WEB',
+      'productModel': 'ETEXT_SMS',
+      'contextualInfo': [
         {
-          "key": "title",
-          "value": data.title ? data.title : '',
+          'key': 'title',
+          'value': data.title ? data.title : '',
         }
       ],
-      "pageId": data.pageId ? data.pageId : '',
-      "noteType": data.noteType ? data.noteType : '',
-      "shareable": false,
-      "tags": data.tags ? data.tags : [],
-      "data": {
-        "quote": data.highLightText ? data.highLightText : '',
-        "text": data.content ? data.content : ''
+      'pageId': data.pageId ? data.pageId : '',
+      'noteType': data.noteType ? data.noteType : '',
+      'shareable': false,
+      'tags': data.tags ? data.tags : [],
+      'data': {
+        'quote': data.highLightText ? data.highLightText : '',
+        'text': data.content ? data.content : ''
       }
     };
   }
-  const saveNotes = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/' + data.id, {
+  const saveNotes = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/` + data.id, {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -264,7 +270,7 @@ function saveNote(msg, data) {
 };
 function deleteNote(msg, data) {
   const payLoad = { ids: [data.id] };
-  const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX', {
+  const deleteCustomNote = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
@@ -284,10 +290,10 @@ function ungroupNotes(msg, data) {
     tagName = tag.tagName;
   });
   const payLoad = {
-    "tagName": tagName,
-    "notes": []
+    'tagName': tagName,
+    'notes': []
   };
-  const deleteCustomNote = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/' + tagId, {
+  const deleteCustomNote = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag/` + tagId, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
