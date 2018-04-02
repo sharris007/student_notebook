@@ -97,7 +97,7 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMzI4NDk0LCJpYXQiOjE1MjIzMTc2OTMsInNlc3NpZCI6ImUwNzFiYjJmLTRkOTUtNGQ0YS1hMGFjLTkxNWQ5ZjkxNjM4ZCJ9.d7IK7y1qT_RLBenZf6MymEhBqgsrSpR2e-tAwgZu6HobWylWc6TikQV_XoNBfTzE3GQsXHdPEZwHtvY_DCsdxz5euuP6aH2wl_uPeGEY7v1TEsIF39pqDsP5MrU5WHK4GJSbdhjphpO5bUOF5Fl8vItzwPDixY9QL0IUw1ww0EM';
+    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNjY4MjA4Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjY4NjIwOSwiaWF0IjoxNTIyNjY4MjA4LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImYwYTUzMzQyLWM4ZjItNDMyNy1iMDc3LTZkYWUwODVhYmVhMiJ9.LPAFxhnNJGlk1v0axN2irO8WZudMYpPfB1QqZaDrAwQIHG5WI21bhL0vzpIJhPvM0Qny_CsarQ2DRMAvOuZLrdXjCgkxNqjqu7CEiBDudGC1Igvx-Jtwnbss5doTNTi51XpipRJBYmL8PEKHdliwt1o3n0kFLTe5JHB6cdx_F3c';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {

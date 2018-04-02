@@ -286,7 +286,7 @@ export default class Cards extends Component {
           <div style={{
             backgroundColor: colorr,
             cursor: 'move'
-          }} onScroll={this.handleScroll}>{this.state.verticalDirection}-{this.state.direction}
+          }} onScroll={this.handleScroll}>
 
             <Card x={x} y={i}
               color={colorr}
