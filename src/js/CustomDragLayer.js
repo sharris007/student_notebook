@@ -3,7 +3,7 @@ import { DragLayer } from 'react-dnd';
 
 import CardDragPreview from './CardDragPreview';
 import snapToGrid from './snapToGrid';
-
+import { findDOMNode } from 'react-dom';
 
 const layerStyles = {
   position: 'fixed',
@@ -11,12 +11,41 @@ const layerStyles = {
   zIndex: 100000
 };
 
+
 function getItemStyles(props) {
   const { initialOffset, currentOffset } = props;
   if (!initialOffset || !currentOffset) {
     return {
       display: 'none'
     };
+  }
+
+  let { x, y } = currentOffset;
+  let x1 = initialOffset.x;
+
+  if (props.snapToGrid) {
+    x -= initialOffset.x;
+    y -= initialOffset.y;
+    [x, y] = snapToGrid(x, y);
+    x += initialOffset.x;
+    y += initialOffset.y;
+  }
+  const transform = `translate(${x - 100}px, ${y - 100}px)`;
+ // console.log('transform', `${x}px, ${y}px)`);
+  return {
+    WebkitTransform: transform,
+    transform
+  };
+}
+
+
+
+function getItemX(props) {
+
+  const { initialOffset, currentOffset } = props;
+
+  if (!initialOffset || !currentOffset) {
+    return "white";
   }
 
   let { x, y } = currentOffset;
@@ -28,12 +57,26 @@ function getItemStyles(props) {
     x += initialOffset.x;
     y += initialOffset.y;
   }
-  const transform = `translate(${x-100}px, ${y-100}px)`;
-  return {
-    WebkitTransform: transform,
-    transform
-  };
+
+ // const transform = `translate(${x - 100}px, ${y - 100}px)`;
+
+  
+  let color = "white";
+  
+  const index = _.findIndex(window.cards, function (o) { return o.left < currentOffset.x+85 && o.left + 100 > currentOffset.x+85 && o.top < ((currentOffset.y-4)+ window.pageYOffset) && (o.top+(o.height/3)) > ((currentOffset.y-4)+ window.pageYOffset) });
+
+  if (index === -1) {
+    color = "yellow";
+
+  } else {
+    color = "blue";
+  }
+  return color;
 }
+
+
+
+
 
 @DragLayer((monitor) => ({  // eslint-disable-line
   item: monitor.getItem(),
@@ -59,19 +102,29 @@ export default class CustomDragLayer extends Component {
     groupModeFlag: PropTypes.bool
   };
 
+
+
+
+
   renderItem(type, item) {
+    item.item.color = getItemX(this.props);
     switch (type) {
-    case 'card':
-      return (
+      case 'card':
+        return (
           <CardDragPreview card={item} />
         );
-    default:
-      return null;
+      default:
+        return null;
     }
   }
 
   render() {
     const { item, itemType, isDragging } = this.props;
+    if (item !== null) {
+      //  item.item.color = getItemX(item);
+      //  item.item.color = "red";
+
+    }
 
     if (!isDragging) {
       return null;

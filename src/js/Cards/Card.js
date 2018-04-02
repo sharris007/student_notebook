@@ -10,6 +10,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import { findDOMNode } from 'react-dom';
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
@@ -19,6 +20,7 @@ const menuPng = require('../../assets/images/menu.png');
 const checkmarkPng = require('../../assets/images/checkmark.png');
 const selectPng = require('../../assets/images/select.png');
 const selectedPng = require('../../assets/images/selected.png');
+const layerPng = require('../../assets/images/biglayer4.png');
 
 const ellipsis = {
   overflow: 'hidden',
@@ -175,6 +177,11 @@ const padding0 = {
   padding: '0'
 };
 
+let globalleft;
+let right;
+let top;
+let bottom;
+
 const titleInputBoxDisabled = {
   outline: '0',
   width: '100%',
@@ -284,12 +291,6 @@ const menuOption = {
   height: '19px'
 };
 
-const Buttony = ({ className }) => (
-  <div style={className}> </div>
-);
-
-
-
 export default class Card extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
@@ -301,6 +302,8 @@ export default class Card extends Component {
     tagId: PropTypes.func,
     handleGroupClick: PropTypes.func
   };
+
+
 
   constructor(props) {
     super(props);
@@ -325,6 +328,8 @@ export default class Card extends Component {
       selected: props.item.selected,
       groupModeFlag: props.groupModeFlag,
       selectedMenuItem: null,
+      groupExpanded: props.groupExpanded,
+		left:0,
       openModal:false
     };
   }
@@ -332,6 +337,32 @@ export default class Card extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ groupModeFlag: nextProps.groupModeFlag });
   }
+
+  componentDidMount = () => {
+    var node = ReactDOM.findDOMNode(this.refs.hoops);
+    //  debugger;
+    if (!window.cards) {
+      window.cards = [];
+    }
+
+    let id = this.props.item.id;
+    const index = _.findIndex(window.cards, function (o) { return o.id === id });
+
+    if (index === -1) { // scott - removes duplicate entries
+      window.cards.push({
+        id: this.props.item.id,
+        left: node.offsetLeft,
+        height: node.offsetHeight,
+        top: node.offsetTop
+      });
+      //    this.setState({ left: ReactDOM.findDOMNode(this.refs.hoop).getBoundingClientRect().left });
+      this.setState({ left: node.offsetLeft, right: node.offsetRight, top: node.offsetTop });
+    }
+  }
+
+
+
+
 
 
   handleCancelAddCard = (card) => {
@@ -428,8 +459,8 @@ export default class Card extends Component {
 
   handleUnGroupNotes = (event, value) => {
     let updatedItem = this.state.item;
-    //updatedItem.tags[0].tagId = '';
-    //updatedItem.insetSeq = '';
+    //  updatedItem.tagId = '';
+    //  updatedItem.insetSeq = '';
     this.setState({ item: updatedItem }, () => {
       this.props.saveCard(this.state.item, 'UNGROUP NOTES');
     });
@@ -454,6 +485,7 @@ export default class Card extends Component {
       // this.props.selectCard(card);
     });
   };
+
 
   checkNoteMaxLengthValidation = () => {
     const inputCharLength = this.contentArea.value.length;
@@ -501,6 +533,14 @@ export default class Card extends Component {
     const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
     //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
+	 const opacity = this.props.item.color === 'blue' ? '1' : '1';
+    const clearBackground = this.props.item.color === 'blue' ? 'transparent' : 'transparent';
+
+    const  overlap  = this.props.item.color;
+    
+    this.props.item.color === 'blue'
+    //  var x = document.getElementById( item.id ).documentOffsetLeft;
+    //  alert(x);
 
     const actions = [
       <FlatButton
@@ -523,12 +563,12 @@ export default class Card extends Component {
 
     return (
 
-
       <div
         //    style={{ background: 'white' }}
         style={tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
         className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
         data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
+        ref="hoops" 
       >
         <Dialog
           title="Delete this note?"
@@ -602,6 +642,20 @@ export default class Card extends Component {
         ) : null}
         {item.noteType === 'FROM_INSTRUCTOR' && !tagId ? (
           <div className="item-name" style={fromInstructor}>
+            {this.props.groupExpanded === true ?
+              <div className="delete-perfomers" style={{ float: 'right', paddingRight: '10px' }}>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  iconStyle={{ fill: '#6a7070', 'marginTop': '-20px', height: '24px', width: '26px' }}
+                  onChange={this.handleMenuItemChange}
+                  value={this.state.selectedMenuItem}
+                >
+                  <MenuItem value='Ungroup note' primaryText="Ungroup note" />
+                </IconMenu>
+              </div>
+              : null}
           </div>
         ) : null}
 
@@ -658,9 +712,6 @@ export default class Card extends Component {
                   <MenuItem onClick={this.handleUnGroupNotes} style={optionListStyle} primaryText="Ungroup notes" />
                 </IconMenu>
               </div>
-
-
-
             </div>
             <div className="rename-group" id="rename-group" ref={(ele) => {
               this.renameDiv = ele;
@@ -677,9 +728,6 @@ export default class Card extends Component {
               />
             </div>
           </div>
-
-
-
         ) : null}
 
 
@@ -693,13 +741,15 @@ export default class Card extends Component {
             {this.state.selected ? <img src={selectedPng} /> : <img src={selectPng} />}</div>
           : null}
 
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
           <div style={item.noteType === 'CUSTOM_NOTE' ? customtitle : title}>{item.title}</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ paddingTop: '115px' }} />
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ 'textAlign': 'center' }}>
             <button
               onClick={this.handleAddCard}
@@ -709,14 +759,16 @@ export default class Card extends Component {
             </button>
           </div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={addNote}>Add Note</div>
         ) : null}
-        {item.cardFormat === 'add mode' ? (
+
+        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
           <div style={{ paddingBottom: '92px' }} />
         ) : null}
 
-        {item.cardFormat !== 'note' ? (
+        {item.cardFormat !== 'note' && this.props.item.color != 'blue' ? (
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
@@ -734,7 +786,7 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {item.cardFormat !== 'add mode' && item.pageId ? (
+                {item.cardFormat !== 'add mode' && item.pageId  && this.props.item.color != 'blue' ? (
                   <input
                     style={titleInputBoxDisabled}
                     ref={(el) => {
@@ -746,8 +798,9 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {this.state.titleInput}
-                {item.cardFormat !== 'add mode' ? (
+                {this.props.item.color != 'blue' ? this.state.titleInput: null}
+
+                {item.cardFormat !== 'add mode'  && this.props.item.color != 'blue' ? (
                   <textarea
                     rows="10"
                     cols="50"
@@ -783,7 +836,7 @@ export default class Card extends Component {
                 </div>
               </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId ?
+              {item.cardFormat === 'note' && item.pageId && this.props.item.color != 'blue' ?
                 <div style={line} /> : null}
 
               {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0', minHeight: (item.noteType === 'CUSTOM_NOTE') ? "94.4px" : null }}>
@@ -800,7 +853,7 @@ export default class Card extends Component {
             </div>
           )}
 
-        {item.cardFormat === 'note' ? (
+        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
           <div className="item-perfomers" >
           </div>
         ) : (
