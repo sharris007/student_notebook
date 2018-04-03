@@ -329,8 +329,8 @@ export default class Card extends Component {
       groupModeFlag: props.groupModeFlag,
       selectedMenuItem: null,
       groupExpanded: props.groupExpanded,
-		left:0,
-      openModal:false
+      left: 0,
+      openModal: false
     };
   }
 
@@ -412,17 +412,17 @@ export default class Card extends Component {
   }
 
   handleDeleteCard = () => {
-    this.setState({openModal: false});
+    this.setState({ openModal: false });
     this.props.saveCard(this.state.item, 'DELETE');
   }
 
   handleMenuItemChange = (event, value) => {
     if (value === 'Delete note') {
-      this.setState({openModal: true}, ()=>{
-        setTimeout(()=>{ReactDOM.findDOMNode(this.deleteButton).focus();}, 200);         
+      this.setState({ openModal: true }, () => {
+        setTimeout(() => { ReactDOM.findDOMNode(this.deleteButton).focus(); }, 200);
       });
       // this.props.saveCard(this.state.item, 'DELETE');
-    }else if (value === 'Edit note') {
+    } else if (value === 'Edit note') {
       let card = this.state.item;
       card.cardFormat = 'create new';
       this.setState({ item: card }, () => {
@@ -522,7 +522,7 @@ export default class Card extends Component {
   }
 
   handleClose = () => {
-    this.setState({openModal: false});
+    this.setState({ openModal: false });
   };
 
   render() {
@@ -533,11 +533,12 @@ export default class Card extends Component {
     const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
     //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
-	 const opacity = this.props.item.color === 'blue' ? '1' : '1';
+    const opacity = this.props.item.color === 'blue' ? '1' : '1';
     const clearBackground = this.props.item.color === 'blue' ? 'transparent' : 'transparent';
+    const heightAdjust = this.props.item.color === 'blue' ? '260px' : 'auto';
+    const widthAdjust = this.props.item.color === 'blue' ? '315px' : 'auto';
+    const overlap = this.props.item.color;
 
-    const  overlap  = this.props.item.color;
-    
     this.props.item.color === 'blue'
     //  var x = document.getElementById( item.id ).documentOffsetLeft;
     //  alert(x);
@@ -547,8 +548,8 @@ export default class Card extends Component {
         label="Cancel"
         primary={true}
         onClick={this.handleClose}
-        style={{width: '69px', height: '36px', borderRadius: '2px', backgroundColor: '#e9e9e9', border: 'solid 1px #c7c7c7', marginRight: '16px'}}
-        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#252525', textTransform:'capitalize', verticalAlign:'initial'}}
+        style={{ width: '69px', height: '36px', borderRadius: '2px', backgroundColor: '#e9e9e9', border: 'solid 1px #c7c7c7', marginRight: '16px' }}
+        labelStyle={{ fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#252525', textTransform: 'capitalize', verticalAlign: 'initial' }}
       />,
       <FlatButton
         label="Delete"
@@ -556,8 +557,8 @@ export default class Card extends Component {
         ref={(node) => this.deleteButton = node}
         keyboardFocused={true}
         onClick={this.handleDeleteCard}
-        style={{  width: '68px', height: '36px', borderRadius: '2px', backgroundColor: '#047a9c'}}
-        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform:'capitalize', verticalAlign:'initial'}}
+        style={{ width: '68px', height: '36px', borderRadius: '2px', backgroundColor: '#047a9c' }}
+        labelStyle={{ fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform: 'capitalize', verticalAlign: 'initial' }}
       />
     ];
 
@@ -565,10 +566,13 @@ export default class Card extends Component {
 
       <div
         //    style={{ background: 'white' }}
-        style={tagId ? { background: 'white', boxShadow: 'none' } : { background: 'white' }}
+        // style={item.tagId ? {  background: `${this.props.item.color}`, boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}`, marginLeft: `${this.props.item.marginLeft}` }}
+    //      style={tagId ? { background: `${this.props.item.color}`, boxShadow: 'none', marginLeft: `${this.props.item.marginLeft}` } : { background: `${this.props.item.color}`, marginLeft: `${this.props.item.marginLeft}` }}
+        
+        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}` }}
         className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
-        data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
-        ref="hoops" 
+        data-tagId={tagId ? tagId : null} id={style ? item.id : null}
+        ref="hoops"
       >
         <Dialog
           title="Delete this note?"
@@ -576,11 +580,11 @@ export default class Card extends Component {
           modal={false}
           open={this.state.openModal}
           onRequestClose={this.handleClose}
-          contentStyle={{  width: '600px', height: '214px'}}
+          contentStyle={{ width: '600px', height: '214px' }}
           titleStyle={{
-            padding:'40px 40px 20px',
-            fontFamily: 'Open Sans', 
-            fontSize: '24px', 
+            padding: '40px 40px 20px',
+            fontFamily: 'Open Sans',
+            fontSize: '24px',
             fontWeight: 'normal',
             fontStyle: 'normal',
             fontStretch: 'normal',
@@ -590,7 +594,7 @@ export default class Card extends Component {
             color: '#252525'
           }}
           bodyStyle={{
-            padding:'0px 40px 24px',
+            padding: '0px 40px 24px',
             fontFamily: 'Open Sans',
             fontSize: '14px',
             fontWeight: 'normal',
@@ -601,7 +605,7 @@ export default class Card extends Component {
             textAlign: 'left',
             color: '#252525'
           }}
-          actionsContainerStyle={{paddingBottom:'40px', paddingRight:'40px'}}
+          actionsContainerStyle={{ paddingBottom: '40px', paddingRight: '40px' }}
         >
           This action cannot be undone.
         </Dialog>
@@ -700,7 +704,7 @@ export default class Card extends Component {
               this.groupTitle = ele;
             }} >
 
-              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', padding:'13px 30px', textAlign:'center'}}>{tagName}</div>
+              <div onClick={this.handleClickGroup} style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', padding: '13px 30px', textAlign: 'center' }}>{tagName}</div>
               <div className="delete-perfomers" style={{ float: 'right', 'marginTop': '-36px' }}>
                 <IconMenu
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -786,7 +790,7 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {item.cardFormat !== 'add mode' && item.pageId  && this.props.item.color != 'blue' ? (
+                {item.cardFormat !== 'add mode' && item.pageId && this.props.item.color != 'blue' ? (
                   <input
                     style={titleInputBoxDisabled}
                     ref={(el) => {
@@ -798,9 +802,9 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {this.props.item.color != 'blue' ? this.state.titleInput: null}
+                {this.props.item.color != 'blue' ? this.state.titleInput : null}
 
-                {item.cardFormat !== 'add mode'  && this.props.item.color != 'blue' ? (
+                {item.cardFormat !== 'add mode' && this.props.item.color != 'blue' ? (
                   <textarea
                     rows="10"
                     cols="50"
@@ -857,7 +861,7 @@ export default class Card extends Component {
           <div className="item-perfomers" >
           </div>
         ) : (
-            <div className="item-perfomers" style= {(item.cardFormat === 'add mode') ? padding0 : null}>
+            <div className="item-perfomers" style={(item.cardFormat === 'add mode') ? padding0 : null}>
               {item.cardFormat === 'create new' ? (
                 <div>
                   {!this.state.hideSave ?
@@ -944,9 +948,9 @@ export default class Card extends Component {
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
             <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset' }}>
-  
-               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '20px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px' }}>
-             
+
+              <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '20px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px' }}>
+
               </div>
             </div>
 

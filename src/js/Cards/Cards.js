@@ -22,6 +22,7 @@ function getPlaceholderIndex(y, scrollY) {
   } else {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
   }
+  window.placeholderIndex = placeholderIndex;
   return placeholderIndex;
 }
 
@@ -77,10 +78,22 @@ const specs = {
       return;
     }
 
+
+    if (window.cardId === null) {
+      alert('MOVE null cardindex');
+    } else {
+      const index = _.findIndex(window.cards, function (o) { return o.id === window.cardId });
+      try {
+        alert('DROP' + window.cards[index].id);
+        props.saveGroup(window.cards[index].id, monitor.getItem().id);
+      } catch (e) {
+        alert('error' + window.cardId);
+      }
+    }
+
+
     if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue" || component.props.item.item.color === "green") {
-
       console.log('transform-drop', `${nextX}px, ${nextY}px)`);
-
     }
 
 
@@ -179,6 +192,7 @@ export default class Cards extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     moveCard: PropTypes.func.isRequired,
+    saveGroup: PropTypes.func.isRequired,
     cards: PropTypes.array.isRequired,
     x: PropTypes.number.isRequired,
     isOver: PropTypes.bool,
@@ -234,58 +248,70 @@ export default class Cards extends Component {
     let isPlaceHold = false;
     let righter = false;
     const cardList = [];
-
+    window.placeholderIndex = null;
 
     let filterList = _.cloneDeep(cards);
 
     filterList.forEach((item, i) => {
 
-
-
       let newKey = Date.now();
+      item.color = 'white';
+      item.marginLeft = '0px';
+      item.marginRight = '0px';
+debugger;
+        
 
       let colorr = 'white';
-      // if (this.state.nextY === i && this.state.nextX === x) {
-      //   colorr = 'green';
-      // } else { colorr = 'white'; }
-
 
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
-          //  cardList.push(<div key="placeholder" className="item placeholder" />);
+          window.placeholderIndex = placeholderIndex;
           if (this.state.direction == 'left') {
+          item.marginLeft = '50px';
+            
             cardList.push(<div key="placeholder" className="item placeholder" />);
           } else {
+          item.marginRight = '50px';
+            
             cardList.push(<div key="placeholder" className="item placeholder2" />);
           }
-
-
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
         }
       }
 
       if (righter) {
+        window.placeholderIndex = placeholderIndex;
+        item.marginRight = '50px';
         cardList.push(<div key="placeholder" className="item placeholder2" />);
-
         righter = false;
       }
 
-      if (item !== undefined) {
-        //    item.keyId = item.Id + Date.now();
-        item.color = colorr;
 
-        //    console.log('lay low' + x, cardList.length);
+
+      if (item !== undefined) {
+        //   item.color = colorr;
+        let height = 'auto';
+        if (item.color === 'blue') { height = '260px' }
+
         if (isOver && canDrop && placeholderIndex === i) {
-        //  item.color = "silver";
+          debugger;
+          if (this.state.direction == 'left') {
+          item.marginLeft = '50px';
+          } else {
+          item.marginRight = '50px';
+          }
         }
 
         cardList.push(
 
           <div style={{
             backgroundColor: colorr,
-            cursor: 'move'
+            cursor: 'move',
+            marginLeft: item.marginLeft,
+            marginRight: item.marginRight,
+            height: `${height}`,
           }} onScroll={this.handleScroll}>
 
             <Card x={x} y={i}
@@ -304,53 +330,61 @@ export default class Cards extends Component {
             /></div>
         );
       }
-      if (isOver && canDrop && placeholderIndex === i) {
-        //      let z = cardList.splice(0,1);
 
-        //    cardList.push(<div key="placeholder" className="item placeholder" />);
+
+
+
+
+      if (isOver && canDrop && placeholderIndex === i) {
         if (this.state.direction == 'left') {
           cardList.push(<div key="placeholder" className="item placeholder" />);
-
         } else {
           righter = true;
-          //   cardList.push(<div key="placeholder" className="item placeholder2" />);
         }
+      }
 
-        //     cardList.push(<div style={{background:'silver'}}>{z}</div>)
+      // if placeholder index is greater than array.length, display placeholder as last
+      if (placeholderIndex + 1 !== cards.length) {
+        window.placeholderIndex = placeholderIndex;
+        if (isPlaceHold) {
+          debugger;
+          if (this.state.direction == 'left') {
+            cardList.push(<div key="placeholder" className="item placeholder" />);
+          } else {
+            cardList.push(<div key="placeholder" className="item placeholder2" />);
+          }
+        }
       }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-      //  cardList.push(<div key="placeholder" className="item placeholder" />);
+      debugger;
+
+      window.placeholderIndex = placeholderIndex;
+
       if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
     }
+
+
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-      //   cardList.push(<div key="placeholder" className="item placeholder" />);
+      debugger;
+      
+      window.placeholderIndex = placeholderIndex;
       if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
-      cardList.push(<div key="placeholder" className="item placeholder2" />);
-
-      //   cardList.push(<div key="placeholder" className="item placeholder2" style={{float: (this.state.direction<=0)? 'right':'right'}}/>);
+      //  cardList.push(<div key="placeholder" className="item placeholder2" />);
     }
-    //   cardList.push(<div key="placeholder" className="item placeholder2" />);
 
-    // if (this.state.direction == 'right'){
-    //   cardList.push(<div key="placeholder" className="item placeholder" />);
-    // } else{
-    //   cardList.push(<div key="placeholder" className="item placeholder2" />);
-    // }
-    //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
-    //   cardList.push(<div key="placeholder" className="item placeholder" style={{float: (this.state.direction == 'right')? 'left':'left'}}/>);
 
     // console.log(cardList);
     return connectDropTarget(

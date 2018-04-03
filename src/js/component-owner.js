@@ -95,10 +95,10 @@ class ComponentOwner extends React.Component {
   }
   callback = (msg, data) => {
     const notesList = [...this.state.notesList];
-    const originalNotesList = [...this.state.originalNotesList];
+    const originalNotesList = [...this.state.originalNotesList];  
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNjY4MjA4Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjY4NjIwOSwiaWF0IjoxNTIyNjY4MjA4LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImYwYTUzMzQyLWM4ZjItNDMyNy1iMDc3LTZkYWUwODVhYmVhMiJ9.LPAFxhnNJGlk1v0axN2irO8WZudMYpPfB1QqZaDrAwQIHG5WI21bhL0vzpIJhPvM0Qny_CsarQ2DRMAvOuZLrdXjCgkxNqjqu7CEiBDudGC1Igvx-Jtwnbss5doTNTi51XpipRJBYmL8PEKHdliwt1o3n0kFLTe5JHB6cdx_F3c';
-    if (msg === 'ADD') {
+    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzYyNTY2LCJpYXQiOjE1MjI3NjA3NjYsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiMTc5YmQyNzYtYzVkNS00ZTM0LWJhNTQtNWM0MWVhYzA1ZGEwIn0.F-Rl4kpIbeUtFFJvPzhWVvFU0tI6DLl-3S8R_5OGEUt0mc82iM-P9aQmnG7LeIi-nl6nAMdZSb9TXDef6S69d_JSuqeiXchwtZOxB15ipG3x8yugc6h6uH4zRwyiRcEHiPL-llDe1lUGHyDq4lyyvoRbwNQaeXdlWdMkNinDjOk';
+    if (msg === 'ADD') { 
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
       this.props.callback(msg, data);
