@@ -23,6 +23,8 @@ function getPlaceholderIndex(y, scrollY) {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
   }
   window.placeholderIndex = placeholderIndex;
+  // window.currentOffsetx = currentOffset.x;
+  window.currentOffsety = yPos;
   return placeholderIndex;
 }
 
@@ -104,7 +106,7 @@ const specs = {
     //  const { placeholderIndex } = component.state;
     // let nextY = placeholderIndex;
 
-  //   document.getElementById(monitor.getItem().id).style.background = 'purple';
+    //   document.getElementById(monitor.getItem().id).style.background = 'purple';
     const nextX = props.x;
     const lastY = monitor.getItem().y;
     const lastX = monitor.getItem().x;
@@ -119,7 +121,6 @@ const specs = {
     var node = findDOMNode(component);
     var getSourceClientOffset = monitor.getSourceClientOffset().x;
 
-    debugger;
     // defines where placeholder is rendered
     let ress = monitor.getDropResult();
     // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
@@ -261,22 +262,21 @@ export default class Cards extends Component {
       item.scale = '1';
 
       let colorr = 'white';
-      cardList.push(<div key="placeholder" className="item placeholder" />);
-      cardList.push(<div key="placeholder3" className="item placeholder3" />);
       if (this.state.node != undefined) {
-        cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', left: '20px', top: `${this.state.node.offsetTop}`, zIindex: '200' }} className="item placeholder3" />);
-      } else {
-        cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', left: '20px', top: '200px', zIindex: '200' }} className="item placeholder3" />);
+    //    cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
       }
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
           window.placeholderIndex = placeholderIndex;
           console.log('here2');
-
+          if (this.state.node != undefined) {
+            cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
+          }
           if (this.state.direction == 'left') {
             item.marginLeft = '20px';
             cardList.push(<div key="placeholder" className="item placeholder" />);
+            cardList.push(<div style={{ background: 'green', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
           } else {
             item.marginRight = '20px';
             cardList.push(<div key="placeholder" className="item placeholder2" />);
