@@ -9,8 +9,11 @@
 import React, { PropTypes } from 'react';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
-
 import NoteBook from './NoteBook';
+
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzUzOTM0LCJpYXQiOjE1MjI3NDMxMzQsInNlc3NpZCI6ImU4ZTRjZDdmLTMyMWEtNDUwMy05ZGRhLTM2YTM3MDhmYjYzNyJ9.C8LIByWxDQNo3mBolfzs__5tXlYeixo0yazrPuhXrX-qvVYerjep988DHMNtE0bGC5RcWPKZVlviERdr1aN77kQscDyAGhXnMChaiYQwS72oMhNDE_oUS1z4j-7aWZ1PlnMTYf-f04v8FFpTz5bZAXx5FXifYbhGrq2HxNyfIT4';
+const contextId = '5a855d06e4b05b48d72dedb9' ;
+const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -98,7 +101,6 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];  
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzUzOTM0LCJpYXQiOjE1MjI3NDMxMzQsInNlc3NpZCI6ImU4ZTRjZDdmLTMyMWEtNDUwMy05ZGRhLTM2YTM3MDhmYjYzNyJ9.C8LIByWxDQNo3mBolfzs__5tXlYeixo0yazrPuhXrX-qvVYerjep988DHMNtE0bGC5RcWPKZVlviERdr1aN77kQscDyAGhXnMChaiYQwS72oMhNDE_oUS1z4j-7aWZ1PlnMTYf-f04v8FFpTz5bZAXx5FXifYbhGrq2HxNyfIT4';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -240,7 +242,7 @@ class ComponentOwner extends React.Component {
         item.selected = false;
       });
 
-      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
+      const getTagId = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -324,7 +326,7 @@ class ComponentOwner extends React.Component {
         groupPayload.notes.push(selectedObj);
       });
 
-      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/'+tagId, {
+      const getTagId = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag/`+tagId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -378,7 +380,7 @@ class ComponentOwner extends React.Component {
         "tagName": tagName,
         "notes": []
       }
-      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/${tagId}`, {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag/${tagId}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -456,7 +458,7 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "MOVECARD") {
-      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a855d06e4b05b48d72dedb9/identities/ffffffff5a0fbf14e4b0b67fcf25d616/notesX/contextLog`, {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -469,7 +471,7 @@ class ComponentOwner extends React.Component {
       });
 
     } else if (msg === "LASTUSEDFILTER") {
-      const filterList = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a855d06e4b05b48d72dedb9/identities/ffffffff5a0fbf14e4b0b67fcf25d616/notesX/contextLog`, {
+      const filterList = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
