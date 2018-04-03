@@ -86,6 +86,7 @@ class ComponentOwner extends React.Component {
       saveNotesList: temporaryArray,
       originalNotesList: props.originalNotesList,
       tagAttributes: props.tagAttributes,
+      lastUsedFilters: props.lastUsedFilters,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
@@ -97,8 +98,8 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];  
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzYyNTY2LCJpYXQiOjE1MjI3NjA3NjYsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiMTc5YmQyNzYtYzVkNS00ZTM0LWJhNTQtNWM0MWVhYzA1ZGEwIn0.F-Rl4kpIbeUtFFJvPzhWVvFU0tI6DLl-3S8R_5OGEUt0mc82iM-P9aQmnG7LeIi-nl6nAMdZSb9TXDef6S69d_JSuqeiXchwtZOxB15ipG3x8yugc6h6uH4zRwyiRcEHiPL-llDe1lUGHyDq4lyyvoRbwNQaeXdlWdMkNinDjOk';
-    if (msg === 'ADD') { 
+    const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzUzOTM0LCJpYXQiOjE1MjI3NDMxMzQsInNlc3NpZCI6ImU4ZTRjZDdmLTMyMWEtNDUwMy05ZGRhLTM2YTM3MDhmYjYzNyJ9.C8LIByWxDQNo3mBolfzs__5tXlYeixo0yazrPuhXrX-qvVYerjep988DHMNtE0bGC5RcWPKZVlviERdr1aN77kQscDyAGhXnMChaiYQwS72oMhNDE_oUS1z4j-7aWZ1PlnMTYf-f04v8FFpTz5bZAXx5FXifYbhGrq2HxNyfIT4';
+    if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
       this.props.callback(msg, data);
@@ -455,7 +456,7 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "MOVECARD") {
-      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX`, {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a855d06e4b05b48d72dedb9/identities/ffffffff5a0fbf14e4b0b67fcf25d616/notesX/contextLog`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -465,6 +466,19 @@ class ComponentOwner extends React.Component {
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((json) => {
         console.log("MOVECARD RES", json);
+      });
+
+    } else if (msg === "LASTUSEDFILTER") {
+      const filterList = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a855d06e4b05b48d72dedb9/identities/ffffffff5a0fbf14e4b0b67fcf25d616/notesX/contextLog`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.text()).then((text) => {
+        console.log("Filter RES", text);
       });
 
     }
@@ -508,10 +522,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId } = this.state;
+    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId, lastUsedFilters } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
+        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} lastUsedFilters={lastUsedFilters} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
       </div>
     );
   };

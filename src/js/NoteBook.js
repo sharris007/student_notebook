@@ -244,8 +244,9 @@ export default class Board extends Component {
     const notesList = {};
     notesList.coloums = this.props.coloums;
     let addNoteFlag;
-    const selectedChapter = JSON.parse(localStorage.getItem("chapterItem")) ? JSON.parse(localStorage.getItem("chapterItem")) : [];
-    const selectedLabel = JSON.parse(localStorage.getItem("labelItem")) ? JSON.parse(localStorage.getItem("labelItem")) : [];
+    const userFilter = JSON.parse(localStorage.getItem("lastUsedFilters"));
+    const selectedChapter = userFilter.chapterId ? userFilter.chapterId : [];
+    const selectedLabel = userFilter.noteType ? userFilter.noteType : [];
     if (selectedChapter.length > 0 || selectedLabel.length > 0) {
       notesList.notesList = list;
     }
@@ -253,7 +254,8 @@ export default class Board extends Component {
       notesList.notesList = this.state.updateNoteList;
     }
     notesList.groupExpanded = false;
-    this.createLists(notesList, false); 
+    this.createLists(notesList, false);
+    this.props.callback('LASTUSEDFILTER', {'lastUsedFilter' : userFilter});
   }
 
   render() {
@@ -269,7 +271,7 @@ export default class Board extends Component {
     });
     return (
       <div>
-        <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} tagAttributes={this.props.tagAttributes} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
+        <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} tagAttributes={this.props.tagAttributes} lastUsedFilters={this.props.lastUsedFilters} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
         <main>
           <div style={{ height: '100%' }}>
             <CustomDragLayer snapToGrid={false}  />
