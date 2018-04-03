@@ -13,7 +13,7 @@ import NoteBook from './NoteBook';
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNzQ4MzgwIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjc2NjM4MCwiaWF0IjoxNTIyNzQ4MzgwLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImIxM2JjN2NjLTZjODAtNDFhYi1hYmFiLTNmNjg0ZjJhZTEyNyJ9.i-EiHyozfl_cX59Iqt4pZ6Qd_c8ugKN_i3P3fsBU5qRIZpygoc-S9gsD7es75fiK85fvBu5aoLE1TLEFnDtpJl-R6aM1DWw-IuoHOWIUfbWcZHeeVpdu1S4D9DemgS1sBngGxqVtWN8x9Suw8V8Jb-Frbv6FxUn_4ZLYYy2Y-T0';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc1ODg1LCJpYXQiOjE1MjI3NjUwODUsInNlc3NpZCI6ImQ1ODVjYmU2LWMwOTktNGJhNi05NmY5LTI2MTFjNTAyNDk4NiJ9.DK-CYKveRW24bYTYYrJbtP3NOOHaSXvYLZ-oKIxTlFyjyEKzzasrpSjyfqIlT3NNITwsdg2aYCR6COavPU0khedQRhyPqHJsDoLy2EfZzwktvIKQCCw5Herw9RAowfB0dF02iSOIkQ_MpOp_KuUsQ18OOkgQUqBRj15xSPW0bBk';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -245,8 +245,8 @@ class ComponentOwner extends React.Component {
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
-        let tagId = json.tagId;
-        let tagName = json.tagName;
+        if(json && json.response && json.response[0].tags && json.response[0].tags[0] && json.response[0].tags[0].tagId)
+          tagId = json.response[0].tags[0].tagId;
         filterList2.forEach((item, i) => {
           const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
           if (index != -1) {
@@ -263,8 +263,7 @@ class ComponentOwner extends React.Component {
           //    item.tagId = null;
         });
         let updatedObject = tagObject;
-        ;
-        updatedObject.push(json);
+        updatedObject.push({'tagId':tagId, 'tagName':tagName});
         this.setState({
           notesList: refreshNotesList(originalNotesList, updatedObject),
           originalNotesList: originalNotesList,
@@ -328,8 +327,8 @@ class ComponentOwner extends React.Component {
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
-        let tagId = json.tagId;
-        let tagName = json.tagName;
+        if(json && json.response && json.response[0].tags && json.response[0].tags[0] && json.response[0].tags[0].tagId)
+          tagId = json.response[0].tags[0].tagId;
         filterList2.forEach((item, i) => {
           const index = _.findIndex(originalNotesList, function (o) { return o.id === item.id; });
           if (index != -1) {
@@ -345,16 +344,11 @@ class ComponentOwner extends React.Component {
           }
           //    item.tagId = null;
         });
-        let updatedObject = tagObject;
-        ;
-        updatedObject.push(json);
-        let newGroups = toolbarMode.groups;
-        newGroups.push(json);
         this.setState({
-          notesList: refreshNotesList(originalNotesList, updatedObject),
+          notesList: refreshNotesList(originalNotesList, tagObject),
           originalNotesList: originalNotesList,
           toolbarMode: toolbarMode,
-          tagAttributes: updatedObject,
+          tagAttributes: tagObject,
           groupModeFlag: false
         });
       });
