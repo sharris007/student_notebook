@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc1ODg1LCJpYXQiOjE1MjI3NjUwODUsInNlc3NpZCI6ImQ1ODVjYmU2LWMwOTktNGJhNi05NmY5LTI2MTFjNTAyNDk4NiJ9.DK-CYKveRW24bYTYYrJbtP3NOOHaSXvYLZ-oKIxTlFyjyEKzzasrpSjyfqIlT3NNITwsdg2aYCR6COavPU0khedQRhyPqHJsDoLy2EfZzwktvIKQCCw5Herw9RAowfB0dF02iSOIkQ_MpOp_KuUsQ18OOkgQUqBRj15xSPW0bBk';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc5NDE1LCJpYXQiOjE1MjI3Njg2MTQsInNlc3NpZCI6Ijg3MGQzMzI3LWE2NDYtNGE3NS1hY2JhLWRkNzEyZjhjMDdhYSJ9.fTYGCwo3O5dv1EniTw3jA246aarKVSsnG3Ypg6m4UmSk-7LFi2uq2QahIpZp5Gtk7Byf2I6zW3WH-diTfRN3YWy76WU_3c2OpXeqRMiWkx6DZVBF5pG4YAMhrThppQLR_hC6h31sVHOKSvLAkmHRi-h0txFD6ie-EQuAIyEUkD4';
 // localStorage.secureToken;
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
@@ -98,10 +98,11 @@ function getNotes() {
         groupFalg = true;
       }
     });
+    console.log(mapNotesObj);
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
-    if (groupFalg) {
+    // if (!groupFalg) {
       const getAllTagName = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'GET',
         headers: {
@@ -110,8 +111,8 @@ function getNotes() {
           'X-Authorization': piToken
         }
       }).then((res) => res.json()).then((json) => {
-        const tagObject = json.tagAttributes;
-
+        const tagObject = (json.tagAttributes.length > 0) ? json.tagAttributes : [];
+        const lastUsedFilters = json.lastUsedFilters
         tagObject.map((tag, i) => {
           _.each(mapNotesObj, function (obj, index) {
             if (obj.notes) {
@@ -142,6 +143,7 @@ function getNotes() {
             originalNotesList: originalNotesList,
             tocData: tocData,
             tagAttributes: tagObject,
+            lastUsedFilters : lastUsedFilters,
             toolbarMode: toolbarModeProp,
             handleGroupClick: (tagId, tagName) => {
             }
@@ -150,32 +152,32 @@ function getNotes() {
 
         });
       });
-    } else {
-      fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Authorization': piToken
-        }
-      }).then((res) => res.json()).then((json) => {
-        tocData = json.content;
-        new NoteBookComponent({
-          elementId: 'demo',
-          locale: 'en-us',
-          callback: callback,
-          notesList: mapNotesObj,
-          originalNotesList: originalNotesList,
-          tocData: tocData,
-          tagAttributes: [],
-          toolbarMode: toolbarModeProp,
-          handleGroupClick: (tagId, tagName) => {
-          }
-          //  responsiveColumns
-        });
+    // } else {
+    //   fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //       'X-Authorization': piToken
+    //     }
+    //   }).then((res) => res.json()).then((json) => {
+    //     tocData = json.content;
+    //     new NoteBookComponent({
+    //       elementId: 'demo',
+    //       locale: 'en-us',
+    //       callback: callback,
+    //       notesList: mapNotesObj,
+    //       originalNotesList: originalNotesList,
+    //       tocData: tocData,
+    //       tagAttributes: [],
+    //       toolbarMode: toolbarModeProp,
+    //       handleGroupClick: (tagId, tagName) => {
+    //       }
+    //       //  responsiveColumns
+    //     });
 
-      });
-    }
+    //   });
+    // }
   });
 }
 

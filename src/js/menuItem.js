@@ -9,33 +9,11 @@ export default class MenuItem extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount = () => {
-    // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('chapterItem')));
-    // this.makeCheckboxAschecked(JSON.parse(localStorage.getItem('labelItem')));
-  }
-
-  makeCheckboxAschecked = (getCheckedVal) => {
-    if ( (getCheckedVal != null && (getCheckedVal.length > 0))) {
-      for (let i=0;i<getCheckedVal.length;i++) {
-        if ( document.getElementById(getCheckedVal[i]) ) {
-          document.getElementById(getCheckedVal[i]).checked = true;
-        }
-      }
-    }
-  }
 
   getSelctedVal = (e, labelFlag) => {
     let checkboxes;
     if (labelFlag) {
       const getAllLabelcheckBox = document.querySelectorAll('.select-box.label');
-      // if (e.target.id === 'all-label') {
-      //   this.enableAllTypeChekbox(getAllLabelcheckBox, e.target.id);
-      //   checkboxes = document.getElementById(e.target.id);
-      // }
-      // else{
-      //   document.getElementById('all-label').checked = false;
-      //   checkboxes = getAllLabelcheckBox;
-      // }
       this.getCheckedboxval(getAllLabelcheckBox, true);
     }
     else {
@@ -76,16 +54,19 @@ export default class MenuItem extends Component {
     else {
       this.formArrayVal(isLabelEle, []);
     }
-    this.props.getSelectedVal(JSON.parse(localStorage.getItem('chapterItem')), JSON.parse(localStorage.getItem('labelItem')));
+    this.props.getSelectedVal(JSON.parse(localStorage.getItem('lastUsedFilters')));
   }
 
   formArrayVal = (flag, itemArr) => {
+    const filterArray = localStorage.getItem('lastUsedFilters') ? JSON.parse(localStorage.getItem('lastUsedFilters')) : { 'noteType' : [], 'chapterId' : []};
     if (flag) {
-      localStorage.setItem('labelItem', JSON.stringify(itemArr));
+      filterArray.noteType = itemArr;
     }
     else {
-      localStorage.setItem('chapterItem', JSON.stringify(itemArr));
-    }
+      filterArray.chapterId = itemArr;
+    } 
+    localStorage.setItem('lastUsedFilters', JSON.stringify(filterArray));
+    
   }
   
   allTypeChckBox = () => {

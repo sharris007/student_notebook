@@ -13,7 +13,7 @@ import NoteBook from './NoteBook';
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc1ODg1LCJpYXQiOjE1MjI3NjUwODUsInNlc3NpZCI6ImQ1ODVjYmU2LWMwOTktNGJhNi05NmY5LTI2MTFjNTAyNDk4NiJ9.DK-CYKveRW24bYTYYrJbtP3NOOHaSXvYLZ-oKIxTlFyjyEKzzasrpSjyfqIlT3NNITwsdg2aYCR6COavPU0khedQRhyPqHJsDoLy2EfZzwktvIKQCCw5Herw9RAowfB0dF02iSOIkQ_MpOp_KuUsQ18OOkgQUqBRj15xSPW0bBk';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc5NDE1LCJpYXQiOjE1MjI3Njg2MTQsInNlc3NpZCI6Ijg3MGQzMzI3LWE2NDYtNGE3NS1hY2JhLWRkNzEyZjhjMDdhYSJ9.fTYGCwo3O5dv1EniTw3jA246aarKVSsnG3Ypg6m4UmSk-7LFi2uq2QahIpZp5Gtk7Byf2I6zW3WH-diTfRN3YWy76WU_3c2OpXeqRMiWkx6DZVBF5pG4YAMhrThppQLR_hC6h31sVHOKSvLAkmHRi-h0txFD6ie-EQuAIyEUkD4';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -84,6 +84,7 @@ class ComponentOwner extends React.Component {
       saveNotesList: temporaryArray,
       originalNotesList: props.originalNotesList,
       tagAttributes: props.tagAttributes,
+      lastUsedFilters: props.lastUsedFilters,
       groupExpanded: false,
       groupModeFlag: false,
       expandedTagName: null,
@@ -445,7 +446,7 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "MOVECARD") {
-      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX`, {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -454,6 +455,19 @@ class ComponentOwner extends React.Component {
         },
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((json) => {
+      });
+
+    } else if (msg === "LASTUSEDFILTER") {
+      const filterList = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.text()).then((text) => {
+        console.log("Filter RES", text);
       });
 
     }
@@ -497,10 +511,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId } = this.state;
+    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId, lastUsedFilters } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
+        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} lastUsedFilters={lastUsedFilters} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
       </div>
     );
   };

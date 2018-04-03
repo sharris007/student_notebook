@@ -155,6 +155,7 @@ export default class NoteBookHeader extends Component {
 
   componentDidMount = () => {
     window.addEventListener('click', this.domClick, false);
+    this.getSelectedVal(this.props.lastUsedFilters ? this.props.lastUsedFilters : {});
   }
 
   domClick = (e) => {
@@ -175,69 +176,98 @@ export default class NoteBookHeader extends Component {
     groupModeToggleFlag = !groupModeToggleFlag;
     this.props.callback('GROUP', groupModeToggleFlag);
   }
-
+  
   handleChange = (getVal) => {
+    const localFilterVal = JSON.parse(localStorage.getItem('lastUsedFilters'));
     if (getVal === 'chapter') {
       const toggledIsOpen = this.state.showChapterMenu ? false : true;
       this.setState({ showChapterMenu: toggledIsOpen, showLabelMenu: false }, () => {
         let node = ReactDOM.findDOMNode(this.refs['listBox']);
         node.style.maxHeight = (window.innerHeight - 120) + 'px';
+        if(localFilterVal.chapterId){
+          this.makeCheckboxAschecked(localFilterVal.chapterId);
+        }
+        
       });
     }
     else if (getVal === 'label') {
       const toggledIsOpen = this.state.showLabelMenu ? false : true;
-      this.setState({ showLabelMenu: toggledIsOpen, showChapterMenu: false });
+      this.setState({ showLabelMenu: toggledIsOpen, showChapterMenu: false }, () => {
+        if(localFilterVal.noteType){
+          this.makeCheckboxAschecked(localFilterVal.noteType);
+        }
+      });
+      
     }
     else {
       this.setState({ showChapterMenu: false, showLabelMenu: false, chapterText: 'Chapter', labelText: 'Labels' });
-      localStorage.setItem('labelItem', JSON.stringify([]));
-      localStorage.setItem('chapterItem', JSON.stringify([]));
+      const filterArray = localStorage.setItem('lastUsedFilters', '');
       this.setState({ groupNoteShow : true});
-      this.getSelectedVal();
+      this.getSelectedVal({'lastUsedFilters' : filterArray});
     }
 
   }
-  getSelectedVal = () => {
-    const props = this.props;
-    const selectedChapter = JSON.parse(localStorage.getItem('chapterItem')) ? JSON.parse(localStorage.getItem('chapterItem')) : [];
-    const selectedLabel = JSON.parse(localStorage.getItem('labelItem')) ? JSON.parse(localStorage.getItem('labelItem')) : [];
-    var tocLevel = props.tocData.items;
+  
+  makeCheckboxAschecked = (getCheckedVal) => {
+    if ( (getCheckedVal != null && (getCheckedVal.length > 0))) {
+      _.each(getCheckedVal , function(val, index){
+        if ( document.getElementById(val) ) {
+          document.getElementById(val).checked = true;
+        }
+      });
+    }
+  }
+
+  getSelectedVal = (props) => {
+    const filterArr = props;
+    localStorage.setItem("lastUsedFilters", JSON.stringify(props));
+    const selectedChapter = filterArr.chapterId ? filterArr.chapterId : [];
+    const selectedLabel = filterArr.noteType ? filterArr.noteType : [];
+    var tocLevel = this.props.tocData.items;
     let updateChapterTxt = selectedChapter.length > 0 ? 'Chapter' + ' ' + selectedChapter.length : 'Chapter';
     let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length + ' ' + 'Labels' : 'Labels';
     this.setState({ chapterText: updateChapterTxt, labelText: updateLabelTxt });
     const tocListItem = [];
-    for (let i = 0; i < selectedChapter.length; i++) {
+    _.each(selectedChapter, (chapterId) => {
       tocLevel.find((toc) => {
-        if (toc.id === selectedChapter[i]) {
+        if (toc.id === chapterId) {
           tocListItem.push(toc);
         }
       });
-    }
+    });
 
     let chapterList = [];
     let finalFilteredList = [];
-    const note = props.notesList;
-    for (let i1 = 0; i1 < tocListItem.length; i1++) {
-      if (typeof tocListItem[i1].items !== 'undefined' && tocListItem[i1].items.length > 0) {
-        for (let j1 = 0; j1 < tocListItem[i1].items.length; j1++) {
+    const note = this.props.notesList;
+    _.each(tocListItem, (toc) => {
+       if (typeof toc.items !== 'undefined' && toc.items.length > 0) {
+      _.each(toc.items, (tocList) => {
           note.find((note) => {
-            if (tocListItem[i1].items[j1].id === note.pageId) {
-              chapterList.push(note);
-            }
-          });
-        }
+          if (tocList.id === note.pageId) {
+            chapterList.push(note);
+          }
+          if (typeof tocList.items !== 'undefined' && tocList.items.length > 0) {
+            _.each(tocList.items, (secItem) => {
+              if (secItem.id === note.pageId) {
+                chapterList.push(note);
+              }
+            });
+          }
+        });
+      });
       }
-    }
+    });
+
     const checkChapterList = chapterList.length;
     if (checkChapterList > 0) {
       if (selectedLabel.length > 0) {
-        for (let c = 0; c < chapterList.length; c++) {
+        _.each(chapterList, (chapterLis) => {
           selectedLabel.find((label) => {
-            if ((chapterList[c].noteType === label && !chapterList[c].tags) || (label === 'NL' && !chapterList[c].noteType)) {
-              finalFilteredList.push(chapterList[c]);
+            if ((chapterLis.noteType === label && !chapterLis.tags) || (label === 'NL' && !chapterLis.noteType)) {
+              finalFilteredList.push(chapterLis);
             }
           });
-        }
+        });
       }
       else {
         finalFilteredList = chapterList;
@@ -245,13 +275,13 @@ export default class NoteBookHeader extends Component {
 
     }
     else {
-      for (let c = 0; c < note.length; c++) {
-        selectedLabel.find((label) => {
-          if ((note[c].noteType === label && !note[c].tags) || (label === 'NL' && !note[c].noteType)) {
-            finalFilteredList.push(note[c]);
+      _.each(note, (note) => {
+          selectedLabel.find((label) => {
+          if ((note.noteType === label && !note.tags) || (label === 'NL' && !note.noteType)) {
+            finalFilteredList.push(note);
           }
         });
-      }
+      });
     }
     this.props.getFilterArr(finalFilteredList);
     if (selectedChapter.length > 0 || selectedLabel.length > 0) {
@@ -261,6 +291,7 @@ export default class NoteBookHeader extends Component {
       this.setState({ groupNoteShow : true});
     }
   }
+
   handleCancelButton(event) {
     groupModeToggleFlag = !groupModeToggleFlag;
     this.setState({ showGroupTitleInput: false, groupTitle: '', groupId: null, groupModeDrop: false });
