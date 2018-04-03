@@ -9,8 +9,11 @@
 import React, { PropTypes } from 'react';
 import { injectIntl } from 'react-intl';
 import _ from 'lodash';
-
 import NoteBook from './NoteBook';
+
+const contextId = '5a855d06e4b05b48d72dedb9' ;
+const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNzQ4MzgwIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjc2NjM4MCwiaWF0IjoxNTIyNzQ4MzgwLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImIxM2JjN2NjLTZjODAtNDFhYi1hYmFiLTNmNjg0ZjJhZTEyNyJ9.i-EiHyozfl_cX59Iqt4pZ6Qd_c8ugKN_i3P3fsBU5qRIZpygoc-S9gsD7es75fiK85fvBu5aoLE1TLEFnDtpJl-R6aM1DWw-IuoHOWIUfbWcZHeeVpdu1S4D9DemgS1sBngGxqVtWN8x9Suw8V8Jb-Frbv6FxUn_4ZLYYy2Y-T0';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -31,14 +34,10 @@ function refreshNotesList(originalNotesList, tagObject) {
         mapNotesObj.push(value[0]) 
       } 
       else { 
-        console.log("value", value);
           value[0].notes = [];
          _.each(value, function (obj, index) {
-          console.log("value", value[0]);
-          
           value[0].notes.push(value[index]);
          });
-         console.log("OBJJ", value[0]);
         mapNotesObj.push(value[0]); 
         groupFalg = true;
       }
@@ -47,7 +46,6 @@ function refreshNotesList(originalNotesList, tagObject) {
       tagObject.map((tag, i) => {
         _.each(mapNotesObj, function (obj, index) {
           if(obj.notes) {
-            console.log(obj)
             if (obj.tags[0].tagId === tag.tagId) {
               obj.tags[0].tagName = tag.tagName;
             }
@@ -97,7 +95,6 @@ class ComponentOwner extends React.Component {
     const notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
     const tagObject = [...this.state.tagAttributes];
-    const piToken = 'eyJraWQiOiJrMTYzMzQ3Mzg2MCIsImFsZyI6IlJTNTEyIn0.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyMzI4NDk0LCJpYXQiOjE1MjIzMTc2OTMsInNlc3NpZCI6ImUwNzFiYjJmLTRkOTUtNGQ0YS1hMGFjLTkxNWQ5ZjkxNjM4ZCJ9.d7IK7y1qT_RLBenZf6MymEhBqgsrSpR2e-tAwgZu6HobWylWc6TikQV_XoNBfTzE3GQsXHdPEZwHtvY_DCsdxz5euuP6aH2wl_uPeGEY7v1TEsIF39pqDsP5MrU5WHK4GJSbdhjphpO5bUOF5Fl8vItzwPDixY9QL0IUw1ww0EM';
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -239,7 +236,7 @@ class ComponentOwner extends React.Component {
         item.selected = false;
       });
 
-      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag', {
+      const getTagId = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -285,7 +282,6 @@ class ComponentOwner extends React.Component {
 
       filterList3.push(filterList1[0]);
     }else if (msg === "EDITGROUP") {
-      console.log('add note group');
       let toolbarMode = this.props.toolbarMode;
       toolbarMode.groupMode = 'DEFAULT'
       const notesList = [...this.state.notesList];
@@ -323,7 +319,7 @@ class ComponentOwner extends React.Component {
         groupPayload.notes.push(selectedObj);
       });
 
-      const getTagId = fetch('https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/'+tagId, {
+      const getTagId = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag/`+tagId, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -377,7 +373,7 @@ class ComponentOwner extends React.Component {
         "tagName": tagName,
         "notes": []
       }
-      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/5a9f8a6ce4b0576972d62596/identities/ffffffff57a9f814e4b00d0a20bf6029/notesX/tag/${tagId}`, {
+      const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/tag/${tagId}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -464,7 +460,6 @@ class ComponentOwner extends React.Component {
         },
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((json) => {
-        console.log("MOVECARD RES", json);
       });
 
     }

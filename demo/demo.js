@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjVhMGZiZjE0ZTRiMGI2N2ZjZjI1ZDYxNiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNjU1NzMyLCJpYXQiOjE1MjI2NTM5MzIsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiNDk0MmJlYzUtNDIyNy00YWM0LTgyODktMmFjMDViMDA5ZDMyIn0.iasam21FyecJUsELrEGbfuNizrXnbg5jSTxJui_fUEPEiaDREjT-5eUrimZjJm11Tw66rmuG-K4_6TCJqGZ4hQwMRIbhjRMJjEMUW6MM4Ot0HYdccye-chmnbGzISRXpTfMZoBocKn2WdN1JOTI3h4s-SdMu9J1tn7-wDna1vG8';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNzQ4MzgwIiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjc2NjM4MCwiaWF0IjoxNTIyNzQ4MzgwLCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImIxM2JjN2NjLTZjODAtNDFhYi1hYmFiLTNmNjg0ZjJhZTEyNyJ9.i-EiHyozfl_cX59Iqt4pZ6Qd_c8ugKN_i3P3fsBU5qRIZpygoc-S9gsD7es75fiK85fvBu5aoLE1TLEFnDtpJl-R6aM1DWw-IuoHOWIUfbWcZHeeVpdu1S4D9DemgS1sBngGxqVtWN8x9Suw8V8Jb-Frbv6FxUn_4ZLYYy2Y-T0';
 // localStorage.secureToken;
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
@@ -98,7 +98,6 @@ function getNotes() {
         groupFalg = true;
       }
     });
-    console.log(mapNotesObj);
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();

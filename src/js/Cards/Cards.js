@@ -51,8 +51,6 @@ const specs = {
   
     component.setState({ direction: (monitor.getDifferenceFromInitialOffset().x <=0)? 'left':'right' });
     
-    console.log(component.state.direction)
-
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
 
