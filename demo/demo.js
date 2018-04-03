@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJvY2QiOiIxNTIyNjY4MjA4Iiwic3ViIjoiZmZmZmZmZmY1N2E5ZjgxNGU0YjAwZDBhMjBiZjYwMjkiLCJiaCI6Ii02NDc0MTA2MzIiLCJoY2MiOiJVUyIsInR5cGUiOiJzZSIsImV4cCI6MTUyMjY4NjIwOSwiaWF0IjoxNTIyNjY4MjA4LCJjbGllbnRfaWQiOiJJMlJKZDdlTzVGOVQ2VTlUZ1ZLN1Z4dEFndzQ4dTBwVSIsInNlc3NpZCI6ImYwYTUzMzQyLWM4ZjItNDMyNy1iMDc3LTZkYWUwODVhYmVhMiJ9.LPAFxhnNJGlk1v0axN2irO8WZudMYpPfB1QqZaDrAwQIHG5WI21bhL0vzpIJhPvM0Qny_CsarQ2DRMAvOuZLrdXjCgkxNqjqu7CEiBDudGC1Igvx-Jtwnbss5doTNTi51XpipRJBYmL8PEKHdliwt1o3n0kFLTe5JHB6cdx_F3c';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzUzOTM0LCJpYXQiOjE1MjI3NDMxMzQsInNlc3NpZCI6ImU4ZTRjZDdmLTMyMWEtNDUwMy05ZGRhLTM2YTM3MDhmYjYzNyJ9.C8LIByWxDQNo3mBolfzs__5tXlYeixo0yazrPuhXrX-qvVYerjep988DHMNtE0bGC5RcWPKZVlviERdr1aN77kQscDyAGhXnMChaiYQwS72oMhNDE_oUS1z4j-7aWZ1PlnMTYf-f04v8FFpTz5bZAXx5FXifYbhGrq2HxNyfIT4';
 // localStorage.secureToken;
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
@@ -102,7 +102,7 @@ function getNotes() {
     // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
-    if (groupFalg) {
+    // if (!groupFalg) {
       const getAllTagName = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'GET',
         headers: {
@@ -111,8 +111,8 @@ function getNotes() {
           'X-Authorization': piToken
         }
       }).then((res) => res.json()).then((json) => {
-        const tagObject = json.tagAttributes;
-
+        const tagObject = (json.tagAttributes.length > 0) ? json.tagAttributes : [];
+        const lastUsedFilters = json.lastUsedFilters
         tagObject.map((tag, i) => {
           _.each(mapNotesObj, function (obj, index) {
             if (obj.notes) {
@@ -143,6 +143,7 @@ function getNotes() {
             originalNotesList: originalNotesList,
             tocData: tocData,
             tagAttributes: tagObject,
+            lastUsedFilters : lastUsedFilters,
             toolbarMode: toolbarModeProp,
             handleGroupClick: (tagId, tagName) => {
             }
@@ -151,32 +152,32 @@ function getNotes() {
 
         });
       });
-    } else {
-      fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Authorization': piToken
-        }
-      }).then((res) => res.json()).then((json) => {
-        tocData = json.content;
-        new NoteBookComponent({
-          elementId: 'demo',
-          locale: 'en-us',
-          callback: callback,
-          notesList: mapNotesObj,
-          originalNotesList: originalNotesList,
-          tocData: tocData,
-          tagAttributes: [],
-          toolbarMode: toolbarModeProp,
-          handleGroupClick: (tagId, tagName) => {
-          }
-          //  responsiveColumns
-        });
+    // } else {
+    //   fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //       'X-Authorization': piToken
+    //     }
+    //   }).then((res) => res.json()).then((json) => {
+    //     tocData = json.content;
+    //     new NoteBookComponent({
+    //       elementId: 'demo',
+    //       locale: 'en-us',
+    //       callback: callback,
+    //       notesList: mapNotesObj,
+    //       originalNotesList: originalNotesList,
+    //       tocData: tocData,
+    //       tagAttributes: [],
+    //       toolbarMode: toolbarModeProp,
+    //       handleGroupClick: (tagId, tagName) => {
+    //       }
+    //       //  responsiveColumns
+    //     });
 
-      });
-    }
+    //   });
+    // }
   });
 }
 

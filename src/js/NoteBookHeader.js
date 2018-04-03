@@ -155,6 +155,7 @@ export default class NoteBookHeader extends Component {
 
   componentDidMount = () => {
     window.addEventListener('click', this.domClick, false);
+    this.getSelectedVal(this.props.lastUsedFilters ? this.props.lastUsedFilters : {});
   }
 
   domClick = (e) => {
@@ -177,31 +178,52 @@ export default class NoteBookHeader extends Component {
   }
 
   handleChange = (getVal) => {
+    const localFilterVal = JSON.parse(localStorage.getItem('lastUsedFilters'));
     if (getVal === 'chapter') {
       const toggledIsOpen = this.state.showChapterMenu ? false : true;
       this.setState({ showChapterMenu: toggledIsOpen, showLabelMenu: false }, () => {
         let node = ReactDOM.findDOMNode(this.refs['listBox']);
         node.style.maxHeight = (window.innerHeight - 120) + 'px';
+        if(localFilterVal.chapterId){
+          this.makeCheckboxAschecked(localFilterVal.chapterId);
+        }
+        
       });
     }
     else if (getVal === 'label') {
       const toggledIsOpen = this.state.showLabelMenu ? false : true;
-      this.setState({ showLabelMenu: toggledIsOpen, showChapterMenu: false });
+      this.setState({ showLabelMenu: toggledIsOpen, showChapterMenu: false }, () => {
+        if(localFilterVal.noteType){
+          this.makeCheckboxAschecked(localFilterVal.noteType);
+        }
+      });
+      
     }
     else {
       this.setState({ showChapterMenu: false, showLabelMenu: false, chapterText: 'Chapter', labelText: 'Labels' });
-      localStorage.setItem('labelItem', JSON.stringify([]));
-      localStorage.setItem('chapterItem', JSON.stringify([]));
+      const filterArray = localStorage.setItem('lastUsedFilters', '');
       this.setState({ groupNoteShow : true});
-      this.getSelectedVal();
+      this.getSelectedVal({'lastUsedFilters' : filterArray});
     }
 
   }
-  getSelectedVal = () => {
-    const props = this.props;
-    const selectedChapter = JSON.parse(localStorage.getItem('chapterItem')) ? JSON.parse(localStorage.getItem('chapterItem')) : [];
-    const selectedLabel = JSON.parse(localStorage.getItem('labelItem')) ? JSON.parse(localStorage.getItem('labelItem')) : [];
-    var tocLevel = props.tocData.items;
+  
+  makeCheckboxAschecked = (getCheckedVal) => {
+    if ( (getCheckedVal != null && (getCheckedVal.length > 0))) {
+      _.each(getCheckedVal , function(val, index){
+        if ( document.getElementById(val) ) {
+          document.getElementById(val).checked = true;
+        }
+      });
+    }
+  }
+
+  getSelectedVal = (props) => {
+    const filterArr = props;
+    localStorage.setItem("lastUsedFilters", JSON.stringify(props));
+    const selectedChapter = filterArr.chapterId ? filterArr.chapterId : [];
+    const selectedLabel = filterArr.noteType ? filterArr.noteType : [];
+    var tocLevel = this.props.tocData.items;
     let updateChapterTxt = selectedChapter.length > 0 ? 'Chapter' + ' ' + selectedChapter.length : 'Chapter';
     let updateLabelTxt = selectedLabel.length > 0 ? selectedLabel.length + ' ' + 'Labels' : 'Labels';
     this.setState({ chapterText: updateChapterTxt, labelText: updateLabelTxt });
@@ -216,7 +238,7 @@ export default class NoteBookHeader extends Component {
 
     let chapterList = [];
     let finalFilteredList = [];
-    const note = props.notesList;
+    const note = this.props.notesList;
     for (let i1 = 0; i1 < tocListItem.length; i1++) {
       if (typeof tocListItem[i1].items !== 'undefined' && tocListItem[i1].items.length > 0) {
         for (let j1 = 0; j1 < tocListItem[i1].items.length; j1++) {
