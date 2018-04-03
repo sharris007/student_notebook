@@ -104,7 +104,7 @@ const specs = {
     //  const { placeholderIndex } = component.state;
     // let nextY = placeholderIndex;
 
-    // document.getElementById(monitor.getItem().id).style.background = 'purple';
+  //   document.getElementById(monitor.getItem().id).style.background = 'purple';
     const nextX = props.x;
     const lastY = monitor.getItem().y;
     const lastX = monitor.getItem().x;
@@ -119,7 +119,7 @@ const specs = {
     var node = findDOMNode(component);
     var getSourceClientOffset = monitor.getSourceClientOffset().x;
 
-
+    debugger;
     // defines where placeholder is rendered
     let ress = monitor.getDropResult();
     // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
@@ -142,7 +142,7 @@ const specs = {
 
 
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
-    component.setState({ style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
+    component.setState({ node: node, style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     // document.getElementById(monitor.getItem().id).style.left
     //The current mouse position where the "on hover indicator" is expected
@@ -258,22 +258,27 @@ export default class Cards extends Component {
       item.color = 'white';
       item.marginLeft = '0px';
       item.marginRight = '0px';
-debugger;
-        
+      item.scale = '1';
 
       let colorr = 'white';
-
+      cardList.push(<div key="placeholder" className="item placeholder" />);
+      cardList.push(<div key="placeholder3" className="item placeholder3" />);
+      if (this.state.node != undefined) {
+        cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', left: '20px', top: `${this.state.node.offsetTop}`, zIindex: '200' }} className="item placeholder3" />);
+      } else {
+        cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', left: '20px', top: '200px', zIindex: '200' }} className="item placeholder3" />);
+      }
       if (isOver && canDrop) {
         isPlaceHold = false;
         if (i === 0 && placeholderIndex === -1) {
           window.placeholderIndex = placeholderIndex;
+          console.log('here2');
+
           if (this.state.direction == 'left') {
-          item.marginLeft = '50px';
-            
+            item.marginLeft = '20px';
             cardList.push(<div key="placeholder" className="item placeholder" />);
           } else {
-          item.marginRight = '50px';
-            
+            item.marginRight = '20px';
             cardList.push(<div key="placeholder" className="item placeholder2" />);
           }
         } else if (placeholderIndex > i) {
@@ -283,7 +288,7 @@ debugger;
 
       if (righter) {
         window.placeholderIndex = placeholderIndex;
-        item.marginRight = '50px';
+        item.marginRight = '20px';
         cardList.push(<div key="placeholder" className="item placeholder2" />);
         righter = false;
       }
@@ -293,16 +298,41 @@ debugger;
       if (item !== undefined) {
         //   item.color = colorr;
         let height = 'auto';
-        if (item.color === 'blue') { height = '260px' }
 
-        if (isOver && canDrop && placeholderIndex === i) {
-          debugger;
+        if (isOver && canDrop && placeholderIndex + 1 === i) {
+          console.log('here3' + placeholderIndex + i);
+
           if (this.state.direction == 'left') {
-          item.marginLeft = '50px';
+            item.marginLeft = '20px';
           } else {
-          item.marginRight = '50px';
+            item.marginRight = '20px';
           }
         }
+
+        if (placeholderIndex + 1 !== cards.length && isPlaceHold) {
+          console.log('here4');
+
+          if (this.state.direction == 'left') {
+            item.marginLeft = '20px';
+          } else {
+            item.marginRight = '20px';
+          }
+        }
+
+        if (placeholderIndex + 1 !== cards.length && isPlaceHold) {
+          console.log('here5');
+
+          if (this.state.direction == 'left') {
+            item.marginLeft = '20px';
+          } else {
+            item.marginRight = '20px';
+          }
+        }
+
+
+        // item.scale = '1';
+        //item.marginLeft = '0px';
+        //item.marginRight = '0px';
 
         cardList.push(
 
@@ -312,6 +342,7 @@ debugger;
             marginLeft: item.marginLeft,
             marginRight: item.marginRight,
             height: `${height}`,
+            //        transform: `scale(${item.scale})`,
           }} onScroll={this.handleScroll}>
 
             <Card x={x} y={i}
@@ -344,25 +375,21 @@ debugger;
       }
 
       // if placeholder index is greater than array.length, display placeholder as last
-      if (placeholderIndex + 1 !== cards.length) {
-        window.placeholderIndex = placeholderIndex;
-        if (isPlaceHold) {
-          debugger;
-          if (this.state.direction == 'left') {
-            cardList.push(<div key="placeholder" className="item placeholder" />);
-          } else {
-            cardList.push(<div key="placeholder" className="item placeholder2" />);
-          }
-        }
-      }
+      // if (placeholderIndex + 1 !== cards.length) {
+      //   window.placeholderIndex = placeholderIndex;
+      //   if (isPlaceHold) {
+      //     if (this.state.direction == 'left') {
+      //       cardList.push(<div key="placeholder" className="item placeholder" />);
+      //     } else {
+      //       cardList.push(<div key="placeholder" className="item placeholder2" />);
+      //     }
+      //   }
+      // }
     });
 
     // if placeholder index is greater than array.length, display placeholder as last
     if (isPlaceHold) {
-      debugger;
-
       window.placeholderIndex = placeholderIndex;
-
       if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
@@ -374,15 +401,12 @@ debugger;
 
     // if there is no items in cards currently, display a placeholder anyway
     if (isOver && canDrop && cards.length === 0) {
-      debugger;
-      
       window.placeholderIndex = placeholderIndex;
       if (this.state.direction == 'left') {
         cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
-      //  cardList.push(<div key="placeholder" className="item placeholder2" />);
     }
 
 
