@@ -13,7 +13,7 @@ import NoteBook from './NoteBook';
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzc5NDE1LCJpYXQiOjE1MjI3Njg2MTQsInNlc3NpZCI6Ijg3MGQzMzI3LWE2NDYtNGE3NS1hY2JhLWRkNzEyZjhjMDdhYSJ9.fTYGCwo3O5dv1EniTw3jA246aarKVSsnG3Ypg6m4UmSk-7LFi2uq2QahIpZp5Gtk7Byf2I6zW3WH-diTfRN3YWy76WU_3c2OpXeqRMiWkx6DZVBF5pG4YAMhrThppQLR_hC6h31sVHOKSvLAkmHRi-h0txFD6ie-EQuAIyEUkD4';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzgyOTcwLCJpYXQiOjE1MjI3NzIxNzAsInNlc3NpZCI6IjQyOGNlMzRiLTk1MDktNDM1Mi05ZDJlLTAxMzRlZDNjNTBhNiJ9.LYZwfUZLhzT53ei0PZRqZImiDooHgSmgCoaMeyzt-U6fBviCyaPj-wum_pjeLxIPn0b7kIuIMFyv6fGaiJxujpqkkpez6Wze-2HUYulb9ZTDdQjn0W4VYphdnhOksJhfhLsdi_t0-1uOP4owTq-SqXgpqPAzr6j4joe1vyTQud0';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -46,7 +46,7 @@ function refreshNotesList(originalNotesList, tagObject) {
       tagObject.map((tag, i) => {
         _.each(mapNotesObj, function (obj, index) {
           if(obj.notes) {
-            if (obj.tags[0].tagId === tag.tagId) {
+            if (obj.tags && obj.tags[0] && (obj.tags[0].tagId === tag.tagId)) {
               obj.tags[0].tagName = tag.tagName;
             }
           }
@@ -377,12 +377,10 @@ class ComponentOwner extends React.Component {
         },
         body: JSON.stringify(renamePayLoad)
       }).then((res) => res.json()).then((json) => {
-        let renamedtagId = json.tagId;
-        let renamedtagName = json.tagName;
         let updatedtagObj = tagObject;
         _.each(updatedtagObj, (obj, index) => {
           if (updatedtagObj[index].tagId === tagId) {
-            updatedtagObj[index].tagName = renamedtagName;
+            updatedtagObj[index].tagName = tagName;
           }
         });
         this.setState({
@@ -420,17 +418,17 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "UNGROUP NOTES") { // ungroup all notes in a group
+      let tagId = data.tags[0].tagId;
       this.props.callback(msg, data);
       const originalNotesList = [...this.state.originalNotesList];
 
       originalNotesList.map((item, i) => {
-        if (item.tags && item.tags[0].tagId === data.tags[0].tagId) {
-          item.tags[0].tagId = null;
-          item.tags[0].tagName = null;
+        if (item.tags && item.tags[0] && item.tags[0].tagId === tagId) {
+          originalNotesList[i].tags= null;
         }
       });
 
-      const index = _.findIndex(tagObject, function (o) { return o.tagId === data.tags[0].tagId; });
+      const index = _.findIndex(tagObject, function (o) { return o.tagId === tagId; });
       if (index != -1) {
         tagObject.splice(index, 1);
       }
