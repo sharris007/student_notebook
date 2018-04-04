@@ -10,3 +10,4 @@ npm_scripts/*.js
 /.project
 -p
 .vscode
+build

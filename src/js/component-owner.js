@@ -13,7 +13,8 @@ import NoteBook from './NoteBook';
 
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJoY2MiOiJVUyIsInN1YiI6ImZmZmZmZmZmNTdhOWY4MTRlNGIwMGQwYTIwYmY2MDI5IiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyNzgyOTcwLCJpYXQiOjE1MjI3NzIxNzAsInNlc3NpZCI6IjQyOGNlMzRiLTk1MDktNDM1Mi05ZDJlLTAxMzRlZDNjNTBhNiJ9.LYZwfUZLhzT53ei0PZRqZImiDooHgSmgCoaMeyzt-U6fBviCyaPj-wum_pjeLxIPn0b7kIuIMFyv6fGaiJxujpqkkpez6Wze-2HUYulb9ZTDdQjn0W4VYphdnhOksJhfhLsdi_t0-1uOP4owTq-SqXgpqPAzr6j4joe1vyTQud0';
+const xCaller='3cc7b6e8-3416-11e8-b467-0ed5f89f718b';
+const piToken = localStorage.secureToken;
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -242,7 +243,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+          'X-Caller':xCaller
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
@@ -324,7 +326,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+          'X-Caller':xCaller
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
@@ -373,7 +376,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+          'X-Caller':xCaller
         },
         body: JSON.stringify(renamePayLoad)
       }).then((res) => res.json()).then((json) => {
@@ -449,7 +453,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+          'X-Caller':xCaller
         },
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((json) => {
@@ -461,7 +466,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+          'X-Caller':xCaller
         },
         body: JSON.stringify(data)
       }).then((res) => res.text()).then((text) => {
