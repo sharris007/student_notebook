@@ -294,6 +294,8 @@ export default class Card extends Component {
 
   constructor(props) {
     super(props);
+    console.log('card.js');
+    console.log(props.item);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleDeleteCard = this.handleDeleteCard.bind(this);

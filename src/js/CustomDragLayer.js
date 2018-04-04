@@ -67,13 +67,12 @@ function getItemX(props) {
 
   if (index === -1) {
     color = "yellow";
-
   } else {
-    color = "blue";
-    window.currentOffsetx = window.cards[index].left;
-    window.height = '300';
-    window.currentOffsety = currentOffset.y;
-  debugger;
+    color = "blue"; // used for later with group hover drop
+  //  window.currentOffsetx = window.cards[index].left;
+    window.height = window.cards[index].height;
+   // window.currentOffsety = currentOffset.y;
+  ;
   }
 
  
