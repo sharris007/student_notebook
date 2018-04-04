@@ -334,8 +334,6 @@ export default class NoteBookHeader extends Component {
   }
   render() {
     const { toolbarMode } = this.state;
-    console.log(toolbarMode);
-    console.log(this.props.tagAttributes);
     const labelObj = [
       {
         'labelName': 'Main ideas',

@@ -294,8 +294,6 @@ export default class Card extends Component {
 
   constructor(props) {
     super(props);
-    console.log('card.js');
-    console.log(props.item);
     this.handleCancelAddCard = this.handleCancelAddCard.bind(this);
     this.handleAddCard = this.handleAddCard.bind(this);
     this.handleDeleteCard = this.handleDeleteCard.bind(this);
@@ -550,7 +548,6 @@ export default class Card extends Component {
         labelStyle={{ fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform: 'capitalize', verticalAlign: 'initial' }}
       />
     ];
-    console.log('cardd');
 
     return (
 

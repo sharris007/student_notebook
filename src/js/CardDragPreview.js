@@ -3,7 +3,7 @@ import Card from './Cards/Card';
 
 const styles = {
   display: 'inline-block',
-  transform: 'rotate(-3deg) scale(.90)',
+  transform: 'rotate(-3deg) scale(.80)',
   WebkitTransform: 'rotate(-3deg)',
  // background: 'pink'
 };
@@ -15,12 +15,10 @@ const propTypes = {
 };
 
 const CardDragPreview = (props) => {
-  console.log('carddragpreview');
-  // debugger;
   styles.width = `${props.card.clientWidth || 243}px`;
   styles.height = `${props.card.clientHeight || 243}px`;
   let isOver = true;
-  props.card.item.scale = '.90';
+  props.card.item.scale = '.80';
   return (
     <div style={styles}>
       <Card item={props.card.item} groupModeFlag={props.groupModeFlag} groupExpanded={props.groupExpanded} />
@@ -33,7 +31,7 @@ const CardDragPreview = (props) => {
           width: '100%',
           zIndex: 1,
   //        opacity: 0.5,
-          transform: 'scale(.90)',
+          transform: 'scale(.80)',
     //      backgroundColor: 'orange'
         }}>
         </div>}

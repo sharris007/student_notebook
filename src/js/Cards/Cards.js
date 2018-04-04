@@ -61,7 +61,7 @@ const specs = {
 
     const droppedItem = monitor.getItem()
 
-    if (window.saveItem === droppedItem.id) {
+    if (window.saveItem === droppedItem.id) { // note didn't move out of place
       return;
     }
 
@@ -76,8 +76,6 @@ const specs = {
       //  alert('put in last position');
       //  return;
     }
-    console.log(window.saveItem);
-    debugger;
     props.moveCard(lastX, lastY, nextX, nextY);
 
 
@@ -251,7 +249,6 @@ export default class Cards extends Component {
       if (isPlaced) {
         isPlaced = false;
         getPlaceholderDimensions(item.id, this.state.direction);
-        console.log(item.quote);
         if (this.state.direction == 'left') {
           item.marginLeft = '20px';
         } else {
@@ -291,7 +288,7 @@ export default class Cards extends Component {
         window.saveItem = item.id;
 
         item.marginRight = '20px';
-        cardList.push(<div key="placeholder" className="item placeholder2" />);
+    //    cardList.push(<div key="placeholder" className="item placeholder2" />);
         cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
         righter = false;
       }
@@ -331,7 +328,7 @@ export default class Cards extends Component {
 
       if (isOver && canDrop && placeholderIndex === i) {
         if (this.state.direction == 'left') {
-          cardList.push(<div key="placeholder" className="item placeholder" />);
+   //       cardList.push(<div key="placeholder" className="item placeholder" />);
           isPlaced = true;
         } else {
           righter = true;
@@ -344,9 +341,9 @@ export default class Cards extends Component {
 
       window.placeholderIndex = placeholderIndex;
       if (this.state.direction == 'left') {
-        cardList.push(<div key="placeholder" className="item placeholder" />);
+  //      cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
-        cardList.push(<div key="placeholder" className="item placeholder2" />);
+   //     cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
       isPlaced = true;
     }
@@ -358,9 +355,9 @@ export default class Cards extends Component {
 
       window.placeholderIndex = placeholderIndex;
       if (this.state.direction == 'left') {
-        cardList.push(<div key="placeholder" className="item placeholder" />);
+  //      cardList.push(<div key="placeholder" className="item placeholder" />);
       } else {
-        cardList.push(<div key="placeholder" className="item placeholder2" />);
+ //       cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
       isPlaced = true;
     }

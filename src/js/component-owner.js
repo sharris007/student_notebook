@@ -11,7 +11,7 @@ import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 import NoteBook from './NoteBook';
 
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyODc3NjYyLCJpYXQiOjE1MjI4NzU4NjIsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiMzc1YTU3NzctODE3My00YWRiLWJlMzktNzZhY2U5N2FhMDQzIn0.OG3Wb5lb4cS7VCa7v6bVfYHvIznqLHYdah6lDBj3GElJXp1KfDw2dQ3GwdFfW0YHMS6iq_f_9HveMCY31TRIz28Ga5Ye-nZvsFOcKvYulNfhVz8cp20R1inBejzkql3ejuDq9Ar1zfHvoRHx9cRX2X2gj-QvkNdgJiehtF1mV-4   ';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyODc5NDYzLCJpYXQiOjE1MjI4Nzc2NjIsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiMzc1YTU3NzctODE3My00YWRiLWJlMzktNzZhY2U5N2FhMDQzIn0.Ob-JFsVg6WXP0WRvv8yh8wMjQb3grp60lBVlxdRaddTWxW4y0n6Uav_pun1dBHw04LU0RwCeW8dVWfJWTWlE0vHV_QZjDoqnZd9vNtmVPa1xTiO8L5JnQM2QLU6qD_1zMi2DR1jjetUGX0s1OU4p7gSHQz9QwEMD5ba2RbLAzWE';
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
 const xCaller='3cc7b6e8-3416-11e8-b467-0ed5f89f718b';
@@ -35,14 +35,11 @@ function refreshNotesList(originalNotesList, tagObject) {
         mapNotesObj.push(value[0]) 
       } 
       else { 
-        console.log("value", value);
           value[0].notes = [];
          _.each(value, function (obj, index) {
-          console.log("value", value[0]);
           
           value[0].notes.push(value[index]);
          });
-         console.log("OBJJ", value[0]);
         mapNotesObj.push(value[0]); 
         groupFalg = true;
       }
@@ -51,7 +48,6 @@ function refreshNotesList(originalNotesList, tagObject) {
       tagObject.map((tag, i) => {
         _.each(mapNotesObj, function (obj, index) {
           if(obj.notes) {
-            console.log(obj)
             if (obj.tags[0].tagId === tag.tagId) {
               obj.tags[0].tagName = tag.tagName;
             }
