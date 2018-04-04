@@ -11,9 +11,10 @@ import { injectIntl } from 'react-intl';
 import _ from 'lodash';
 import NoteBook from './NoteBook';
 
-const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyODQ4NDY4LCJpYXQiOjE1MjI4NDY2NjcsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiZWNhZmM0OWItZWQyNi00ODVmLWEyNTctODc5NDFiMzkxZDM5In0.fWYUce44TrCAgVVh_i3fqEOmAKsV_6aE8KoOR35KPf4hH8mP2xWENBrZh019Xk1PJaQ_gk3-pT3wiFoCfEU2BZ9cEugC3G-QYiJUpqj_psCZF43a6trLGLLZMakn99sDjzGwlf69lBR6M2kCT12QfB70p0Wc6lrd61wwzrsmMuI';
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjVhMGZiZjE0ZTRiMGI2N2ZjZjI1ZDYxNiIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyODQyMDM0LCJpYXQiOjE1MjI4NDAyMzMsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiM2E0ZDY0Y2UtYTIzNS00OTVmLTllYTAtNGRhMzZkZWQ0NGRlIn0.OPml73E5In4nAuN0LuT1Z-tMt0Xo5t77BX-Ml_YqSXMF1bWqKW4SXEsfVBwSsCKv8VVU_ay_XEyBqDI2JsiLPPPIIXY3VRburo-3vj9gJJzp7KCN7ypGL5kUTtXrNnI1Z4nXFAx-8T_U29zczc18c6jTPUvVq15sQ9NJebSMQzM';
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
+const xCaller='3cc7b6e8-3416-11e8-b467-0ed5f89f718b';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -247,7 +248,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
@@ -331,7 +333,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
         },
         body: JSON.stringify(groupPayload)
       }).then((res) => res.json()).then((json) => {
@@ -385,7 +388,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
         },
         body: JSON.stringify(renamePayLoad)
       }).then((res) => res.json()).then((json) => {
@@ -463,7 +467,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
         },
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((json) => {
@@ -476,7 +481,8 @@ class ComponentOwner extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Authorization': piToken
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
         },
         body: JSON.stringify(data)
       }).then((res) => res.text()).then((text) => {
