@@ -271,15 +271,16 @@ export default class Cards extends Component {
           window.placeholderIndex = placeholderIndex;
           console.log('here2');
           if (this.state.node != undefined) {
-            cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
+         //   cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
           }
           if (this.state.direction == 'left') {
             item.marginLeft = '20px';
             cardList.push(<div key="placeholder" className="item placeholder" />);
-            cardList.push(<div style={{ background: 'green', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
+            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
           } else {
             item.marginRight = '20px';
             cardList.push(<div key="placeholder" className="item placeholder2" />);
+            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
           }
         } else if (placeholderIndex > i) {
           isPlaceHold = true;
@@ -290,6 +291,7 @@ export default class Cards extends Component {
         window.placeholderIndex = placeholderIndex;
         item.marginRight = '20px';
         cardList.push(<div key="placeholder" className="item placeholder2" />);
+        cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
         righter = false;
       }
 
@@ -369,6 +371,7 @@ export default class Cards extends Component {
       if (isOver && canDrop && placeholderIndex === i) {
         if (this.state.direction == 'left') {
           cardList.push(<div key="placeholder" className="item placeholder" />);
+          cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
         } else {
           righter = true;
         }
@@ -395,6 +398,7 @@ export default class Cards extends Component {
       } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
+      cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
     }
 
 
@@ -407,6 +411,7 @@ export default class Cards extends Component {
       } else {
         cardList.push(<div key="placeholder" className="item placeholder2" />);
       }
+      cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
     }
 
 

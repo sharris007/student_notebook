@@ -70,7 +70,8 @@ function getItemX(props) {
 
   } else {
     color = "blue";
-    window.currentOffsetx = wiindow.cards[index].left;
+    window.currentOffsetx = window.cards[index].left;
+    window.height = '300';
     window.currentOffsety = currentOffset.y;
   debugger;
   }
