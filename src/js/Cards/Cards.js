@@ -11,7 +11,6 @@ var yDirection = "";
 var oldX = 0;
 var oldY = 0;
 var bodyElement = document.querySelector("body");
-bodyElement.addEventListener("mousemove", getMouseDirection, false);
 
 function getPlaceholderIndex(y, scrollY) {
   // shift placeholder if y position more than card height / 2
@@ -23,7 +22,6 @@ function getPlaceholderIndex(y, scrollY) {
     placeholderIndex = Math.floor((yPos - CARD_HEIGHT / 2) / (CARD_HEIGHT + CARD_MARGIN));
   }
   window.placeholderIndex = placeholderIndex;
-  // window.currentOffsetx = currentOffset.x;
   window.currentOffsety = yPos;
   return placeholderIndex;
 }
@@ -43,39 +41,16 @@ function getPlaceholderDimensions(id, direction) {
 }
 
 
-function getMouseDirection(e) {
-  //deal with the horizontal case
-  if (oldX < e.pageX) {
-    xDirection = "right";
-  } else {
-    xDirection = "left";
-  }
-
-  //deal with the vertical case
-  if (oldY < e.pageY) {
-    yDirection = "down";
-  } else {
-    yDirection = "up";
-  }
-
-  oldX = e.pageX;
-  oldY = e.pageY;
-
-  //  console.log("-----------> " + xDirection + " " + yDirection);
-}
 
 const specs = {
   drop(props, monitor, component) {
 
-
     document.getElementById(monitor.getItem().id).style.display = 'block';
-
 
     const newStyle = { 'display': 'none', 'left': '0px' };
 
     newStyle.display = 'block';
     newStyle.left = monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
-
 
     const { placeholderIndex } = component.state;
     const { direction } = component.state;
@@ -84,36 +59,49 @@ const specs = {
     const nextX = props.x;
     let nextY = placeholderIndex;
 
+    const droppedItem = monitor.getItem()
+
+    if (window.saveItem === droppedItem.id) {
+      return;
+    }
+
+
     if (lastY > nextY) { // move top
       nextY += 1;
     } else if (lastX !== nextX) { // insert into another list
       nextY += 1;
     }
     if (lastX === nextX && lastY === nextY) { // if position equel
-      alert('put in last position');
-      return;
+      nextY += 1;
+      //  alert('put in last position');
+      //  return;
     }
-
-
-    if (window.cardId === null) {
-      alert('MOVE null cardindex');
-    } else {
-      const index = _.findIndex(window.cards, function (o) { return o.id === window.cardId });
-      try {
-        alert('DROP' + window.cards[index].id);
-        props.saveGroup(window.cards[index].id, monitor.getItem().id);
-      } catch (e) {
-        alert('error' + window.cardId);
-      }
-    }
-
-
-    if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue" || component.props.item.item.color === "green") {
-      console.log('transform-drop', `${nextX}px, ${nextY}px)`);
-    }
-
-
+    console.log(window.saveItem);
+    debugger;
     props.moveCard(lastX, lastY, nextX, nextY);
+
+
+    // used for grouping over
+    // save for later
+
+    // if (window.cardId === null) {
+    //   alert('MOVE null cardindex');
+    // } else {
+    //   const index = _.findIndex(window.cards, function (o) { return o.id === window.cardId });
+    //   try {
+    //     alert('DROP' + window.cards[index].id);
+    //     props.saveGroup(window.cards[index].id, monitor.getItem().id);
+    //   } catch (e) {
+    //     alert('error' + window.cardId);
+    //   }
+    // }
+
+
+    // if (component.props.item.item.color === "orange" || component.props.item.item.color === "blue" || component.props.item.item.color === "green") {
+    //   console.log('transform-drop', `${nextX}px, ${nextY}px)`);
+    // }
+
+
   },
   hover(props, monitor, component) {
     const nextX = props.x;
@@ -128,16 +116,13 @@ const specs = {
 
     var getSourceClientOffset = monitor.getSourceClientOffset().x;
 
-    // defines where placeholder is rendered
-    let ress = monitor.getDropResult();
 
-    //  const draggedPosition = item.position;
     const hoverPosition = props.position;
     const newStyle = { 'display': 'none', 'left': '0px' };
     newStyle.display = 'block';
 
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
-    component.setState({  style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
+    component.setState({ style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     // document.getElementById(monitor.getItem().id).style.left
     //The current mouse position where the "on hover indicator" is expected
@@ -246,6 +231,7 @@ export default class Cards extends Component {
     let skip = false;
     let isPlaced = false;
     window.placeholderIndex = null;
+    window.saveItem = null;
 
     let filterList = _.cloneDeep(cards);
     filterList.forEach((item, i) => {
@@ -259,18 +245,19 @@ export default class Cards extends Component {
       item.scale = '1';
 
       let colorr = 'white';
-      
+
 
 
       if (isPlaced) {
         isPlaced = false;
         getPlaceholderDimensions(item.id, this.state.direction);
-
+        console.log(item.quote);
         if (this.state.direction == 'left') {
           item.marginLeft = '20px';
         } else {
           item.marginRight = '20px';
         }
+        window.saveItem = item.id;
         cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
       }
 
@@ -290,6 +277,8 @@ export default class Cards extends Component {
             item.marginRight = '20px';
             cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
           }
+          window.saveItem = item.id;
+
         } else if (placeholderIndex > i) { // wait to indent next note not the current one in this loop
           isPlaceHold = true;
         }
@@ -299,6 +288,8 @@ export default class Cards extends Component {
         isPlaceHold = false;
         window.placeholderIndex = placeholderIndex;
         getPlaceholderDimensions(item.id, this.state.direction);
+        window.saveItem = item.id;
+
         item.marginRight = '20px';
         cardList.push(<div key="placeholder" className="item placeholder2" />);
         cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
