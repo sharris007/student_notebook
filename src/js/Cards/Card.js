@@ -63,7 +63,7 @@ const questions = {
 };
 
 const group = {
-  backgroundColor: 'white',
+//  backgroundColor: 'white',
   height: '44px',
   color: 'black',
   textOverflow: 'ellipsis'
@@ -128,7 +128,7 @@ const title = {
   padding: '16px',
   paddingBottom: 0,
   whiteSpace: 'normal',
-  background: 'white'
+//  background: 'white'
 };
 const customtitle = {
   fontSize: '16px',
@@ -140,7 +140,7 @@ const customtitle = {
   padding: '16px',
   paddingBottom: 0,
   whiteSpace: 'normal',
-  background: 'white',
+//  background: 'white',
   fontFamily: 'Open Sans',
   fontStyle: 'normal',
   fontStretch: 'normal'
@@ -230,20 +230,7 @@ const line2 = {
   border: 'solid 1px #e9e9e9',
 };
 
-const Rtest = {
-  width: '30px',
-  height: '30px',
-  borderRadius: '50%',
-  background: 'white',
-  position: 'relative',
-  top: '-50px',
-  left: '-10px',
-  border: 'solid',
-  borderWidth: '2px',
-  borderColor: 'pink',
-  marginBottom: '-30px',
-  outline: 'none'
-};
+
 
 const optionListStyle = {
   fontFamily: 'Open Sans',
@@ -526,7 +513,7 @@ export default class Card extends Component {
   };
 
   render() {
-    const { style } = this.props;
+    const { style } = this.props; 
     // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
     const tagId = (item.tags && item.tags[0].tagId) ? item.tags[0].tagId : '';
@@ -535,8 +522,8 @@ export default class Card extends Component {
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     const opacity = this.props.item.color === 'blue' ? '1' : '1';
     const clearBackground = this.props.item.color === 'blue' ? 'transparent' : 'transparent';
-    const heightAdjust = this.props.item.color === 'blue' ? '260px' : 'auto';
-    const widthAdjust = this.props.item.color === 'blue' ? '315px' : 'auto';
+    const heightAdjust = this.props.item.color === 'blue' ? 'auto' : 'auto';
+    const widthAdjust = this.props.item.color === 'blue' ? 'auto' : 'auto';
     const overlap = this.props.item.color;
 
     this.props.item.color === 'blue'
@@ -561,6 +548,7 @@ export default class Card extends Component {
         labelStyle={{ fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform: 'capitalize', verticalAlign: 'initial' }}
       />
     ];
+    console.log('cardd');
 
     return (
 
@@ -569,7 +557,9 @@ export default class Card extends Component {
         // style={item.tagId ? {  background: `${this.props.item.color}`, boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}`, marginLeft: `${this.props.item.marginLeft}` }}
     //      style={tagId ? { background: `${this.props.item.color}`, boxShadow: 'none', marginLeft: `${this.props.item.marginLeft}` } : { background: `${this.props.item.color}`, marginLeft: `${this.props.item.marginLeft}` }}
         
-        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}` }}
+  // old      style={item.tagId ? {  background: 'green', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}`, transform: `scale(${item.scale})` } : { background: 'violet', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}`, transform: `scale(${item.scale})` }}
+        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}`, transform: `scale(${item.scale})` } : { background: 'white', border: 'none', cursor: 'move', opacity: `${opacity}`,  transform: `scale(${item.scale})` }}
+     //   style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}` }}
         className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
         data-tagId={tagId ? tagId : null} id={style ? item.id : null}
         ref="hoops"
@@ -745,15 +735,15 @@ export default class Card extends Component {
             {this.state.selected ? <img src={selectedPng} /> : <img src={selectPng} />}</div>
           : null}
 
-        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
+        {item.cardFormat === 'note'  ? (
           <div style={item.noteType === 'CUSTOM_NOTE' ? customtitle : title}>{item.title}</div>
         ) : null}
 
-        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
+        {item.cardFormat === 'add mode' ? (
           <div style={{ paddingTop: '115px' }} />
         ) : null}
 
-        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
+        {item.cardFormat === 'add mode'  ? (
           <div style={{ 'textAlign': 'center' }}>
             <button
               onClick={this.handleAddCard}
@@ -764,15 +754,15 @@ export default class Card extends Component {
           </div>
         ) : null}
 
-        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
+        {item.cardFormat === 'add mode' ? (
           <div style={addNote}>Add Note</div>
         ) : null}
 
-        {item.cardFormat === 'add mode' && this.props.item.color != 'blue' ? (
+        {item.cardFormat === 'add mode'  ? (
           <div style={{ paddingBottom: '92px' }} />
         ) : null}
 
-        {item.cardFormat !== 'note' && this.props.item.color != 'blue' ? (
+        {item.cardFormat !== 'note' ? (
           <div className="item-container">
             <div className="item-content">
               <div id="create-card" className="Mask">
@@ -790,7 +780,7 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {item.cardFormat !== 'add mode' && item.pageId && this.props.item.color != 'blue' ? (
+                {item.cardFormat !== 'add mode' && item.pageId ? (
                   <input
                     style={titleInputBoxDisabled}
                     ref={(el) => {
@@ -802,9 +792,9 @@ export default class Card extends Component {
                   />
                 ) : null}
 
-                {this.props.item.color != 'blue' ? this.state.titleInput : null}
+                {this.state.titleInput}
 
-                {item.cardFormat !== 'add mode' && this.props.item.color != 'blue' ? (
+                {item.cardFormat !== 'add mode'  ? (
                   <textarea
                     rows="10"
                     cols="50"
@@ -840,7 +830,7 @@ export default class Card extends Component {
                 </div>
               </div> : null}
 
-              {item.cardFormat === 'note' && item.pageId && this.props.item.color != 'blue' ?
+              {item.cardFormat === 'note' && item.pageId  ?
                 <div style={line} /> : null}
 
               {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0', minHeight: (item.noteType === 'CUSTOM_NOTE') ? "94.4px" : null }}>
@@ -857,8 +847,8 @@ export default class Card extends Component {
             </div>
           )}
 
-        {item.cardFormat === 'note' && this.props.item.color != 'blue' ? (
-          <div className="item-perfomers" >
+        {item.cardFormat === 'note'  ? (
+          <div className="item-perfomers" style={{background: 'transparent'}}>
           </div>
         ) : (
             <div className="item-perfomers" style={(item.cardFormat === 'add mode') ? padding0 : null}>
@@ -907,7 +897,7 @@ export default class Card extends Component {
 
 
         {tagId ?
-          <div style={{ background: 'white', marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
+          <div style={{  marginBottom: '0px', marginLeft: '1px', borderBottomLeftRadius: '.5em', zIndex: '1000', width: '100%', position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset', borderRadius: '4px' }}>
             <div>
               <span className="verticalAlign" style={{ background: `${this.noteTypebackgroundColor(item.noteType)}`, width: '11px', height: '60px', borderBottomLeftRadius: '.3em', marginLeft: '-1px', borderBottomLeftRadius: '4px' }}></span>
               <table className="verticalAlign footerTable">
@@ -947,7 +937,7 @@ export default class Card extends Component {
         {tagId ?
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset' }}>
+            <div style={{ display: `${i === 0 ? 'none' : null}`, marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset' }}>
 
               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '20px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px' }}>
 

@@ -70,7 +70,13 @@ function getItemX(props) {
 
   } else {
     color = "blue";
+    window.currentOffsetx = wiindow.cards[index].left;
+    window.currentOffsety = currentOffset.y;
+  debugger;
   }
+
+ 
+
   return color;
 }
 
