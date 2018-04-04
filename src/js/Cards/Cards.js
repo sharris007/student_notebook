@@ -29,25 +29,17 @@ function getPlaceholderIndex(y, scrollY) {
 }
 
 function getPlaceholderDimensions(id, direction) {
-  debugger;
   let item = document.getElementById(id);
 
-
   if (item) {
-    // shift placeholder if y position more than card height / 2
-    // const index = _.findIndex(window.cards, function (o) { return o.id === id });
-    //  if (index != -1) {
     if (direction === 'left') {
       window.lefter = item.offsetLeft - 20;
     } else {
       window.lefter = item.offsetLeft + 270;
     }
-    //   window.topper = window.cards[index].top;
-    //  window.height = window.cards[index].height;
     window.topper = item.offsetTop;
     window.height = item.offsetHeight;
   }
-  // }
 }
 
 
@@ -124,11 +116,6 @@ const specs = {
     props.moveCard(lastX, lastY, nextX, nextY);
   },
   hover(props, monitor, component) {
-    //      console.log(component);
-    //  const { placeholderIndex } = component.state;
-    // let nextY = placeholderIndex;
-
-    //   document.getElementById(monitor.getItem().id).style.background = 'purple';
     const nextX = props.x;
     const lastY = monitor.getItem().y;
     const lastX = monitor.getItem().x;
@@ -139,33 +126,18 @@ const specs = {
       nextY += 1;
     }
 
-    let xxxx = window.innerWidth - monitor.getClientOffset().x;
-    var node = findDOMNode(component);
     var getSourceClientOffset = monitor.getSourceClientOffset().x;
 
     // defines where placeholder is rendered
     let ress = monitor.getDropResult();
-    // component.setState({ nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     //  const draggedPosition = item.position;
     const hoverPosition = props.position;
-
     const newStyle = { 'display': 'none', 'left': '0px' };
-
     newStyle.display = 'block';
 
-    let upDown2 = monitor.getClientOffset().y;
-    let upDown3 = monitor.getInitialSourceClientOffset().y;
-    let upDown4 = monitor.getInitialClientOffset().y;
-    let upDown5 = monitor.getSourceClientOffset().y;
-    let upDown = monitor.getDifferenceFromInitialOffset().y;
-    let upDown6 = upDown2 + upDown;
-    let upDown7 = upDown6 - upDown4;
-    let leftright = monitor.getDifferenceFromInitialOffset().x;
-
-
     newStyle.left = window.innerWidth - monitor.getClientOffset().x - findDOMNode(component).getBoundingClientRect().left + 'px';
-    component.setState({ node: node, style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
+    component.setState({  style: newStyle, nextX: nextX, nextY: nextY, direction: (monitor.getDifferenceFromInitialOffset().x <= 0) ? 'left' : 'right', positioning: getSourceClientOffset });
 
     // document.getElementById(monitor.getItem().id).style.left
     //The current mouse position where the "on hover indicator" is expected
@@ -287,9 +259,7 @@ export default class Cards extends Component {
       item.scale = '1';
 
       let colorr = 'white';
-      if (this.state.node != undefined) {
-        //    cardList.push(<div style={{ background: 'red', position: 'absolute', visibility: 'visible', top: `${window.currentOffsety}`, left: `${window.currentOffsetx}`, zIindex: '200', height: '300px' }} className="item placeholder3" />);
-      }
+      
 
 
       if (isPlaced) {
@@ -348,7 +318,6 @@ export default class Cards extends Component {
             marginLeft: item.marginLeft,
             marginRight: item.marginRight,
             height: `${height}`,
-            //        transform: `scale(${item.scale})`,
           }} onScroll={this.handleScroll}>
 
             <Card x={x} y={i}
