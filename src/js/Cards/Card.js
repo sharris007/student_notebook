@@ -10,6 +10,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import SvgIcon from 'material-ui/SvgIcon';
 
 const deletePng = require('../../assets/images/ic-trash.png');
 const gotoPng = require('../../assets/images/goto-arrow-ico.png');
@@ -501,25 +502,63 @@ export default class Card extends Component {
     const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
     //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
-
+    const DialogStyle = {
+      dialogContainerstyl: {
+        width: '362px',
+        backgroundColor: '#fff',
+        borderRadius: '4px'
+      },
+      cancelIcon: {
+        color: '#8d8d8d',
+        position: 'absolute',
+        top: '19px',
+        right: '19px',
+        height: '18.7px',
+        width: '18px',
+        cursor: 'pointer'
+      },
+      cancelbtnstyl: {
+        color: '#74797b'
+      },
+      deleteBtnstyl: {
+        borderRadius: 2,
+        backgroundColor: '#34b6b4'
+      }
+    };
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
+        primary
+        style={DialogStyle.cancelbtnstyl}
+        className="cancelBtn"
         onClick={this.handleClose}
-        style={{width: '69px', height: '36px', borderRadius: '2px', backgroundColor: '#e9e9e9', border: 'solid 1px #c7c7c7', marginRight: '16px'}}
-        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#252525', textTransform:'capitalize', verticalAlign:'initial'}}
       />,
       <FlatButton
         label="Delete"
-        primary={true}
+        primary
+        autoFocus
         ref={(node) => this.deleteButton = node}
-        keyboardFocused={true}
         onClick={this.handleDeleteCard}
-        style={{  width: '68px', height: '36px', borderRadius: '2px', backgroundColor: '#047a9c'}}
-        labelStyle={{  fontFamily: 'Open Sans', fontSize: '14px', fontWeight: 600, fontStyle: 'normal', fontStretch: 'normal', lineHeight: 1.29, letterSpacing: 'normal', textAlign: 'center', color: '#ffffff', textTransform:'capitalize', verticalAlign:'initial'}}
+        style={DialogStyle.deleteBtnstyl}
+        className="deleteBtn"
       />
     ];
+    const CancelIcon = props => (
+      <SvgIcon {...props}>
+        <path
+          d="M712.993036,23.3253012 L720.736289,15.2808193 C721.026024,14.9878313 721.026024,14.5128916 720.735855,
+          14.2199036 C720.445687,13.9266988 719.975518,13.9266988 719.685349,14.2199036 L711.976795,
+          22.005012 L704.268458,14.2199036 C703.978072,13.9266988 703.50812,13.9266988 703.217735,
+          14.2199036 C702.927566,14.5128916 702.927566,14.9878313 703.217518,15.2808193 L710.960554,
+          23.3253012 L703.217735,31.3697831 C702.927566,31.6627711 702.927566,32.1377108 703.217735,
+          32.4306988 C703.507687,32.7234699 703.978072,32.7239036 704.268458,32.4306988 L711.976795,
+          24.6455904 L719.685349,32.4306988 C719.975518,32.7239036 720.44612,32.7234699 720.735855,
+          32.4306988 C721.026024,32.1377108 721.026024,31.6627711 720.735855,31.3697831 L712.993036,23.3253012 Z"
+          id="ic_cancel"
+          fill="#8d8d8d"
+        />
+      </SvgIcon>
+    );
 
     return (
 
@@ -531,38 +570,21 @@ export default class Card extends Component {
         data-tagId= {tagId ? tagId: null} id={style ? item.id : null}
       >
         <Dialog
-          title="Delete this note?"
+          title="Confirm Delete?"
           actions={actions}
           modal={false}
           open={this.state.openModal}
           onRequestClose={this.handleClose}
-          contentStyle={{  width: '600px', height: '214px'}}
-          titleStyle={{
-            padding:'40px 40px 20px',
-            fontFamily: 'Open Sans', 
-            fontSize: '24px', 
-            fontWeight: 'normal',
-            fontStyle: 'normal',
-            fontStretch: 'normal',
-            lineHeight: 1.17,
-            letterSpacing: 'normal',
-            textAlign: 'left',
-            color: '#252525'
-          }}
-          bodyStyle={{
-            padding:'0px 40px 24px',
-            fontFamily: 'Open Sans',
-            fontSize: '14px',
-            fontWeight: 'normal',
-            fontStyle: 'normal',
-            fontStretch: 'normal',
-            lineHeight: '1.57',
-            letterSpacing: 'normal',
-            textAlign: 'left',
-            color: '#252525'
-          }}
-          actionsContainerStyle={{paddingBottom:'40px', paddingRight:'40px'}}
+          contentStyle={DialogStyle.dialogContainerstyl}
         >
+          <CancelIcon
+            tabIndex="0"
+            onClick={this.handleClose}
+            viewBox="703 14 18 18.7"
+            style={DialogStyle.cancelIcon}
+            aria-label={'Close'}
+            className="handleCloseIcon"
+          />
           This action cannot be undone.
         </Dialog>
 
@@ -786,7 +808,7 @@ export default class Card extends Component {
               {item.cardFormat === 'note' && item.pageId ?
                 <div style={line} /> : null}
 
-              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0', minHeight: (item.noteType === 'CUSTOM_NOTE') ? "94.4px" : null }}>
+              {item.cardFormat === 'note' && !item.pageId ? <div className="item-container" style={{ paddingTop: '11.1px', paddingBottom: '0', minHeight: (item.noteType === 'CUSTOM_NOTE') ? '94.4px' : null }}>
                 <div className="item-content" style={{ paddingRight: '8px' }}>
                   <span style={styleContent2}><Linkify properties={{ target: '_blank' }}>{item.content}</Linkify></span>
                 </div>

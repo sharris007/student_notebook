@@ -183,3 +183,30 @@
     height: 300px !important;
  }
 
+/*Warning popup styles*/
+
+button.deleteBtn {
+  width: 140px;
+}
+button.deleteBtn div{
+  background-color: rgb(52, 182, 180) !important;
+  color: #fff;
+  height: 36px;
+  }
+button.cancelBtn div span,button.deleteBtn div span{
+  text-transform: none !important;
+  font-weight: normal !important;
+  font-size: 18px !important;
+  font-family: Open Sans !important;
+}
+button.deleteBtn div span{
+  padding: 0 !important
+}
+.cancelBtn div{
+  color: #74797b;
+  background-color: #fff !important;
+}
+.cancelBtn:focus, .deleteBtn:focus{
+  outline: 1px dotted #212121 !important;
+  outline: 5px auto -webkit-focus-ring-color !important;
+}
