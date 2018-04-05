@@ -909,7 +909,7 @@ export default class Card extends Component {
           : null}
 
 
-        {tagId ?
+        {tagId && item.notes ?
           item.notes.map((note, i) => (
             //  item.notes.splice(1).map((note, i) => (
             <div style={{ display: `${i === 0 ? 'none' : null}`, background: 'white', marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) -1px -3px 12px -5px  inset' }}>
