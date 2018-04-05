@@ -259,7 +259,7 @@ export default class Board extends Component {
       return true;
     });
     return (
-      <div>
+      <div className="notesContainer">
         <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} tagAttributes={this.props.tagAttributes} lastUsedFilters={this.props.lastUsedFilters} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
         <main>
           <div style={{ height: '100%' }}>
