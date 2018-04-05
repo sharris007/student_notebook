@@ -255,7 +255,7 @@ export default class Cards extends Component {
           item.marginRight = '20px';
         }
         window.saveItem = item.id;
-        cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
+        cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: window.topper, left: window.lefter, zIndex: 200, height: window.height }} className="item placeholder3" />);
       }
 
 
@@ -269,10 +269,10 @@ export default class Cards extends Component {
 
           if (this.state.direction == 'left') {
             item.marginLeft = '20px';
-            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
+            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: window.topper, left: window.lefter, zIndex: 200, height: window.height }} className="item placeholder3" />);
           } else {
             item.marginRight = '20px';
-            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
+            cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: window.topper, left: window.lefter, zIndex: '200', height: window.height }} className="item placeholder3" />);
           }
           window.saveItem = item.id;
 
@@ -288,8 +288,7 @@ export default class Cards extends Component {
         window.saveItem = item.id;
 
         item.marginRight = '20px';
-    //    cardList.push(<div key="placeholder" className="item placeholder2" />);
-        cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: `${window.topper}`, left: `${window.lefter}`, zIindex: '200', height: `${window.height}` }} className="item placeholder3" />);
+        cardList.push(<div style={{ background: '#047a9c', position: 'absolute', visibility: 'visible', top: window.topper, left: window.lefter, zIndex: 200, height: window.height }} className="item placeholder3" />);
         righter = false;
       }
 
@@ -300,7 +299,7 @@ export default class Cards extends Component {
 
         cardList.push(
 
-          <div style={{
+          <div key={item.keyId} style={{
             backgroundColor: colorr,
             cursor: 'move',
             marginLeft: item.marginLeft,
@@ -328,7 +327,6 @@ export default class Cards extends Component {
 
       if (isOver && canDrop && placeholderIndex === i) {
         if (this.state.direction == 'left') {
-   //       cardList.push(<div key="placeholder" className="item placeholder" />);
           isPlaced = true;
         } else {
           righter = true;
@@ -336,17 +334,6 @@ export default class Cards extends Component {
       }
     });
 
-    // if placeholder index is greater than array.length, display placeholder as last
-    if (isPlaceHold > 999) {
-
-      window.placeholderIndex = placeholderIndex;
-      if (this.state.direction == 'left') {
-  //      cardList.push(<div key="placeholder" className="item placeholder" />);
-      } else {
-   //     cardList.push(<div key="placeholder" className="item placeholder2" />);
-      }
-      isPlaced = true;
-    }
 
 
 

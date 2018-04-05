@@ -14,7 +14,7 @@ import NoteBook from './NoteBook';
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
 const xCaller='3cc7b6e8-3416-11e8-b467-0ed5f89f718b';
-const piToken = localStorage.secureToken;
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyOTY0MzQ4LCJpYXQiOjE1MjI5NjI1NDgsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiOTBlYTY4MzMtNDBjYS00Y2RhLTg2MDAtMzZjY2FhNjk3NWIxIn0.jVyKabYaarIsO_FsDYVF6p1cV8RDEb1q0AosAGRnxB7IMoJlOOmT27wNzJCRpwFdNziSThWVbkK0ACW2lE4bmKIDCePYi4maOiDoe5XsKGvlxNLnmdlj7SC4tnLzlkfKZ9RmNdMI6KxdHWrMIaatWQieS88IZJGgcY4wxhWSEyA';
 
 function refreshNotesList(originalNotesList, tagObject) {
   //  const tagName = state.expandedTagName;
@@ -533,10 +533,10 @@ class ComponentOwner extends React.Component {
   //
 
   render() {
-    const { notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId, lastUsedFilters } = this.state;
+    const { originalNotesList, notesList, groupModeFlag, toolbarMode, groupExpanded, expandedTagName, tagAttributes, expandedTagId, lastUsedFilters } = this.state;
     return (
       <div>
-        <NoteBook notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} lastUsedFilters={lastUsedFilters} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
+        <NoteBook originalNotesList={originalNotesList} notesList={notesList} groupExpanded={groupExpanded} expandedTagName={expandedTagName} tagAttributes={tagAttributes} lastUsedFilters={lastUsedFilters} expandedTagId={expandedTagId} handleBack={this.handleBack} toolbarMode={toolbarMode} tocData={this.props.tocData} groupModeFlag={groupModeFlag} callback={this.callback} handleGroupClick={this.handleGroupClick} coloums={4} />
       </div>
     );
   };

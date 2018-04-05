@@ -412,11 +412,11 @@ export default class NoteBookHeader extends Component {
 
 
               {groupModeToggleFlag === false ? <div>
-                {this.state.groupNoteShow ? <table>
-                  <tr>
+                {this.state.groupNoteShow ? <table><tbody><tr>
                     <td style={{ paddingTop: '5px' }}><img src={layerPng} height='19px' width='18px' onClick={() => this.handleGroupNotesButton()} />
                     </td>
-                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></table> : ''}</div>
+                    <td ><a onClick={() => this.handleGroupNotesButton()} style={{ fontSize: '14px', color: '#6a7070', fontWeight: '600', paddingLeft: '6px' }}>Group notes</a></td></tr></tbody>
+                  </table> : ''}</div>
                 : null}
               {groupModeToggleFlag === true ? <RaisedButton label="Cancel" labelStyle={{ textTransform: 'capitalize', fontWeight: '600', color: '#252525', fontFamily:'Open Sans', fontSize:'14px', lineHheight: '1.29' }} style={{ boxShadow: 'none' }} buttonStyle={buttonCancelStyle} onClick={() => this.handleCancelButton()} />
                 : null}

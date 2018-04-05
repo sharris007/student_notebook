@@ -2,7 +2,7 @@ import NoteBookComponent from '../main'; // to demo direct API usage
 // import { notes } from './notesDummy';
 import _ from 'lodash';
 
-const piToken = localStorage.secureToken;
+const piToken = 'eyJraWQiOiJrMjAyOTE3MzM4IiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJmZmZmZmZmZjU3YTlmODE0ZTRiMDBkMGEyMGJmNjAyOSIsImhjYyI6IlVTIiwidHlwZSI6ImF0IiwiZXhwIjoxNTIyOTY0MzQ4LCJpYXQiOjE1MjI5NjI1NDgsImNsaWVudF9pZCI6IkkyUkpkN2VPNUY5VDZVOVRnVks3Vnh0QWd3NDh1MHBVIiwic2Vzc2lkIjoiOTBlYTY4MzMtNDBjYS00Y2RhLTg2MDAtMzZjY2FhNjk3NWIxIn0.jVyKabYaarIsO_FsDYVF6p1cV8RDEb1q0AosAGRnxB7IMoJlOOmT27wNzJCRpwFdNziSThWVbkK0ACW2lE4bmKIDCePYi4maOiDoe5XsKGvlxNLnmdlj7SC4tnLzlkfKZ9RmNdMI6KxdHWrMIaatWQieS88IZJGgcY4wxhWSEyA';
 const xCaller='3cc7b6e8-3416-11e8-b467-0ed5f89f718b';
 const contextId = '5a855d06e4b05b48d72dedb9' ;
 const identityId = 'ffffffff5a0fbf14e4b0b67fcf25d616';
@@ -98,11 +98,8 @@ function getNotes() {
         groupFalg = true;
       }
     });
-    console.log(mapNotesObj);
-    // }
     // add group to beginning of notes list
     const toolbarModeProp = new toolbarMode();
-    // if (!groupFalg) {
       const getAllTagName = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
         method: 'GET',
         headers: {

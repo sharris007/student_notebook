@@ -125,7 +125,7 @@ const title = {
   color: '#252525',
   fontWeight: '300',
   lineHeight: '1.5',
-  padding: '16px',
+  padding: '8px',
   paddingBottom: 0,
   whiteSpace: 'normal',
 //  background: 'white'
@@ -137,10 +137,9 @@ const customtitle = {
   color: '#252525',
   fontWeight: '600',
   lineHeight: '1.38',
-  padding: '16px',
+  padding: '8px',
   paddingBottom: 0,
   whiteSpace: 'normal',
-//  background: 'white',
   fontFamily: 'Open Sans',
   fontStyle: 'normal',
   fontStretch: 'normal'
@@ -327,7 +326,6 @@ export default class Card extends Component {
 
   componentDidMount = () => {
     var node = ReactDOM.findDOMNode(this.refs.hoops);
-    //  debugger;
     if (!window.cards) {
       window.cards = [];
     }
@@ -342,7 +340,6 @@ export default class Card extends Component {
         height: node.offsetHeight,
         top: node.offsetTop
       });
-      //    this.setState({ left: ReactDOM.findDOMNode(this.refs.hoop).getBoundingClientRect().left });
       this.setState({ left: node.offsetLeft, right: node.offsetRight, top: node.offsetTop });
     }
   }
@@ -514,11 +511,9 @@ export default class Card extends Component {
 
   render() {
     const { style } = this.props; 
-    // const { item } = this.state;
     const item = Object.assign({}, this.state.item);
     const tagId = (item.tags && item.tags[0].tagId) ? item.tags[0].tagId : '';
     const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : '';
-    //const tagName = (item.tags && item.tags[0].tagName) ? item.tags[0].tagName : 'Test Tag 123456';
     const disablehighLightText = item.pageId ? { 'disabled': 'disabled' } : {};
     const DialogStyle = {
       dialogContainerstyl: {
@@ -580,14 +575,8 @@ export default class Card extends Component {
 
     return (
 
-      <div
-        //    style={{ background: 'white' }}
-        // style={item.tagId ? {  background: `${this.props.item.color}`, boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}`, marginLeft: `${this.props.item.marginLeft}` }}
-    //      style={tagId ? { background: `${this.props.item.color}`, boxShadow: 'none', marginLeft: `${this.props.item.marginLeft}` } : { background: `${this.props.item.color}`, marginLeft: `${this.props.item.marginLeft}` }}
-        
-  // old      style={item.tagId ? {  background: 'green', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}`, transform: `scale(${item.scale})` } : { background: 'violet', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}`, transform: `scale(${item.scale})` }}
-        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}`, transform: `scale(${item.scale})` } : { background: 'white', border: 'none', cursor: 'move', opacity: `${opacity}`,  transform: `scale(${item.scale})` }}
-     //   style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer', opacity: `${opacity}` } : { background: 'transparent', border: 'none', cursor: 'move', opacity: `${opacity}`, height: `${heightAdjust}`, width: `${widthAdjust}` }}
+      <div 
+        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer',  transform: `scale(${item.scale})` } : { background: 'white', border: 'none', cursor: 'move',   transform: `scale(${item.scale})` }}
         className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
         data-tagId={tagId ? tagId : null} id={style ? item.id : null}
         ref="hoops"
@@ -947,8 +936,7 @@ export default class Card extends Component {
 
         {tagId && item.notes ?
           item.notes.map((note, i) => (
-            //  item.notes.splice(1).map((note, i) => (
-            <div style={{ display: `${i === 0 ? 'none' : null}`, marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) 0px -3px 12px -5px  inset' }}>
+            <div key={i} style={{ display: `${i === 0 ? 'none' : null}`, marginBottom: '0px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px', width: '100%', zIndex: `${1000 - (i + 1)}`, position: 'relative', boxShadow: 'rgb(153, 145, 153) 0px -3px 12px -5px  inset' }}>
 
               <div style={{ background: `${this.noteTypebackgroundColor(note.noteType)}`, width: '11px', height: '20px', borderBottomLeftRadius: '4px', borderBottomRightRadius: '4px' }}>
 

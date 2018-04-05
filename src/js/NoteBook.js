@@ -277,7 +277,7 @@ export default class Board extends Component {
             <CustomDragLayer snapToGrid={false}  />
             {filteredList.map((item, i) => (
               <CardsContainer
-                key={item.keyId}
+                key={item.id}
                 id={item.id}
                 item={item}
                 moveCard={this.moveCard}
