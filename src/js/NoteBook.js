@@ -88,7 +88,7 @@ export default class Board extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded });
+    this.setState({ groupModeFlag: nextProps.groupModeFlag, groupExpanded: nextProps.groupExpanded, updateNoteList:nextProps.notesList });
     this.createLists(nextProps);
   }
 
