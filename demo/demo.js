@@ -142,7 +142,7 @@ function getNotes() {
               'title': 'All Labels',
               'labelName': 'All Chapters'
             };
-            (this.props.tocData.items).unshift(labelAllObj);
+            tocData.items.unshift(labelAllObj);
           }
           new NoteBookComponent({
             elementId: 'demo',
