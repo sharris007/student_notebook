@@ -142,15 +142,7 @@ export default class NoteBookHeader extends Component {
       groupModeDrop: false,
       groupNoteShow : true
     };
-
-    const labelAllObj = {
-      'id': 'All',
-      'title': 'All Labels',
-      'labelName': 'All Chapters'
-    };
-    (this.props.tocData.items).unshift(labelAllObj);
-
-
+  
   }
 
   componentDidMount = () => {

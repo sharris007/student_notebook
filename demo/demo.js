@@ -136,6 +136,14 @@ function getNotes() {
           }
         }).then((res) => res.json()).then((json) => {
           tocData = json.content;
+          if(tocData && tocData.items){
+            const labelAllObj = {
+              'id': 'All',
+              'title': 'All Labels',
+              'labelName': 'All Chapters'
+            };
+            (this.props.tocData.items).unshift(labelAllObj);
+          }
           new NoteBookComponent({
             elementId: 'demo',
             locale: 'en-us',
@@ -153,32 +161,6 @@ function getNotes() {
 
         });
       });
-    // } else {
-    //   fetch(`https://etext-qa-stg.pearson.com/api/nextext-api/v1/api/nextext/custom/toc/contextId/${contextId}?provider=${provider}`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //       'X-Authorization': piToken
-    //     }
-    //   }).then((res) => res.json()).then((json) => {
-    //     tocData = json.content;
-    //     new NoteBookComponent({
-    //       elementId: 'demo',
-    //       locale: 'en-us',
-    //       callback: callback,
-    //       notesList: mapNotesObj,
-    //       originalNotesList: originalNotesList,
-    //       tocData: tocData,
-    //       tagAttributes: [],
-    //       toolbarMode: toolbarModeProp,
-    //       handleGroupClick: (tagId, tagName) => {
-    //       }
-    //       //  responsiveColumns
-    //     });
-
-    //   });
-    // }
   });
 }
 
