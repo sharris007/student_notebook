@@ -161,7 +161,7 @@ export default class Board extends Component {
     this.createLists(nextLists, true);
     nextLists.notesList.shift();
     this.setState({updateNoteList : nextLists.notesList});
-    this.props.callback('MOVECARD', moveCardObj);
+    this.props.callback('MOVECARD', moveCardObj,nextLists.notesList);
   }
 
   moveList(listId, nextX) {

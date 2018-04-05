@@ -93,10 +93,10 @@ class ComponentOwner extends React.Component {
     };
 
   }
-  callback = (msg, data) => {
-    const notesList = [...this.state.notesList];
+  callback = (msg, data,movedNoteList=null) => {
+    let notesList = [...this.state.notesList];
     const originalNotesList = [...this.state.originalNotesList];
-    const tagObject = [...this.state.tagAttributes];
+    const tagObject = [...this.state.tagAttributes];  
     if (msg === 'ADD') {
       this.props.callback(msg, data);
     } else if (msg === 'SAVE') {
@@ -448,6 +448,10 @@ class ComponentOwner extends React.Component {
 
 
     } else if (msg === "MOVECARD") {
+       notesList = movedNoteList;
+       this.setState({
+        notesList: notesList       
+      });
       const renameGroup = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX`, {
         method: 'PUT',
         headers: {
