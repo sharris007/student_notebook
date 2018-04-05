@@ -22,6 +22,7 @@ export default class Board extends Component {
   constructor(props) {
     super(props);
     this.moveCard = this.moveCard.bind(this);
+    this.saveGroup = this.saveGroup.bind(this);
     this.moveList = this.moveList.bind(this);
     this.findList = this.findList.bind(this);
     this.scrollRight = this.scrollRight.bind(this);
@@ -122,6 +123,16 @@ export default class Board extends Component {
 
   stopScrolling() {
     this.setState({ isScrolling: false }, clearInterval(this.scrollInterval));
+  }
+
+  saveGroup(id1, id2) {
+    alert('save group');
+  //  const index = _.findIndex(this.state.notesList, function (o) { return o.id === id1 });
+    alert(this.state.notesList[index].quote);
+  //  index = _.findIndex(this.state.notesList, function (o) { return o.id === id2 });
+    alert(this.state.notesList[index].quote);
+   // const nextLists = Object.assign({ ...this.props }, { notesList: new Array(this.state.notesList.length) });
+
   }
 
   moveCard(lastX, lastY, nextX, nextY) {
@@ -263,13 +274,14 @@ export default class Board extends Component {
         <NoteBookHeader toolbarMode={this.props.toolbarMode} groupExpanded={this.props.groupExpanded} expandedTagName={this.props.expandedTagName} expandedTagId={this.props.expandedTagId} tagAttributes={this.props.tagAttributes} lastUsedFilters={this.props.lastUsedFilters} handleBack={this.props.handleBack} getFilterArr={this.getFilterArr} callback={this.props.callback} tocData={this.props.tocData} notesList={this.props.notesList}></NoteBookHeader>
         <main>
           <div style={{ height: '100%' }}>
-            <CustomDragLayer snapToGrid={false} />
+            <CustomDragLayer snapToGrid={false}  />
             {filteredList.map((item, i) => (
               <CardsContainer
                 key={item.keyId}
                 id={item.id}
                 item={item}
                 moveCard={this.moveCard}
+                saveGroup={this.saveGroup}
                 moveList={this.moveList}
                 startScrolling={this.startScrolling}
                 stopScrolling={this.stopScrolling}

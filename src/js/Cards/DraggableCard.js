@@ -22,20 +22,29 @@ const cardSource = {
     return { id, title, item, x, y, clientWidth, clientHeight };
   },
   endDrag(props, monitor) {
-    try  {
+
+    const item = monitor.getItem()
+    const dropResult = monitor.getDropResult()
+
+
+
+    try {
       if (monitor.getItem().id) {
         document.getElementById(monitor.getItem().id).style.opacity = 1;
       }
       props.stopScrolling();
-    }catch (e) {
+    } catch (e) {
+      console.log(e);
     }
-    
+
   },
   isDragging(props, monitor) {
+
     const isDragging = props.item && props.item.id === monitor.getItem().id;
     return isDragging;
   },
   canDrag(props) {
+
     return props.canDrag;
   }
 };
@@ -92,6 +101,7 @@ export default class CardComponent extends Component {
   }
 
   componentDidMount() {
+
     this.props.connectDragPreview(getEmptyImage(), {
       captureDraggingState: true
     });
@@ -103,17 +113,19 @@ export default class CardComponent extends Component {
   }
 
   render() {
+    //  const { clientWidth, clientHeight } = findDOMNode(component);
     const { isDragging, connectDragSource, item, cancelAddCard, saveCard, addCard, ungroupNote, handleGroupClick } = this.props;
     return connectDragSource(
-      <div>
-        <Card 
-            style={getStyles(isDragging)} 
-            item={item} cancelAddCard={cancelAddCard} 
-            saveCard={saveCard} 
-            addCard={addCard} 
-            groupModeFlag={this.state.groupModeFlag}
-            groupExpanded={this.state.groupExpanded}
-            handleGroupClick={handleGroupClick}
+      <div style={{ cursor: 'move' }}>
+        <Card
+          y={this.props.y}
+          style={getStyles(isDragging)}
+          item={item} cancelAddCard={cancelAddCard}
+          saveCard={saveCard}
+          addCard={addCard}
+          groupModeFlag={this.state.groupModeFlag}
+          groupExpanded={this.state.groupExpanded}
+          handleGroupClick={handleGroupClick}
         />
       </div>
     );

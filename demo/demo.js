@@ -132,7 +132,8 @@ function getNotes() {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-Authorization': piToken
+            'X-Authorization': piToken,
+             'X-Caller':xCaller
           }
         }).then((res) => res.json()).then((json) => {
           tocData = json.content;

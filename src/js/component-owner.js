@@ -478,6 +478,20 @@ class ComponentOwner extends React.Component {
         console.log("Filter RES", text);
       });
 
+    } else if (msg === "LASTUSEDFILTER") {
+      const filterList = fetch(`https://spectrum-qa.pearsoned.com/api/v1/context/${contextId}/identities/${identityId}/notesX/contextLog`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Authorization': piToken,
+           'X-Caller':xCaller
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.text()).then((text) => {
+        console.log("Filter RES", text);
+      });
+
     }
   }
 

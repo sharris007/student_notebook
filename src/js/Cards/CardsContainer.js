@@ -10,7 +10,11 @@ const listSource = {
       x: props.x
     };
   },
-  endDrag(props) {
+  endDrag(props, monitor) {
+    const item = monitor.getItem()
+		const dropResult = monitor.getDropResult()
+
+	
     props.stopScrolling();
   },
   canDrag(props) {
@@ -58,6 +62,7 @@ export default class CardsContainer extends Component {
     item: PropTypes.object,
     x: PropTypes.number,
     moveCard: PropTypes.func.isRequired,
+    saveGroup: PropTypes.func.isRequired,
     moveList: PropTypes.func.isRequired,
     isDragging: PropTypes.bool,
     startScrolling: PropTypes.func,
@@ -82,19 +87,19 @@ export default class CardsContainer extends Component {
   }
 
   render() {
-    const { connectDropTarget, connectDragSource, item, x, moveCard, isDragging } = this.props;
-
+    const { connectDropTarget, connectDragSource, item, x, moveCard, saveGroup, isDragging } = this.props;
     const opacity = isDragging ? 0.5 : 1;
     //const background = x == 0 ? 'gold' : null;
     // const cancelPng = require('../../assets/images/cancel.png');
     return connectDragSource(connectDropTarget(
       // shortcut for background:background
-      <div className="desk" style={{ opacity }}>
-        <div className="desk-head">
+      <div className="desk" style={{ opacity }} >
+        <div className="desk-head" style={{cursor: 'move'}}>
         </div>
 
         <Cards
           moveCard={moveCard}
+          saveGroup={saveGroup}
           x={x}
           cards={item.cards}
           startScrolling={this.props.startScrolling}
