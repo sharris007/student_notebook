@@ -73,8 +73,6 @@ const specs = {
     }
     if (lastX === nextX && lastY === nextY) { // if position equel
       nextY += 1;
-      //  alert('put in last position');
-      //  return;
     }
     props.moveCard(lastX, lastY, nextX, nextY);
 
@@ -301,7 +299,6 @@ export default class Cards extends Component {
 
           <div key={item.keyId} style={{
             backgroundColor: colorr,
-            cursor: 'move',
             marginLeft: item.marginLeft,
             marginRight: item.marginRight,
             height: `${height}`,

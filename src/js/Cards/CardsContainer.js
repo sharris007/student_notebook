@@ -79,7 +79,6 @@ export default class CardsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {groupModeFlag: props.groupModeFlag, groupExpanded: props.groupExpanded};
-  //  this.moveCard = this.moveCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,7 +88,7 @@ export default class CardsContainer extends Component {
   render() {
     const { connectDropTarget, connectDragSource, item, x, moveCard, saveGroup, isDragging } = this.props;
     const opacity = isDragging ? 0.5 : 1;
-    //const background = x == 0 ? 'gold' : null;
+    //const background = x == 0 ? 'gold' : null;    Save for grouping hover later
     // const cancelPng = require('../../assets/images/cancel.png');
     return connectDragSource(connectDropTarget(
       // shortcut for background:background

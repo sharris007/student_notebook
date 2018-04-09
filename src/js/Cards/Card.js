@@ -576,7 +576,7 @@ export default class Card extends Component {
     return (
 
       <div 
-        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'pointer',  transform: `scale(${item.scale})` } : { background: 'white', border: 'none', cursor: 'move',   transform: `scale(${item.scale})` }}
+        style={item.tagId ? {  background: 'white', boxShadow: 'none', cursor: 'help',  transform: `scale(${item.scale})` } : { background: 'white', border: 'none', cursor: 'text',   transform: `scale(${item.scale})` }}
         className={(item.cardFormat === 'add mode') ? 'item addcardStyle' : 'item'}
         data-tagId={tagId ? tagId : null} id={style ? item.id : null}
         ref="hoops"

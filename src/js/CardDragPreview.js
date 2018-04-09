@@ -5,7 +5,6 @@ const styles = {
   display: 'inline-block',
   transform: 'rotate(-3deg) scale(.90)',
   WebkitTransform: 'rotate(-3deg)',
- // background: 'pink'
 };
 
 const propTypes = {
@@ -30,9 +29,7 @@ const CardDragPreview = (props) => {
           height: '100%',
           width: '100%',
           zIndex: 1,
-  //        opacity: 0.5,
           transform: 'scale(90)',
-    //      backgroundColor: 'orange'
         }}>
         </div>}
     </div>

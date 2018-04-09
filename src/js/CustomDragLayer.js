@@ -31,7 +31,6 @@ function getItemStyles(props) {
     y += initialOffset.y;
   }
   const transform = `translate(${x - 100}px, ${y - 100}px)`;
- // console.log('transform', `${x}px, ${y}px)`);
   return {
     WebkitTransform: transform,
     transform
@@ -58,8 +57,6 @@ function getItemX(props) {
     y += initialOffset.y;
   }
 
- // const transform = `translate(${x - 100}px, ${y - 100}px)`;
-
   
   let color = "white";
   
@@ -72,10 +69,7 @@ function getItemX(props) {
   //  window.currentOffsetx = window.cards[index].left;
     window.height = window.cards[index].height;
    // window.currentOffsety = currentOffset.y;
-  ;
   }
-
- 
 
   return color;
 }
@@ -109,9 +103,6 @@ export default class CustomDragLayer extends Component {
   };
 
 
-
-
-
   renderItem(type, item) {
     item.item.color = getItemX(this.props);
     switch (type) {
@@ -127,9 +118,8 @@ export default class CustomDragLayer extends Component {
   render() {
     const { item, itemType, isDragging } = this.props;
     if (item !== null) {
-      //  item.item.color = getItemX(item);
+      //  item.item.color = getItemX(item);  use with hover group together later
       //  item.item.color = "red";
-
     }
 
     if (!isDragging) {
